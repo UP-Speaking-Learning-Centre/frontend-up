@@ -1,0 +1,485 @@
+{
+    "programs": [
+        {
+            "name": "School Program",
+            "description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos",
+            "groups": [
+                {
+                    "name": "Kindergarten",
+                    "levels": [
+                        {
+                            "name": "New Star",
+                            "prerequisites": "No prerequisites required. Open for beginners.",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "No prerequisites required. Open for beginners.",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to understand and use basic greetings, simple introductions, and respond to simple questions.",
+                                    "taughtBy": ["Baby Bear"]
+                                }
+                            ]
+                        }
+                    ],
+                    "materi": [
+                        "Mengenalkan bahasa Inggris lewat aktivitas seru seperti games, lagu, dan roleplay",
+                        "Mengembangkan 4 skills (Listening, Reading, Speaking, Writing) secara bertahap",
+                        "Latihan simple conversation yang dekat dengan dunia anak",
+                        "Mendorong keberanian untuk berbicara sejak dini",
+                        "Menanamkan pola pikir kritis lewat pertanyaan ringan dan cerita sederhana"
+                    ],
+                    "capaian": [
+                        "Anak mulai berani ngomong bahasa Inggris, walau dengan kalimat sederhana",
+                        "Mampu menggunakan kosakata yang dipelajari dalam konteks sehari-hari",
+                        "Mulai bisa mengenal struktur kalimat sederhana dalam bentuk lisan dan tulisan",
+                        "Meningkatkan rasa percaya diri dan menjadikan belajar bahasa Inggris sesuatu yang menyenangkan",
+                        "Siap melakukan show and tell atau storytelling dengan ekspresi yang natural"
+                    ]
+                },
+                {
+                    "name": "Elementary School",
+                    "levels": [
+                        {
+                            "name": "Novice",
+                            "prerequisites": "Completed New Star 2 or equivalent",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Completed New Star 2 or equivalent",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Completed Novice 1 or equivalent",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "3",
+                                    "prerequisites": "Completed Novice 2 or equivalent",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "4",
+                                    "prerequisites": "Completed Novice 3 or equivalent",
+                                    "taughtBy": ["Baby Bear"]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Elementary",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Should be able to understand and use basic vocabulary and simple sentence structures.",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to construct simple sentences about daily activities and express basic needs.",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "3",
+                                    "prerequisites": "Should be able to describe people, places, and things using simple adjectives and basic verb tenses.",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "4",
+                                    "prerequisites": "Should be able to hold simple conversations about daily life and express opinions using basic vocabulary.",
+                                    "taughtBy": ["Baby Bear"]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Talented",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Should be able to understand and use basic vocabulary and simple sentence structures.",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to construct simple sentences about daily activities and express basic needs.",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "3",
+                                    "prerequisites": "Should be able to describe people, places, and things using simple adjectives and basic verb tenses.",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "4",
+                                    "prerequisites": "Should be able to hold simple conversations about daily life and express opinions using basic vocabulary.",
+                                    "taughtBy": ["Baby Bear"]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Super",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Should be able to understand and use basic vocabulary and simple sentence structures.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to construct simple sentences about daily activities and express basic needs.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "3",
+                                    "prerequisites": "Should be able to describe people, places, and things using simple adjectives and basic verb tenses.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "4",
+                                    "prerequisites": "Should be able to hold simple conversations about daily life and express opinions using basic vocabulary.",
+                                    "taughtBy": ["Papa Bear"]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Intersection",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Should be able to understand and use basic vocabulary and simple sentence structures.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to construct simple sentences about daily activities and express basic needs.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "3",
+                                    "prerequisites": "Should be able to describe people, places, and things using simple adjectives and basic verb tenses.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "4",
+                                    "prerequisites": "Should be able to hold simple conversations about daily life and express opinions using basic vocabulary.",
+                                    "taughtBy": ["Papa Bear"]
+                                }
+                            ]
+                        }
+                    ],
+                    "materi": [
+                        "Mengenalkan bahasa Inggris lewat aktivitas seru seperti games, lagu, dan roleplay",
+                        "Mengembangkan 4 skills (Listening, Reading, Speaking, Writing) secara bertahap",
+                        "Latihan simple conversation yang dekat dengan dunia anak",
+                        "Mendorong keberanian untuk berbicara sejak dini",
+                        "Menanamkan pola pikir kritis lewat pertanyaan ringan dan cerita sederhana"
+                    ],
+                    "capaian": [
+                        "Anak mulai berani ngomong bahasa Inggris, walau dengan kalimat sederhana",
+                        "Mampu menggunakan kosakata yang dipelajari dalam konteks sehari-hari",
+                        "Mulai bisa mengenal struktur kalimat sederhana dalam bentuk lisan dan tulisan",
+                        "Meningkatkan rasa percaya diri dan menjadikan belajar bahasa Inggris sesuatu yang menyenangkan",
+                        "Siap melakukan show and tell atau storytelling dengan ekspresi yang natural"
+                    ]
+                },
+                {
+                    "name": "Junior High School",
+                    "levels": [
+                        {
+                            "name": "Beginners",
+                            "prerequisites": "Completed Novice 4 or equivalent",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Should be able to understand and use basic vocabulary for everyday objects, numbers, and simple sentences.",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to construct simple sentences about daily activities and express basic needs.",
+                                    "taughtBy": ["Baby Bear"]
+                                },
+                                {
+                                    "grade": "3",
+                                    "prerequisites": "Should be able to describe people, places, and things using simple adjectives and basic verb tenses.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "4",
+                                    "prerequisites": "Should be able to hold simple conversations about daily life and express opinions using basic vocabulary.",
+                                    "taughtBy": ["Papa Bear"]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Interchange",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Should be able to understand and use basic vocabulary and simple sentence structures.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to construct simple sentences about daily activities and express basic needs.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "3",
+                                    "prerequisites": "Should be able to describe people, places, and things using simple adjectives and basic verb tenses.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "4",
+                                    "prerequisites": "Should be able to hold simple conversations about daily life and express opinions using basic vocabulary.",
+                                    "taughtBy": ["Papa Bear"]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Competent",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Should be able to understand and use basic vocabulary and simple sentence structures.",
+                                    "taughtBy": ["Mama Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to construct simple sentences about daily activities and express basic needs.",
+                                    "taughtBy": ["Mama Bear"]
+                                },
+                                { "grade": "3", "taughtBy": ["Mama Bear"] },
+                                { "grade": "4", "taughtBy": ["Mama Bear"] }
+                            ]
+                        }
+                    ],
+                    "materi": [
+                        "Latihan percakapan sehari-hari dengan berbagai situasi yang dekat dengan dunia remaja",
+                        "Menggabungkan diskusi ringan, roleplay, dan mini presentation",
+                        "Belajar struktur kalimat lebih kompleks dan ekspresi umum dalam speaking",
+                        "Menumbuhkan kebiasaan belajar mandiri dan critical thinking sederhana",
+                        "Menulis dan memahami teks pendek, email, dan chat formal/informal"
+                    ],
+                    "capaian": [
+                        "Siswa menjadi lebih percaya diri berbicara dalam berbagai situasi",
+                        "Mampu menyampaikan pendapat dengan logis dan runtut",
+                        "Bisa berinteraksi dalam diskusi ringan dan interview dengan ekspresi yang sesuai",
+                        "Mampu memahami struktur grammar yang umum dan menggunakannya dalam percakapan",
+                        "Siap membuat video vlog atau interview dalam bahasa Inggris"
+                    ]
+                },
+                {
+                    "name": "Senior High School",
+                    "levels": [
+                        {
+                            "name": "Rookie",
+                            "prerequisites": "Completed Elementary School or equivalent",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Should be able to understand and use basic grammar structures and hold simple conversations about daily life.",
+                                    "taughtBy": ["Baby Bear", "Papa Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to express opinions, describe experiences, and participate in simple discussions using appropriate vocabulary.",
+                                    "taughtBy": ["Baby Bear", "Papa Bear"]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Movers",
+                            "prerequisites": "Completed Rookie 2 or equivalent",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Should be able to understand and use complex sentence structures and express detailed ideas about various topics.",
+                                    "taughtBy": ["Baby Bear", "Papa Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to analyze and discuss complex topics using appropriate vocabulary and grammar structures.",
+                                    "taughtBy": ["Baby Bear", "Papa Bear"]
+                                },
+                                {
+                                    "grade": "3",
+                                    "prerequisites": "Should be able to present arguments and express complex ideas with clarity and precision.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "4",
+                                    "prerequisites": "Should be able to engage in academic discussions and present complex arguments with confidence.",
+                                    "taughtBy": ["Papa Bear"]
+                                }
+                            ]
+                        },
+                        {
+                            "name": "Flyers",
+                            "prerequisites": "Completed Movers 4 or equivalent",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Should be able to analyze and critique academic topics with appropriate vocabulary and grammar structures.",
+                                    "taughtBy": ["Mama Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to present complex academic arguments and engage in sophisticated discussions.",
+                                    "taughtBy": ["Mama Bear"]
+                                },
+                                {
+                                    "grade": "3",
+                                    "prerequisites": "Should be able to analyze and critique academic texts and present sophisticated arguments.",
+                                    "taughtBy": ["Mama Bear"]
+                                },
+                                {
+                                    "grade": "4",
+                                    "prerequisites": "Should be able to engage in academic debates and present complex arguments with confidence and precision.",
+                                    "taughtBy": ["Mama Bear"]
+                                }
+                            ]
+                        }
+                    ],
+                    "materi": [
+                        "Topik-topik aktual dan meaningful untuk diskusi dan presentasi",
+                        "Latihan berpikir kritis, berpendapat, dan menyampaikan ide dalam bahasa Inggris",
+                        "Teknik speaking untuk academic presentation, pitch, dan debat",
+                        "Latihan grammar in use, bukan sekadar menghafal rumus",
+                        "Menulis teks formal (email, artikel singkat, opini)"
+                    ],
+                    "capaian": [
+                        "Siswa dapat berpendapat dengan percaya diri dan logis dalam forum formal dan nonformal",
+                        "Mampu menyusun dan menyampaikan presentasi akademik atau debat dalam bahasa Inggris",
+                        "Terbiasa menggunakan grammar secara alami dalam speaking dan writing",
+                        "Siap menghadapi situasi nyata seperti interview beasiswa, kuliah luar negeri, atau pitching ide",
+                        "Mampu menjadi bintang di kelas dengan keahlian speaking yang keren dan powerful"
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Regular / Adults Program",
+            "description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos",
+            "groups": [
+                {
+                    "name": "Grammar Program",
+                    "levels": [
+                        {
+                            "name": "Grammar",
+                            "prerequisites": "No prerequisites required. Open for beginners.",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "No prerequisites required. Open for beginners.",
+                                    "taughtBy": ["Papa Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to understand and use basic grammar structures and sentence patterns.",
+                                    "taughtBy": ["Papa Bear"]
+                                }
+                            ]
+                        }
+                    ],
+                    "materi": [
+                        "Topik-topik aktual dan meaningful untuk diskusi dan presentasi",
+                        "Latihan berpikir kritis, berpendapat, dan menyampaikan ide dalam bahasa Inggris",
+                        "Teknik speaking untuk academic presentation, pitch, dan debat",
+                        "Latihan grammar in use, bukan sekadar menghafal rumus",
+                        "Menulis teks formal (email, artikel singkat, opini)"
+                    ],
+                    "capaian": [
+                        "Siswa dapat berpendapat dengan percaya diri dan logis dalam forum formal dan nonformal",
+                        "Mampu menyusun dan menyampaikan presentasi akademik atau debat dalam bahasa Inggris",
+                        "Terbiasa menggunakan grammar secara alami dalam speaking dan writing",
+                        "Siap menghadapi situasi nyata seperti interview beasiswa, kuliah luar negeri, atau pitching ide",
+                        "Mampu menjadi bintang di kelas dengan keahlian speaking yang keren dan powerful"
+                    ]
+                },
+                {
+                    "name": "Speaking Program",
+                    "levels": [
+                        {
+                            "name": "Speaking",
+                            "prerequisites": "No prerequisites required. Open for beginners.",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "No prerequisites required. Open for beginners.",
+                                    "taughtBy": ["Mama Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to hold basic conversations and express simple ideas.",
+                                    "taughtBy": ["Mama Bear"]
+                                },
+                                {
+                                    "grade": "3",
+                                    "prerequisites": "Should be able to participate in discussions and express opinions with clarity.",
+                                    "taughtBy": ["Mama Bear"]
+                                },
+                                {
+                                    "grade": "4",
+                                    "prerequisites": "Should be able to present arguments and engage in sophisticated discussions.",
+                                    "taughtBy": ["Mama Bear"]
+                                }
+                            ]
+                        }
+                    ],
+                    "materi": [
+                        "Topik-topik aktual dan meaningful untuk diskusi dan presentasi",
+                        "Latihan berpikir kritis, berpendapat, dan menyampaikan ide dalam bahasa Inggris",
+                        "Teknik speaking untuk academic presentation, pitch, dan debat",
+                        "Latihan grammar in use, bukan sekadar menghafal rumus",
+                        "Menulis teks formal (email, artikel singkat, opini)"
+                    ],
+                    "capaian": [
+                        "Siswa dapat berpendapat dengan percaya diri dan logis dalam forum formal dan nonformal",
+                        "Mampu menyusun dan menyampaikan presentasi akademik atau debat dalam bahasa Inggris",
+                        "Terbiasa menggunakan grammar secara alami dalam speaking dan writing",
+                        "Siap menghadapi situasi nyata seperti interview beasiswa, kuliah luar negeri, atau pitching ide",
+                        "Mampu menjadi bintang di kelas dengan keahlian speaking yang keren dan powerful"
+                    ]
+                },
+                {
+                    "name": "TOEFL Preparation",
+                    "levels": [
+                        {
+                            "name": "TOEFL Preparation",
+                            "prerequisites": "Completed Speaking Program or equivalent",
+                            "grades": [
+                                {
+                                    "grade": "1",
+                                    "prerequisites": "Should be able to engage in academic discussions and present arguments with confidence.",
+                                    "taughtBy": ["Mama Bear"]
+                                },
+                                {
+                                    "grade": "2",
+                                    "prerequisites": "Should be able to analyze academic texts and present sophisticated arguments with clarity.",
+                                    "taughtBy": ["Mama Bear"]
+                                }
+                            ]
+                        }
+                    ],
+                    "materi": [
+                        "Topik-topik aktual dan meaningful untuk diskusi dan presentasi",
+                        "Latihan berpikir kritis, berpendapat, dan menyampaikan ide dalam bahasa Inggris",
+                        "Teknik speaking untuk academic presentation, pitch, dan debat",
+                        "Latihan grammar in use, bukan sekadar menghafal rumus",
+                        "Menulis teks formal (email, artikel singkat, opini)"
+                    ],
+                    "capaian": [
+                        "Siswa dapat berpendapat dengan percaya diri dan logis dalam forum formal dan nonformal",
+                        "Mampu menyusun dan menyampaikan presentasi akademik atau debat dalam bahasa Inggris",
+                        "Terbiasa menggunakan grammar secara alami dalam speaking dan writing",
+                        "Siap menghadapi situasi nyata seperti interview beasiswa, kuliah luar negeri, atau pitching ide",
+                        "Mampu menjadi bintang di kelas dengan keahlian speaking yang keren dan powerful"
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -4,5 +4,5 @@ export const ROUTES = {
     programs: '/programs',
     faqTestimonials: '/faq-testimonials',
     login: '/login',
-    chooseProgram: '/choose-program',
+    chooseProgram: '/select-program',
 } as const;

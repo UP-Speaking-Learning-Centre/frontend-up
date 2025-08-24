@@ -8,28 +8,22 @@ import { usePathname } from 'next/navigation';
 import { HEADER_NAVIGATION } from '@/constants/navigation';
 import { cn } from '@/lib/utils';
 import { ROUTES } from '@/constants/routes';
+import Image from 'next/image';
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname();
 
     return (
-        <header className="bg-white shadow-sm sticky top-0 z-50">
+        <header className="bg-white shadow-[0px_4px_6px_0px_rgba(0,_0,_0,_0.1)] sticky top-0 z-50">
             <nav
-                className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+                className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8"
                 aria-label="Global"
             >
                 <div className="flex lg:flex-1">
-                    <Link href="/" className="-m-1.5 p-1.5">
+                    <Link href={ROUTES.home} className="-m-1.5 p-1.5">
                         <span className="sr-only">UP Education</span>
-                        <div className="flex items-center">
-                            <div className="h-8 w-8 rounded-full bg-[#CE6439] flex items-center justify-center text-white font-bold text-lg">
-                                UP
-                            </div>
-                            <span className="ml-2 text-xl font-bold text-[#254116]">
-                                UP Education
-                            </span>
-                        </div>
+                        <Image src={'/logo-black.png'} width="60" height="60" alt="Logo UP" />
                     </Link>
                 </div>
                 <div className="flex lg:hidden">

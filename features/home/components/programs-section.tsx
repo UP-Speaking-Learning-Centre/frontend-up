@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ButtonOutline } from '@/components/ui/button-outline';
 import SectionTitle from '@/components/section-title';
 import { ROUTES } from '@/constants/routes';
+import { Button } from '@/components/ui/button';
 
 const programs = [
     {
@@ -33,11 +34,11 @@ export default function ProgramsSection() {
                         description="Kami hadir untuk membantumu melangkah lebih dekat ke masa depan yang kamu impikan, dengan percaya diri."
                     />
                 </div>
-                <div className="mx-auto mt-16 max-w-2xl flex flex-col gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:flex-row">
+                <div className="mx-auto mt-16 max-w-2xl flex flex-col justify-center gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:flex-row">
                     {programs.map(program => (
                         <div
                             key={program.id}
-                            className="relative flex flex-col lg:flex-row justify-between overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 w-1/12"
+                            className="relative flex flex-col lg:flex-row justify-between overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 w-full lg:w-1/3"
                         >
                             <div className="flex flex-1 flex-col p-8">
                                 <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-[3/2]">
@@ -71,7 +72,9 @@ export default function ProgramsSection() {
                 </div>
                 <div className="mt-12 text-center">
                     <Link href={ROUTES.programs}>
-                        <ButtonOutline className="mt-10">View All Programs</ButtonOutline>
+                        <Button className="bg-[#CE6439] hover:bg-[#CE6439]/90">
+                            View All Programs
+                        </Button>
                     </Link>
                 </div>
             </div>

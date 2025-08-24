@@ -14,7 +14,7 @@ export default function HeroSection() {
                         backgroundPosition: 'center',
                     }}
                 />
-                <div className="absolute inset-0 w-full h-full bg-red-50"></div>
+                <div className="absolute inset-0 w-full h-full bg-black/50"></div>
             </div>
             <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40 relative z-10">
                 <div className="mx-auto max-w-2xl">
