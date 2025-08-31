@@ -2,9 +2,7 @@ import type React from 'react';
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Navbar from '@/components/navbar';
-import Footer from '@/components/footer';
-import { ThemeProvider } from '@/components/theme-provider';
+import TanstackProvider from '@/components/layout/tanstack-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +16,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="en">
             <body className={inter.className}>
-                <main className="flex-1">{children}</main>
+                <TanstackProvider>
+                    <main className="flex-1">{children}</main>
+                </TanstackProvider>
             </body>
         </html>
     );

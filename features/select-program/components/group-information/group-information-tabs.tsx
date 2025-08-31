@@ -1,21 +1,16 @@
 'use client';
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import useProgramSelection from '../../hooks/use-program-selection';
-import { useState } from 'react';
-import data from '@/data/dummy.json';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { Book, BookOpen, Check, GraduationCap } from 'lucide-react';
+import { BookOpen, GraduationCap } from 'lucide-react';
+import useFetchGroupsQuery from '../../queries/use-fetch-groups';
+import TabContent from './tab-content';
 
-const LevelInformationTabs = () => {
+const GroupInformationTabs = () => {
     const { formValue } = useProgramSelection();
-    const materi = data.programs
-        .find(item => item.category === formValue.programCategory)
-        ?.groups.find(item => item.name === formValue.group)?.materi;
-
-    const capaian = data.programs
-        .find(item => item.category === formValue.programCategory)
-        ?.groups.find(item => item.name === formValue.group)?.capaian;
+    const { data: groups } = useFetchGroupsQuery();
+    const materi = groups?.find(item => item.id === formValue.groupId)?.materi;
+    const capaian = groups?.find(item => item.id === formValue.groupId)?.capaian;
 
     return (
         <Tabs defaultValue="materi" className="w-full mt-4">
@@ -27,40 +22,20 @@ const LevelInformationTabs = () => {
                     <GraduationCap /> Capaian
                 </TabsTrigger>
             </TabsList>
-            <TabsContent value="materi">
-                <Card className="p-6 !border-none !outline-none shadow-[0px_1px_4px_2px_rgba(0,_0,_0,_0.1)]">
-                    <CardTitle className="sr-only">Materi Pembelajaran</CardTitle>
-                    <CardContent className="p-0">
-                        <p className="text-lg font-semibold">Materi Pembelajaran</p>
-                        <div className="flex flex-col gap-2 mt-4">
-                            {materi?.map((item, index) => (
-                                <p key={index} className="flex items-center gap-2">
-                                    <Check className="text-[#CE6439]" />
-                                    {item}
-                                </p>
-                            ))}
-                        </div>
-                    </CardContent>
-                </Card>
-            </TabsContent>
-            <TabsContent value="capaian">
-                <Card className="p-6 !border-none !outline-none shadow-[0px_1px_4px_2px_rgba(0,_0,_0,_0.1)]">
-                    <CardTitle className="sr-only">Capaian Pembelajaran</CardTitle>
-                    <CardContent className="p-0">
-                        <p className="text-lg font-semibold">Capaian Pembelajaran</p>
-                        <div className="flex flex-col gap-2 mt-4">
-                            {capaian?.map((item, index) => (
-                                <p key={index} className="flex items-center gap-2">
-                                    <Check className="text-[#CE6439]" />
-                                    {item}
-                                </p>
-                            ))}
-                        </div>
-                    </CardContent>
-                </Card>
-            </TabsContent>
+
+            {[
+                { title: 'Materi Pembelajaran', items: materi?.split('\n'), id: 'materi' },
+                { title: 'Capaian Pembelajaran', items: capaian?.split('\n'), id: 'capaian' },
+            ].map(item => (
+                <TabContent
+                    key={item.id}
+                    title={item.title}
+                    items={item.items || []}
+                    id={item.id}
+                />
+            ))}
         </Tabs>
     );
 };
 
-export default LevelInformationTabs;
+export default GroupInformationTabs;

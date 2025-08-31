@@ -1,4 +1,4 @@
-import { CHOOSE_PROGRAM_STEP, PROGRAM_SELECTION_STEPS } from '@/constants/program-selections';
+import { PROGRAM_SELECTION_STEPS } from '@/constants/program-selections';
 import useProgramSelectionStore, { FormValue } from '../stores/program-selection-store';
 
 const useProgramSelection = () => {
@@ -39,7 +39,7 @@ const useProgramSelection = () => {
                     behavior: 'smooth',
                 });
             }
-        }, 100);
+        }, 500);
     };
 
     const handleNextStepAction = ({

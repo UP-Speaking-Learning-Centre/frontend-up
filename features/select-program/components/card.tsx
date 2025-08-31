@@ -7,6 +7,7 @@ const Card = ({
     title,
     description,
     imageUrl,
+    className,
     buttonLabel,
     buttonAction,
     selected,
@@ -16,13 +17,15 @@ const Card = ({
     imageUrl: string;
     buttonLabel: string;
     buttonAction: () => void;
+    className?: string;
     selected: boolean;
 }) => {
     return (
         <div
             className={cn(
-                'flex flex-col w-full overflow-hidden  rounded-lg border border-[#E2E8F0] shadow-md hover:shadow-xl hover:border-[#CE6439]',
-                selected && 'outline-2 outline outline-[#CE6439]'
+                'flex flex-col w-full overflow-hidden rounded-lg border border-[#E2E8F0] shadow-md hover:shadow-xl hover:border-[#CE6439]',
+                selected && 'outline-2 outline outline-[#CE6439]',
+                className
             )}
         >
             <div className="relative h-48">
@@ -31,6 +34,7 @@ const Card = ({
                     alt={title}
                     fill
                     className="object-cover"
+                    quality={100}
                 />
             </div>
             <div className="flex flex-1 flex-col justify-between bg-white p-6">

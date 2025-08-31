@@ -1,16 +1,16 @@
 {
-  "teachers": {
-    "Mama Bear": {
-      "coordinator": "Mr. Yayat",
-      "members": ["Mr. Yayat (C)", "Ms. Nuraeni", "Mr. Rafif", "Mr. Wildan"]
-    },
-    "Papa Bear": {
-      "coordinator": "Ms. Lieken",
-      "members": ["Ms. Lieken (C)", "Ms. Binti", "Mr. Noval"]
-    },
-    "Baby Bear": {
-      "coordinator": "Mr. Firdan",
-      "members": ["Mr. Firdan (C)", "Ms. Feby", "Ms. Puji"]
+    "teachers": {
+        "Mama Bear": {
+            "coordinator": "Mr. Yayat",
+            "members": ["Mr. Yayat (C)", "Ms. Nuraeni", "Mr. Rafif", "Mr. Wildan"]
+        },
+        "Papa Bear": {
+            "coordinator": "Ms. Lieken",
+            "members": ["Ms. Lieken (C)", "Ms. Binti", "Mr. Noval", "Ms. May"]
+        },
+        "Baby Bear": {
+            "coordinator": "Mr. Firdan",
+            "members": ["Mr. Firdan (C)", "Ms. Feby", "Ms. Puji", "Ms. Ica"]
+        }
     }
-  }
 }
