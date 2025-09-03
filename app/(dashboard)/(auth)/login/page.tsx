@@ -399,120 +399,92 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 flex">
-            {/* Left side - Illustration */}
-            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-[#254116] to-[#CE6439] relative overflow-hidden">
-                <div className="absolute inset-0 bg-black/20" />
-                <div className="relative mx-auto z-10 flex flex-col justify-center items-center p-12 text-white">
-                    <div className="max-w-md text-center">
-                        <div className="mb-8">
-                            <div className="h-20 w-20 mx-auto rounded-full bg-white/20 flex items-center justify-center mb-4">
-                                <div className="h-12 w-12 rounded-full bg-[#CE6439] flex items-center justify-center text-white font-bold text-xl">
-                                    UP
-                                </div>
-                            </div>
-                            <h1 className="text-3xl font-bold mb-4">Welcome Back</h1>
-                            <p className="text-lg text-white/90">
-                                Sign in to your account to continue your educational journey with UP
-                                Education.
-                            </p>
-                        </div>
+        <div className="w-full max-w-md">
+            <div className="text-center mb-8">
+                <Link href="/" className="inline-flex items-center mb-6">
+                    <div className="h-10 w-10 rounded-full bg-[#CE6439] flex items-center justify-center text-white font-bold text-lg mr-3">
+                        UP
                     </div>
-                </div>
+                    <span className="text-2xl font-bold text-[#254116]">UP Education</span>
+                </Link>
+                <h2 className="text-3xl font-bold text-gray-900">Sign In</h2>
+                <p className="mt-2 text-gray-600">Welcome back! Please sign in to your account</p>
             </div>
 
-            {/* Right side - Login Form */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-                <div className="w-full max-w-md">
-                    <div className="text-center mb-8">
-                        <Link href="/" className="inline-flex items-center mb-6">
-                            <div className="h-10 w-10 rounded-full bg-[#CE6439] flex items-center justify-center text-white font-bold text-lg mr-3">
-                                UP
-                            </div>
-                            <span className="text-2xl font-bold text-[#254116]">UP Education</span>
-                        </Link>
-                        <h2 className="text-3xl font-bold text-gray-900">Sign In</h2>
-                        <p className="mt-2 text-gray-600">
-                            Welcome back! Please sign in to your account
-                        </p>
-                    </div>
+            <Card>
+                <CardHeader>
+                    <CardTitle className="text-center text-lg">Login to Your Account</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        <div>
+                            <Label htmlFor="phone" className="flex items-center mb-2">
+                                <Phone className="w-4 h-4 mr-2 text-[#CE6439]" />
+                                Phone Number
+                            </Label>
+                            <Input
+                                id="phone"
+                                type="tel"
+                                value={phoneNumber}
+                                onChange={e => setPhoneNumber(e.target.value)}
+                                placeholder="08123456789 or 628123456789"
+                                required
+                                className="w-full"
+                            />
+                            <p className="text-xs text-gray-500 mt-1">
+                                Enter your registered phone number
+                            </p>
+                        </div>
 
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="text-center text-lg">
-                                Login to Your Account
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <form onSubmit={handleSubmit} className="space-y-6">
-                                <div>
-                                    <Label htmlFor="phone" className="flex items-center mb-2">
-                                        <Phone className="w-4 h-4 mr-2 text-[#CE6439]" />
-                                        Phone Number
-                                    </Label>
-                                    <Input
-                                        id="phone"
-                                        type="tel"
-                                        value={phoneNumber}
-                                        onChange={e => setPhoneNumber(e.target.value)}
-                                        placeholder="08123456789 or 628123456789"
-                                        required
-                                        className="w-full"
-                                    />
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Enter your registered phone number
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <Label htmlFor="password" className="flex items-center mb-2">
-                                        <Lock className="w-4 h-4 mr-2 text-[#CE6439]" />
-                                        Password
-                                    </Label>
-                                    <div className="relative">
-                                        <Input
-                                            id="password"
-                                            type={showPassword ? 'text' : 'password'}
-                                            value={password}
-                                            onChange={e => setPassword(e.target.value)}
-                                            placeholder="Enter your password"
-                                            className="w-full pr-10"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowPassword(!showPassword)}
-                                            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                                        >
-                                            {showPassword ? (
-                                                <EyeOff className="w-4 h-4" />
-                                            ) : (
-                                                <Eye className="w-4 h-4" />
-                                            )}
-                                        </button>
-                                    </div>
-                                    <p className="text-xs text-gray-500 mt-1">
-                                        Leave empty if you're a new user
-                                    </p>
-                                </div>
-
-                                <Button
-                                    type="submit"
-                                    disabled={isLoading || !phoneNumber}
-                                    className="w-full bg-[#CE6439] hover:bg-[#CE6439]/90"
+                        <div>
+                            <Label htmlFor="password" className="flex items-center mb-2">
+                                <Lock className="w-4 h-4 mr-2 text-[#CE6439]" />
+                                Password
+                            </Label>
+                            <div className="relative">
+                                <Input
+                                    id="password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                    placeholder="Enter your password"
+                                    className="w-full pr-10"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                                 >
-                                    {isLoading ? 'Signing In...' : 'Sign In'}
-                                </Button>
+                                    {showPassword ? (
+                                        <EyeOff className="w-4 h-4" />
+                                    ) : (
+                                        <Eye className="w-4 h-4" />
+                                    )}
+                                </button>
+                            </div>
+                            <p className="text-xs text-gray-500 mt-1">
+                                Leave empty if you're a new user
+                            </p>
+                        </div>
 
-                                <div className="text-center">
-                                    <Link
-                                        href="/forgot-password"
-                                        className="text-sm text-[#CE6439] hover:underline font-medium"
-                                    >
-                                        Forgot your password?
-                                    </Link>
-                                </div>
+                        <Button
+                            type="submit"
+                            disabled={isLoading || !phoneNumber}
+                            className="w-full bg-[#CE6439] hover:bg-[#CE6439]/90"
+                        >
+                            {isLoading ? 'Signing In...' : 'Sign In'}
+                        </Button>
 
-                                {/* <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                        <div className="text-center">
+                            <Link
+                                href="/forgot-password"
+                                className="text-sm text-[#CE6439] hover:underline font-medium"
+                            >
+                                Forgot your password?
+                            </Link>
+                        </div>
+
+                        {/* <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
                   <h4 className="text-sm font-medium text-blue-900 mb-2">Demo Accounts:</h4>
                   <div className="space-y-2">
                     <div>
@@ -532,11 +504,9 @@ export default function LoginPage() {
                     </div>
                   </div>
                 </div> */}
-                            </form>
-                        </CardContent>
-                    </Card>
-                </div>
-            </div>
+                    </form>
+                </CardContent>
+            </Card>
         </div>
     );
 }
