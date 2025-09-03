@@ -9,7 +9,6 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
     title: 'UP - Education For Everyone',
     description: 'Unlock your potential with our educational programs',
-    generator: 'v0.dev',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
