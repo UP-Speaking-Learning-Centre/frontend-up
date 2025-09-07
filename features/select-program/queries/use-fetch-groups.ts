@@ -35,12 +35,12 @@ const fetchGroups = async (programId: string): Promise<GroupType[]> => {
     return dummyData;
 };
 
-const useFetchGroupsQuery = (): UseQueryResult<GroupType[]> => {
-    const { programId } = useProgramSelectionStore(s => s.formValue);
+const useFetchGroupsQuery = (): UseQueryResult<GroupType[], Error> => {
+    const { programId: programIdFromStore } = useProgramSelectionStore(s => s.formValue);
     const res = useQuery({
-        queryKey: ['groups', programId],
-        queryFn: () => fetchGroups(programId as string),
-        enabled: !!programId,
+        queryKey: ['groups', programIdFromStore],
+        queryFn: () => fetchGroups(programIdFromStore as string),
+        enabled: !!programIdFromStore,
     });
 
     return res;

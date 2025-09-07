@@ -28,7 +28,7 @@ const QuestionCard = ({
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                {currentQuestion.questionType === QUESTION_TYPE.multiple_choice && (
+                {currentQuestion.questionType === QUESTION_TYPE.multipleChoice && (
                     <RadioGroup
                         value={answers[currentQuestionIndex] || ''}
                         onValueChange={value => handleAnswerSelect(value)}
@@ -44,8 +44,8 @@ const QuestionCard = ({
                     </RadioGroup>
                 )}
 
-                {(currentQuestion.questionType === QUESTION_TYPE.fill_in_the_blank ||
-                    currentQuestion.questionType === QUESTION_TYPE.free_text) && (
+                {(currentQuestion.questionType === QUESTION_TYPE.fillInTheBlank ||
+                    currentQuestion.questionType === QUESTION_TYPE.freeText) && (
                     <Input
                         type="text"
                         value={answers[currentQuestionIndex] || ''}

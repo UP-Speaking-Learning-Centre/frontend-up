@@ -1,4 +1,3 @@
-/* createa axios isntance */
 import axios from 'axios';
 
 const api = axios.create({
