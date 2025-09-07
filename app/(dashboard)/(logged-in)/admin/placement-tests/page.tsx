@@ -134,6 +134,7 @@ const Index = () => {
                                     <Button
                                         variant="outline"
                                         size="sm"
+                                        className="hover:text-white"
                                         onClick={() =>
                                             router.push(`/admin/placement-tests/${user.id}`)
                                         }

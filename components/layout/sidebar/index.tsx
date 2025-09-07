@@ -55,7 +55,7 @@ const Sidebar = () => {
             </Sheet>
 
             {/* Desktop Sidebar */}
-            <div className="hidden [grid-area:sidebar] md:flex h-full flex-col bg-secondary shadow-sm border-r">
+            <div className="hidden fixed left-0 inset-y-0 w-[240px] [grid-area:sidebar] md:flex h-full flex-col bg-secondary shadow-sm border-r">
                 <div className="py-6 flex flex-col h-full">
                     <div className="px-6 mb-8">
                         <div className="flex flex-col items-start">

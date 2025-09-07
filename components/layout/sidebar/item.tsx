@@ -16,7 +16,7 @@ const SidebarItem = ({
     };
 }) => {
     const pathname = usePathname();
-    const isActive = pathname === item.href;
+    const isActive = pathname.startsWith(item.href);
 
     return (
         <div

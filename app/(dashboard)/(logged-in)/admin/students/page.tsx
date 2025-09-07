@@ -99,7 +99,11 @@ const Page = () => {
                             },
                             actions: {
                                 renderCell: () => (
-                                    <Button variant="outline" size="sm">
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className="hover:text-white"
+                                    >
                                         <Eye className="h-4 w-4" />
                                     </Button>
                                 ),
