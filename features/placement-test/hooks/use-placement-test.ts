@@ -14,7 +14,7 @@ interface StoredTestState {
 
 export const usePlacementTest = (questions: Question[], initialTimeInMinutes = 20) => {
     const router = useRouter();
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<string[]>(new Array(questions.length).fill(''));
     const [timeLeft, setTimeLeft] = useState(initialTimeInMinutes * 60);
@@ -56,9 +56,9 @@ export const usePlacementTest = (questions: Question[], initialTimeInMinutes = 2
         setLoadSavedState(false);
     }, []);
 
-    useEffect(() => {
-        searchParams.get('isCompleted') === 'true' && setIsCompleted(true);
-    }, [searchParams]);
+    // useEffect(() => {
+    //     searchParams.get('isCompleted') === 'true' && setIsCompleted(true);
+    // }, [searchParams]);
 
     const saveTestState = useCallback(() => {
         if (isCompleted) return;
