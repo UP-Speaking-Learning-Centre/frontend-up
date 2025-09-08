@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect } from 'react';
 import { useDashboardLayoutStore } from '@/stores/dashboard-layout-store';
 
@@ -9,6 +11,7 @@ const DashboardContentLayout = ({
     pageTitle: string;
 }) => {
     const setDashboardHeaderTitle = useDashboardLayoutStore(s => s.setDashboardHeaderTitle);
+
     useEffect(() => {
         setDashboardHeaderTitle(pageTitle);
     }, [pageTitle]);
