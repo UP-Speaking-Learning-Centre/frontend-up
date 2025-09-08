@@ -14,8 +14,9 @@ import Header from '@/features/placement-test/components/header';
 import Navigation from '@/features/placement-test/components/navigation';
 import QuestionCard from '@/features/placement-test/components/question-card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Suspense } from 'react';
 
-export default function PlacementTestPage() {
+function PlacementTestPage() {
     const router = useRouter();
     const {
         currentQuestion,
@@ -143,3 +144,13 @@ export default function PlacementTestPage() {
         </div>
     );
 }
+
+const PlacementTestPageWrapper = () => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <PlacementTestPage />
+        </Suspense>
+    );
+};
+
+export default PlacementTestPageWrapper;
