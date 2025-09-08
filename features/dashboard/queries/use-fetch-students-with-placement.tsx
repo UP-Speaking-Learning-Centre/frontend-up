@@ -1,7 +1,12 @@
+'use client';
+
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useStudentsStore } from '../stores/students-store';
-import { StudentType } from '@/types/students';
+import { StudentPlacementTest, StudentType } from '@/types/students';
 import { useEffect } from 'react';
+import api, { baseService } from '@/lib/api';
+import { API_ADMIN_LIST_PLACEMENT_TEST, API_ADMIN_LIST_STUDENTS } from '../constants/config';
+import { BaseResponse } from '@/types/general';
 
 const allUsers = [
     {
@@ -77,10 +82,21 @@ const allUsers = [
 ];
 
 const fetchStudents = () => {
-    return allUsers;
+    return baseService(async () => {
+        const res = await api.get<BaseResponse<StudentPlacementTest[]>>(API_ADMIN_LIST_PLACEMENT_TEST, {
+            headers: {
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInBob25lTnVtYmVyIjoiMDgxMjM0NTY3ODkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTczMDUzNzcsImV4cCI6MTc1NzM5MTc3N30.zjq1vZVhDVMoMXr8FSezwUUPQ0X3veRaBWjG7pPCyEY',
+            },
+        });
+        return res.data;
+    });
+    // return allUsers;
 };
 
-const useFetchStudentsWithPlacementQuery = (): UseQueryResult<StudentType[]> => {
+const useFetchStudentsWithPlacementQuery = (): UseQueryResult<
+    BaseResponse<StudentPlacementTest[]>
+> => {
     const filters = useStudentsStore(s => s.filters);
     const setStudentsPlacementTest = useStudentsStore(s => s.setStudentsPlacementTest);
 
@@ -91,7 +107,7 @@ const useFetchStudentsWithPlacementQuery = (): UseQueryResult<StudentType[]> => 
 
     useEffect(() => {
         if (res.status === 'success') {
-            setStudentsPlacementTest(res.data);
+            setStudentsPlacementTest(res.data.data);
         }
     }, [res.status]);
 

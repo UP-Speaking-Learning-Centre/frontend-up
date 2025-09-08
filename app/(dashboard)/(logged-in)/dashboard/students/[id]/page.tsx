@@ -1,14 +1,301 @@
 'use client';
 
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
+import PlacementTestPending from '@/features/home/components/placement-test-pending';
+import PlacementTestSuccess from '@/features/home/components/placement-test-success';
+import useGetProfile from '@/features/home/queries/useGetProfile';
+import useGetProfileById from '@/features/home/queries/useGetProfileById';
+import { isPlacementTest } from '@/utils/api.helper';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import { BookOpen, Calendar, Home, User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Label } from 'recharts';
+import { ROUTES } from '@/constants/routes';
 
 export default function DashboardPage() {
+    const { data: students, isLoading: isLoadingStudents } = useGetProfile();
+    const { data, isLoading } = useGetProfileById();
+    const router = useRouter();
+
     return (
-        <DashboardContentLayout pageTitle="Detail Student">
-            <div className="bg-gray-50 flex">
-                <div className="flex-1 flex flex-col overflow-hidden">
-                    <main className="flex-1 overflow-auto p-6"></main>
+        <DashboardContentLayout
+            pageTitle="Detail Student"
+            extras={
+                <div className="flex items-center">
+                    <span className="text-sm text-gray-600 mr-3">Current Student:</span>
+                    <Select
+                        value={data?.id.toString()}
+                        onValueChange={id =>
+                            router.replace(ROUTES.dashboardStudentsId.expand({ id }))
+                        }
+                    >
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Theme" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {students?.students.map(student => (
+                                <SelectItem value={student.id.toString()}>
+                                    {student.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                 </div>
+            }
+        >
+            <div className="space-y-6">
+                {/* Student Overview */}
+                <div className="mb-8">
+                    <h1 className="text-lg text-gray-600 font-normal">
+                        Detail student dari{' '}
+                        <span className="text-gray-800 font-semibold">{data?.name}</span>
+                    </h1>
+                </div>
+                {isPlacementTest(data?.testResults ?? []) ? (
+                    <PlacementTestPending />
+                ) : (
+                    <>
+                        {isPlacementTest(data?.testResults ?? [], 'success') && (
+                            <PlacementTestSuccess />
+                        )}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <Card>
+                                <CardContent className="p-6">
+                                    <div className="flex items-center">
+                                        <div className="p-2 bg-blue-100 rounded-lg">
+                                            <User className="w-6 h-6 text-blue-600" />
+                                        </div>
+                                        <div className="ml-4">
+                                            <p className="text-sm font-medium text-gray-600">
+                                                Student Name
+                                            </p>
+                                            <p className="text-lg font-semibold text-gray-900">
+                                                {data?.name}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card>
+                                <CardContent className="p-6">
+                                    <div className="flex items-center">
+                                        <div className="p-2 bg-green-100 rounded-lg">
+                                            <BookOpen className="w-6 h-6 text-green-600" />
+                                        </div>
+                                        <div className="ml-4">
+                                            <p className="text-sm font-medium text-gray-600">
+                                                Current Program
+                                            </p>
+                                            <p className="text-lg font-semibold text-gray-900">
+                                                {data?.programName}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card>
+                                <CardContent className="p-6">
+                                    <div className="flex items-center">
+                                        <div className="p-2 bg-purple-100 rounded-lg">
+                                            <Calendar className="w-6 h-6 text-purple-600" />
+                                        </div>
+                                        <div className="ml-4">
+                                            <p className="text-sm font-medium text-gray-600">
+                                                Current Level
+                                            </p>
+                                            <p className="text-lg font-semibold text-gray-900">
+                                                {data?.levelName}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+
+                        {/* Student Details */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle className="flex items-center">
+                                        <User className="w-5 h-5 mr-2" />
+                                        Personal Information
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <Label className="text-sm font-medium text-gray-600">
+                                                Full Name
+                                            </Label>
+                                            <p className="font-semibold text-gray-900">
+                                                {data?.name}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <Label className="text-sm font-medium text-gray-600">
+                                                Age
+                                            </Label>
+                                            {/* <p className="font-semibold text-gray-900">
+                                            {data?.age} years old
+                                        </p> */}
+                                        </div>
+                                        <div>
+                                            <Label className="text-sm font-medium text-gray-600">
+                                                Program
+                                            </Label>
+                                            <p className="font-semibold text-gray-900">
+                                                {data?.programName}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <Label className="text-sm font-medium text-gray-600">
+                                                Level
+                                            </Label>
+                                            <Badge variant="secondary">{data?.levelName}</Badge>
+                                        </div>
+                                        <div className="col-span-2">
+                                            <Label className="text-sm font-medium text-gray-600">
+                                                Status
+                                            </Label>
+                                            <div className="mt-1">
+                                                <Badge
+                                                    variant={
+                                                        isPlacementTest(
+                                                            data?.testResults ?? [],
+                                                            'active'
+                                                        )
+                                                            ? 'default'
+                                                            : 'secondary'
+                                                    }
+                                                >
+                                                    {isPlacementTest(
+                                                        data?.testResults ?? [],
+                                                        'active'
+                                                    )
+                                                        ? 'Active'
+                                                        : 'Inactive'}
+                                                </Badge>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            {/* Schedule Information */}
+                            {(data?.schedules.length ?? 0) > 0 &&
+                                data?.schedules.map(schedule => (
+                                    <Card>
+                                        <CardHeader>
+                                            <CardTitle className="flex items-center">
+                                                <Calendar className="w-5 h-5 mr-2" />
+                                                Class Schedule
+                                            </CardTitle>
+                                        </CardHeader>
+                                        <CardContent className="space-y-4">
+                                            <div className="grid grid-cols-1 gap-4">
+                                                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                                    <div className="flex items-center">
+                                                        <Calendar className="w-4 h-4 text-gray-500 mr-2" />
+                                                        <span className="text-sm text-gray-600">
+                                                            Days
+                                                        </span>
+                                                    </div>
+                                                    <span className="font-semibold">
+                                                        {schedule.dayOfWeek}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                                    <div className="flex items-center">
+                                                        <Calendar className="w-4 h-4 text-gray-500 mr-2" />
+                                                        <span className="text-sm text-gray-600">
+                                                            Time
+                                                        </span>
+                                                    </div>
+                                                    <span className="font-semibold">
+                                                        {schedule.startTime}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                                    <div className="flex items-center">
+                                                        <Home className="w-4 h-4 text-gray-500 mr-2" />
+                                                        <span className="text-sm text-gray-600">
+                                                            Location
+                                                        </span>
+                                                    </div>
+                                                    <span className="font-semibold">
+                                                        {schedule.locationName}
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                                    <div className="flex items-center">
+                                                        <User className="w-4 h-4 text-gray-500 mr-2" />
+                                                        <span className="text-sm text-gray-600">
+                                                            Mentor
+                                                        </span>
+                                                    </div>
+                                                    <span className="font-semibold">
+                                                        {schedule.teacherName}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                        </div>
+
+                        {/* Progress Section */}
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="flex items-center">
+                                    <BookOpen className="w-5 h-5 mr-2" />
+                                    Learning Progress
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <div className="flex justify-between items-center mb-2">
+                                            <span className="text-sm font-medium">
+                                                Attendance Rate
+                                            </span>
+                                            <span className="text-sm text-gray-600">85%</span>
+                                        </div>
+                                        <div className="w-full bg-gray-200 rounded-full h-2">
+                                            <div
+                                                className="bg-green-600 h-2 rounded-full"
+                                                style={{ width: '85%' }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="flex justify-between items-center mb-2">
+                                            <span className="text-sm font-medium">
+                                                Average Score
+                                            </span>
+                                            <span className="text-sm text-gray-600">8.5/10</span>
+                                        </div>
+                                        <div className="w-full bg-gray-200 rounded-full h-2">
+                                            <div
+                                                className="bg-blue-600 h-2 rounded-full"
+                                                style={{ width: '85%' }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </>
+                )}
             </div>
         </DashboardContentLayout>
     );

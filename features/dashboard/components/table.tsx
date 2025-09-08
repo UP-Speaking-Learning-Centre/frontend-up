@@ -68,7 +68,7 @@ const Table = ({ columns, values, pagination, onChangePage }: ITable) => {
                                                             {typeof value === 'object' &&
                                                             'renderCell' in value
                                                                 ? value.renderCell()
-                                                                : `${value} ${value} ${value}` ||
+                                                                : `${value}` ||
                                                                   '-'}
                                                         </td>
                                                     );

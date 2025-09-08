@@ -17,6 +17,7 @@ import React, { useState } from 'react';
 const Page = () => {
     const { isLoading } = useFetchStudentsQuery();
     const students = useStudentsStore(s => s.students);
+    console.log(students);
     const pagination = useStudentsStore(s => s.pagination);
     const {
         filters: { groups, mentors },
@@ -80,14 +81,14 @@ const Page = () => {
 
                 <Table
                     columns={[
-                        { name: 'Name', id: 'name' },
+                        { name: 'Name', id: 'studentName' },
                         { name: 'Phone', id: 'phone' },
                         { name: 'Program (Group)', id: 'program' },
                         { name: 'Mentor', id: 'mentor' },
                         { name: 'Schedule', id: 'schedule' },
                         { name: 'Actions', id: 'actions' },
                     ]}
-                    values={students.map(user => {
+                    values={students?.map(user => {
                         return {
                             ...user,
                             program: {

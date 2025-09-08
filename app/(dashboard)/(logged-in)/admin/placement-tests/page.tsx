@@ -1,21 +1,21 @@
 'use client';
 
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
-import { ChevronDown, Eye, Filter } from 'lucide-react';
-import React from 'react';
-import DashboardFilter from '@/features/dashboard/components/filter';
-import { cn } from '@/lib/utils';
-import useFilterStudents from '@/features/dashboard/hooks/use-filter-studets';
-import Table from '@/features/dashboard/components/table';
-import { useStudentsStore } from '@/features/dashboard/stores/students-store';
-import { Button } from '@/components/ui/button';
-import useFetchStudentsWithPlacementQuery from '@/features/dashboard/queries/use-fetch-students-with-placement';
-import { Badge } from '@/components/ui/badge';
 import { PLACEMENT_TEST_FILTER_OPTIONS } from '@/constants/placement-test';
+import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
+import DashboardFilter from '@/features/dashboard/components/filter';
+import Table from '@/features/dashboard/components/table';
+import useFilterStudents from '@/features/dashboard/hooks/use-filter-studets';
+import useFetchStudentsWithPlacementQuery from '@/features/dashboard/queries/use-fetch-students-with-placement';
+import { useStudentsStore } from '@/features/dashboard/stores/students-store';
+import { cn } from '@/lib/utils';
+import { ChevronDown, Eye, Filter } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import React from 'react';
 
 const Index = () => {
     const { isLoading } = useFetchStudentsWithPlacementQuery();
@@ -29,8 +29,6 @@ const Index = () => {
     } = useFilterStudents();
 
     const [isFilterOpen, setIsFilterOpen] = React.useState(true);
-
-    console.log(students);
 
     if (isLoading && !students.length) {
         return (
@@ -118,7 +116,7 @@ const Index = () => {
                                     <Badge className="flex items-center gap-2">
                                         {
                                             PLACEMENT_TEST_FILTER_OPTIONS.find(
-                                                option => option.id === user.testStatus
+                                                option => option.id === user.resultId?.toString()
                                             )?.name
                                         }
                                     </Badge>
@@ -136,7 +134,7 @@ const Index = () => {
                                         size="sm"
                                         className="hover:text-white"
                                         onClick={() =>
-                                            router.push(`/admin/placement-tests/${user.id}`)
+                                            router.push(`/admin/placement-tests/${user.resultId}`)
                                         }
                                     >
                                         <Eye className="h-4 w-4" />

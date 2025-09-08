@@ -1,4 +1,4 @@
-import { StudentType } from '@/types/students';
+import { StudentPlacementTest, StudentType } from '@/types/students';
 import { create } from 'zustand';
 
 interface Pagination {
@@ -27,8 +27,8 @@ interface StudentsStore {
     students: StudentType[];
     setStudents: (students: StudentType[]) => void;
 
-    studentsPlacementTest: Partial<StudentType>[];
-    setStudentsPlacementTest: (students: Partial<StudentType>[]) => void;
+    studentsPlacementTest: Partial<StudentPlacementTest>[];
+    setStudentsPlacementTest: (students: Partial<StudentPlacementTest>[]) => void;
 
     pagination: Pagination;
     setPagination: (pagination: Partial<Pagination>) => void;
