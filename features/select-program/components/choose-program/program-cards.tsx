@@ -11,9 +11,10 @@ const ProgramCards = () => {
 
     const renderContent = () => {
         if (isLoading) {
-            return [...new Array(3)].map((_, i) => <Skeleton key={i} className="h-72 basis-1/3" />);
+            return [...new Array(3)].map((_, i) => <Skeleton key={i} className="h-80 basis-1/3" />);
         }
 
+        console.log(formValue);
         return programs?.map(item => {
             const isProgramSelected = formValue.programId === item.id;
             return (

@@ -29,7 +29,7 @@ const Sidebar = () => {
     const [open, setOpen] = React.useState(false);
 
     // TODO: get user role from auth store
-    const [userRole, setUserRole] = React.useState('asdasd');
+    const [userRole, setUserRole] = React.useState('admin');
     const [sidebarMenu, setSidebarMenu] = React.useState<
         { href: string; label: string; icon: React.ComponentType<{ className?: string }> }[]
     >([]);

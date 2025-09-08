@@ -43,7 +43,7 @@ const mentors = [
         name: 'Budi Santoso, MBA',
         role: 'Business Program Director',
         bio: 'An entrepreneur who has founded three successful startups, Budi brings real-world business expertise and mentorship to aspiring business leaders.',
-        imageUrl: '/placeholder.svg?height=300&width=300',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/mr-firdan.jpg',
     },
     {
         name: 'Dr. Siti Rahayu',

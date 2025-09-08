@@ -22,9 +22,10 @@ const Card = ({
 }) => {
     return (
         <div
+            onClick={buttonAction}
             className={cn(
-                'flex flex-col w-full overflow-hidden rounded-lg border border-[#E2E8F0] shadow-md hover:shadow-xl hover:border-[#CE6439]',
-                selected && 'outline-2 outline outline-[#CE6439]',
+                'flex flex-col w-full overflow-hidden rounded-lg border-2 border-[#E2E8F0] hover:translate-y-[-5px] transition-all shadow-md hover:shadow-xl hover:border-[#CE6439]',
+                selected && 'border-[#CE6439] border-[3px]',
                 className
             )}
         >
@@ -37,21 +38,13 @@ const Card = ({
                     quality={100}
                 />
             </div>
-            <div className="flex flex-1 flex-col justify-between bg-white p-6">
+            <div className="flex flex-1 flex-col justify-between bg-white p-4">
                 <div className="flex-1">
                     <h3 className="text-lg font-bold text-[#111827]">{title}</h3>
                     <p className="mt-2 text-sm text-[#4B5563]">{description}</p>
                 </div>
-                <div className="mt-6 flex items-center justify-end">
-                    <Button
-                        className={cn(
-                            'cursor-pointer',
-                            selected
-                                ? 'bg-[#CE6439] hover:bg-[#CE6439]/90'
-                                : 'bg-[#F3F4F6] text-[#111827] hover:bg-[#F3F4F6]/90'
-                        )}
-                        onClick={buttonAction}
-                    >
+                <div className="mt-4 flex items-center justify-end">
+                    <Button variant={selected ? 'default' : 'outline'} onClick={buttonAction}>
                         {buttonLabel}
                     </Button>
                 </div>

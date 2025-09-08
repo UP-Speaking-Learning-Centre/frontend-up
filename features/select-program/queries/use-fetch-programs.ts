@@ -72,10 +72,8 @@ const dummyData = [
 ];
 
 const fetchPrograms = async (): Promise<ProgramType[]> => {
-    // const res = await api.get<ProgramType[]>(ENDPOINTS.fetchPrograms);
-    // return res.data
-    console.log(dummyData);
-    return dummyData;
+    const res = await api.get<ProgramType[]>(ENDPOINTS.fetchPrograms);
+    return res.data;
 };
 
 const useFetchProgramsQuery = (): UseQueryResult<ProgramType[]> => {

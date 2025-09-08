@@ -10,10 +10,11 @@ const studentData = [
 
 export default function PartnersSection() {
     return (
-        <div className="bg-white py-16 sm:py-24">
+        <div className="bg-primary py-16 sm:py-24">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl text-center">
                     <SectionTitle
+                        variant="white"
                         subtitle="Trusted by hundreds of students"
                         description="Our track record speaks for itself. Here's what we've achieved so far."
                     />
@@ -22,7 +23,7 @@ export default function PartnersSection() {
                     {studentData.map(partner => (
                         <div
                             key={partner.label}
-                            className="col-span-1 flex justify-center bg-[#F8FAFC] py-8 rounded-sm"
+                            className="col-span-1 flex justify-center bg-[#F8FAFC] py-8 rounded-xl"
                         >
                             <div className="flex flex-col items-center">
                                 <p className="text-3xl font-semibold text-[#CE6439]">

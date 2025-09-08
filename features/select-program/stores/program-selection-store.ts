@@ -54,19 +54,19 @@ export type FormValue = {
 };
 
 const formValue: FormValue = {
-    programId: 1,
-    programName: 'School Program',
-    groupId: 2,
-    groupName: 'Elementary School',
-    levelId: '2',
-    levelName: 'Novice',
-    gradeId: '1',
-    gradeName: 'Novice 1',
-    taughtBy: ['Mama Bear', 'Papa Bear'],
-    locationId: 1,
-    locationName: 'Stadion',
-    packageId: '1',
-    packageName: 'Semi Private',
+    programId: 0,
+    programName: '',
+    groupId: 0,
+    groupName: '',
+    levelId: 0,
+    levelName: '',
+    gradeId: 0,
+    gradeName: '',
+    taughtBy: [],
+    locationId: 0,
+    locationName: '',
+    packageId: 0,
+    packageName: '',
     schedule: {
         firstSession: {
             dayOfWeek: '',

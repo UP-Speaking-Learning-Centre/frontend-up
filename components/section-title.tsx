@@ -1,21 +1,48 @@
+import { cn } from '@/lib/utils';
+
 const SectionTitle = ({
     title,
     subtitle,
     description,
+    variant = 'black',
 }: {
     title?: string;
     subtitle?: string;
+    variant?: 'black' | 'white';
     description?: string;
 }) => {
     return (
         <div className="mx-auto max-w-2xl text-center">
-            {title && <h2 className="text-base font-semibold leading-7 text-[#CE6439]">{title}</h2>}
+            {title && (
+                <h2
+                    className={cn(
+                        'text-base font-semibold leading-7',
+                        variant === 'black' ? 'text-[#CE6439]' : 'text-white'
+                    )}
+                >
+                    {title}
+                </h2>
+            )}
             {subtitle && (
-                <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                <p
+                    className={cn(
+                        'mt-2 text-3xl font-bold tracking-tight sm:text-4xl',
+                        variant === 'black' ? 'text-gray-900' : 'text-white'
+                    )}
+                >
                     {subtitle}
                 </p>
             )}
-            {description && <p className="mt-6 text-lg leading-8 text-gray-600">{description}</p>}
+            {description && (
+                <p
+                    className={cn(
+                        'mt-6 text-lg leading-8',
+                        variant === 'black' ? 'text-gray-600' : 'text-white'
+                    )}
+                >
+                    {description}
+                </p>
+            )}
         </div>
     );
 };

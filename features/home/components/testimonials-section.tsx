@@ -33,7 +33,7 @@ const testimonials = [
 
 export default function TestimonialsSection() {
     return (
-        <div className="bg-white py-24 sm:py-32">
+        <div className="py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl text-center">
                     <SectionTitle
@@ -73,9 +73,7 @@ export default function TestimonialsSection() {
                 </div>
                 <div className="mt-16 flex justify-center">
                     <Link href={ROUTES.faqTestimonials}>
-                        <Button className="bg-[#CE6439] hover:bg-[#CE6439]/90">
-                            Read More Testimonials
-                        </Button>
+                        <Button variant="secondary">Read More Testimonials</Button>
                     </Link>
                 </div>
             </div>

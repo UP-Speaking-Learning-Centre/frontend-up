@@ -42,7 +42,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             <div className='grid min-h-screen max-w-[100vw] [grid-template-areas:"sidebar_header""sidebar_main"] [grid-template-columns:240px_auto] [grid-template-rows:60px_auto]'>
                 <Sidebar />
                 <Header />
-                <div className="[grid-area:main] p-4 w-full overflow-x-scroll">{children}</div>
+                <div className="[grid-area:main] p-4 w-full overflow-x-scroll max-w-[1724px] mx-auto">
+                    {children}
+                </div>
             </div>
         </>
     );

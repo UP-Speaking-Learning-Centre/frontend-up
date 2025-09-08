@@ -10,12 +10,12 @@ import Summary from './summary';
 const ProgramSelectionComponent = () => {
     return (
         <div>
-            <ChooseSchedule />
-            <Summary />
-            {/* <ChoosePrograms />
+            <ChoosePrograms />
             <ChooseGroup />
             <GroupInformation />
-            <ChooseLevel /> */}
+            <ChooseLevel />
+            <ChooseSchedule />
+            <Summary />
         </div>
     );
 };

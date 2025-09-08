@@ -29,10 +29,8 @@ const dummyData = [
 ];
 
 const fetchGroups = async (programId: string): Promise<GroupType[]> => {
-    // const res = await api.get<GroupType[]>(ENDPOINTS.fetchGroups.expand({ programId }));
-    // return res.data
-    console.log(dummyData, programId);
-    return dummyData;
+    const res = await api.get<GroupType[]>(ENDPOINTS.fetchGroups.expand({ programId }));
+    return res.data;
 };
 
 const useFetchGroupsQuery = (): UseQueryResult<GroupType[], Error> => {

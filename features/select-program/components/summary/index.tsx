@@ -7,9 +7,9 @@ import SummaryItem from './summary-item';
 const Summary = () => {
     const { isStepDisplayed } = useProgramSelection();
 
-    // if (!isStepDisplayed(SUMMARY_STEP)) {
-    //     return null;
-    // }
+    if (!isStepDisplayed(SUMMARY_STEP)) {
+        return null;
+    }
 
     return (
         <div id={SUMMARY_STEP} className="py-24">

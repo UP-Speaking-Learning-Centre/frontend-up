@@ -3,9 +3,16 @@ import useFetchAvailableScheduleQuery from '../../queries/use-fetch-available-sc
 import ScheduleSelection from './schedule-selection';
 import { CHOOSE_SCHEDULE_STEP } from '@/constants/program-selections';
 import Title from '../title';
+import useProgramSelection from '../../hooks/use-program-selection';
 
 const ChooseSchedule = () => {
     const { isLoading } = useFetchAvailableScheduleQuery();
+
+    const { isStepDisplayed } = useProgramSelection();
+
+    if (!isStepDisplayed(CHOOSE_SCHEDULE_STEP)) {
+        return null;
+    }
 
     const renderContent = () => {
         if (isLoading) {

@@ -37,16 +37,16 @@ export default function Navbar() {
                     </button>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center gap-12">
-                    <div className="flex gap-x-12">
+                    <div className="flex gap-x-4 items-center">
                         {HEADER_NAVIGATION.map(item => (
                             <Link
                                 key={item.name}
                                 href={item.href}
                                 className={cn(
-                                    `text-sm font-semibold leading-6 whitespace-nowrap`,
+                                    `text-sm font-semibold leading-6 whitespace-nowrap py-2 px-4`,
                                     pathname === item.href
-                                        ? 'text-[#CE6439] underline underline-offset-4'
-                                        : 'text-gray-900 hover:text-[#CE6439]'
+                                        ? 'text-[#CE6439] bg-[#CE6439]/20 rounded-md'
+                                        : 'text-gray-900 hover:text-[#CE6439] hover:bg-[#CE6439]/10 hover:rounded-md'
                                 )}
                             >
                                 {item.name}
