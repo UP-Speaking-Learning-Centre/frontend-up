@@ -11,7 +11,7 @@ const ChooseLevel = () => {
     }
 
     return (
-        <div id={CHOOSE_LEVEL_STEP} className="py-24">
+        <div id={CHOOSE_LEVEL_STEP} className="h-[calc(100vh-64px)] flex flex-col justify-center">
             <Title
                 title="Pilih Level Anda"
                 description="Pilih tingkat yang paling sesuai dengan kemampuan dan pengetahuan Anda saat ini.   "

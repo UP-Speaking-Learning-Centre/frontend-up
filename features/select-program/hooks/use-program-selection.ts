@@ -19,7 +19,7 @@ const useProgramSelection = () => {
     const scrollToStep = (stepId: (typeof PROGRAM_SELECTION_STEPS)[number]) => {
         const currentStepElement = document.getElementById(PROGRAM_SELECTION_STEPS[currentStep]);
         const stepElement = document.getElementById(stepId);
-        var headerOffset = 20;
+        var headerOffset = 60;
 
         setTimeout(() => {
             if (stepElement) {

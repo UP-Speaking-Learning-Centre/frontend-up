@@ -21,6 +21,7 @@ const GroupCards = () => {
             const isGroupSelected = formValue.groupId === item.id;
             return (
                 <Card
+                    className="basis-[calc(25%-18px)]"
                     title={item.name}
                     description={`Group tersedia`}
                     key={item.name}
@@ -38,11 +39,7 @@ const GroupCards = () => {
         });
     };
 
-    return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-            {renderContent()}
-        </div>
-    );
+    return <div className="flex gap-4 justify-center flex-wrap mt-8">{renderContent()}</div>;
 };
 
 export default GroupCards;

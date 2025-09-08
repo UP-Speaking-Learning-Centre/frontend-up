@@ -12,7 +12,7 @@ const ChoosePrograms = () => {
     }
 
     return (
-        <div id={CHOOSE_PROGRAM_STEP} className="py-24">
+        <div id={CHOOSE_PROGRAM_STEP} className="py-32">
             <Title
                 title="Pilih Program Anda"
                 description="Choose the program category that matches your educational needs."

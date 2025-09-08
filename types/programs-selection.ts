@@ -21,6 +21,30 @@ export type LevelType = {
     prerequisites: string | null;
 };
 
+export type GradeType = {
+    id: number;
+    gradeNumber: number;
+    prerequisites: string;
+    taughtBy: [
+        {
+            id: number;
+            name: string;
+        }
+    ];
+};
+
+export type PackageType = {
+    id: number;
+    name: string;
+    description: string;
+    points: string;
+};
+
+export type LocationType = {
+    locationId: number;
+    locationName: string;
+};
+
 export type AvailableScheduleType = {
     scheduleId: number;
     dayOfWeek: string;

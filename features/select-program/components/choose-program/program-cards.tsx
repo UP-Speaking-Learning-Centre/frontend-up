@@ -14,7 +14,6 @@ const ProgramCards = () => {
             return [...new Array(3)].map((_, i) => <Skeleton key={i} className="h-80 basis-1/3" />);
         }
 
-        console.log(formValue);
         return programs?.map(item => {
             const isProgramSelected = formValue.programId === item.id;
             return (
@@ -37,7 +36,11 @@ const ProgramCards = () => {
         });
     };
 
-    return <div className="flex items-center justify-center gap-4 mt-8">{renderContent()}</div>;
+    return (
+        <div className="flex items-center flex-col md:flex-row justify-center gap-4 mt-8">
+            {renderContent()}
+        </div>
+    );
 };
 
 export default ProgramCards;

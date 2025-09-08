@@ -1,25 +1,32 @@
 import Image from 'next/image';
 import { MapPin } from 'lucide-react';
 import SectionTitle from '@/components/section-title';
+import Link from 'next/link';
 
 const locations = [
     {
-        city: 'Jakarta',
-        address: 'Jl. Sudirman No. 123, Jakarta Selatan',
+        city: 'Kuningan 1',
+        address:
+            'Jl. Aruji Kartawinata Dalam No.19 , Kuningan, Kec. Kuningan, Kabupaten Kuningan, Jawa Barat',
         image: '/placeholder.svg?height=300&width=400',
-        phone: '+62 21 1234 5678',
+        phone: '+62 813-1670-1747',
+        mapUrl: 'https://maps.app.goo.gl/X1T1FTcSiazf5f1U9',
     },
     {
-        city: 'Bandung',
-        address: 'Jl. Asia Afrika No. 456, Bandung',
+        city: 'Kuningan 2 (Soon)',
+        address:
+            'Jl. Aruji Kartawinata No.X, Kuningan, Kec. Kuningan, Kabupaten Kuningan, Jawa Barat 45511',
         image: '/placeholder.svg?height=300&width=400',
-        phone: '+62 22 9876 5432',
+        phone: '+62 813-1670-1747',
+        mapUrl: 'https://maps.app.goo.gl/fWfGkcu7tPYM4vLj6',
     },
     {
-        city: 'Surabaya',
-        address: 'Jl. Pemuda No. 789, Surabaya',
+        city: 'Luragung',
+        address:
+            'Jl. Raya Luragung - Kuningan, Sindangsuka, Kec. Luragung, Kabupaten Kuningan, Jawa Barat 45581 (sebrang Kolam Renang Tirta Agung Mas)',
         image: '/placeholder.svg?height=300&width=400',
-        phone: '+62 31 8765 4321',
+        phone: '+62 813-1670-1747',
+        mapUrl: 'https://maps.app.goo.gl/c9Av9zLYduEzu3P6A',
     },
 ];
 
@@ -31,7 +38,7 @@ export default function LocationsSection() {
                     <SectionTitle
                         title="Our Locations"
                         subtitle="Find Us Everywhere"
-                        description="Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla."
+                        description="Gak perlu jauh-jauh! UP! sudah hadir di beberapa titik strategis biar lebih dekat sama Moms Dad & anak. Tinggal pilih lokasi terdekat dan mulai perjalanan upgrade bahasa Inggrissekarang."
                     />
                 </div>
                 <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -65,6 +72,13 @@ export default function LocationsSection() {
                                         </p>
                                     </div>
                                 </div>
+                                <Link
+                                    className="mt-4 text-sm underline text-primary"
+                                    href={location.mapUrl}
+                                    target="_blank"
+                                >
+                                    Open in google map
+                                </Link>
                             </div>
                         </div>
                     ))}

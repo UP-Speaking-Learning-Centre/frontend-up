@@ -42,3 +42,5 @@ export const END_TIME = [
     '18:15:00',
     '20:30:00',
 ] as const;
+
+export const GROUP_WITH_PLACEMENT_TEST = [2, 3, 4];

@@ -24,12 +24,12 @@ const Card = ({
         <div
             onClick={buttonAction}
             className={cn(
-                'flex flex-col w-full overflow-hidden rounded-lg border-2 border-[#E2E8F0] hover:translate-y-[-5px] transition-all shadow-md hover:shadow-xl hover:border-[#CE6439]',
+                'flex flex-col w-full cursor-pointer overflow-hidden rounded-lg border-2 border-[#E2E8F0] hover:translate-y-[-5px] transition-all shadow-md hover:shadow-xl hover:border-[#CE6439]',
                 selected && 'border-[#CE6439] border-[3px]',
                 className
             )}
         >
-            <div className="relative h-48">
+            <div className="relative h-32">
                 <Image
                     src={imageUrl || '/placeholder.svg'}
                     alt={title}

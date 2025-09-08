@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import DashboardLayout from '@/features/dashboard/components/dashboard-layout';
 
 export const metadata: Metadata = {
-    title: 'UP - Education For Everyone',
+    title: 'UP Speaking Learning Centre',
     description: 'Unlock your potential with our educational programs',
 };
 

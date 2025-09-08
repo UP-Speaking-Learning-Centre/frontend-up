@@ -9,14 +9,17 @@ const WithPlacementTest = ({ display }: { display: boolean }) => {
 
     return (
         <>
-            <Card
-                title="Belum tau levelmu?"
-                description="Cari tahu levelmu dengan Placement Test!"
-                imageUrl="/school-program.svg"
-                buttonLabel="Pilih"
-                buttonAction={() => setOpenDialogPlacement(true)}
-                selected={false}
-            />
+            {display && (
+                <Card
+                    className="basis-[calc(25%-18px)]"
+                    title="Belum tau levelmu?"
+                    description="Cari tahu levelmu dengan Placement Test!"
+                    imageUrl="/school-program.svg"
+                    buttonLabel="Pilih"
+                    buttonAction={() => setOpenDialogPlacement(true)}
+                    selected={false}
+                />
+            )}
 
             <Dialog open={openDialogPlacement} onOpenChange={setOpenDialogPlacement}>
                 <DialogContent className="w-11/12" onInteractOutside={e => e.preventDefault()}>

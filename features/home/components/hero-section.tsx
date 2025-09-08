@@ -14,18 +14,24 @@ export default function HeroSection() {
                         backgroundPosition: 'center',
                     }}
                 />
-                <div className="absolute inset-0 w-full h-full bg-black/50"></div>
+                <div className="absolute inset-0 w-full h-full bg-black/70"></div>
             </div>
             <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40 relative z-10">
-                <div className="mx-auto max-w-2xl">
+                <div className="mx-auto">
                     <div className="text-center">
-                        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-                            LOREM IPSUM DOLOR SIT AMET
-                        </h1>
-                        <p className="mt-6 text-lg leading-8 text-gray-300">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud
+                        <div className="max-w-4xl mx-auto">
+                            <h1 className="text-[4rem] font-bold font-bebasNeue tracking-wider text-white sm:text-6xl">
+                                Up Your <span className="text-[#CE6439]">Words</span>, Up Your{' '}
+                                <span className="text-[#CE6439]">World!</span>
+                            </h1>
+                            <div className="text-2xl mt-2 font-semibold font-bebasNeue tracking-wide text-white">
+                                Mulai langkah kecil, buka peluang besar lewat bahasa Inggris
+                            </div>
+                        </div>
+                        <p className="mt-12 text-lg max-w-2xl mx-auto leading-8 text-gray-300">
+                            Di UP! anak gak cuma belajar bahasa, tapi juga naik level percaya diri.
+                            Dengan metode seru dan lingkungan supportive, English jadi bagian dari
+                            keseharian mereka.
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
                             <Link href="/programs">

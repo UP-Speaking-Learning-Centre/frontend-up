@@ -3,14 +3,17 @@ import useFetchAvailableScheduleQuery from '../../queries/use-fetch-available-sc
 import moment from 'moment';
 import { DAY, END_TIME, START_TIME } from '@/constants/program-selections';
 import 'moment/locale/id';
-import { Calendar, Clock } from 'lucide-react';
+import { Calendar, Clock, MapPinHouse, PinIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import useProgramSelectionStore from '../../stores/program-selection-store';
 import { DayOfWeekType } from '@/types/programs-selection';
 import { renderDayToIndonesian } from '@/lib/moment';
+import useFetchLocationsQuery from '../../queries/use-fetch-locations';
 
 const ScheduleSelection = () => {
     const { data } = useFetchAvailableScheduleQuery();
+    const { data: locations } = useFetchLocationsQuery();
+    const setFormValue = useProgramSelectionStore(s => s.setFormValue);
     const setFirstSessionSchedule = useProgramSelectionStore(s => s.setFirstSessionSchedule);
     const setSecondSessionSchedule = useProgramSelectionStore(s => s.setSecondSessionSchedule);
     const formValue = useProgramSelectionStore(s => s.formValue);
@@ -27,9 +30,39 @@ const ScheduleSelection = () => {
         );
     }, [availableScheduleByTeacher, secondSession.dayOfWeek]);
 
-    console.log(availableScheduleByTeacher);
-
+    const renderLocation = () => {
+        return (
+            <div className="mx-auto">
+                <p className="text-center text-[#020817] font-medium">Pilih Cabang</p>
+                <div className="grid grid-cols-3 mx-auto gap-4 mt-3">
+                    {locations?.map((item, i) => {
+                        return (
+                            <div
+                                key={i}
+                                onClick={() =>
+                                    setFormValue({
+                                        locationName: item.locationName,
+                                        locationId: item.locationId,
+                                    })
+                                }
+                                className={cn(
+                                    'flex items-center cursor-pointer justify-center col-span-1 bg-[#FFFFFF] border-2 border-[#E2E8F0] p-4 rounded-lg gap-4',
+                                    'hover:border-[#CE6439]',
+                                    locationName === item.locationName && 'border-[#CE6439]'
+                                )}
+                            >
+                                <MapPinHouse className="size-4 text-[#4B5563]" />
+                                <p className="text-sm">Cabang {item.locationName}</p>
+                            </div>
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    };
     const renderDays = () => {
+        if (!locationName) return null;
+
         return (
             <div className="mx-auto">
                 <p className="text-center text-[#020817] font-medium">Pilih Hari</p>
@@ -60,6 +93,8 @@ const ScheduleSelection = () => {
     };
 
     const renderTime = () => {
+        if (!firstSession.dayOfWeek) return null;
+
         return (
             <div className="mx-auto">
                 <p className="text-center text-[#020817] font-medium">Pilih Waktu</p>
@@ -95,7 +130,6 @@ const ScheduleSelection = () => {
         );
     };
 
-    console.log(availableScheduleByTeacherSecondSession);
     const renderMentor = () => {
         if (!firstSession.dayOfWeek || !firstSession.startTime || !firstSession.endTime) {
             return null;
@@ -254,6 +288,7 @@ const ScheduleSelection = () => {
 
     return (
         <div className="mt-10 flex flex-col gap-20">
+            {renderLocation()}
             {renderDays()}
             {renderTime()}
             {renderMentor()}

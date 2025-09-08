@@ -1,57 +1,59 @@
+import SectionTitle from '@/components/section-title';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import Link from 'next/link';
 
 export default function ContactSection() {
     return (
         <div className="bg-white py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <div className="mx-auto max-w-2xl text-center">
-                    <h2 className="text-base font-semibold leading-7 text-[#CE6439]">Contact Us</h2>
-                    <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                        Get in Touch
-                    </p>
-                    <p className="mt-6 text-lg leading-8 text-gray-600">
-                        Have questions about our programs? Ready to start your educational journey?
-                        Contact us today and our team will be happy to assist you.
-                    </p>
-                </div>
+                <SectionTitle
+                    title="Contact Us"
+                    subtitle="Get in Touch"
+                    description="Ada pertanyaan seputar program atau mau langsung daftar? Jangan ragu buat hubungi kami — tim UP! siap bantu kamu dengan senang hati."
+                />
 
-                <div className="mx-auto mt-16 grid max-w-4xl grid-cols-1 gap-8 sm:mt-20">
+                <div className="mx-auto mt-16 grid max-w-xl grid-cols-1 gap-8 sm:mt-20">
                     <div className="rounded-2xl bg-gray-50 p-8">
                         <h3 className="text-xl font-semibold text-gray-900">Contact Information</h3>
                         <p className="mt-4 text-base text-gray-500">
-                            Feel free to reach out to us through any of these channels. We're here
-                            to help you with any questions or concerns.
+                            Feel free to reach out via email, phone, atau langsung datang ke lokasi
+                            kami.
                         </p>
 
-                        <dl className="mt-8 space-y-6">
-                            <div className="flex">
+                        <dl className="mt-8 max-w-xl space-y-6">
+                            <div className="flex items-center">
                                 <dt className="flex-shrink-0">
                                     <Mail className="h-6 w-6 text-[#CE6439]" />
                                 </dt>
                                 <dd className="ml-3 text-base text-gray-500">
-                                    <p>info@upeducation.com</p>
-                                    <p className="mt-1">We'll respond within 24 hours</p>
+                                    <p className="font-semibold">
+                                        upspeakinglearningcentre@gmail.com
+                                    </p>
+                                    <p className="mt-1">Kami usahakan balas dalam waktu 24 jam.</p>
                                 </dd>
                             </div>
-                            <div className="flex">
+                            <div className="flex items-center">
                                 <dt className="flex-shrink-0">
                                     <Phone className="h-6 w-6 text-[#CE6439]" />
                                 </dt>
                                 <dd className="ml-3 text-base text-gray-500">
-                                    <p>+62 123 4567 890</p>
-                                    <p className="mt-1">Mon-Fri 8AM-5PM</p>
+                                    <p className="font-semibold">+62 813-1670-1747</p>
+                                    <p className="mt-1">Mon–Sat, 08.00–18.30</p>
                                 </dd>
                             </div>
-                            <div className="flex">
+                            <div className="flex items-center">
                                 <dt className="flex-shrink-0">
                                     <MapPin className="h-6 w-6 text-[#CE6439]" />
                                 </dt>
                                 <dd className="ml-3 text-base text-gray-500">
-                                    <p>Jl. Education No. 123</p>
-                                    <p>Jakarta, Indonesia</p>
+                                    <p className="font-semibold">
+                                        Cabang Kuningan 1, Jl. Aruji Kartawinata Dalam No.19 ,
+                                        Kuningan, Kec. Kuningan, Kabupaten Kuningan, Jawa Barat
+                                    </p>
+                                    <p>Kuningan, Jawa Barat</p>
                                 </dd>
                             </div>
                         </dl>
@@ -59,7 +61,13 @@ export default function ContactSection() {
                         <div className="mt-8">
                             <h3 className="text-base font-semibold text-gray-900">Follow Us</h3>
                             <div className="mt-4 flex space-x-6">
-                                <a href="#" className="text-gray-400 hover:text-gray-500">
+                                <Link
+                                    href={
+                                        'https://www.tiktok.com/@up.speakingcourse?_t=ZS-8zYTOCFOQlQ&_r=1'
+                                    }
+                                    target="_blank"
+                                    className="text-gray-400 hover:text-gray-500"
+                                >
                                     <span className="sr-only">Facebook</span>
                                     <svg
                                         className="h-6 w-6"
@@ -73,8 +81,12 @@ export default function ContactSection() {
                                             clipRule="evenodd"
                                         />
                                     </svg>
-                                </a>
-                                <a href="#" className="text-gray-400 hover:text-gray-500">
+                                </Link>
+                                <Link
+                                    href={'https://www.instagram.com/up.speakingcourse/#'}
+                                    target="_blank"
+                                    className="text-gray-400 hover:text-gray-500"
+                                >
                                     <span className="sr-only">Instagram</span>
                                     <svg
                                         className="h-6 w-6"
@@ -88,18 +100,7 @@ export default function ContactSection() {
                                             clipRule="evenodd"
                                         />
                                     </svg>
-                                </a>
-                                <a href="#" className="text-gray-400 hover:text-gray-500">
-                                    <span className="sr-only">Twitter</span>
-                                    <svg
-                                        className="h-6 w-6"
-                                        fill="currentColor"
-                                        viewBox="0 0 24 24"
-                                        aria-hidden="true"
-                                    >
-                                        <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
-                                    </svg>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

@@ -36,7 +36,7 @@ const SectionTitle = ({
             {description && (
                 <p
                     className={cn(
-                        'mt-6 text-lg leading-8',
+                        'mt-1 text-lg leading-8',
                         variant === 'black' ? 'text-gray-600' : 'text-white'
                     )}
                 >
