@@ -1,5 +1,10 @@
 import { PLACEMENT_TEST_STATUS } from '@/constants/placement-test';
-import { PlacementTestStatus, Question } from '@/types/placement-test';
+import {
+    PlacementTestStatus,
+    Question,
+    ResponsePlacementTestStudent,
+    ResponsePlacementTestTest,
+} from '@/types/placement-test';
 import { create } from 'zustand';
 
 const initialState = {
@@ -9,6 +14,9 @@ const initialState = {
     correctAnswers: 0,
     questions: [],
     status: PLACEMENT_TEST_STATUS.doneInterview,
+    student: undefined,
+    test: undefined,
+    testDate:"",
 };
 
 interface DisplayedPlacementTestStore {
@@ -18,6 +26,9 @@ interface DisplayedPlacementTestStore {
     correctAnswers: number;
     questions: Question[];
     status: PlacementTestStatus;
+    student?: ResponsePlacementTestStudent;
+    test?: ResponsePlacementTestTest;
+    testDate:string
     setState: (state: Partial<DisplayedPlacementTestStore>) => void;
 }
 

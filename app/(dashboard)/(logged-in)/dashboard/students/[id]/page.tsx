@@ -1,13 +1,6 @@
 'use client';
 
-import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
-import PlacementTestPending from '@/features/home/components/placement-test-pending';
-import PlacementTestSuccess from '@/features/home/components/placement-test-success';
-import useGetProfile from '@/features/home/queries/useGetProfile';
-import useGetProfileById from '@/features/home/queries/useGetProfileById';
-import { isPlacementTest } from '@/utils/api.helper';
 import {
     Select,
     SelectContent,
@@ -15,10 +8,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { ROUTES } from '@/constants/routes';
+import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
+import PlacementTestPending from '@/features/home/components/placement-test-pending';
+import PlacementTestSuccess from '@/features/home/components/placement-test-success';
+import useGetProfile from '@/features/home/queries/useGetProfile';
+import useGetProfileById from '@/features/home/queries/useGetProfileById';
+import { isPlacementTest } from '@/utils/api.helper';
 import { BookOpen, Calendar, Home, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { Label } from 'recharts';
-import { ROUTES } from '@/constants/routes';
 
 export default function DashboardPage() {
     const { data: students, isLoading: isLoadingStudents } = useGetProfile();
@@ -66,26 +64,8 @@ export default function DashboardPage() {
                         {isPlacementTest(data?.testResults ?? [], 'success') && (
                             <PlacementTestSuccess />
                         )}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <Card>
-                                <CardContent className="p-6">
-                                    <div className="flex items-center">
-                                        <div className="p-2 bg-blue-100 rounded-lg">
-                                            <User className="w-6 h-6 text-blue-600" />
-                                        </div>
-                                        <div className="ml-4">
-                                            <p className="text-sm font-medium text-gray-600">
-                                                Student Name
-                                            </p>
-                                            <p className="text-lg font-semibold text-gray-900">
-                                                {data?.name}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <Card className="col-span-2">
                                 <CardContent className="p-6">
                                     <div className="flex items-center">
                                         <div className="p-2 bg-green-100 rounded-lg">
@@ -120,89 +100,38 @@ export default function DashboardPage() {
                                     </div>
                                 </CardContent>
                             </Card>
-                        </div>
 
-                        {/* Student Details */}
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <Card>
-                                <CardHeader>
-                                    <CardTitle className="flex items-center">
-                                        <User className="w-5 h-5 mr-2" />
-                                        Personal Information
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent className="space-y-4">
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <Label className="text-sm font-medium text-gray-600">
-                                                Full Name
-                                            </Label>
-                                            <p className="font-semibold text-gray-900">
-                                                {data?.name}
+                                <CardContent className="p-6">
+                                    <div className="flex items-center">
+                                        <div className="p-2 bg-green-100 rounded-lg">
+                                            <User className="w-6 h-6 text-blue-600" />
+                                        </div>
+                                        <div className="ml-4">
+                                            <p className="text-sm font-medium text-gray-600">
+                                                Package
                                             </p>
-                                        </div>
-                                        <div>
-                                            <Label className="text-sm font-medium text-gray-600">
-                                                Age
-                                            </Label>
-                                            {/* <p className="font-semibold text-gray-900">
-                                            {data?.age} years old
-                                        </p> */}
-                                        </div>
-                                        <div>
-                                            <Label className="text-sm font-medium text-gray-600">
-                                                Program
-                                            </Label>
-                                            <p className="font-semibold text-gray-900">
-                                                {data?.programName}
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <Label className="text-sm font-medium text-gray-600">
-                                                Level
-                                            </Label>
-                                            <Badge variant="secondary">{data?.levelName}</Badge>
-                                        </div>
-                                        <div className="col-span-2">
-                                            <Label className="text-sm font-medium text-gray-600">
-                                                Status
-                                            </Label>
-                                            <div className="mt-1">
-                                                <Badge
-                                                    variant={
-                                                        isPlacementTest(
-                                                            data?.testResults ?? [],
-                                                            'active'
-                                                        )
-                                                            ? 'default'
-                                                            : 'secondary'
-                                                    }
-                                                >
-                                                    {isPlacementTest(
-                                                        data?.testResults ?? [],
-                                                        'active'
-                                                    )
-                                                        ? 'Active'
-                                                        : 'Inactive'}
-                                                </Badge>
-                                            </div>
+                                            <p className="text-lg font-semibold text-gray-900">-</p>
                                         </div>
                                     </div>
                                 </CardContent>
                             </Card>
+                        </div>
 
+                        {/* Student Details */}
+                        <div className="">
                             {/* Schedule Information */}
-                            {(data?.schedules.length ?? 0) > 0 &&
-                                data?.schedules.map(schedule => (
-                                    <Card>
-                                        <CardHeader>
-                                            <CardTitle className="flex items-center">
-                                                <Calendar className="w-5 h-5 mr-2" />
-                                                Class Schedule
-                                            </CardTitle>
-                                        </CardHeader>
-                                        <CardContent className="space-y-4">
-                                            <div className="grid grid-cols-1 gap-4">
+                            <Card>
+                                <CardHeader className="border-b">
+                                    <CardTitle className="flex items-center">
+                                        <Calendar className="w-5 h-5 mr-2 text-orange-500" />
+                                        Class Schedule
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="grid grid-cols-2 p-4 gap-6">
+                                    {(data?.schedules.length ?? 0) > 0 &&
+                                        data?.schedules.map(schedule => (
+                                            <div className="grid grid-cols-1 gap-4 p-4 border border-green-200 rounded-lg">
                                                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                                                     <div className="flex items-center">
                                                         <Calendar className="w-4 h-4 text-gray-500 mr-2" />
@@ -248,13 +177,13 @@ export default function DashboardPage() {
                                                     </span>
                                                 </div>
                                             </div>
-                                        </CardContent>
-                                    </Card>
-                                ))}
+                                        ))}
+                                </CardContent>
+                            </Card>
                         </div>
 
                         {/* Progress Section */}
-                        <Card>
+                        {/* <Card>
                             <CardHeader>
                                 <CardTitle className="flex items-center">
                                     <BookOpen className="w-5 h-5 mr-2" />
@@ -293,7 +222,7 @@ export default function DashboardPage() {
                                     </div>
                                 </div>
                             </CardContent>
-                        </Card>
+                        </Card> */}
                     </>
                 )}
             </div>

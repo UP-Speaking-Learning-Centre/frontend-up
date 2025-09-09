@@ -53,7 +53,7 @@ const ListStudent = () => {
                                     ) : (
                                         <Badge variant="secondary">Tidak Aktif</Badge>
                                     )}
-                                    <Link href={`/dashboard/student/${student.id}`}>
+                                    <Link href={`/dashboard/students/${student.id}`}>
                                         <Button variant="outline" size="sm">
                                             View Details
                                         </Button>

@@ -15,11 +15,11 @@ const useGetProfileById = () => {
         return baseService(async () => {
             if (process.env.NODE_ENV === DEVELOPMENT)
                 return {
-                    id: 39,
-                    name: 'Siswa Dengan Jadwal 2',
-                    programName: 'School Program',
-                    groupName: 'Senior High School',
-                    levelName: 'Rookie',
+                    id: 46,
+                    name: 'radit 21.22',
+                    programName: 'Not determined',
+                        groupName: 'Not determined',
+                        levelName: 'Not determined',
                     gradeNumber: 2,
                     schedules: [
                         {

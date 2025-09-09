@@ -34,6 +34,8 @@ const QuestionNavigation = () => {
                         const isCorrect = question.isCorrect || false;
                         const isCurrent = index === currentQuestionIndex;
 
+                        console.log(isGraded)
+
                         return (
                             <Button
                                 key={index}
