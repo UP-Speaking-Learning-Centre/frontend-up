@@ -14,6 +14,10 @@ const LandingLayout = ({ children }: { children: React.ReactNode }) => {
         }, 2000);
     }, []);
 
+    useEffect(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, []);
+
     return (
         <>
             {isOverlayVisible && <Overlay />}

@@ -38,6 +38,13 @@ export type PackageType = {
     name: string;
     description: string;
     points: string;
+    prices: {
+        program: number;
+        price: {
+            price: number;
+            duration: number;
+        }[];
+    }[];
 };
 
 export type LocationType = {

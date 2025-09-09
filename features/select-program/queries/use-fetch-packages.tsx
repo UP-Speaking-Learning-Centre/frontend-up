@@ -13,6 +13,22 @@ const dummy = [
 \nFleksibilitas waktu: Relatif tetap (disesuaikan dengan jadwal kelompok)\nKelas ganti: Bisa sit-in di grup lain pada minggu sama / ikut kelas tambahan
 \nUjian: Shooting 1x/semester
 `,
+        prices: [
+            {
+                program: 1,
+                price: [
+                    { price: 349000, duration: 1 },
+                    { price: 1999000, duration: 6 },
+                ],
+            },
+            {
+                program: 2,
+                price: [
+                    { price: 499000, duration: 1 },
+                    { price: 899000, duration: 2 },
+                ],
+            },
+        ],
     },
     {
         id: 2,
@@ -22,6 +38,22 @@ const dummy = [
 \nFleksibilitas waktu: Relatif tetap (disesuaikan dengan jadwal kelompok)\nKelas ganti: Bisa sit-in di grup lain pada minggu sama / ikut kelas tambahan
 \nUjian: Shooting 1x/semester
 `,
+        prices: [
+            {
+                program: 1,
+                price: [
+                    { price: 799000, duration: 1 },
+                    { price: 4499000, duration: 6 },
+                ],
+            },
+            {
+                program: 2,
+                price: [
+                    { price: 1049000, duration: 1 },
+                    { price: 1899000, duration: 2 },
+                ],
+            },
+        ],
     },
     {
         id: 3,
@@ -31,6 +63,22 @@ const dummy = [
 \nFleksibilitas waktu: Relatif tetap (disesuaikan dengan jadwal kelompok)\nKelas ganti: Bisa sit-in di grup lain pada minggu sama / ikut kelas tambahan
 \nUjian: Shooting 1x/semester
 `,
+        prices: [
+            {
+                program: 1,
+                price: [
+                    { price: 999000, duration: 1 },
+                    { price: 5299000, duration: 6 },
+                ],
+            },
+            {
+                program: 2,
+                price: [
+                    { price: 1499000, duration: 1 },
+                    { price: 2599000, duration: 2 },
+                ],
+            },
+        ],
     },
 ];
 

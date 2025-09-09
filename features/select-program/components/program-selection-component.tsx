@@ -8,6 +8,8 @@ import ChooseSchedule from './choose-schedule';
 import Summary from './summary';
 import ChooseGrade from './choose-grade';
 import ChoosePackage from './choose-package';
+import Price from './price';
+import FormInformation from './form-information';
 
 const ProgramSelectionComponent = () => {
     return (
@@ -18,8 +20,10 @@ const ProgramSelectionComponent = () => {
             <ChooseLevel />
             <ChooseGrade />
             <ChoosePackage />
-            <ChooseSchedule />
-            <Summary />
+            {/* <ChooseSchedule />
+            <Summary /> */}
+            <Price />
+            <FormInformation />
         </div>
     );
 };

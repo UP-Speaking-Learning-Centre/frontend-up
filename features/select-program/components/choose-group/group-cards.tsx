@@ -39,7 +39,11 @@ const GroupCards = () => {
         });
     };
 
-    return <div className="flex gap-4 justify-center flex-wrap mt-8">{renderContent()}</div>;
+    return (
+        <div className="flex flex-col md:flex-row gap-4 justify-center flex-wrap mt-8">
+            {renderContent()}
+        </div>
+    );
 };
 
 export default GroupCards;

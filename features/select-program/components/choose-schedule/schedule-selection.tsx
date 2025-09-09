@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import useFetchAvailableScheduleQuery from '../../queries/use-fetch-available-schedule';
 import moment from 'moment';
-import { DAY, END_TIME, START_TIME } from '@/constants/program-selections';
+import { DAY, END_TIME, GROUP_INFORMATION_STEP, START_TIME } from '@/constants/program-selections';
 import 'moment/locale/id';
 import { Calendar, Clock, MapPinHouse, PinIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -9,6 +9,8 @@ import useProgramSelectionStore from '../../stores/program-selection-store';
 import { DayOfWeekType } from '@/types/programs-selection';
 import { renderDayToIndonesian } from '@/lib/moment';
 import useFetchLocationsQuery from '../../queries/use-fetch-locations';
+import { Button } from '@/components/ui/button';
+import useProgramSelection from '../../hooks/use-program-selection';
 
 const ScheduleSelection = () => {
     const { data } = useFetchAvailableScheduleQuery();
@@ -16,6 +18,7 @@ const ScheduleSelection = () => {
     const setFormValue = useProgramSelectionStore(s => s.setFormValue);
     const setFirstSessionSchedule = useProgramSelectionStore(s => s.setFirstSessionSchedule);
     const setSecondSessionSchedule = useProgramSelectionStore(s => s.setSecondSessionSchedule);
+    const { handleNextStepAction } = useProgramSelection();
     const formValue = useProgramSelectionStore(s => s.formValue);
     const { schedule, locationName } = formValue;
     const { firstSession, secondSession } = schedule;
@@ -282,6 +285,31 @@ const ScheduleSelection = () => {
                         );
                     })}
                 </div>
+            </div>
+        );
+    };
+
+    const renderNextButton = () => {
+        if (
+            !firstSession.dayOfWeek ||
+            !firstSession.startTime ||
+            !firstSession.endTime ||
+            !secondSession.dayOfWeek ||
+            !secondSession.startTime ||
+            !secondSession.endTime
+        ) {
+            return null;
+        }
+
+        return (
+            <div className="mt-6 flex items-center w-full justify-center">
+                <Button
+                    onClick={() =>
+                        handleNextStepAction({ stepId: GROUP_INFORMATION_STEP, formValue: {} })
+                    }
+                >
+                    Lihat Rangkuman Program
+                </Button>
             </div>
         );
     };

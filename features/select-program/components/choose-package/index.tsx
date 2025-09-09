@@ -11,7 +11,10 @@ const ChooseLevel = () => {
     }
 
     return (
-        <div id={CHOOSE_PACKAGE_STEP} className="h-[calc(100vh-64px)] flex flex-col justify-center">
+        <div
+            id={CHOOSE_PACKAGE_STEP}
+            className="min-h-[calc(100vh-64px)] py-24 flex flex-col justify-center"
+        >
             <Title
                 title="Pilih Paket Anda"
                 description="Pilih paket yang paling sesuai dengan kebutuhan Anda. "
