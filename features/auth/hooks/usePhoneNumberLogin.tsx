@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
@@ -25,26 +25,26 @@ const usePhoneNumberLogin = () => {
     const { register, handleSubmit, formState, getValues } = useForm<LoginRequest>({
         resolver: zodResolver(Login),
     });
-    const { mutateAsync } = usePostPhoneNumberVerification();
+    const { mutateAsync, isPending } = usePostPhoneNumberVerification();
     const { handlePostOTP } = useGetOTP();
-    const { setTimeLeft, setStep, setIsNewAccount,setPhone } = useAuthStore();
+    const { setTimeLeft, setStep, setIsNewAccount, setPhone } = useAuthStore();
 
     const handleContinue = (data: LoginRequest) => {
         setIsLoading(true);
-        setPhone(data.phone)
+        setPhone(data.phone);
         mutateAsync(data.phone)
             .then(res => {
                 if (res === ACTIVATION_REQUIRED) {
                     setStep(OTP);
                     setTimeLeft(30);
-                    handlePostOTP(data.phone)
+                    handlePostOTP(data.phone);
                     setIsNewAccount(true);
                     return;
                 }
                 setStep(PASSWORD);
             })
-            .catch(err => toast.error(err?.message, { position: 'top-center' }));
-        setIsLoading(false);
+            .catch(err => toast.error(err?.message, { position: 'top-center' }))
+            .finally(() => setIsLoading(false));
     };
 
     const handleError = (error: any) => {
@@ -57,6 +57,7 @@ const usePhoneNumberLogin = () => {
         formState,
         isLoading,
         getValues,
+        isPending,
     };
 };
 

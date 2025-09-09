@@ -12,7 +12,8 @@ export const ACCESS_TOKEN = 'accessToken';
 // API URLs
 export const API_PHONE_CHECKER = '/auth/check-phone';
 export const API_OTP = '/auth/request-otp';
-export const API_LOGIN = '/auth/activate-account';
+export const API_FIRST_LOGIN = '/auth/activate-account';
+export const API_LOGIN = '/auth/login';
 
 export const API_GET_STUDENT_BY_ID = (id: string) => '/profile/students/' + id;
 export const API_GET_PROFILE = '/profile';

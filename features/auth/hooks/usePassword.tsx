@@ -48,15 +48,15 @@ const usePassword = () => {
             })
                 .then(async res => {
                     toast.info(res, { position: 'top-center' });
-                    await postLogin({ phoneNumber: phone, password: data.password }).then(() =>
-                        router.replace(ROUTES.dashboardListStudents)
-                    );
+                    await postLogin({ phoneNumber: phone, password: data.password })
+                        .then(() => router.replace(ROUTES.dashboardListStudents))
+                        .catch(err => toast.error(err?.message, { position: 'top-center' }));
                 })
                 .catch(err => toast.info(err?.message, { position: 'top-center' }));
         } else {
-            await postLogin({ phoneNumber: phone, password: data.password }).then(() =>
-                router.replace(ROUTES.dashboardListStudents)
-            );
+            await postLogin({ phoneNumber: phone, password: data.password })
+                .then(() => router.replace(ROUTES.dashboardListStudents))
+                .catch(err => toast.error(err?.message, { position: 'top-center' }));
         }
     };
 
