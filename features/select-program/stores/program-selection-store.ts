@@ -47,9 +47,8 @@ export type FormValue = {
     };
     personalInformation: {
         name: string;
-        email: string;
+        instagram: string;
         phone: string;
-        address: string;
     };
 };
 
@@ -88,9 +87,8 @@ const formValue: FormValue = {
     payment: '',
     personalInformation: {
         name: '',
-        email: '',
+        instagram: '',
         phone: '',
-        address: '',
     },
 };
 

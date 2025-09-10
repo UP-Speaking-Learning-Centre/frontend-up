@@ -8,9 +8,9 @@ import { Button } from '@/components/ui/button';
 const Summary = () => {
     const { isStepDisplayed, handleNextStepAction } = useProgramSelection();
 
-    // if (!isStepDisplayed(SUMMARY_STEP)) {
-    //     return null;
-    // }
+    if (!isStepDisplayed(SUMMARY_STEP)) {
+        return null;
+    }
 
     return (
         <div id={SUMMARY_STEP} className="py-24">
@@ -19,13 +19,13 @@ const Summary = () => {
                 description="Silahkan periksa kembali pilihan program Anda."
             />
             <SummaryItem />
-            {/* <div className="mt-6 flex items-center w-full justify-center">
+            <div className="mt-6 flex items-center w-full justify-center">
                 <Button
                     onClick={() => handleNextStepAction({ stepId: SUMMARY_STEP, formValue: {} })}
                 >
                     Berapa perkiraan biaya?
                 </Button>
-            </div> */}
+            </div>
         </div>
     );
 };

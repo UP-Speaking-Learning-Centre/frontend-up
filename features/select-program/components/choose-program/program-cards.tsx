@@ -27,7 +27,7 @@ const ProgramCards = () => {
                     buttonAction={() =>
                         handleNextStepAction({
                             stepId: CHOOSE_PROGRAM_STEP,
-                            formValue: { programId: item.id },
+                            formValue: { programId: item.id, programName: item.name },
                         })
                     }
                     selected={isProgramSelected}

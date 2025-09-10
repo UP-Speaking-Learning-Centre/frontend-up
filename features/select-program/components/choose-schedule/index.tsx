@@ -10,9 +10,9 @@ const ChooseSchedule = () => {
 
     const { isStepDisplayed } = useProgramSelection();
 
-    // if (!isStepDisplayed(CHOOSE_SCHEDULE_STEP)) {
-    //     return null;
-    // }
+    if (!isStepDisplayed(CHOOSE_SCHEDULE_STEP)) {
+        return null;
+    }
 
     const renderContent = () => {
         // if (isLoading) {

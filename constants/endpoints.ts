@@ -9,6 +9,7 @@ const ENDPOINTS = {
     fetchLocations: '/locations',
     fetchAvailableSchedule: parseTemplate('/locations/{locationId}/available-schedules'),
     fetchDetailPlacementTest: parseTemplate('/placement-tests/{id}'),
+    submitRegistration: '/registrations',
 } as const;
 
 export default ENDPOINTS;

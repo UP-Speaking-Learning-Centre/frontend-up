@@ -20,8 +20,8 @@ const ProgramSelectionComponent = () => {
             <ChooseLevel />
             <ChooseGrade />
             <ChoosePackage />
-            {/* <ChooseSchedule />
-            <Summary /> */}
+            <ChooseSchedule />
+            <Summary />
             <Price />
             <FormInformation />
         </div>

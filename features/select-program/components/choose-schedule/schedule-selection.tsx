@@ -1,7 +1,13 @@
 import React, { useMemo } from 'react';
 import useFetchAvailableScheduleQuery from '../../queries/use-fetch-available-schedule';
 import moment from 'moment';
-import { DAY, END_TIME, GROUP_INFORMATION_STEP, START_TIME } from '@/constants/program-selections';
+import {
+    CHOOSE_SCHEDULE_STEP,
+    DAY,
+    END_TIME,
+    GROUP_INFORMATION_STEP,
+    START_TIME,
+} from '@/constants/program-selections';
 import 'moment/locale/id';
 import { Calendar, Clock, MapPinHouse, PinIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -106,12 +112,23 @@ const ScheduleSelection = () => {
                         return (
                             <div
                                 key={i}
-                                onClick={() =>
+                                onClick={() => {
                                     setFirstSessionSchedule({
                                         startTime: time,
                                         endTime: END_TIME[i],
-                                    })
-                                }
+                                        teacherMemberId: -1,
+                                        teacherScheduleId: -1,
+                                        teacherMemberName: '',
+                                    });
+                                    setSecondSessionSchedule({
+                                        startTime: '',
+                                        endTime: '',
+                                        dayOfWeek: '',
+                                        teacherMemberId: -1,
+                                        teacherScheduleId: -1,
+                                        teacherMemberName: '',
+                                    });
+                                }}
                                 className={cn(
                                     'flex items-center cursor-pointer justify-center col-span-1 bg-[#FFFFFF] border-2 border-[#E2E8F0] p-4 rounded-lg gap-4',
                                     'hover:border-[#CE6439]',
@@ -133,6 +150,7 @@ const ScheduleSelection = () => {
         );
     };
 
+    console.log(firstSession);
     const renderMentor = () => {
         if (!firstSession.dayOfWeek || !firstSession.startTime || !firstSession.endTime) {
             return null;
@@ -159,8 +177,8 @@ const ScheduleSelection = () => {
                         ?.filter(
                             item =>
                                 item.dayOfWeek === firstSession.dayOfWeek &&
-                                item.startTime === firstSession.startTime &&
-                                formValue.taughtBy.includes(item.alias)
+                                item.startTime === firstSession.startTime
+                            // formValue.taughtBy.includes(item.alias)
                         )
                         .map((item, i) => {
                             return (
@@ -175,7 +193,6 @@ const ScheduleSelection = () => {
                                         setSecondSessionSchedule({
                                             teacherMemberId: item.teacherMemberId,
                                             teacherMemberName: item.teacherMemberName,
-                                            teacherScheduleId: item.scheduleId,
                                         });
                                     }}
                                     className={cn(
@@ -254,9 +271,10 @@ const ScheduleSelection = () => {
                 <p className="text-center text-[#020817] font-medium">Pilih Waktu</p>
                 <div className="grid grid-cols-3 mx-auto gap-4 mt-3">
                     {START_TIME.map((time, i) => {
-                        const isDisabled = !availableScheduleByTeacherSecondSession?.find(
+                        const currentSchedule = availableScheduleByTeacherSecondSession?.find(
                             item => item.startTime === time
                         );
+                        const isDisabled = !currentSchedule;
 
                         return (
                             <div
@@ -266,6 +284,7 @@ const ScheduleSelection = () => {
                                     setSecondSessionSchedule({
                                         startTime: time,
                                         endTime: END_TIME[i],
+                                        teacherScheduleId: currentSchedule?.scheduleId,
                                     })
                                 }
                                 className={cn(
@@ -305,7 +324,7 @@ const ScheduleSelection = () => {
             <div className="mt-6 flex items-center w-full justify-center">
                 <Button
                     onClick={() =>
-                        handleNextStepAction({ stepId: GROUP_INFORMATION_STEP, formValue: {} })
+                        handleNextStepAction({ stepId: CHOOSE_SCHEDULE_STEP, formValue: {} })
                     }
                 >
                     Lihat Rangkuman Program
@@ -323,6 +342,7 @@ const ScheduleSelection = () => {
             {renderSecondSessionTitle()}
             {renderSecondDay()}
             {renderSecondTime()}
+            {renderNextButton()}
         </div>
     );
 };
