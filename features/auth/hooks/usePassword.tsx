@@ -13,7 +13,7 @@ import { ROUTES } from '@/constants/routes';
 
 const usePassword = () => {
     const router = useRouter();
-    const { isNewAccount, phone, otpForTesting } = useAuthStore();
+    const { isNewAccount, phone, otpForTesting, setRole } = useAuthStore();
 
     const [isLoading, setIsloading] = useState(false);
 
@@ -39,6 +39,15 @@ const usePassword = () => {
     });
     const { mutateAsync } = usePostFirstLogin();
 
+    const login = async (password: string) => {
+        await postLogin({ phoneNumber: phone, password: password })
+            .then(res => {
+                router.replace(ROUTES.dashboardListStudents);
+                setRole(res.role);
+            })
+            .catch(err => toast.error(err?.message, { position: 'top-center' }));
+    };
+
     const handleSuccess = async (data: PasswordForm) => {
         if (isNewAccount) {
             mutateAsync({
@@ -48,16 +57,10 @@ const usePassword = () => {
             })
                 .then(async res => {
                     toast.info(res, { position: 'top-center' });
-                    await postLogin({ phoneNumber: phone, password: data.password })
-                        .then(() => router.replace(ROUTES.dashboardListStudents))
-                        .catch(err => toast.error(err?.message, { position: 'top-center' }));
+                    await login(data.password);
                 })
                 .catch(err => toast.info(err?.message, { position: 'top-center' }));
-        } else {
-            await postLogin({ phoneNumber: phone, password: data.password })
-                .then(() => router.replace(ROUTES.dashboardListStudents))
-                .catch(err => toast.error(err?.message, { position: 'top-center' }));
-        }
+        } else await login(data.password);
     };
 
     const handleError: SubmitErrorHandler<PasswordForm> = error => {

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
-import { ACTIVATION_REQUIRED, OTP, PASSWORD } from '../constants/config';
+import { ACTIVATION_REQUIRED, NOT_REGISTERED, OTP, PASSWORD } from '../constants/config';
 import { LoginRequest } from '../constants/interface';
 import useGetOTP from '../queries/useGetOTP';
 import usePostPhoneNumberVerification from '../queries/usePostPhoneNumberVerification';
@@ -39,6 +39,10 @@ const usePhoneNumberLogin = () => {
                     setTimeLeft(30);
                     handlePostOTP(data.phone);
                     setIsNewAccount(true);
+                    return;
+                }
+                if (res === NOT_REGISTERED) {
+                    toast.error('This phone is not registered', { position: 'top-center' });
                     return;
                 }
                 setStep(PASSWORD);

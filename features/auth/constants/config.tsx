@@ -6,7 +6,8 @@ export const NEW_ACCOUNT = 'new-account';
 export const PENDING = 'pending';
 export const PLACEMENT_TEST = 'placement-test';
 export const DEVELOPMENT = 'development';
-export const ACTIVATION_REQUIRED = 'not_registered';
+export const ACTIVATION_REQUIRED = 'activation_required';
+export const NOT_REGISTERED = 'not_registered';
 export const ACCESS_TOKEN = 'accessToken';
 
 // API URLs

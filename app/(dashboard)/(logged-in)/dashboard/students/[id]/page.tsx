@@ -36,7 +36,7 @@ export default function DashboardPage() {
                         }
                     >
                         <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Theme" />
+                            <SelectValue placeholder="Select student" />
                         </SelectTrigger>
                         <SelectContent>
                             {students?.students.map(student => (

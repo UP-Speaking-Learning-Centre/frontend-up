@@ -6,6 +6,8 @@ import { FileText, LogOut, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SidebarItem from './item';
 import { ROUTES } from '@/constants/routes';
+import { logout } from '@/features/auth/utils/cookies.helper';
+import useAuthStore from '@/features/auth/stores/authStore';
 
 const sidebarItemsAdmin = [
     { href: ROUTES.adminStudents, label: 'List Students', icon: Users },
@@ -29,24 +31,26 @@ const Sidebar = () => {
     const [open, setOpen] = React.useState(false);
 
     // TODO: get user role from auth store
-    const [userRole, setUserRole] = React.useState('admin');
+    const { role } = useAuthStore();
     const [sidebarMenu, setSidebarMenu] = React.useState<
         { href: string; label: string; icon: React.ComponentType<{ className?: string }> }[]
     >([]);
 
     useEffect(() => {
         // TODO: get user role from auth store
-        if (userRole === 'admin') {
+        if (role === 'admin') {
             setSidebarMenu(sidebarItemsAdmin);
         } else {
             setSidebarMenu(sidebarItemsUser);
         }
     }, []);
 
-    const handleLogout = () => {};
+    const handleLogout = async () => {
+        await logout().then(() => window.location.reload());
+    };
 
     const generateSidebarHeader = () => {
-        if (userRole === 'admin') {
+        if (role === 'admin') {
             return (
                 <div className="flex flex-col items-start">
                     <span className="text-xl font-bold text-white">Admin Dashboard</span>
