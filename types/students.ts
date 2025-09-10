@@ -1,14 +1,19 @@
 export type StudentType = {
-    id: string;
-    name: string;
-    phone: string;
-    email: string;
-    status: string;
+    group: string;
+    parentPhoneNumber: string;
+    program: string;
+    schedule: string;
+    studentId: number;
+    studentName: string;
+    teacherName: string;
+};
+
+export type StudentPlacementTest = {
+    resultId: number;
+    studentName: string;
+    parentPhoneNumber: string;
     program: string;
     group: string;
-    mentor: string;
-    schedule: string;
-    registrationType: string;
+    status: string;
     testDate: string;
-    testStatus: string;
 };

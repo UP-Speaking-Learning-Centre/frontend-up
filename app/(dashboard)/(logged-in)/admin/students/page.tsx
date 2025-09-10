@@ -11,24 +11,28 @@ import useFilterStudents from '@/features/dashboard/hooks/use-filter-studets';
 import useFetchStudentsQuery from '@/features/dashboard/queries/use-fetch-students';
 import { useStudentsStore } from '@/features/dashboard/stores/students-store';
 import { cn } from '@/lib/utils';
+import { StudentType } from '@/types/students';
 import { ChevronDown, Eye, Filter } from 'lucide-react';
-import React, { useState } from 'react';
+import Link from 'next/link';
+import { useState } from 'react';
 
 const Page = () => {
-    const { isLoading } = useFetchStudentsQuery();
     const students = useStudentsStore(s => s.students);
     const pagination = useStudentsStore(s => s.pagination);
+    const filter = useStudentsStore(s => s.filters);
     const {
         filters: { groups, mentors },
-        onChangeFilter,
         onChangePage,
+        onChangeSearch,
+        onChangeGroup,
+        onChangeMentor,
     } = useFilterStudents();
+    const { isLoading } = useFetchStudentsQuery({
+        search: filter.searchQuery,
+        mentors: filter.mentors,
+    });
 
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-    if (isLoading && !students.length) {
-        return <DashboardContentLayout pageTitle="Students">Loading...</DashboardContentLayout>;
-    }
 
     return (
         <DashboardContentLayout pageTitle="Students">
@@ -60,59 +64,68 @@ const Page = () => {
                         >
                             <div className="flex flex-col items-start gap-2">
                                 <Label>Search Name/Phone</Label>
-                                <Input placeholder="Search..." />
+                                <Input
+                                    placeholder="Search..."
+                                    onChange={e => onChangeSearch(e.target.value)}
+                                />
                             </div>
                             <DashboardFilter
                                 label="Group"
                                 options={groups}
-                                onSelect={() => {}}
+                                onSelect={onChangeGroup}
                                 defaultValue="All Groups"
                             />
                             <DashboardFilter
                                 label="Mentor"
                                 options={mentors}
-                                onSelect={() => {}}
+                                onSelect={onChangeMentor}
                                 defaultValue="All Mentors"
                             />
                         </div>
                     </CardContent>
                 </Card>
 
-                <Table
-                    columns={[
-                        { name: 'Name', id: 'name' },
-                        { name: 'Phone', id: 'phone' },
-                        { name: 'Program (Group)', id: 'program' },
-                        { name: 'Mentor', id: 'mentor' },
-                        { name: 'Schedule', id: 'schedule' },
-                        { name: 'Actions', id: 'actions' },
-                    ]}
-                    values={students.map(user => {
-                        return {
-                            ...user,
-                            program: {
-                                renderCell: () => (
-                                    <div className="flex items-center gap-2">
-                                        {user.program} ({user.group})
-                                    </div>
-                                ),
-                            },
-                            actions: {
-                                renderCell: () => (
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        className="hover:text-white"
-                                    >
-                                        <Eye className="h-4 w-4" />
-                                    </Button>
-                                ),
-                            },
-                        };
-                    })}
-                    pagination={pagination}
-                    onChangePage={page => onChangePage(page)}
-                />
+                {isLoading && !students.length ? (
+                    <DashboardContentLayout pageTitle="Students">Loading...</DashboardContentLayout>
+                ) : (
+                    <Table<StudentType>
+                        columns={[
+                            { name: 'Name', id: 'studentName' },
+                            { name: 'Phone', id: 'parentPhoneNumber' },
+                            { name: 'Program (Group)', id: 'program' },
+                            { name: 'Mentor', id: 'teacherName' },
+                            { name: 'Schedule', id: 'schedule' },
+                            { name: 'Actions', id: 'actions' },
+                        ]}
+                        values={students?.map(user => {
+                            return {
+                                ...user,
+                                program: {
+                                    renderCell: () => (
+                                        <div className="flex items-center gap-2">
+                                            {user.program} ({user.group})
+                                        </div>
+                                    ),
+                                },
+                                actions: {
+                                    renderCell: () => (
+                                        <Link href={`/admin/students/${user.studentId}`}>
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                className="hover:text-white absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2"
+                                            >
+                                                <Eye className="h-4 w-4" />
+                                            </Button>
+                                        </Link>
+                                    ),
+                                },
+                            };
+                        })}
+                        pagination={pagination}
+                        onChangePage={page => onChangePage(page)}
+                    />
+                )}
             </div>
         </DashboardContentLayout>
     );

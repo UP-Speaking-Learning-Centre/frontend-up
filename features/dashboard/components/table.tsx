@@ -10,8 +10,8 @@ type RenderCellType = {
 
 type GenericData = Record<string, string | number | RenderCellType | undefined>;
 
-interface ITable {
-    columns: { name: string; id: string; width?: string }[];
+interface ITable<T> {
+    columns: { name: string; id: keyof T | string; width?: string }[];
     values: GenericData[] | [];
     pagination?: {
         totalPages: number;
@@ -23,7 +23,7 @@ interface ITable {
     onChangePage: (page: number) => void;
 }
 
-const Table = ({ columns, values, pagination, onChangePage }: ITable) => {
+const Table = <T,>({ columns, values, pagination, onChangePage }: ITable<T>) => {
     return (
         <>
             <Card>
@@ -36,7 +36,7 @@ const Table = ({ columns, values, pagination, onChangePage }: ITable) => {
                                         .filter(col => col.id !== 'actions')
                                         .map((column, idx) => (
                                             <th
-                                                key={column.id}
+                                                key={column.id.toString()}
                                                 className={cn(
                                                     'text-left p-4 font-medium',
                                                     idx === columns.length - 2 && 'pr-24'
@@ -55,10 +55,10 @@ const Table = ({ columns, values, pagination, onChangePage }: ITable) => {
                                             {columns
                                                 .filter(col => col.id !== 'actions')
                                                 .map((col, idx) => {
-                                                    const value = row[col.id];
+                                                    const value = row[col.id as keyof GenericData];
                                                     return (
                                                         <td
-                                                            key={col.id}
+                                                            key={col.id.toString()}
                                                             className={cn(
                                                                 'p-4 truncate',
                                                                 idx === columns.length - 2 &&
@@ -68,8 +68,7 @@ const Table = ({ columns, values, pagination, onChangePage }: ITable) => {
                                                             {typeof value === 'object' &&
                                                             'renderCell' in value
                                                                 ? value.renderCell()
-                                                                : `${value} ${value} ${value}` ||
-                                                                  '-'}
+                                                                : `${value}` || '-'}
                                                         </td>
                                                     );
                                                 })}
@@ -100,11 +99,12 @@ const Table = ({ columns, values, pagination, onChangePage }: ITable) => {
                                                 {columns
                                                     .filter(col => col.id === 'actions')
                                                     .map(col => {
-                                                        const value = row[col.id];
+                                                        const value =
+                                                            row[col.id as keyof GenericData];
                                                         return (
                                                             <td
-                                                                key={col.id}
-                                                                className="p-4 truncate"
+                                                                key={col.id.toString()}
+                                                                className="h-[56.5px] relative"
                                                             >
                                                                 {typeof value === 'object' &&
                                                                 'renderCell' in value

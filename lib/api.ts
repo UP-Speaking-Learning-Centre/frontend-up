@@ -8,4 +8,12 @@ const api = axios.create({
     },
 });
 
+export const baseService = async <T>(service: () => Promise<T>) => {
+    try {
+        return await service();
+    } catch (error) {
+        throw new Error((error as Error).message);
+    }
+};
+
 export default api;

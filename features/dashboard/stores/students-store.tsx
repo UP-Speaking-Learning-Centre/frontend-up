@@ -1,4 +1,4 @@
-import { StudentType } from '@/types/students';
+import { StudentPlacementTest, StudentType } from '@/types/students';
 import { create } from 'zustand';
 
 interface Pagination {
@@ -14,6 +14,7 @@ interface StudentsStore {
         group: { id: number; name: string }[];
         mentors: { id: number; name: string }[];
         searchQuery: string;
+        status: { id: number; name: string }[];
     };
 
     filterPlacementTest: {
@@ -21,14 +22,14 @@ interface StudentsStore {
         mentors: { id: number; name: string }[];
         searchQuery: string;
     };
-    onChangeFilter: (filter: string, value: string) => void;
+    onChangeFilter: <T = string>(filter: keyof StudentsStore['filters'], value: T) => void;
     onChangeFilterPlacementTest: (filter: string, value: string) => void;
 
     students: StudentType[];
     setStudents: (students: StudentType[]) => void;
 
-    studentsPlacementTest: Partial<StudentType>[];
-    setStudentsPlacementTest: (students: Partial<StudentType>[]) => void;
+    studentsPlacementTest: Partial<StudentPlacementTest>[];
+    setStudentsPlacementTest: (students: Partial<StudentPlacementTest>[]) => void;
 
     pagination: Pagination;
     setPagination: (pagination: Partial<Pagination>) => void;
@@ -42,13 +43,14 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
         group: [],
         mentors: [],
         searchQuery: '',
+        status: [],
     },
     filterPlacementTest: {
         group: [],
         mentors: [],
         searchQuery: '',
     },
-    onChangeFilter: (filter: string, value: string) => {
+    onChangeFilter: (filter: keyof StudentsStore['filters'], value: any) => {
         const getFilters = get().filters;
         set({
             filters: {

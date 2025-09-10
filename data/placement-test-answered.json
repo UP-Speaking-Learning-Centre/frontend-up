@@ -1,357 +1,202 @@
 {
-    "testSessionId": "9d57aaba-f0c9-431e-8ecc-bc390b625efa",
-    "questions": [
+    "resultId": 1,
+    "student": {
+        "id": 2,
+        "name": "radit 21.22",
+        "parentPhoneNumber": "+6281211112210122"
+    },
+    "test": {
+        "id": 2,
+        "name": "Placement Test - Junior High",
+        "program": "School Program",
+        "group": "Junior High School"
+    },
+    "status": "pending",
+    "score": 0,
+    "determinedLevel": null,
+    "submittedAt": "2025-09-05T11:52:25.744Z",
+    "qa": [
         {
-            "id": 1,
-            "instruction": "Use the proper modal auxiliary (should, have to, must) to complete these sentences!",
+            "questionId": 19,
             "questionText": "You ____ take your umbrella with you because it looks like it might rain later.",
-            "options": ["should", "have to", "must"],
             "questionType": "multiple_choice",
-            "answer": "should"
+            "options": ["should", "have to", "must"],
+            "studentAnswer": ""
         },
         {
-            "id": 2,
-            "instruction": "Use the proper modal auxiliary (should, have to, must) to complete these sentences!",
+            "questionId": 20,
             "questionText": "I ____ to finish this report by noon, or it will be late.",
-            "options": ["should", "have to", "must"],
             "questionType": "multiple_choice",
-            "answer": "have to"
+            "options": ["should", "have to", "must"],
+            "studentAnswer": ""
         },
         {
-            "id": 3,
-            "instruction": "Use the proper modal auxiliary (should, have to, must) to complete these sentences!",
+            "questionId": 21,
             "questionText": "We ____ start preparing for the presentation tomorrow to ensure everything goes smoothly.",
-            "options": ["should", "have to", "must"],
             "questionType": "multiple_choice",
-            "answer": "should"
+            "options": ["should", "have to", "must"],
+            "studentAnswer": ""
         },
         {
-            "id": 4,
-            "instruction": "Use the proper modal auxiliary (should, have to, must) to complete these sentences!",
+            "questionId": 22,
             "questionText": "Employees ____ follow the company's safety protocols at all times to avoid accidents.",
-            "options": ["should", "have to", "must"],
             "questionType": "multiple_choice",
-            "answer": "must"
+            "options": ["should", "have to", "must"],
+            "studentAnswer": ""
         },
         {
-            "id": 5,
-            "instruction": "Use the proper modal auxiliary (should, have to, must) to complete these sentences!",
+            "questionId": 23,
             "questionText": "Students ____ submit their math assignment by the end of the week to receive credit.",
-            "options": ["should", "have to", "must"],
             "questionType": "multiple_choice",
-            "answer": "must"
+            "options": ["should", "have to", "must"],
+            "studentAnswer": ""
         },
         {
-            "id": 6,
-            "instruction": "Use the proper modal auxiliary (should, have to, must) to complete these sentences!",
+            "questionId": 24,
             "questionText": "They ____ attend the meeting session next Saturday to discuss the new policy.",
+            "questionType": "multiple_choice",
             "options": ["should", "have to", "must"],
-            "questionType": "multiple_choice",
-            "answer": "have to"
+            "studentAnswer": ""
         },
         {
-            "id": 7,
-            "instruction": "Put the correct form of the verbs in the blanks!",
+            "questionId": 25,
             "questionText": "She ____ cooking a very delicious nugget with his mom a couple days ago.",
-            "options": null,
             "questionType": "fill_in_the_blank",
-            "answer": "was"
+            "options": null,
+            "studentAnswer": ""
         },
         {
-            "id": 8,
-            "instruction": "Put the correct form of the verbs in the blanks!",
+            "questionId": 26,
             "questionText": "They ____ sleeping under the moonlight last night.",
-            "options": null,
             "questionType": "fill_in_the_blank",
-            "answer": "were"
+            "options": null,
+            "studentAnswer": ""
         },
         {
-            "id": 9,
-            "instruction": "",
+            "questionId": 27,
             "questionText": "Mr. Jupri ____ in a Coffee Shop last year. (work)",
-            "options": null,
             "questionType": "fill_in_the_blank",
-            "answer": "worked"
+            "options": null,
+            "studentAnswer": "swimming"
         },
         {
-            "id": 10,
-            "instruction": "",
+            "questionId": 28,
             "questionText": "We ____ some sweet beverages at Jl.Pramuka. (drink)",
-            "options": null,
             "questionType": "fill_in_the_blank",
-            "answer": "drank"
+            "options": null,
+            "studentAnswer": ""
         },
         {
-            "id": 11,
-            "instruction": "Fill the blanks with; can for ability / can’t for inability",
+            "questionId": 29,
             "questionText": "Mr. Darmedi ____ speak 3 languages fluently: English, Spanish, Sundanese.",
-            "options": ["can", "can't"],
             "questionType": "multiple_choice",
-            "answer": "can"
+            "options": ["can", "can't"],
+            "studentAnswer": ""
         },
         {
-            "id": 12,
-            "instruction": "Fill the blanks with; can for ability / can’t for inability",
+            "questionId": 30,
             "questionText": "Unfortunately, She ____ swim despite her interest in sports.",
-            "options": ["can", "can't"],
             "questionType": "multiple_choice",
-            "answer": "can't"
+            "options": ["can", "can't"],
+            "studentAnswer": "any"
         },
         {
-            "id": 13,
-            "instruction": "Fill the blanks with; can for ability / can’t for inability",
+            "questionId": 31,
             "questionText": "With his training, he ____ solve complex mathematical problems accurately.",
-            "options": ["can", "can't"],
             "questionType": "multiple_choice",
-            "answer": "can"
+            "options": ["can", "can't"],
+            "studentAnswer": ""
         },
         {
-            "id": 14,
-            "instruction": "Fill the blanks with; can for ability / can’t for inability",
+            "questionId": 32,
             "questionText": "I ____ sing Justin Bieber's song very well, so I prefer to sing Adele's song instead.",
+            "questionType": "multiple_choice",
             "options": ["can", "can't"],
-            "questionType": "multiple_choice",
-            "answer": "can't"
+            "studentAnswer": ""
         },
         {
-            "id": 15,
-            "instruction": "",
+            "questionId": 33,
             "questionText": "If I had known that you were coming, I would have ____.",
-            "options": null,
             "questionType": "free_text",
-            "answer": "prepared something special"
+            "options": null,
+            "studentAnswer": ""
         },
         {
-            "id": 16,
-            "instruction": "",
+            "questionId": 34,
             "questionText": "If she had studied harder, she might have ____.",
-            "options": null,
             "questionType": "free_text",
-            "answer": "passed the exam"
-        },
-        {
-            "id": 17,
-            "instruction": "",
-            "questionText": "She ____ Yogyakarta two times. (visit)",
             "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "has visited"
+            "studentAnswer": ""
         },
         {
-            "id": 18,
-            "instruction": "",
-            "questionText": "Cipung and H. Thoriq ____ in this company since 2020. (work)",
+            "questionId": 35,
+            "questionText": "She ____ Yogyakarta two times.",
+            "questionType": "fill_in_the_blank",
             "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "have worked"
+            "studentAnswer": ""
         },
         {
-            "id": 19,
-            "instruction": "",
-            "questionText": "Cyntia ____ her Aerox motorbike for three hours straight. (ride)",
+            "questionId": 36,
+            "questionText": "Cipung and H. Thoriq ____ in this company since 2020.",
+            "questionType": "fill_in_the_blank",
             "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "has been riding"
+            "studentAnswer": ""
         },
         {
-            "id": 20,
-            "instruction": "",
-            "questionText": "Since 1985, Mr. Ajay ____ in South Korea. (live)",
+            "questionId": 37,
+            "questionText": "Cyntia ____ her Aerox motorbike for three hours straight.",
+            "questionType": "fill_in_the_blank",
             "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "has been living"
+            "studentAnswer": ""
         },
         {
-            "id": 21,
-            "instruction": "",
+            "questionId": 38,
+            "questionText": "Since 1985, Mr. Ajay ____ in South Korea.",
+            "questionType": "fill_in_the_blank",
+            "options": null,
+            "studentAnswer": ""
+        },
+        {
+            "questionId": 39,
             "questionText": "She probably ____ win the race. She's been training all this year.",
-            "options": ["will", "may", "might"],
             "questionType": "multiple_choice",
-            "answer": "will"
+            "options": ["will", "may", "might"],
+            "studentAnswer": ""
         },
         {
-            "id": 22,
-            "instruction": "",
+            "questionId": 40,
             "questionText": "If the negotiation goes well, they ____ announce the Grand Opening next week.",
-            "options": ["will", "may", "might"],
             "questionType": "multiple_choice",
-            "answer": "will"
+            "options": ["will", "may", "might"],
+            "studentAnswer": ""
         },
         {
-            "id": 23,
-            "instruction": "",
+            "questionId": 41,
             "questionText": "Depending on the traffic, we ____ arrive at the party a bit late.",
+            "questionType": "multiple_choice",
             "options": ["will", "may", "might"],
-            "questionType": "multiple_choice",
-            "answer": "might"
+            "studentAnswer": ""
         },
         {
-            "id": 24,
-            "instruction": "",
+            "questionId": 42,
             "questionText": "You finished your homework, ____?",
+            "questionType": "multiple_choice",
             "options": ["did I?", "didn't you?"],
-            "questionType": "multiple_choice",
-            "answer": "didn't you?"
+            "studentAnswer": ""
         },
         {
-            "id": 25,
-            "instruction": "",
+            "questionId": 43,
             "questionText": "Aurel is coming to the party, ____?",
-            "options": ["is he?", "isn't she?"],
             "questionType": "multiple_choice",
-            "answer": "isn't she?"
+            "options": ["is he?", "isn't she"],
+            "studentAnswer": ""
         },
         {
-            "id": 26,
-            "instruction": "",
-            "questionText": "They enjoyed the movie, ____?",
+            "questionId": 44,
+            "questionText": "They Enjoyed the movie, ____?",
+            "questionType": "multiple_choice",
             "options": ["aren't they?", "didn't they?"],
-            "questionType": "multiple_choice",
-            "answer": "didn't they?"
-        },
-        {
-            "id": 27,
-            "instruction": "",
-            "questionText": "She likes ____ (swim) in the ocean during summer.",
-            "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "swimming"
-        },
-        {
-            "id": 28,
-            "instruction": "",
-            "questionText": "They ____ (not like) ____ (eat) spicy food.",
-            "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "don't like, eating"
-        },
-        {
-            "id": 29,
-            "instruction": "",
-            "questionText": "There are ____ apples in the fridge. Would you like one?",
-            "options": ["some", "any"],
-            "questionType": "multiple_choice",
-            "answer": "some"
-        },
-        {
-            "id": 30,
-            "instruction": "",
-            "questionText": "She doesn't have ____ money left in her wallet.",
-            "options": ["some", "any"],
-            "questionType": "multiple_choice",
-            "answer": "any"
-        },
-        {
-            "id": 31,
-            "instruction": "",
-            "questionText": "The movie begins at 7:20 pm. It's ____ seven.",
-            "options": ["twenty past", "twenty to"],
-            "questionType": "multiple_choice",
-            "answer": "twenty past"
-        },
-        {
-            "id": 32,
-            "instruction": "",
-            "questionText": "He goes to bed at 11:45. It's ____ twelve.",
-            "options": ["quarter past", "quarter to"],
-            "questionType": "multiple_choice",
-            "answer": "quarter to"
-        },
-        {
-            "id": 33,
-            "instruction": "",
-            "questionText": "They are going to the gym ____ (work out) this evening.",
-            "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "to work out"
-        },
-        {
-            "id": 34,
-            "instruction": "",
-            "questionText": "She is going to the library ____ (study) for her exams.",
-            "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "to study"
-        },
-        {
-            "id": 35,
-            "instruction": "",
-            "questionText": "The children ____ excited about the trip.",
-            "options": ["was", "were"],
-            "questionType": "multiple_choice",
-            "answer": "were"
-        },
-        {
-            "id": 36,
-            "instruction": "",
-            "questionText": "It ____ cold outside yesterday.",
-            "options": ["was", "were"],
-            "questionType": "multiple_choice",
-            "answer": "was"
-        },
-        {
-            "id": 37,
-            "instruction": "",
-            "questionText": "Sandy is the ____ (smart) student in the school. He always gets the perfect score.",
-            "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "smartest"
-        },
-        {
-            "id": 38,
-            "instruction": "",
-            "questionText": "Harry Potter is ____ (interesting) than The Lord of the Rings.",
-            "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "more interesting"
-        },
-        {
-            "id": 39,
-            "instruction": "",
-            "questionText": "The weather ____ beautiful today. Let's go to the beach and having fun!",
-            "options": ["is", "am", "are"],
-            "questionType": "multiple_choice",
-            "answer": "is"
-        },
-        {
-            "id": 40,
-            "instruction": "",
-            "questionText": "The students ____ tired after studying all day.",
-            "options": ["is", "am", "are"],
-            "questionType": "multiple_choice",
-            "answer": "are"
-        },
-        {
-            "id": 41,
-            "instruction": "",
-            "questionText": "They'd like ____ (try) the new restaurant in town.",
-            "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "try"
-        },
-        {
-            "id": 42,
-            "instruction": "",
-            "questionText": "He'd like ____ (improve) his English-speaking skill.",
-            "options": null,
-            "questionType": "fill_in_the_blank",
-            "answer": "improve"
-        },
-        {
-            "id": 43,
-            "instruction": "",
-            "questionText": "____ you pass me the salt, please?",
-            "options": ["Can", "May", "Will"],
-            "questionType": "multiple_choice",
-            "answer": "Can"
-        },
-        {
-            "id": 44,
-            "instruction": "",
-            "questionText": "____ you please lower the volume a bit? I'm studying right now.",
-            "options": ["Can", "May", "Will"],
-            "questionType": "multiple_choice",
-            "answer": "Can"
+            "studentAnswer": ""
         }
     ]
 }

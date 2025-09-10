@@ -1,97 +1,68 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { useStudentsStore } from '../stores/students-store';
+import api, { baseService } from '@/lib/api';
+import { BaseResponse } from '@/types/general';
 import { StudentType } from '@/types/students';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import { API_ADMIN_LIST_STUDENTS } from '../constants/config';
+import { useStudentsStore } from '../stores/students-store';
 
-const allUsers = [
-    {
-        id: '1',
-        name: 'Budi Santoso',
-        phone: '081234567890',
-        email: 'budi@email.com',
-        status: 'active',
-        program: 'Elementary School',
-        group: 'Novice',
-        mentor: 'Ms. Feby',
-        schedule: 'Senin & Rabu, 15:00-17:00',
-        registrationType: 'regular',
-        testDate: '2025-09-06',
-        testStatus: 'pending',
+const allUsers = {
+    data: [
+        {
+            studentId: 2,
+            studentName: 'radit 21.22',
+            parentPhoneNumber: '+6281211112210122',
+            program: 'School Program',
+            group: 'Junior High School',
+            teacherName: 'N/A',
+            schedule: 'No schedule',
+        },
+        {
+            studentId: 1,
+            studentName: 'Siswa Dengan Jadwal 2',
+            parentPhoneNumber: '+6281288889999',
+            program: 'School Program',
+            group: 'Senior High School',
+            teacherName: 'Ms. Nuraeni',
+            schedule: 'MON 08:00:00, MON 11:00:00',
+        },
+    ],
+    meta: {
+        totalItems: 2,
+        itemCount: 2,
+        itemsPerPage: 10,
+        totalPages: 1,
+        currentPage: 1,
     },
-    {
-        id: '2',
-        name: 'Sari Santoso',
-        phone: '081234567891',
-        email: 'sari@email.com',
-        status: 'active',
-        program: 'Junior High School',
-        group: 'Beginners',
-        mentor: 'Mr. Firdan',
-        schedule: 'Selasa & Kamis, 17:00-19:00',
-        registrationType: 'regular',
-        testDate: '2025-09-06',
-        testStatus: 'pending',
-    },
-    {
-        id: '3',
-        name: 'Andi Wijaya',
-        phone: '089876543210',
-        email: 'andi@email.com',
-        status: 'pending',
-        program: 'Elementary School',
-        group: 'Elementary',
-        mentor: '-',
-        schedule: '-',
-        registrationType: 'placement-test',
-        testDate: '2025-09-06',
-        testStatus: 'pending',
-    },
-    {
-        id: '4',
-        name: 'Maya Putri',
-        phone: '087654321098',
-        email: 'maya@email.com',
-        status: 'pending',
-        program: 'Elementary School',
-        group: 'Elementary',
-        mentor: '-',
-        schedule: '-',
-        registrationType: 'placement-test',
-        testDate: '2025-09-06',
-        testStatus: 'pending',
-    },
-    {
-        id: '5',
-        name: 'Reza Putra',
-        phone: '085555555555',
-        email: 'reza@email.com',
-        status: 'pending',
-        program: 'Junior High School',
-        group: 'Interchange',
-        mentor: '-',
-        schedule: '-',
-        registrationType: 'placement-test',
-        testDate: '2025-09-06',
-        testStatus: 'pending',
-    },
-];
-
-const fetchStudents = () => {
-    return allUsers;
 };
 
-const useFetchStudentsQuery = (): UseQueryResult<StudentType[]> => {
+const fetchStudents = async (params: any) => {
+    return allUsers as BaseResponse<StudentType[]>;
+
+    return baseService(async () => {
+        const res = await api.get<BaseResponse<StudentType[]>>(API_ADMIN_LIST_STUDENTS, {
+            params,
+            headers: {
+                Authorization:
+                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInBob25lTnVtYmVyIjoiMDgxMjM0NTY3ODkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTczMDUzNzcsImV4cCI6MTc1NzM5MTc3N30.zjq1vZVhDVMoMXr8FSezwUUPQ0X3veRaBWjG7pPCyEY',
+            },
+        });
+        return res.data;
+    });
+};
+
+const useFetchStudentsQuery = (params?: any) => {
     const filters = useStudentsStore(s => s.filters);
     const setStudents = useStudentsStore(s => s.setStudents);
 
     const res = useQuery({
-        queryKey: ['students', Object.values(filters)],
-        queryFn: fetchStudents,
+        queryKey: [API_ADMIN_LIST_STUDENTS, Object.values(filters), params],
+        queryFn: async () => await fetchStudents(params),
     });
 
     useEffect(() => {
         if (res.status === 'success') {
-            setStudents(res.data);
+            setStudents(res.data.data);
         }
     }, [res.status]);
 

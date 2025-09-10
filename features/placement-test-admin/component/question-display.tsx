@@ -1,16 +1,14 @@
-import React from 'react';
-import useDetailPlacementTest from '../hooks/use-detail-placement-test';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+import useDetailPlacementTest from '../hooks/use-detail-placement-test';
 
 const QuestionDisplay = () => {
     const { questions, currentQuestionIndex, totalQuestions, setState } = useDetailPlacementTest();
     const currentQuestion = questions[currentQuestionIndex];
-    const handleGradeQuestion = (question: any, isCorrect: boolean) => {
+    const handleGradeQuestion = (question: any, isCorrect: boolean,isGraded:boolean) => {
         setState({
-            questions: questions.map(q => (q.id === question.id ? { ...q, isCorrect } : q)),
+            questions: questions.map(q => (q.questionId === question.questionId ? { ...q, isCorrect,isGraded } : q)),
         });
     };
 
@@ -62,11 +60,11 @@ const QuestionDisplay = () => {
                             <div className="grid grid-cols-1 gap-2">
                                 {currentQuestion.questionType === 'fill_in_the_blank' ||
                                 currentQuestion.questionType === 'free_text' ? (
-                                    <div>{currentQuestion.answer}</div>
+                                    <div>{currentQuestion.studentAnswer}</div>
                                 ) : (
                                     currentQuestion.options?.map((option, optIndex) => {
                                         const isUserAnswer =
-                                            option.toString() === currentQuestion.answer;
+                                            option.toString() === currentQuestion.studentAnswer;
 
                                         return (
                                             <div
@@ -117,7 +115,7 @@ const QuestionDisplay = () => {
                                             ? 'bg-green-600 hover:bg-green-700'
                                             : 'border-green-300 text-green-600 hover:bg-green-50'
                                     }`}
-                                    onClick={() => handleGradeQuestion(currentQuestion, true)}
+                                    onClick={() => handleGradeQuestion(currentQuestion, true,true)}
                                 >
                                     <Check className="w-4 h-4 mr-2" />
                                     Correct
@@ -131,7 +129,7 @@ const QuestionDisplay = () => {
                                             ? 'bg-red-600 hover:bg-red-700'
                                             : 'border-red-300 text-red-600 hover:bg-red-50'
                                     }`}
-                                    onClick={() => handleGradeQuestion(currentQuestion, false)}
+                                    onClick={() => handleGradeQuestion(currentQuestion, false,true)}
                                 >
                                     <X className="w-4 h-4 mr-2" />
                                     Incorrect
