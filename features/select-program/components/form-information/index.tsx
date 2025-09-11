@@ -65,6 +65,11 @@ const FormInformation = ({
         }
     };
 
+    const isPhoneNumberValid = (phone: string) => {
+        const phoneRegex = /^08[1-9][0-9]{6,9}$/;
+        return phoneRegex.test(phone);
+    };
+
     const getTitle = () => {
         if (steps === REGISTER_STEPS) {
             return 'Formulir Pendaftaran';
@@ -115,6 +120,12 @@ const FormInformation = ({
                                 })
                             }
                         />
+                        {formValue.personalInformation.phone &&
+                            !isPhoneNumberValid(formValue.personalInformation.phone) && (
+                                <p className="text-red-500 mt-1">
+                                    Format No HP tidak valid (Gunakan format 08xxxxxx)
+                                </p>
+                            )}
                     </div>
 
                     <div className="mt-6">
@@ -137,7 +148,8 @@ const FormInformation = ({
                                 isPendingFromProgram ||
                                 isPendingFromPlacement ||
                                 !formValue.personalInformation.name ||
-                                !formValue.personalInformation.phone
+                                !formValue.personalInformation.phone ||
+                                !isPhoneNumberValid(formValue.personalInformation.phone)
                             }
                             onClick={() => {
                                 handleSave();
