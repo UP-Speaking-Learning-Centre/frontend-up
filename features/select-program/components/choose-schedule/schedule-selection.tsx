@@ -9,7 +9,7 @@ import {
     START_TIME,
 } from '@/constants/program-selections';
 import 'moment/locale/id';
-import { Calendar, Clock, MapPinHouse, PinIcon } from 'lucide-react';
+import { Calendar, Clock, MapPinHouse, PinIcon, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import useProgramSelectionStore from '../../stores/program-selection-store';
 import { DayOfWeekType } from '@/types/programs-selection';
@@ -216,6 +216,14 @@ const ScheduleSelection = () => {
             return null;
         }
 
+        const availableMentor = data?.filter(
+            item =>
+                item.dayOfWeek === firstSession.dayOfWeek &&
+                item.startTime === firstSession.startTime
+            // formValue.taughtBy.includes(item.alias)
+        );
+
+        console.log(availableMentor);
         return (
             <div className="mx-auto max-w-7xl" id={CHOOSE_MENTOR_STEP}>
                 <p className="text-center text-[#020817] font-medium">
@@ -233,67 +241,71 @@ const ScheduleSelection = () => {
                 </p>
 
                 <div className="grid grid-cols-3 mx-auto  gap-4 mt-3">
-                    {data
-                        ?.filter(
-                            item =>
-                                item.dayOfWeek === firstSession.dayOfWeek &&
-                                item.startTime === firstSession.startTime
-                            // formValue.taughtBy.includes(item.alias)
-                        )
-                        .map((item, i) => {
-                            const mentor = mentors.find(
-                                m => m.nameWithoutDegree === item.teacherMemberName
-                            );
+                    {!availableMentor || availableMentor?.length === 0 ? (
+                        <div className="text-center font-semibold col-start-2 mt-8 text-lg">
+                            <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                                <X className="w-8 h-8 text-red-600" />
+                            </div>
+                            <p>Tidak ada mentor yang tersedia</p>
+                        </div>
+                    ) : (
+                        <>
+                            {availableMentor?.map((item, i) => {
+                                const mentor = mentors.find(
+                                    m => m.nameWithoutDegree === item.teacherMemberName
+                                );
 
-                            return (
-                                <div
-                                    key={mentor?.name}
-                                    onClick={() => {
-                                        setFirstSessionSchedule({
-                                            teacherMemberId: item.teacherMemberId,
-                                            teacherMemberName: item.teacherMemberName,
-                                            teacherScheduleId: item.scheduleId,
-                                        });
-                                        setSecondSessionSchedule({
-                                            teacherMemberId: item.teacherMemberId,
-                                            teacherMemberName: item.teacherMemberName,
-                                        });
-                                        onClickStep(CHOOSE_MENTOR_STEP);
-                                    }}
-                                    className={cn(
-                                        'col-span-1 bg-[#FFFFFF] border-2 gap-4 group rounded-md overflow-hidden',
-                                        'hover:border-[#CE6439]',
-                                        firstSession.teacherMemberId === item.teacherMemberId &&
-                                            'border-[#CE6439]'
-                                    )}
-                                >
-                                    <MentorImage
-                                        mentor={{
-                                            name: item.teacherMemberName,
-                                            role: mentor?.role || '',
-                                            bio: mentor?.bio || '',
-                                            imageUrl: mentor?.imageUrl || '',
+                                return (
+                                    <div
+                                        key={mentor?.name}
+                                        onClick={() => {
+                                            setFirstSessionSchedule({
+                                                teacherMemberId: item.teacherMemberId,
+                                                teacherMemberName: item.teacherMemberName,
+                                                teacherScheduleId: item.scheduleId,
+                                            });
+                                            setSecondSessionSchedule({
+                                                teacherMemberId: item.teacherMemberId,
+                                                teacherMemberName: item.teacherMemberName,
+                                            });
+                                            onClickStep(CHOOSE_MENTOR_STEP);
                                         }}
-                                    />
-                                    <p
                                         className={cn(
-                                            'text-lg cursor-pointer relative flex items-center justify-center text-center p-4 w-full'
+                                            'col-span-1 bg-[#FFFFFF] border-2 gap-4 group rounded-md overflow-hidden',
+                                            'hover:border-[#CE6439]',
+                                            firstSession.teacherMemberId === item.teacherMemberId &&
+                                                'border-[#CE6439]'
                                         )}
                                     >
-                                        <span
+                                        <MentorImage
+                                            mentor={{
+                                                name: item.teacherMemberName,
+                                                role: mentor?.role || '',
+                                                bio: mentor?.bio || '',
+                                                imageUrl: mentor?.imageUrl || '',
+                                            }}
+                                        />
+                                        <p
                                             className={cn(
-                                                'relative z-20',
-                                                firstSession.teacherMemberId ===
-                                                    item.teacherMemberId &&
-                                                    'after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-1 after:rounded-full after:bg-primary after:content-[""]'
+                                                'text-lg cursor-pointer relative flex items-center justify-center text-center p-4 w-full'
                                             )}
                                         >
-                                            {item.teacherMemberName}
-                                        </span>
-                                    </p>
-                                </div>
-                            );
-                        })}
+                                            <span
+                                                className={cn(
+                                                    'relative z-20',
+                                                    firstSession.teacherMemberId ===
+                                                        item.teacherMemberId &&
+                                                        'after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-1 after:rounded-full after:bg-primary after:content-[""]'
+                                                )}
+                                            >
+                                                {item.teacherMemberName}
+                                            </span>
+                                        </p>
+                                    </div>
+                                );
+                            })}
+                        </>
+                    )}
                 </div>
             </div>
         );
