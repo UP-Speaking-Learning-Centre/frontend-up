@@ -10,8 +10,6 @@ const fetchAvailableSchedule = async (locationId: string): Promise<AvailableSche
         ENDPOINTS.fetchAvailableSchedule.expand({ locationId })
     );
     return res.data;
-    console.log(data, locationId);
-    return data;
 };
 
 const useFetchAvailableScheduleQuery = (): UseQueryResult<AvailableScheduleType[]> => {

@@ -1,9 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Question } from '@/types/placement-test';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useSubmitPlacementTestMutation } from '../queries/use-submit-placement-test';
+import usePlacementTestGuestStore from '@/features/select-program/stores/placemenet-test-guest-store';
+import { ROUTES } from '@/constants/routes';
 
-const STORAGE_KEY = 'placementTest';
-
+export const STORAGE_KEY = 'placementTest';
+export const QUESTION_KEY = 'questions';
+export const FORM_VALUE_KEY = 'formValue';
 interface StoredTestState {
     answers: string[];
     timeLeft: number;
@@ -12,23 +16,35 @@ interface StoredTestState {
     startedAt: number;
 }
 
-export const usePlacementTest = (questions: Question[], initialTimeInMinutes = 20) => {
+export const usePlacementTest = (questionsFromAPI: Question[], initialTimeInMinutes = 20) => {
     const router = useRouter();
     const searchParams = useSearchParams();
+    const { mutateAsync: submitPlacementTest } = useSubmitPlacementTestMutation();
+    const testSessionId = usePlacementTestGuestStore(s => s.testSessionId);
+    const setTestSessionId = usePlacementTestGuestStore(s => s.setTestSessionId);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [answers, setAnswers] = useState<string[]>(new Array(questions.length).fill(''));
+    const [answers, setAnswers] = useState<string[]>(new Array(questionsFromAPI.length).fill(''));
     const [timeLeft, setTimeLeft] = useState(initialTimeInMinutes * 60);
     const [isCompleted, setIsCompleted] = useState(false);
     const [startedAt, setStartedAt] = useState<number>(Date.now());
+    const [questions, setQuestions] = useState<Question[]>(questionsFromAPI);
     const [shouldBeFinishedAt, setShouldBeFinishedAt] = useState<number>(
         Date.now() + initialTimeInMinutes * 60 * 1000
     );
+
+    useEffect(() => {
+        if (questions.length > 0) {
+            localStorage.setItem(QUESTION_KEY, JSON.stringify(questions));
+        }
+    }, [questions]);
+
     const [loadSavedState, setLoadSavedState] = useState(true);
 
     useEffect(() => {
         try {
             setLoadSavedState(true);
             const savedState = localStorage.getItem(STORAGE_KEY);
+
             if (savedState) {
                 const parsedState = JSON.parse(savedState) as StoredTestState;
                 const remainingTime = Math.floor(
@@ -36,7 +52,6 @@ export const usePlacementTest = (questions: Question[], initialTimeInMinutes = 2
                 );
                 const shouldBeFinishedAt = parsedState.shouldBeFinishedAt;
 
-                console.log(remainingTime);
                 setAnswers(parsedState.answers);
                 setTimeLeft(remainingTime);
                 setShouldBeFinishedAt(shouldBeFinishedAt);
@@ -49,6 +64,13 @@ export const usePlacementTest = (questions: Question[], initialTimeInMinutes = 2
             } else {
                 setStartedAt(Date.now());
             }
+
+            const savedQuestion = localStorage.getItem(QUESTION_KEY);
+
+            if (savedQuestion) {
+                const parsedData = JSON.parse(savedQuestion) as Question[];
+                setQuestions(parsedData);
+            }
         } catch (error) {
             console.error('Failed to load test state:', error);
             setStartedAt(Date.now());
@@ -58,6 +80,8 @@ export const usePlacementTest = (questions: Question[], initialTimeInMinutes = 2
 
     useEffect(() => {
         searchParams.get('isCompleted') === 'true' && setIsCompleted(true);
+        searchParams.get('testSessionId') &&
+            setTestSessionId(String(searchParams.get('testSessionId')));
     }, [searchParams]);
 
     const saveTestState = useCallback(() => {
@@ -90,7 +114,6 @@ export const usePlacementTest = (questions: Question[], initialTimeInMinutes = 2
         }
     }, []);
 
-    console.log(timeLeft);
     // Timer effect
     useEffect(() => {
         if (timeLeft > 0 && !isCompleted) {
@@ -139,24 +162,34 @@ export const usePlacementTest = (questions: Question[], initialTimeInMinutes = 2
 
     // Handle test submission
     const handleSubmit = useCallback(() => {
-        setIsCompleted(true);
-        router.push('/placement-test?isCompleted=true');
-        // clearSavedState();
-
         let payload = [];
 
         for (let i = 0; i < answers.length; i++) {
             payload.push({
                 questionId: questions[i].id,
-                answer: answers[i],
+                studentAnswer: answers[i],
             });
         }
-        console.log('answers', payload);
 
-        // saveTestResults(answers, timeElapsed);
-    }, []);
+        submitPlacementTest(
+            {
+                testSessionId: testSessionId,
+                answers: payload,
+            },
+            {
+                onSuccess: () => {
+                    router.push(
+                        `${ROUTES.placementTest}?testSessionId=${testSessionId}&isCompleted=true`
+                    );
+                    setIsCompleted(true);
+                    localStorage.removeItem(STORAGE_KEY);
+                    localStorage.removeItem(QUESTION_KEY);
+                },
+            }
+        );
+    }, [answers, testSessionId]);
 
-    const answeredCount = answers.filter(a => a !== '').length;
+    const answeredCount = answers.filter(a => !!a).length;
     const progress = (answeredCount / questions.length) * 100;
 
     useEffect(() => {
@@ -167,6 +200,7 @@ export const usePlacementTest = (questions: Question[], initialTimeInMinutes = 2
         };
     }, [isCompleted, saveTestState]);
 
+    console.log(isCompleted);
     return {
         currentQuestion: questions[currentQuestionIndex],
         currentQuestionIndex,

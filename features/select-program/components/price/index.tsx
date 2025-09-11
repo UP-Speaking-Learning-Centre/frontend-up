@@ -1,14 +1,18 @@
 import React from 'react';
 import useProgramSelection from '../../hooks/use-program-selection';
 import useProgramSelectionStore from '../../stores/program-selection-store';
-import { PRICE_STEP } from '@/constants/program-selections';
+import {
+    PRICE_STEP,
+    PROGRAM_SELECTION_STEPS,
+    REGISTER_STEPS,
+} from '@/constants/program-selections';
 import useFetchPackagesQuery from '../../queries/use-fetch-packages';
 import SectionTitle from '@/components/section-title';
 import Title from '../title';
 import { Button } from '@/components/ui/button';
 
-const Price = () => {
-    const { isStepDisplayed, handleNextStepAction } = useProgramSelection();
+const Price = ({ steps }: { steps?: typeof PROGRAM_SELECTION_STEPS | typeof REGISTER_STEPS }) => {
+    const { isStepDisplayed, handleNextStepAction } = useProgramSelection(steps);
     const { data: packages } = useFetchPackagesQuery();
     const { packageId, programId } = useProgramSelectionStore(s => s.formValue);
 
@@ -38,7 +42,10 @@ const Price = () => {
     };
 
     return (
-        <div className="h-[calc(100vh-64px)] flex items-center flex-col justify-center">
+        <div
+            className="h-[calc(100vh-64px)] flex items-center flex-col justify-center"
+            id={PRICE_STEP}
+        >
             <Title
                 title={'Daftar sekarang!'}
                 description="karena harga yang bisa anda dapatkan adalah"

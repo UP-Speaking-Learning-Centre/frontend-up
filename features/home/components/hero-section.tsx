@@ -25,7 +25,8 @@ export default function HeroSection() {
                                 <span className="text-[#CE6439]">World!</span>
                             </h1>
                             <div className="text-2xl mt-2 font-semibold font-bebasNeue tracking-wide text-white">
-                                Mulai langkah kecil, buka peluang besar lewat bahasa Inggris
+                                Mulai langkah kecil, buka peluang besar lewat{' '}
+                                <span className="text-[#CE6439]">bahasa Inggris</span>
                             </div>
                         </div>
                         <p className="mt-12 text-lg max-w-2xl mx-auto leading-8 text-gray-300">

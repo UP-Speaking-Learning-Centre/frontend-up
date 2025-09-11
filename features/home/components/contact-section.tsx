@@ -41,7 +41,7 @@ export default function ContactSection() {
                                 </dt>
                                 <dd className="ml-3 text-base text-gray-500">
                                     <p className="font-semibold">+62 813-1670-1747</p>
-                                    <p className="mt-1">Mon–Sat, 08.00–18.30</p>
+                                    <p className="mt-1">Senin - Sabtu, 08.00–18.30</p>
                                 </dd>
                             </div>
                             <div className="flex items-center">

@@ -22,6 +22,12 @@ export const PROGRAM_SELECTION_STEPS = [
     FILL_PERSONAL_INFORMATION_STEP,
 ] as const;
 
+export const REGISTER_STEPS = [
+    CHOOSE_PACKAGE_STEP,
+    PRICE_STEP,
+    FILL_PERSONAL_INFORMATION_STEP,
+] as const;
+
 export const DAY = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'] as const;
 export const START_TIME = [
     '08:00:00',

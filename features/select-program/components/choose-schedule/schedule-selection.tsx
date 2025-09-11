@@ -17,6 +17,27 @@ import { renderDayToIndonesian } from '@/lib/moment';
 import useFetchLocationsQuery from '../../queries/use-fetch-locations';
 import { Button } from '@/components/ui/button';
 import useProgramSelection from '../../hooks/use-program-selection';
+import { mentors } from '@/app/(landing)/about/page';
+import Image from 'next/image';
+import MentorImage from './mentor-image';
+
+const CHOOSE_LOCATION_STEP = 'choose-location';
+const CHOOSE_DAY_STEP = 'choose-day';
+const CHOOSE_TIME_STEP = 'choose-time';
+const CHOOSE_MENTOR_STEP = 'choose-mentor';
+const CHOOSE_SECOND_DAY_STEP = 'choose-second-day';
+const CHOOSE_SECOND_TIME_STEP = 'choose-second-time';
+const CHOOSE_SECOND_MENTOR_STEP = 'choose-second-mentor';
+
+const steps = [
+    CHOOSE_LOCATION_STEP,
+    CHOOSE_DAY_STEP,
+    CHOOSE_TIME_STEP,
+    CHOOSE_MENTOR_STEP,
+    CHOOSE_SECOND_DAY_STEP,
+    CHOOSE_SECOND_TIME_STEP,
+    CHOOSE_SECOND_MENTOR_STEP,
+];
 
 const ScheduleSelection = () => {
     const { data } = useFetchAvailableScheduleQuery();
@@ -28,6 +49,17 @@ const ScheduleSelection = () => {
     const formValue = useProgramSelectionStore(s => s.formValue);
     const { schedule, locationName } = formValue;
     const { firstSession, secondSession } = schedule;
+    const [currentStep, setCurrentStep] = React.useState(0);
+
+    const getCurrentStepIndex = (stepId: (typeof steps)[number]) => {
+        return steps.findIndex(step => step === stepId);
+    };
+
+    const onClickStep = (stepId: (typeof steps)[number]) => {
+        const nextStep = getCurrentStepIndex(stepId) + 1;
+        setCurrentStep(nextStep);
+        scrollToStep(stepId);
+    };
 
     const availableScheduleByTeacher = useMemo(() => {
         return data?.filter(item => item.teacherMemberId === firstSession.teacherMemberId);
@@ -39,21 +71,48 @@ const ScheduleSelection = () => {
         );
     }, [availableScheduleByTeacher, secondSession.dayOfWeek]);
 
+    const scrollToStep = (stepId: (typeof steps)[number]) => {
+        const currentStepElement = document.getElementById(steps[currentStep]);
+        const stepElement = document.getElementById(stepId);
+        var headerOffset = 100;
+
+        setTimeout(() => {
+            if (stepElement) {
+                var elementPosition = stepElement.getBoundingClientRect().top;
+                var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth',
+                });
+            } else if (currentStepElement) {
+                const bottom = currentStepElement.getBoundingClientRect().bottom;
+                const offsetPosition = window.pageYOffset + bottom - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth',
+                });
+            }
+        }, 100);
+    };
+
     const renderLocation = () => {
         return (
-            <div className="mx-auto">
+            <div className="mx-auto" id={CHOOSE_LOCATION_STEP}>
                 <p className="text-center text-[#020817] font-medium">Pilih Cabang</p>
                 <div className="grid grid-cols-3 mx-auto gap-4 mt-3">
                     {locations?.map((item, i) => {
                         return (
                             <div
                                 key={i}
-                                onClick={() =>
+                                onClick={() => {
                                     setFormValue({
                                         locationName: item.locationName,
                                         locationId: item.locationId,
-                                    })
-                                }
+                                    });
+                                    onClickStep(CHOOSE_LOCATION_STEP);
+                                }}
                                 className={cn(
                                     'flex items-center cursor-pointer justify-center col-span-1 bg-[#FFFFFF] border-2 border-[#E2E8F0] p-4 rounded-lg gap-4',
                                     'hover:border-[#CE6439]',
@@ -73,16 +132,17 @@ const ScheduleSelection = () => {
         if (!locationName) return null;
 
         return (
-            <div className="mx-auto">
+            <div className="mx-auto" id={CHOOSE_DAY_STEP}>
                 <p className="text-center text-[#020817] font-medium">Pilih Hari</p>
                 <div className="grid grid-cols-6 mx-auto gap-4 mt-3">
                     {DAY.map(day => {
                         return (
                             <div
                                 key={day}
-                                onClick={() =>
-                                    setFirstSessionSchedule({ dayOfWeek: day as DayOfWeekType })
-                                }
+                                onClick={() => {
+                                    setFirstSessionSchedule({ dayOfWeek: day as DayOfWeekType });
+                                    onClickStep(CHOOSE_DAY_STEP);
+                                }}
                                 className={cn(
                                     'flex items-center cursor-pointer justify-center col-span-1 bg-[#FFFFFF] border-2 border-[#E2E8F0] px-4 py-3 rounded-lg gap-4',
                                     'hover:border-[#CE6439]',
@@ -105,7 +165,7 @@ const ScheduleSelection = () => {
         if (!firstSession.dayOfWeek) return null;
 
         return (
-            <div className="mx-auto">
+            <div className="mx-auto" id={CHOOSE_TIME_STEP}>
                 <p className="text-center text-[#020817] font-medium">Pilih Waktu</p>
                 <div className="grid grid-cols-3 mx-auto gap-4 mt-3">
                     {START_TIME.map((time, i) => {
@@ -128,6 +188,7 @@ const ScheduleSelection = () => {
                                         teacherScheduleId: -1,
                                         teacherMemberName: '',
                                     });
+                                    onClickStep(CHOOSE_TIME_STEP);
                                 }}
                                 className={cn(
                                     'flex items-center cursor-pointer justify-center col-span-1 bg-[#FFFFFF] border-2 border-[#E2E8F0] p-4 rounded-lg gap-4',
@@ -150,14 +211,13 @@ const ScheduleSelection = () => {
         );
     };
 
-    console.log(firstSession);
     const renderMentor = () => {
         if (!firstSession.dayOfWeek || !firstSession.startTime || !firstSession.endTime) {
             return null;
         }
 
         return (
-            <div className="mx-auto">
+            <div className="mx-auto max-w-7xl" id={CHOOSE_MENTOR_STEP}>
                 <p className="text-center text-[#020817] font-medium">
                     Pilih mentor yang tersedia di{' '}
                     <span className="font-bold text-[#CE6439]">Cabang {locationName}</span>, pada
@@ -172,7 +232,7 @@ const ScheduleSelection = () => {
                     </span>
                 </p>
 
-                <div className="grid grid-cols-2 mx-auto gap-4 mt-3">
+                <div className="grid grid-cols-3 mx-auto  gap-4 mt-3">
                     {data
                         ?.filter(
                             item =>
@@ -181,9 +241,13 @@ const ScheduleSelection = () => {
                             // formValue.taughtBy.includes(item.alias)
                         )
                         .map((item, i) => {
+                            const mentor = mentors.find(
+                                m => m.nameWithoutDegree === item.teacherMemberName
+                            );
+
                             return (
                                 <div
-                                    key={i}
+                                    key={mentor?.name}
                                     onClick={() => {
                                         setFirstSessionSchedule({
                                             teacherMemberId: item.teacherMemberId,
@@ -194,16 +258,39 @@ const ScheduleSelection = () => {
                                             teacherMemberId: item.teacherMemberId,
                                             teacherMemberName: item.teacherMemberName,
                                         });
+                                        onClickStep(CHOOSE_MENTOR_STEP);
                                     }}
                                     className={cn(
-                                        'flex items-center cursor-pointer justify-center col-span-1 bg-[#FFFFFF] border-2 border-[#E2E8F0] p-4 rounded-lg gap-4',
+                                        'col-span-1 bg-[#FFFFFF] border-2 gap-4 group rounded-md overflow-hidden',
                                         'hover:border-[#CE6439]',
                                         firstSession.teacherMemberId === item.teacherMemberId &&
                                             'border-[#CE6439]'
                                     )}
                                 >
-                                    <div className="flex items-center justify-center size-8 rounded-full shrink-0 bg-[#E5E7EB]"></div>
-                                    <p className="text-sm">{item.teacherMemberName}</p>
+                                    <MentorImage
+                                        mentor={{
+                                            name: item.teacherMemberName,
+                                            role: mentor?.role || '',
+                                            bio: mentor?.bio || '',
+                                            imageUrl: mentor?.imageUrl || '',
+                                        }}
+                                    />
+                                    <p
+                                        className={cn(
+                                            'text-lg cursor-pointer relative flex items-center justify-center text-center p-4 w-full'
+                                        )}
+                                    >
+                                        <span
+                                            className={cn(
+                                                'relative z-20',
+                                                firstSession.teacherMemberId ===
+                                                    item.teacherMemberId &&
+                                                    'after:absolute after:-bottom-1 after:left-0 after:right-0 after:h-1 after:rounded-full after:bg-primary after:content-[""]'
+                                            )}
+                                        >
+                                            {item.teacherMemberName}
+                                        </span>
+                                    </p>
                                 </div>
                             );
                         })}
@@ -216,7 +303,7 @@ const ScheduleSelection = () => {
         if (!firstSession.teacherMemberName) return null;
 
         return (
-            <p className="text-center text-[#020817] font-medium">
+            <p className="text-center text-[#020817] font-medium" id={CHOOSE_SECOND_DAY_STEP}>
                 Pilih jadwal untuk sesi kedua pada bersama{' '}
                 <span className="font-bold text-[#CE6439]">{firstSession.teacherMemberName}</span>
             </p>
@@ -239,10 +326,14 @@ const ScheduleSelection = () => {
                         return (
                             <div
                                 key={day}
-                                onClick={() =>
-                                    !isDisabled &&
-                                    setSecondSessionSchedule({ dayOfWeek: day as DayOfWeekType })
-                                }
+                                onClick={() => {
+                                    if (!isDisabled) {
+                                        setSecondSessionSchedule({
+                                            dayOfWeek: day as DayOfWeekType,
+                                        });
+                                        onClickStep(CHOOSE_SECOND_DAY_STEP);
+                                    }
+                                }}
                                 className={cn(
                                     'flex items-center cursor-pointer justify-center col-span-1 bg-[#FFFFFF] border-2 border-[#E2E8F0] px-4 py-3 rounded-lg gap-4',
                                     isDisabled
@@ -267,7 +358,7 @@ const ScheduleSelection = () => {
         if (!secondSession.dayOfWeek) return null;
 
         return (
-            <div className="mx-auto">
+            <div className="mx-auto" id={CHOOSE_SECOND_TIME_STEP}>
                 <p className="text-center text-[#020817] font-medium">Pilih Waktu</p>
                 <div className="grid grid-cols-3 mx-auto gap-4 mt-3">
                     {START_TIME.map((time, i) => {
@@ -279,14 +370,16 @@ const ScheduleSelection = () => {
                         return (
                             <div
                                 key={i}
-                                onClick={() =>
-                                    !isDisabled &&
-                                    setSecondSessionSchedule({
-                                        startTime: time,
-                                        endTime: END_TIME[i],
-                                        teacherScheduleId: currentSchedule?.scheduleId,
-                                    })
-                                }
+                                onClick={() => {
+                                    if (!isDisabled) {
+                                        setSecondSessionSchedule({
+                                            startTime: time,
+                                            endTime: END_TIME[i],
+                                            teacherScheduleId: currentSchedule?.scheduleId,
+                                        });
+                                        onClickStep(CHOOSE_SECOND_TIME_STEP);
+                                    }
+                                }}
                                 className={cn(
                                     'flex items-center cursor-pointer justify-center col-span-1 bg-[#FFFFFF] border-2 border-[#E2E8F0] p-4 rounded-lg gap-4',
                                     isDisabled

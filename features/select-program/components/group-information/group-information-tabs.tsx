@@ -24,8 +24,16 @@ const GroupInformationTabs = () => {
             </TabsList>
 
             {[
-                { title: 'Materi Pembelajaran', items: materi?.split('\n'), id: 'materi' },
-                { title: 'Capaian Pembelajaran', items: capaian?.split('\n'), id: 'capaian' },
+                {
+                    title: 'Materi Pembelajaran',
+                    items: materi?.split('\n').filter(item => item !== ''),
+                    id: 'materi',
+                },
+                {
+                    title: 'Capaian Pembelajaran',
+                    items: capaian?.split('\n').filter(item => item !== ''),
+                    id: 'capaian',
+                },
             ].map(item => (
                 <TabContent
                     key={item.id}

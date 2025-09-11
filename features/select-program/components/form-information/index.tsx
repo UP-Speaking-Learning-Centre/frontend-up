@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { FILL_PERSONAL_INFORMATION_STEP } from '@/constants/program-selections';
 import useProgramSelection from '../../hooks/use-program-selection';
 import Title from '../title';
@@ -10,89 +10,144 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import useProgramSelectionStore from '../../stores/program-selection-store';
 import useSubmitRegistrationMutation from '../../queries/use-submit-registration';
+import { PROGRAM_SELECTION_STEPS, REGISTER_STEPS } from '@/constants/program-selections';
+import useRegisterFromPlacementMutation from '../../queries/use-submit-registration-from-placement';
+import { Dialog } from '@/components/ui/dialog';
+import SuccessDialog from './success-dialog';
+import usePlacementTestGuestStore from '../../stores/placemenet-test-guest-store';
+import Overlay from '@/components/layout/overlay';
 
-const FormInformation = () => {
-    const { isStepDisplayed, handleNextStepAction } = useProgramSelection();
+const FormInformation = ({
+    steps,
+}: {
+    steps?: typeof PROGRAM_SELECTION_STEPS | typeof REGISTER_STEPS;
+}) => {
+    const { isStepDisplayed, handleNextStepAction } = useProgramSelection(steps);
     const formValue = useProgramSelectionStore(s => s.formValue);
-    const setFormValue = useProgramSelectionStore(s => s.setFormValue);
-    const { mutate } = useSubmitRegistrationMutation();
+    const setStudentInfo = useProgramSelectionStore(s => s.setStudentInfo);
+    const testSessionId = usePlacementTestGuestStore(s => s.testSessionId);
+    const { mutate, isPending: isPendingFromProgram } = useSubmitRegistrationMutation();
+    const { mutate: mutateRegisterFromPlacement, isPending: isPendingFromPlacement } =
+        useRegisterFromPlacementMutation();
+    const [isSuccess, setIsSuccess] = useState(false);
 
     if (!isStepDisplayed(FILL_PERSONAL_INFORMATION_STEP)) {
         return null;
     }
 
+    const onSuccess = () => {
+        setIsSuccess(true);
+    };
+
+    const handleSave = () => {
+        if (steps === REGISTER_STEPS) {
+            mutateRegisterFromPlacement(
+                {},
+                {
+                    onSuccess,
+                }
+            );
+        } else {
+            mutate(
+                {},
+                {
+                    onSuccess,
+                }
+            );
+        }
+    };
+
+    const getTitle = () => {
+        if (steps === REGISTER_STEPS) {
+            return 'Formulir Pendaftaran';
+        }
+        return 'Amankan Promo!';
+    };
+
+    const getDescription = () => {
+        if (steps === REGISTER_STEPS) {
+            return 'Silahkan isi data diri anda';
+        }
+        return 'Silahkan isi formulir supaya anda mendapatkan antrian teratas untuk mendapatkan promo';
+    };
+
     return (
-        <div
-            id={FILL_PERSONAL_INFORMATION_STEP}
-            className="h-[calc(100vh-64px)] flex flex-col justify-center"
-        >
-            <Title
-                title="Amankan Promo!"
-                description="Silahkan isi formulir supaya anda mendapatkan antrian teratas untuk mendapatkan promo"
-            />
-            <Card className="w-full md:w-[500px] mx-auto mt-8 p-6">
-                {/* <form> */}
-                <div>
-                    <Label>Nama Student</Label>
-                    <Input
-                        className="mt-1"
-                        value={formValue.personalInformation.name}
-                        onChange={e =>
-                            setFormValue({
-                                personalInformation: {
-                                    ...formValue.personalInformation,
+        <>
+            <Overlay opacity={30} show={isPendingFromProgram || isPendingFromPlacement} />
+
+            <div
+                id={FILL_PERSONAL_INFORMATION_STEP}
+                className="h-[calc(100vh-64px)] flex flex-col justify-center"
+            >
+                <Title title={getTitle()} description={getDescription()} />
+
+                <Card className="w-full md:w-[500px] mx-auto mt-8 p-6">
+                    {/* <form> */}
+                    <div>
+                        <Label>Nama Student*</Label>
+                        <Input
+                            className="mt-1"
+                            value={formValue.personalInformation.name}
+                            onChange={e =>
+                                setStudentInfo({
                                     name: e.target.value,
-                                },
-                            })
-                        }
-                    />
-                </div>
+                                })
+                            }
+                        />
+                    </div>
 
-                <div className="mt-6">
-                    <Label>No HP (WhatsApp)</Label>
-                    <Input
-                        className="mt-1"
-                        value={formValue.personalInformation.phone}
-                        onChange={e =>
-                            setFormValue({
-                                personalInformation: {
-                                    ...formValue.personalInformation,
+                    <div className="mt-6">
+                        <Label>No HP (WhatsApp)*</Label>
+                        <Input
+                            className="mt-1"
+                            value={formValue.personalInformation.phone}
+                            onChange={e =>
+                                setStudentInfo({
                                     phone: e.target.value,
-                                },
-                            })
-                        }
-                    />
-                </div>
+                                })
+                            }
+                        />
+                    </div>
 
-                <div className="mt-6">
-                    <Label>Username Instagram (Opsional)</Label>
-                    <Input
-                        className="mt-1"
-                        value={formValue.personalInformation.instagram}
-                        onChange={e =>
-                            setFormValue({
-                                personalInformation: {
-                                    ...formValue.personalInformation,
+                    <div className="mt-6">
+                        <Label>Username Instagram (Opsional)</Label>
+                        <Input
+                            className="mt-1"
+                            value={formValue.personalInformation.instagram}
+                            onChange={e =>
+                                setStudentInfo({
                                     instagram: e.target.value,
-                                },
-                            })
-                        }
-                    />
-                </div>
+                                })
+                            }
+                        />
+                    </div>
 
-                <div className="mt-12">
-                    <Button
-                        className="w-full"
-                        onClick={() => {
-                            mutate();
-                        }}
-                    >
-                        Simpan
-                    </Button>
-                </div>
-                {/* </form> */}
-            </Card>
-        </div>
+                    <div className="mt-12">
+                        <Button
+                            className="w-full"
+                            disabled={
+                                isPendingFromProgram ||
+                                isPendingFromPlacement ||
+                                !formValue.personalInformation.name ||
+                                !formValue.personalInformation.phone
+                            }
+                            onClick={() => {
+                                handleSave();
+                            }}
+                        >
+                            Simpan
+                        </Button>
+                    </div>
+                    {/* </form> */}
+                </Card>
+            </div>
+
+            <SuccessDialog
+                open={isSuccess}
+                onOpenChange={setIsSuccess}
+                isFromPlacement={steps === REGISTER_STEPS}
+            />
+        </>
     );
 };
 

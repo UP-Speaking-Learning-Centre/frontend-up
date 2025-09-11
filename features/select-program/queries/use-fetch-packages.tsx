@@ -34,9 +34,7 @@ const dummy = [
         id: 2,
         name: 'Private',
         description: 'Siswa dengan target spesifik (misal interview, TOEFL/IELTS, presentasi)',
-        points: `Jumlah murid: 5–10 orang\nFokus belajar: Dinamis mengikuti kurikulum, ada diskusi kelompok kecil
-\nFleksibilitas waktu: Relatif tetap (disesuaikan dengan jadwal kelompok)\nKelas ganti: Bisa sit-in di grup lain pada minggu sama / ikut kelas tambahan
-\nUjian: Shooting 1x/semester
+        points: `Jumlah murid: 2 orang\nFokus belajar: Fokus penuh ke kebutuhan siswa\nFleksibilitas waktu: Relatif tetap (disesuaikan dengan kelompok kecil)\nKelas ganti: Bebas reschedule + bisa sit-in\nUjian: Shooting 2x/semester
 `,
         prices: [
             {
@@ -58,10 +56,8 @@ const dummy = [
     {
         id: 3,
         name: 'Exclusive',
-        description: ' Yang butuh hasil cepat, layanan premium, atau eksekutif yang sibuk',
-        points: `Jumlah murid: 5–10 orang\nFokus belajar: Dinamis mengikuti kurikulum, ada diskusi kelompok kecil
-\nFleksibilitas waktu: Relatif tetap (disesuaikan dengan jadwal kelompok)\nKelas ganti: Bisa sit-in di grup lain pada minggu sama / ikut kelas tambahan
-\nUjian: Shooting 1x/semester
+        description: 'Yang butuh hasil cepat, layanan premium, atau eksekutif yang sibuk',
+        points: `Jumlah murid: 1 orang\nFokus belajar: Sangat personal, kurikulum bisa customized\nFleksibilitas waktu: Sangat fleksibel sesuai permintaan siswa & kesepakatan pengajar\nKelas ganti: Bebas reschedule + bisa sit-in\nUjian: Shooting 3x/semester
 `,
         prices: [
             {
@@ -90,24 +86,14 @@ const fetchPackages = async (): Promise<PackageType[]> => {
 };
 
 const useFetchPackagesQuery = (): UseQueryResult<PackageType[], Error> => {
-    const {
-        programId: programIdFromStore,
-        groupId: groupIdFromStore,
-        levelId: levelIdFromStore,
-        gradeId: gradeIdFromStore,
-    } = useProgramSelectionStore(s => s.formValue);
+    const { programId: programIdFromStore, groupId: groupIdFromStore } = useProgramSelectionStore(
+        s => s.formValue
+    );
 
     const res = useQuery({
-        queryKey: [
-            'packages',
-            programIdFromStore,
-            groupIdFromStore,
-            levelIdFromStore,
-            gradeIdFromStore,
-        ],
+        queryKey: ['packages', programIdFromStore, groupIdFromStore],
         queryFn: () => fetchPackages(),
-        enabled:
-            !!programIdFromStore && !!groupIdFromStore && !!levelIdFromStore && !!gradeIdFromStore,
+        enabled: !!programIdFromStore && !!groupIdFromStore,
     });
 
     return res;

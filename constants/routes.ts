@@ -7,6 +7,8 @@ export const ROUTES = {
     faqTestimonials: '/faq-testimonials',
     login: '/login',
     chooseProgram: '/select-program',
+    placementTest: '/placement-test',
+    register: '/register',
 
     // Dashboard
     dashboard: '/dashboard',

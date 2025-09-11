@@ -11,15 +11,16 @@ const programs = [
         id: 1,
         name: 'School Program',
         description:
-            'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos',
-        imageUrl: '/school-program.svg',
+            'Dirancang khusus buat pelajar sekolah yang mau naik level English sekaligus lebih pede tampil di kelas maupun lomba.',
+        imageUrl: '/programs/school.svg',
         href: ROUTES.programs,
     },
     {
         id: 2,
         name: 'Regular / Adults Program',
-        description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem',
-        imageUrl: '/school-program.svg',
+        description:
+            'Cocok buat mahasiswa & dewasa yang pengen improve English untuk kerja, kuliah, atau sekadar biar makin lancar ngobrol sehari-hari.',
+        imageUrl: '/programs/adult.svg',
         href: ROUTES.programs,
     },
 ];

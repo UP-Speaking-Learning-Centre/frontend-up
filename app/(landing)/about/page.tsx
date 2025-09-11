@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import Mentor from '@/features/home/components/mentors';
 import { CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -46,75 +47,87 @@ const values = [
     },
 ];
 
-const mentors = [
+export const mentors = [
     {
         name: 'Mr. Rizky, S.T., MBA',
+        nameWithoutDegree: 'Mr. Rizky',
         role: 'Mama Bear (Speaking & TOEFL Mentor)',
         bio: 'Founder sekaligus mentor utama UP SLC, membimbing siswa dalam public speaking & TOEFL dengan pendekatan percaya diri dan fun.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/mr-rizky.jpg',
     },
     {
         name: 'Mr. Galang, S.Pd., M.Pd',
+        nameWithoutDegree: 'Mr. Galang',
         role: 'Speaking, TOEFL & High School Mentor',
         bio: 'Berpengalaman mendampingi siswa SMA dan profesional  dalam persiapan TOEFL & speaking, dengan gaya mengajar interaktif.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/mr-galang.jpg',
     },
     {
         name: 'Mr. Rafif, S.Pd',
+        nameWithoutDegree: 'Mr. Rafif',
         role: 'Speaking, TOEFL & High School Mentor',
         bio: 'Fokus mendukung siswa SMA untuk lebih pede dalam English akademik & komunikasi sehari-hari.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/mr-rafif.png',
     },
     {
         name: 'Ms. Nuraeni, S.Pd',
+        nameWithoutDegree: 'Ms. Nuraeni',
         role: 'Speaking, TOEFL & High School Mentor',
         bio: 'Spesialis speaking & TOEFL, dikenal sabar & mampu membangun kepercayaan diri siswa.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-nuraeni.jpg',
     },
     {
         name: 'Mr. Noval, S.Pd',
+        nameWithoutDegree: 'Mr. Noval',
         role: 'Mid & High School Mentor',
         bio: 'Mendampingi siswa SMP-SMA dengan pembelajaran English yang aplikatif & engaging.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/mr-noval',
     },
     {
         name: 'Ms. Lieken',
+        nameWithoutDegree: 'Ms. Lieken',
         role: 'Mid & High School Mentor',
         bio: 'Membimbing siswa dengan pendekatan kreatif agar nyaman belajar English di usia remaja.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-lieken.jpg',
     },
     {
         name: 'Ms. Binti',
+        nameWithoutDegree: 'Ms. Binti',
         role: 'Mid & High School Mentor',
         bio: 'Membimbing siswa dengan pendekatan kreatif agar nyaman belajar English di usia remaja.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-binti.jpg',
     },
     {
         name: 'Mr. Firdan, S.Pd',
+        nameWithoutDegree: 'Mr. Firdan',
         role: 'Elementary & Mid School Mentor',
         bio: 'Ahli membimbing anak-anak SD-SMP dengan metode playful & mudah dipahami.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/mr-firdan.jpg',
     },
     {
         name: 'Ms. Feby, S.Pd',
+        nameWithoutDegree: 'Ms. Feby',
         role: 'Elementary School Mentor',
         bio: 'Membantu anak-anak SD belajar English dengan fun activities & friendly approach.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-feby.HEIC',
     },
     {
         name: 'Ms. Puji, S.Pd',
+        nameWithoutDegree: 'Ms. Puji',
         role: 'Elementary & Mid School Mentor',
         bio: 'Mendampingi siswa SD-SMP dengan kombinasi belajar grammar & conversation praktis.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-puji.jpg',
     },
     {
         name: 'Ms. Denisa, S.Pd',
+        nameWithoutDegree: 'Ms. Ica',
         role: 'Elementary School Mentor',
         bio: 'Spesialis anak-anak SD, bikin kelas jadi seru & bikin anak makin pede ngomong English.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-ica.jpg',
     },
     {
         name: 'Ms. Sella, S.Pd',
+        nameWithoutDegree: 'Ms. Sella',
         role: 'Elementary & Mid School Mentor',
         bio: 'Mendampingi siswa SD-SMP dengan kombinasi belajar grammar & conversation praktis.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-sella.jpg',
@@ -226,30 +239,7 @@ export default function AboutPage() {
                     </div>
                     <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
                         {mentors.map(mentor => (
-                            <div
-                                key={mentor.name}
-                                className="bg-white rounded-xl flex flex-col overflow-hidden"
-                            >
-                                <div className="relative h-64 w-full">
-                                    <Image
-                                        className="object-cover"
-                                        src={mentor.imageUrl || '/placeholder.svg'}
-                                        alt={mentor.name}
-                                        fill
-                                    />
-                                </div>
-                                <div className="p-3 grow flex flex-col">
-                                    <div className="grow">
-                                        <h3 className="text-lg font-bold text-gray-900">
-                                            {mentor.name}
-                                        </h3>
-                                        <p className="text-sm font-medium text-[#CE6439]">
-                                            {mentor.role}
-                                        </p>
-                                    </div>
-                                    <p className="mt-3 text-sm text-gray-500">{mentor.bio}</p>
-                                </div>
-                            </div>
+                            <Mentor mentor={mentor} key={mentor.name} />
                         ))}
                     </div>
                     <div className="mt-12 flex justify-center">

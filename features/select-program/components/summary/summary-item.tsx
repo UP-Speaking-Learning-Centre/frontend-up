@@ -44,9 +44,17 @@ const SummaryItem = () => {
                 </div>
             </div>
             <div className="w-8/12 rounded-lg border-2 bg-white border-[#E2E8F0] flex flex-col items-center mx-auto">
-                <div className="px-6 py-4 border-b w-full border-[#E2E8F0] flex items-center gap-3">
-                    <Calendar className="text-[#CE6439] size-6" />
-                    <p className="font-semibold text-[#111827] text-lg">Jadwal Kelas</p>
+                <div className="px-6 py-4 border-b w-full border-[#E2E8F0] flex justify-between items-center gap-3">
+                    <div className="flex items-center gap-2">
+                        <Calendar className="text-[#CE6439] size-6" />
+                        <p className="font-semibold text-[#111827] text-lg">Jadwal Kelas</p>
+                    </div>
+                    <div className="text-[#4B5563] text-lg">
+                        Cabang:{' '}
+                        <span className="font-semibold text-[#111827]">
+                            {formValue.locationName}
+                        </span>
+                    </div>
                 </div>
                 <div className="p-6 grid grid-cols-2 gap-6 w-full">
                     <div className="col-span-1">

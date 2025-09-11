@@ -1,9 +1,15 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { ButtonOutline } from '@/components/ui/button-outline';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ROUTES } from '@/constants/routes';
+import useFetchGroupsQuery from '@/features/select-program/queries/use-fetch-groups';
+import { GroupType } from '@/types/programs-selection';
 import { BadgeCheck, BookOpen, Users, Clock, CreditCard } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
 const programs = [
     {
@@ -72,6 +78,22 @@ const steps = [
 ];
 
 export default function ProgramsPage() {
+    const {
+        isLoading: isLoadingGroupsSchool,
+        data: groupsSchool,
+        refetch: refetchGroupsSchool,
+    } = useFetchGroupsQuery('1');
+    const {
+        isLoading: isLoadingGroupsRegular,
+        data: groupsRegular,
+        refetch: refetchGroupsRegular,
+    } = useFetchGroupsQuery('2');
+
+    useEffect(() => {
+        refetchGroupsSchool();
+        refetchGroupsRegular();
+    }, []);
+
     return (
         <>
             {/* Hero Section */}
@@ -137,27 +159,42 @@ export default function ProgramsPage() {
                                             <div className="flex items-center gap-x-3">
                                                 <Clock className="h-5 w-5 text-[#CE6439]" />
                                                 <span className="text-sm font-medium text-gray-900">
-                                                    Duration: {program.duration}
+                                                    {program.duration}
                                                 </span>
                                             </div>
                                             <div className="flex items-center gap-x-3">
                                                 <Users className="h-5 w-5 text-[#CE6439]" />
                                                 <span className="text-sm font-medium text-gray-900">
-                                                    Format: {program.format}
+                                                    {program.format}
                                                 </span>
                                             </div>
                                         </div>
 
-                                        {/* <ul className="mt-8 space-y-2">
-                                            {program.features.map((feature, featureIdx) => (
-                                                <li key={featureIdx} className="flex items-start">
-                                                    <BadgeCheck className="h-5 w-5 flex-shrink-0 text-[#CE6439]" />
-                                                    <span className="ml-2 text-sm text-gray-500">
-                                                        {feature}
-                                                    </span>
-                                                </li>
-                                            ))}
-                                        </ul> */}
+                                        <div className="mt-8 text-sm">Tersedia untuk:</div>
+                                        {isLoadingGroupsSchool || isLoadingGroupsRegular ? (
+                                            <Skeleton className="h-4 w-24" />
+                                        ) : (
+                                            groupsSchool &&
+                                            groupsRegular && (
+                                                <ul className="mt-2 space-y-2">
+                                                    {[
+                                                        ...(program.id === 'school-program'
+                                                            ? (groupsSchool as GroupType[])
+                                                            : (groupsRegular as GroupType[])),
+                                                    ]?.map((group, groupIdx) => (
+                                                        <li
+                                                            key={groupIdx}
+                                                            className="flex items-start"
+                                                        >
+                                                            <BadgeCheck className="h-5 w-5 flex-shrink-0 text-[#CE6439]" />
+                                                            <span className="ml-2 text-sm text-gray-500">
+                                                                {group.name}
+                                                            </span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )
+                                        )}
                                     </div>
                                     <div className="mt-10">
                                         <Link href={ROUTES.chooseProgram}>

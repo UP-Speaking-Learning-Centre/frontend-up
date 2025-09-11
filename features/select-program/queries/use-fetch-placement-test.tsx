@@ -1,0 +1,30 @@
+import ENDPOINTS from '@/constants/endpoints';
+import api from '@/lib/api';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import usePlacementTestGuestStore from '../stores/placemenet-test-guest-store';
+import { PlacementTestResponse } from '@/types/placement-test';
+import { AxiosError } from 'axios';
+
+const fetchPlacementTest = async (data: { testId: number }): Promise<PlacementTestResponse> => {
+    const res = await api.post<PlacementTestResponse>(ENDPOINTS.fetchPlacementTest, data);
+    return res.data;
+};
+
+const useFetchPlacementTestMutation = (): UseMutationResult<
+    PlacementTestResponse,
+    AxiosError,
+    { testId: number }
+> => {
+    const setQuestions = usePlacementTestGuestStore(s => s.setQuestions);
+    const setTestSessionId = usePlacementTestGuestStore(s => s.setTestSessionId);
+
+    return useMutation({
+        mutationFn: (data: { testId: number }) => fetchPlacementTest(data),
+        onSuccess: data => {
+            setQuestions(data.questions);
+            setTestSessionId(data.testSessionId);
+        },
+    });
+};
+
+export default useFetchPlacementTestMutation;

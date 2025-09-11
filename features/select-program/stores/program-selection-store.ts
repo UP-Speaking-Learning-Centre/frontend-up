@@ -9,6 +9,7 @@ type ProgramSelectionStore = {
     setFormValue: (value: Partial<FormValue>) => void;
     setFirstSessionSchedule: (value: Partial<FormValue['schedule']['firstSession']>) => void;
     setSecondSessionSchedule: (value: Partial<FormValue['schedule']['secondSession']>) => void;
+    setStudentInfo: (value: Partial<FormValue['personalInformation']>) => void;
     hydrate: () => void;
 };
 
@@ -52,7 +53,7 @@ export type FormValue = {
     };
 };
 
-const formValue: FormValue = {
+export const initialFormValue: FormValue = {
     programId: 0,
     programName: '',
     groupId: 0,
@@ -94,7 +95,7 @@ const formValue: FormValue = {
 
 const useProgramSelectionStore = create<ProgramSelectionStore>()((set, get) => ({
     currentStep: 0,
-    formValue,
+    formValue: initialFormValue,
     setCurrentStep: (step: number) => {
         set({ currentStep: step });
         // localStorage.setItem('currentStep', step.toString());
@@ -125,6 +126,15 @@ const useProgramSelectionStore = create<ProgramSelectionStore>()((set, get) => (
                     ...getFormValue.schedule,
                     secondSession: { ...getFormValue.schedule.secondSession, ...value },
                 },
+            },
+        });
+    },
+    setStudentInfo: (value: Partial<FormValue['personalInformation']>) => {
+        const getFormValue = get().formValue;
+        set({
+            formValue: {
+                ...getFormValue,
+                personalInformation: { ...getFormValue.personalInformation, ...value },
             },
         });
     },

@@ -15,9 +15,9 @@ export type Question = {
     isCorrect?: boolean;
 };
 
-export type PlacementTest = {
+export type PlacementTestResponse = {
     questions: Question[];
-    sessionId: string;
+    testSessionId: string;
 };
 
 export interface ResponsePlacementTestStudent {

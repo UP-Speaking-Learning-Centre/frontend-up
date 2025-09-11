@@ -9,6 +9,35 @@ const GradeCards = () => {
     const { handleNextStepAction, formValue } = useProgramSelection();
     const { data: grades, isLoading } = useFetchGradesQuery();
 
+    const imageUrl = (idx: number) => {
+        if (idx === 9) {
+            return '/levels/1.svg';
+        }
+        if (idx === 8) {
+            return '/levels/2.svg';
+        }
+        if (idx === 6) {
+            return '/levels/3.svg';
+        }
+        if (idx === 4) {
+            return '/levels/4.png';
+        }
+        if (idx === 3) {
+            return '/levels/5.png';
+        }
+        if (idx === 2) {
+            return '/levels/6.svg';
+        }
+        if (idx === 1) {
+            return '/levels/7.svg';
+        }
+        if (idx === 0) {
+            return '/levels/8.svg';
+        }
+
+        return '/levels/8.svg';
+    };
+
     const renderContent = () => {
         if (isLoading) {
             return [...new Array(4)].map((_, i) => (
@@ -16,15 +45,15 @@ const GradeCards = () => {
             ));
         }
 
-        return grades?.map(item => {
+        return grades?.map((item, idx) => {
             const isGradeSelected = formValue.gradeId === item.id;
             return (
                 <Card
-                    className="basis-[calc(25%-18px)]"
+                    className="sm:basis-[calc(50%-18px)] xl:basis-[calc(25%-18px)]"
                     title={`${formValue.levelName} ${item.gradeNumber}`}
                     description={item.prerequisites}
                     key={item.id}
-                    imageUrl="/school-program.svg"
+                    imageUrl={imageUrl(idx)}
                     buttonLabel={isGradeSelected ? 'Grade terpilih!' : 'Pilih grade'}
                     buttonAction={() =>
                         handleNextStepAction({

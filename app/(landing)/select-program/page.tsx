@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -14,8 +14,21 @@ import {
     DialogTitle,
 } from '@/components/ui/dialog';
 import ProgramSelectionComponent from '@/features/select-program/components/program-selection-component';
+import { FORM_VALUE_KEY } from '@/features/placement-test/hooks/use-placement-test';
+import useProgramSelectionStore, {
+    initialFormValue,
+} from '@/features/select-program/stores/program-selection-store';
 
 export default function SelectProgramPage() {
+    const setFormValue = useProgramSelectionStore(s => s.setFormValue);
+    const setCurrentStep = useProgramSelectionStore(s => s.setCurrentStep);
+
+    useEffect(() => {
+        setCurrentStep(0);
+        setFormValue(initialFormValue);
+        localStorage.removeItem(FORM_VALUE_KEY);
+    }, []);
+
     return (
         <>
             <div className="relative isolate overflow-hidden bg-[#254116] py-24 sm:py-32">

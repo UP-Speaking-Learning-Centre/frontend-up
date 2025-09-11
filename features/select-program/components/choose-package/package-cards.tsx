@@ -1,7 +1,12 @@
 import React from 'react';
 import Card from '../card';
 import useProgramSelection from '../../hooks/use-program-selection';
-import { CHOOSE_GROUP_STEP, CHOOSE_PACKAGE_STEP } from '@/constants/program-selections';
+import {
+    CHOOSE_GROUP_STEP,
+    CHOOSE_PACKAGE_STEP,
+    PROGRAM_SELECTION_STEPS,
+    REGISTER_STEPS,
+} from '@/constants/program-selections';
 import useFetchGroupsQuery from '../../queries/use-fetch-groups';
 import { Skeleton } from '@/components/ui/skeleton';
 import useFetchPackagesQuery from '../../queries/use-fetch-packages';
@@ -9,8 +14,12 @@ import { cn } from '@/lib/utils';
 import { CheckCircle2Icon } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 
-const PackageCards = () => {
-    const { handleNextStepAction, formValue } = useProgramSelection();
+const PackageCards = ({
+    steps = PROGRAM_SELECTION_STEPS,
+}: {
+    steps?: typeof PROGRAM_SELECTION_STEPS | typeof REGISTER_STEPS;
+}) => {
+    const { handleNextStepAction, formValue } = useProgramSelection(steps);
     const { data: packages, isLoading } = useFetchPackagesQuery();
 
     const renderContent = () => {

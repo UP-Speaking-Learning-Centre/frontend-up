@@ -4,16 +4,17 @@ import React from 'react';
 import { useDashboardLayoutStore } from '@/stores/dashboard-layout-store';
 import { cn } from '@/lib/utils';
 
-const Overlay = () => {
+const Overlay = ({ opacity = 100, show = false }: { opacity?: number; show?: boolean }) => {
     const isDashboardReady = useDashboardLayoutStore(state => state.isDashboardReady);
 
     return (
         <div
             className={cn(
                 'fixed inset-0 bg-white z-[99] flex items-center justify-center gap-3 transition-all duration-700',
-                isDashboardReady
+                isDashboardReady && !show
                     ? 'opacity-0 pointer-events-none'
-                    : 'opacity-100 pointer-events-auto'
+                    : 'opacity-100 pointer-events-auto',
+                `bg-opacity-${opacity}`
             )}
         >
             <Image

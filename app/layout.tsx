@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
         <html lang="en">
-            <body className={cn(inter.className, outfit.className, roboto.className)}>
+            <body className={cn(outfit.className)}>
                 <TanstackProvider>
                     <main className="flex-1">{children}</main>
                 </TanstackProvider>

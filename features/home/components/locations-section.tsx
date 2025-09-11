@@ -32,10 +32,11 @@ const locations = [
 
 export default function LocationsSection() {
     return (
-        <div className="bg-gray-100 py-24 sm:py-32">
+        <div className="bg-secondary py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl text-center">
                     <SectionTitle
+                        variant="white"
                         title="Our Locations"
                         subtitle="Find Us Everywhere"
                         description="Gak perlu jauh-jauh! UP! sudah hadir di beberapa titik strategis biar lebih dekat sama Moms Dad & anak. Tinggal pilih lokasi terdekat dan mulai perjalanan upgrade bahasa Inggrissekarang."

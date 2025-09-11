@@ -10,6 +10,35 @@ const LevelCards = () => {
     const { handleNextStepAction, formValue } = useProgramSelection();
     const { data: levels, isLoading } = useFetchLevelsQuery();
 
+    const imageUrl = (idx: number) => {
+        if (idx === 0) {
+            return '/levels/1.svg';
+        }
+        if (idx === 1) {
+            return '/levels/2.svg';
+        }
+        if (idx === 2) {
+            return '/levels/3.svg';
+        }
+        if (idx === 3) {
+            return '/levels/4.png';
+        }
+        if (idx === 4) {
+            return '/levels/5.png';
+        }
+        if (idx === 5) {
+            return '/levels/6.svg';
+        }
+        if (idx === 6) {
+            return '/levels/7.svg';
+        }
+        if (idx === 7) {
+            return '/levels/8.svg';
+        }
+
+        return '/levels/8.svg';
+    };
+
     const renderContent = () => {
         if (isLoading) {
             return [...new Array(4)].map((_, i) => (
@@ -19,15 +48,15 @@ const LevelCards = () => {
 
         return (
             <>
-                {levels?.map(item => {
+                {levels?.map((item, idx) => {
                     const isLevelSelected = formValue.levelId === item.id;
                     return (
                         <Card
-                            className="basis-[calc(25%-18px)]"
+                            className="sm:basis-[calc(50%-18px)] xl:basis-[calc(25%-18px)]"
                             title={item.name}
                             description={item.description}
                             key={item.id}
-                            imageUrl="/school-program.svg"
+                            imageUrl={imageUrl(idx)}
                             buttonLabel={isLevelSelected ? 'Level terpilih!' : 'Pilih level'}
                             buttonAction={() =>
                                 handleNextStepAction({

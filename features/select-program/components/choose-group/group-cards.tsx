@@ -4,11 +4,42 @@ import useProgramSelection from '../../hooks/use-program-selection';
 import { CHOOSE_GROUP_STEP } from '@/constants/program-selections';
 import useFetchGroupsQuery from '../../queries/use-fetch-groups';
 import { Skeleton } from '@/components/ui/skeleton';
+import useFetchPlacementTestMutation from '../../queries/use-fetch-placement-test';
 
 const GroupCards = () => {
     const { handleNextStepAction, formValue } = useProgramSelection();
+    const { mutate } = useFetchPlacementTestMutation();
 
     const { data: groups, isLoading } = useFetchGroupsQuery();
+
+    const imageUrl = (idx: number) => {
+        if (formValue.programId === 1) {
+            if (idx === 0) {
+                return '/groups/1.svg';
+            }
+            if (idx === 1) {
+                return '/groups/2.svg';
+            }
+            if (idx === 2) {
+                return '/groups/3.svg';
+            }
+            if (idx === 3) {
+                return '/groups/4.svg';
+            }
+        } else {
+            if (idx === 0) {
+                return '/groups/5.svg';
+            }
+            if (idx === 1) {
+                return '/groups/6.svg';
+            }
+            if (idx === 2) {
+                return '/groups/7.svg';
+            }
+        }
+
+        return '/groups/1.svg';
+    };
 
     const renderContent = () => {
         if (isLoading) {
@@ -17,22 +48,23 @@ const GroupCards = () => {
             ));
         }
 
-        return groups?.map(item => {
+        return groups?.map((item, idx) => {
             const isGroupSelected = formValue.groupId === item.id;
             return (
                 <Card
-                    className="basis-[calc(25%-18px)]"
+                    className="sm:basis-[calc(50%-18px)] xl:basis-[calc(25%-18px)]"
                     title={item.name}
                     description={`Group tersedia`}
                     key={item.name}
-                    imageUrl="/school-program.svg"
+                    imageUrl={imageUrl(idx)}
                     buttonLabel={isGroupSelected ? 'Group terpilih!' : 'Pilih group'}
-                    buttonAction={() =>
+                    buttonAction={() => {
                         handleNextStepAction({
                             stepId: CHOOSE_GROUP_STEP,
                             formValue: { groupId: item.id, groupName: item.name },
-                        })
-                    }
+                        });
+                        mutate({ testId: item.id });
+                    }}
                     selected={isGroupSelected}
                 />
             );

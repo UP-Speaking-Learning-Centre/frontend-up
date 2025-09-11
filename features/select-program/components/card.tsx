@@ -29,7 +29,7 @@ const Card = ({
                 className
             )}
         >
-            <div className="relative h-32">
+            <div className="relative h-64">
                 <Image
                     src={imageUrl || '/placeholder.svg'}
                     alt={title}

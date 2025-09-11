@@ -1,0 +1,46 @@
+import ENDPOINTS from '@/constants/endpoints';
+import api from '@/lib/api';
+import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import useProgramSelectionStore from '../stores/program-selection-store';
+import usePlacementTestGuestStore from '../stores/placemenet-test-guest-store';
+import useSubmitRegistrationMutation from './use-submit-registration';
+
+interface SubmitRegistrationProps {
+    studentName: string;
+    phoneNumber: string;
+    instagram: string;
+    programId: number;
+    groupId: number;
+    packageId: number;
+    testSessionId: string;
+}
+
+const submitRegistration = async (data: SubmitRegistrationProps) => {
+    const res = await api.post(ENDPOINTS.submitRegistrationFromPlacement, data);
+    return res.data;
+};
+
+const useRegisterFromPlacementMutation = (): UseMutationResult<
+    SubmitRegistrationProps,
+    unknown,
+    {}
+> => {
+    const formValue = useProgramSelectionStore(s => s.formValue);
+    const testSessionId = usePlacementTestGuestStore(s => s.testSessionId);
+
+    const payload = {
+        phoneNumber: formValue.personalInformation.phone,
+        instagram: formValue.personalInformation.instagram,
+        studentName: formValue.personalInformation.name,
+        programId: Number(formValue.programId),
+        groupId: Number(formValue.groupId),
+        packageId: Number(formValue.packageId),
+        testSessionId: testSessionId,
+    };
+
+    return useMutation({
+        mutationFn: () => submitRegistration(payload),
+    });
+};
+
+export default useRegisterFromPlacementMutation;

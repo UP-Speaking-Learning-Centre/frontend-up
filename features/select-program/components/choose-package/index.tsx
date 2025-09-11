@@ -3,7 +3,7 @@ import { CHOOSE_PACKAGE_STEP } from '@/constants/program-selections';
 import Title from '../title';
 import PackageCards from './package-cards';
 
-const ChooseLevel = () => {
+const ChoosePackage = () => {
     const { isStepDisplayed } = useProgramSelection();
 
     if (!isStepDisplayed(CHOOSE_PACKAGE_STEP)) {
@@ -25,4 +25,4 @@ const ChooseLevel = () => {
     );
 };
 
-export default ChooseLevel;
+export default ChoosePackage;
