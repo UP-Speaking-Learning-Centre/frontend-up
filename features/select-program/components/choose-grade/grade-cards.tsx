@@ -61,6 +61,7 @@ const GradeCards = () => {
                             formValue: {
                                 gradeId: item.id,
                                 gradeName: `${formValue.levelName} ${item.gradeNumber}`,
+                                taughtBy: item.taughtBy.map(taughtBy => taughtBy.name),
                             },
                         })
                     }

@@ -61,6 +61,7 @@ export type AvailableScheduleType = {
     teacherMemberId: number;
     teacherMemberName: string;
     alias: string;
+    taughtBy: string;
     isCoordinator: boolean;
     locationId: number;
     locationName: string;

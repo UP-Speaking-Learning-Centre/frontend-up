@@ -219,8 +219,8 @@ const ScheduleSelection = () => {
         const availableMentor = data?.filter(
             item =>
                 item.dayOfWeek === firstSession.dayOfWeek &&
-                item.startTime === firstSession.startTime
-            // formValue.taughtBy.includes(item.alias)
+                item.startTime === firstSession.startTime &&
+                formValue.taughtBy.includes(item.alias || item.taughtBy)
         );
 
         console.log(availableMentor);
@@ -246,7 +246,7 @@ const ScheduleSelection = () => {
                             <div className="mx-auto w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
                                 <X className="w-8 h-8 text-red-600" />
                             </div>
-                            <p>Tidak ada mentor yang tersedia</p>
+                            <p className="text-red-600">Tidak ada mentor yang tersedia</p>
                         </div>
                     ) : (
                         <>
