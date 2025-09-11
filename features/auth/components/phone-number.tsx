@@ -32,6 +32,7 @@ const PhoneNumber = () => {
                                 Phone Number
                             </Label>
                             <Input
+                                placeholder='e.g. 08123456789'
                                 {...register(PHONE)}
                                 className={cn(errors.phone && 'border-red-500')}
                             />

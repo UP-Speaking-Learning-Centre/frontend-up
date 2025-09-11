@@ -2,18 +2,32 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Check, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import useDetailPlacementTest from '../hooks/use-detail-placement-test';
+import useSubmitMark from '../queries/use-submit-mark';
+import { toast, Toaster } from 'sonner';
 
 const QuestionDisplay = () => {
     const { questions, currentQuestionIndex, totalQuestions, setState } = useDetailPlacementTest();
     const currentQuestion = questions[currentQuestionIndex];
-    const handleGradeQuestion = (question: any, isCorrect: boolean,isGraded:boolean) => {
+    const { mutateAsync } = useSubmitMark();
+    const handleGradeQuestion = (question: any, isCorrect: boolean, isGraded: boolean) => {
+        mutateAsync({
+            check: isCorrect ? 'correct' : 'incorrect',
+            questionId: question.questionId,
+        })
+            .then(res => toast.info(res.message, { position: 'top-center' }))
+            .catch(() =>
+                toast.error('Failed to update, please try again later', { position: 'top-center' })
+            );
         setState({
-            questions: questions.map(q => (q.questionId === question.questionId ? { ...q, isCorrect,isGraded } : q)),
+            questions: questions.map(q =>
+                q.questionId === question.questionId ? { ...q, isCorrect, isGraded } : q
+            ),
         });
     };
 
     return (
         <Card>
+            <Toaster />
             <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                     <span>
@@ -115,7 +129,7 @@ const QuestionDisplay = () => {
                                             ? 'bg-green-600 hover:bg-green-700'
                                             : 'border-green-300 text-green-600 hover:bg-green-50'
                                     }`}
-                                    onClick={() => handleGradeQuestion(currentQuestion, true,true)}
+                                    onClick={() => handleGradeQuestion(currentQuestion, true, true)}
                                 >
                                     <Check className="w-4 h-4 mr-2" />
                                     Correct
@@ -129,7 +143,9 @@ const QuestionDisplay = () => {
                                             ? 'bg-red-600 hover:bg-red-700'
                                             : 'border-red-300 text-red-600 hover:bg-red-50'
                                     }`}
-                                    onClick={() => handleGradeQuestion(currentQuestion, false,true)}
+                                    onClick={() =>
+                                        handleGradeQuestion(currentQuestion, false, true)
+                                    }
                                 >
                                     <X className="w-4 h-4 mr-2" />
                                     Incorrect

@@ -122,7 +122,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage }: ITable<T>) => 
                                                 colSpan={columns.length}
                                                 className="p-4 text-center"
                                             >
-                                                No data available
+                                                -
                                             </td>
                                         </tr>
                                     )}

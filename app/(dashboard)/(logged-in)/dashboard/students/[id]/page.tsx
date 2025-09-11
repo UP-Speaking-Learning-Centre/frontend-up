@@ -19,8 +19,8 @@ import { BookOpen, Calendar, Home, User } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
-    const { data: students, isLoading: isLoadingStudents } = useGetProfile();
-    const { data, isLoading } = useGetProfileById();
+    const { data: students } = useGetProfile();
+    const { data } = useGetProfileById();
     const router = useRouter();
 
     return (

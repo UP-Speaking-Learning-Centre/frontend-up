@@ -43,3 +43,28 @@ export interface ResponsePlacementTest {
     submittedAt: string;
     qa: Question[];
 }
+
+export interface ResponseTeacherSchedule {
+    day: string;
+    start: string;
+    end: string;
+    isFull: boolean;
+}
+
+export interface ResponseTeacher {
+    memberId: number;
+    memberName: string;
+    alias: string;
+    schedules: ResponseTeacherSchedule[];
+}
+
+export interface ResponseGrade {
+    id: number;
+    gradeNumber: number;
+    prerequisites: string;
+}
+export interface ResponseLevel {
+    id: number;
+    name: string;
+    prerequisites: string;
+}

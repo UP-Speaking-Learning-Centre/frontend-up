@@ -13,7 +13,7 @@ interface StudentsStore {
     filters: {
         group: { id: number; name: string }[];
         mentors: { id: number; name: string }[];
-        searchQuery: string;
+        searchQuery: string | undefined;
         status: { id: number; name: string }[];
     };
 
@@ -42,7 +42,7 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
     filters: {
         group: [],
         mentors: [],
-        searchQuery: '',
+        searchQuery: undefined,
         status: [],
     },
     filterPlacementTest: {

@@ -6,8 +6,10 @@ import { FileText, LogOut, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SidebarItem from './item';
 import { ROUTES } from '@/constants/routes';
-import { logout } from '@/features/auth/utils/cookies.helper';
 import useAuthStore from '@/features/auth/stores/authStore';
+import { useRouter } from 'next/navigation';
+import { logout } from '@/features/auth/utils/auth-server.helper';
+import { isAdmin } from '@/features/auth/utils/auth-client.helper';
 
 const sidebarItemsAdmin = [
     { href: ROUTES.adminStudents, label: 'List Students', icon: Users },
@@ -28,6 +30,7 @@ const sidebarItemsUser = [
 ];
 
 const Sidebar = () => {
+    const router = useRouter()
     const [open, setOpen] = React.useState(false);
 
     // TODO: get user role from auth store
@@ -38,15 +41,15 @@ const Sidebar = () => {
 
     useEffect(() => {
         // TODO: get user role from auth store
-        if (role === 'admin') {
+        if (isAdmin(role)) {
             setSidebarMenu(sidebarItemsAdmin);
         } else {
             setSidebarMenu(sidebarItemsUser);
         }
-    }, []);
+    }, [role]);
 
     const handleLogout = async () => {
-        await logout().then(() => window.location.reload());
+        await logout().then(() => router.replace(ROUTES.login));
     };
 
     const generateSidebarHeader = () => {

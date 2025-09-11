@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { API_ADMIN_LIST_STUDENTS } from '../constants/config';
 import { useStudentsStore } from '../stores/students-store';
+import { getCookiesToken } from '@/features/auth/utils/cookies.helper';
 
 const allUsers = {
     data: [
@@ -37,14 +38,12 @@ const allUsers = {
 };
 
 const fetchStudents = async (params: any) => {
-    return allUsers as BaseResponse<StudentType[]>;
-
+    // return allUsers as BaseResponse<StudentType[]>;
     return baseService(async () => {
         const res = await api.get<BaseResponse<StudentType[]>>(API_ADMIN_LIST_STUDENTS, {
             params,
             headers: {
-                Authorization:
-                    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInBob25lTnVtYmVyIjoiMDgxMjM0NTY3ODkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTczMDUzNzcsImV4cCI6MTc1NzM5MTc3N30.zjq1vZVhDVMoMXr8FSezwUUPQ0X3veRaBWjG7pPCyEY',
+                Authorization: 'Bearer ' + (await getCookiesToken()),
             },
         });
         return res.data;

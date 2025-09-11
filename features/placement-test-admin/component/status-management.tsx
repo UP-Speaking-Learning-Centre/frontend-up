@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import {
@@ -7,18 +8,55 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { FileText, Save } from 'lucide-react';
-import React from 'react';
-import AssignLevel from './assign-level';
-import { Button } from '@/components/ui/button';
+import { ROUTES } from '@/constants/routes';
 import { PlacementTestStatus } from '@/types/placement-test';
+import { FileText, Save } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import useDetailPlacementTest from '../hooks/use-detail-placement-test';
+import useSaveNotes from '../queries/use-save-notes';
+import useSavePlacementTest from '../queries/use-save-placement-test';
+import useUpdateStatus from '../queries/use-update-status';
+import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
+import AssignLevel from './assign-level';
 
 const StatusManagement = () => {
+    const router = useRouter();
     const { status, setState } = useDetailPlacementTest();
+    const { mutateAsync } = useUpdateStatus();
+    const { mutateAsync: patchPlacementTest } = useSavePlacementTest();
+    const { assignedGrade, assignedLevel, assignedSchedule, assignedLocation, noteForStudent } =
+        useDisplayedPlacementTestStore();
+    const { mutateAsync: patchNotes } = useSaveNotes();
 
     const handleSave = () => {
-        console.log('submit');
+        Promise.all([
+            patchNotes({ notes: noteForStudent }),
+            patchPlacementTest({
+                gradeId: +assignedGrade,
+                levelId: +assignedLevel,
+                locationId: +assignedLocation,
+                scheduleIds: [+assignedSchedule],
+            }),
+        ]).then(([resNote, resSave]) => {
+            toast.info(resNote.message, { position: 'top-center' });
+            toast.info(resSave.message, { position: 'top-center' });
+        });
+    };
+    const handleChangeStatus = (value: PlacementTestStatus) => {
+        mutateAsync({ status })
+            .then(() => {
+                toast.info('Placement test status updated successfully', {
+                    position: 'top-center',
+                });
+                router.replace(ROUTES.adminPlacementTests);
+            })
+            .catch(() =>
+                toast.error('Error to update status, please try again later', {
+                    position: 'top-center',
+                })
+            );
+        setState({ status: value as PlacementTestStatus });
     };
 
     return (
@@ -32,10 +70,7 @@ const StatusManagement = () => {
             <CardContent className="space-y-4">
                 <div>
                     <Label>Status</Label>
-                    <Select
-                        value={status}
-                        onValueChange={value => setState({ status: value as PlacementTestStatus })}
-                    >
+                    <Select value={status} onValueChange={handleChangeStatus}>
                         <SelectTrigger>
                             <SelectValue />
                         </SelectTrigger>
