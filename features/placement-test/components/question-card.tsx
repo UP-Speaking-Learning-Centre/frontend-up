@@ -3,7 +3,7 @@ import React from 'react';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Question } from '@/types/placement-test';
+import { QuestionForGuest } from '@/types/placement-test';
 import { QUESTION_TYPE } from '@/constants/placement-test';
 
 const QuestionCard = ({
@@ -12,7 +12,7 @@ const QuestionCard = ({
     answers,
     handleAnswerSelect,
 }: {
-    currentQuestion: Question;
+    currentQuestion: QuestionForGuest;
     currentQuestionIndex: number;
     answers: string[];
     handleAnswerSelect: (answer: string) => void;

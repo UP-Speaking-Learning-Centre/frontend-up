@@ -1,18 +1,18 @@
-import { Question, QuestionType } from '@/types/placement-test';
+import { QuestionForGuest } from '@/types/placement-test';
 import { create } from 'zustand';
 
 interface PlacementTestGuestStore {
     testSessionId: string;
-    questions: Question[];
+    questions: QuestionForGuest[];
     setTestSessionId: (testSessionId: string) => void;
-    setQuestions: (questions: Question[]) => void;
+    setQuestions: (questions: QuestionForGuest[]) => void;
 }
 
 const usePlacementTestGuestStore = create<PlacementTestGuestStore>()(set => ({
     testSessionId: '',
     questions: [],
     setTestSessionId: (testSessionId: string) => set({ testSessionId }),
-    setQuestions: (questions: Question[]) => set({ questions }),
+    setQuestions: (questions: QuestionForGuest[]) => set({ questions }),
 }));
 
 export default usePlacementTestGuestStore;

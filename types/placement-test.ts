@@ -15,8 +15,17 @@ export type Question = {
     isCorrect?: boolean;
 };
 
+export type QuestionForGuest = {
+    id: number;
+    questionText: string;
+    questionType: string;
+    options: string[];
+    instruction: string;
+    studentAnswer: string;
+};
+
 export type PlacementTestResponse = {
-    questions: Question[];
+    questions: QuestionForGuest[];
     testSessionId: string;
 };
 

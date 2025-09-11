@@ -16,6 +16,7 @@ import { Dialog } from '@/components/ui/dialog';
 import SuccessDialog from './success-dialog';
 import usePlacementTestGuestStore from '../../stores/placemenet-test-guest-store';
 import Overlay from '@/components/layout/overlay';
+import ErrorDialog from './error-dialog';
 
 const FormInformation = ({
     steps,
@@ -30,6 +31,7 @@ const FormInformation = ({
     const { mutate: mutateRegisterFromPlacement, isPending: isPendingFromPlacement } =
         useRegisterFromPlacementMutation();
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isError, setIsError] = useState(false);
 
     if (!isStepDisplayed(FILL_PERSONAL_INFORMATION_STEP)) {
         return null;
@@ -39,12 +41,17 @@ const FormInformation = ({
         setIsSuccess(true);
     };
 
+    const onError = () => {
+        setIsError(true);
+    };
+
     const handleSave = () => {
         if (steps === REGISTER_STEPS) {
             mutateRegisterFromPlacement(
                 {},
                 {
                     onSuccess,
+                    onError,
                 }
             );
         } else {
@@ -52,6 +59,7 @@ const FormInformation = ({
                 {},
                 {
                     onSuccess,
+                    onError,
                 }
             );
         }
@@ -142,6 +150,7 @@ const FormInformation = ({
                 </Card>
             </div>
 
+            <ErrorDialog open={isError} onOpenChange={setIsError} />
             <SuccessDialog
                 open={isSuccess}
                 onOpenChange={setIsSuccess}

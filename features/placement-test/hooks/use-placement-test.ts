@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Question } from '@/types/placement-test';
+import { QuestionForGuest } from '@/types/placement-test';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useSubmitPlacementTestMutation } from '../queries/use-submit-placement-test';
 import usePlacementTestGuestStore from '@/features/select-program/stores/placemenet-test-guest-store';
@@ -16,7 +16,10 @@ interface StoredTestState {
     startedAt: number;
 }
 
-export const usePlacementTest = (questionsFromAPI: Question[], initialTimeInMinutes = 20) => {
+export const usePlacementTest = (
+    questionsFromAPI: QuestionForGuest[],
+    initialTimeInMinutes = 20
+) => {
     const router = useRouter();
     const searchParams = useSearchParams();
     const { mutateAsync: submitPlacementTest } = useSubmitPlacementTestMutation();
@@ -27,7 +30,7 @@ export const usePlacementTest = (questionsFromAPI: Question[], initialTimeInMinu
     const [timeLeft, setTimeLeft] = useState(initialTimeInMinutes * 60);
     const [isCompleted, setIsCompleted] = useState(false);
     const [startedAt, setStartedAt] = useState<number>(Date.now());
-    const [questions, setQuestions] = useState<Question[]>(questionsFromAPI);
+    const [questions, setQuestions] = useState<QuestionForGuest[]>(questionsFromAPI);
     const [shouldBeFinishedAt, setShouldBeFinishedAt] = useState<number>(
         Date.now() + initialTimeInMinutes * 60 * 1000
     );
@@ -68,7 +71,7 @@ export const usePlacementTest = (questionsFromAPI: Question[], initialTimeInMinu
             const savedQuestion = localStorage.getItem(QUESTION_KEY);
 
             if (savedQuestion) {
-                const parsedData = JSON.parse(savedQuestion) as Question[];
+                const parsedData = JSON.parse(savedQuestion) as QuestionForGuest[];
                 setQuestions(parsedData);
             }
         } catch (error) {
@@ -200,7 +203,6 @@ export const usePlacementTest = (questionsFromAPI: Question[], initialTimeInMinu
         };
     }, [isCompleted, saveTestState]);
 
-    console.log(isCompleted);
     return {
         currentQuestion: questions[currentQuestionIndex],
         currentQuestionIndex,

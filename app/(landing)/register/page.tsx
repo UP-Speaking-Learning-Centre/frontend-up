@@ -1,6 +1,6 @@
 'use client';
 import useProgramSelectionStore from '@/features/select-program/stores/program-selection-store';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { CHOOSE_PACKAGE_STEP, REGISTER_STEPS } from '@/constants/program-selections';
 import PackageCards from '@/features/select-program/components/choose-package/package-cards';
 import Title from '@/features/select-program/components/title';
@@ -10,8 +10,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import usePlacementTestGuestStore from '@/features/select-program/stores/placemenet-test-guest-store';
 
-const Page = () => {
-    const formValue = useProgramSelectionStore(s => s.formValue);
+const RegisterPage = () => {
     const searchParams = useSearchParams();
     const testSessionId = searchParams.get('testSessionId');
     const setTestSessionId = usePlacementTestGuestStore(s => s.setTestSessionId);
@@ -42,4 +41,12 @@ const Page = () => {
     );
 };
 
-export default Page;
+const RegisterPageWrapper = () => {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <RegisterPage />
+        </Suspense>
+    );
+};
+
+export default RegisterPageWrapper;
