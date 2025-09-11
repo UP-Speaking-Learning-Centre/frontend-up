@@ -63,7 +63,7 @@ const GroupCards = () => {
                             stepId: CHOOSE_GROUP_STEP,
                             formValue: { groupId: item.id, groupName: item.name },
                         });
-                        mutate({ testId: item.id });
+                        mutate({ groupId: item.id });
                     }}
                     selected={isGroupSelected}
                 />

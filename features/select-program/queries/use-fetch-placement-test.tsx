@@ -5,7 +5,7 @@ import usePlacementTestGuestStore from '../stores/placemenet-test-guest-store';
 import { PlacementTestResponse } from '@/types/placement-test';
 import { AxiosError } from 'axios';
 
-const fetchPlacementTest = async (data: { testId: number }): Promise<PlacementTestResponse> => {
+const fetchPlacementTest = async (data: { groupId: number }): Promise<PlacementTestResponse> => {
     const res = await api.post<PlacementTestResponse>(ENDPOINTS.fetchPlacementTest, data);
     return res.data;
 };
@@ -13,13 +13,13 @@ const fetchPlacementTest = async (data: { testId: number }): Promise<PlacementTe
 const useFetchPlacementTestMutation = (): UseMutationResult<
     PlacementTestResponse,
     AxiosError,
-    { testId: number }
+    { groupId: number }
 > => {
     const setQuestions = usePlacementTestGuestStore(s => s.setQuestions);
     const setTestSessionId = usePlacementTestGuestStore(s => s.setTestSessionId);
 
     return useMutation({
-        mutationFn: (data: { testId: number }) => fetchPlacementTest(data),
+        mutationFn: (data: { groupId: number }) => fetchPlacementTest(data),
         onSuccess: data => {
             setQuestions(data.questions);
             setTestSessionId(data.testSessionId);
