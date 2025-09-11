@@ -58,6 +58,7 @@ export type AvailableScheduleType = {
     startTime: string;
     endTime: string;
     durationMinutes: number;
+    teacherAlias: string;
     teacherMemberId: number;
     teacherMemberName: string;
     alias: string;

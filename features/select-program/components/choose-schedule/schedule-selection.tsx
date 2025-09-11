@@ -1,24 +1,17 @@
-import React, { useMemo } from 'react';
-import useFetchAvailableScheduleQuery from '../../queries/use-fetch-available-schedule';
-import moment from 'moment';
-import {
-    CHOOSE_SCHEDULE_STEP,
-    DAY,
-    END_TIME,
-    GROUP_INFORMATION_STEP,
-    START_TIME,
-} from '@/constants/program-selections';
-import 'moment/locale/id';
-import { Calendar, Clock, MapPinHouse, PinIcon, X } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import useProgramSelectionStore from '../../stores/program-selection-store';
-import { DayOfWeekType } from '@/types/programs-selection';
-import { renderDayToIndonesian } from '@/lib/moment';
-import useFetchLocationsQuery from '../../queries/use-fetch-locations';
-import { Button } from '@/components/ui/button';
-import useProgramSelection from '../../hooks/use-program-selection';
 import { mentors } from '@/app/(landing)/about/page';
-import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { CHOOSE_SCHEDULE_STEP, DAY, END_TIME, START_TIME } from '@/constants/program-selections';
+import { renderDayToIndonesian } from '@/lib/moment';
+import { cn } from '@/lib/utils';
+import { DayOfWeekType } from '@/types/programs-selection';
+import { Calendar, Clock, MapPinHouse, X } from 'lucide-react';
+import moment from 'moment';
+import 'moment/locale/id';
+import React, { useMemo } from 'react';
+import useProgramSelection from '../../hooks/use-program-selection';
+import useFetchAvailableScheduleQuery from '../../queries/use-fetch-available-schedule';
+import useFetchLocationsQuery from '../../queries/use-fetch-locations';
+import useProgramSelectionStore from '../../stores/program-selection-store';
 import MentorImage from './mentor-image';
 
 const CHOOSE_LOCATION_STEP = 'choose-location';
@@ -220,7 +213,7 @@ const ScheduleSelection = () => {
             item =>
                 item.dayOfWeek === firstSession.dayOfWeek &&
                 item.startTime === firstSession.startTime &&
-                formValue.taughtBy.includes(item.alias || item.taughtBy)
+                formValue.taughtBy.includes(item.teacherAlias)
         );
 
         console.log(availableMentor);
