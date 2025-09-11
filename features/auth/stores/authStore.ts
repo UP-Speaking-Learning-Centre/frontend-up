@@ -17,6 +17,8 @@ const useAuthStore = create<AuthStoreInterface>()((set, get) => ({
     },
     otpForTesting: '',
     setOtpForTesting: (otpForTesting: string) => set({ otpForTesting }),
+    role: '',
+    setRole: (role: string) => set({ role }),
 }));
 
 export default useAuthStore;

@@ -6,6 +6,10 @@ import { FileText, LogOut, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SidebarItem from './item';
 import { ROUTES } from '@/constants/routes';
+import useAuthStore from '@/features/auth/stores/authStore';
+import { useRouter } from 'next/navigation';
+import { logout } from '@/features/auth/utils/auth-server.helper';
+import { isAdmin } from '@/features/auth/utils/auth-client.helper';
 
 const sidebarItemsAdmin = [
     { href: ROUTES.adminStudents, label: 'List Students', icon: Users },
@@ -26,27 +30,30 @@ const sidebarItemsUser = [
 ];
 
 const Sidebar = () => {
+    const router = useRouter()
     const [open, setOpen] = React.useState(false);
 
     // TODO: get user role from auth store
-    const [userRole, setUserRole] = React.useState('admin');
+    const { role } = useAuthStore();
     const [sidebarMenu, setSidebarMenu] = React.useState<
         { href: string; label: string; icon: React.ComponentType<{ className?: string }> }[]
     >([]);
 
     useEffect(() => {
         // TODO: get user role from auth store
-        if (userRole === 'admin') {
+        if (isAdmin(role)) {
             setSidebarMenu(sidebarItemsAdmin);
         } else {
             setSidebarMenu(sidebarItemsUser);
         }
-    }, []);
+    }, [role]);
 
-    const handleLogout = () => {};
+    const handleLogout = async () => {
+        await logout().then(() => router.replace(ROUTES.login));
+    };
 
     const generateSidebarHeader = () => {
-        if (userRole === 'admin') {
+        if (role === 'admin') {
             return (
                 <div className="flex flex-col items-start">
                     <span className="text-xl font-bold text-white">Admin Dashboard</span>

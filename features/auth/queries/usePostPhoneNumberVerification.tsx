@@ -1,12 +1,11 @@
 import api, { baseService } from '@/lib/api';
 import { useMutation } from '@tanstack/react-query';
-import { API_PHONE_CHECKER, DEVELOPMENT } from '../constants/config';
+import { API_PHONE_CHECKER } from '../constants/config';
 import { ResponseCheckPhone } from '../constants/interface';
 
 const postCheckPhone = async (phoneNumber: string) => {
     return baseService(async () => {
         const res = await api.post<ResponseCheckPhone>(API_PHONE_CHECKER, { phoneNumber });
-        return ""
         return res.data.status;
     });
 };

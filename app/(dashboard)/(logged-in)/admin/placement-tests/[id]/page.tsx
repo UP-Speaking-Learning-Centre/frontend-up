@@ -7,7 +7,6 @@ import MarkingProgress from '@/features/placement-test-admin/component/progress'
 import QuestionDisplay from '@/features/placement-test-admin/component/question-display';
 import QuestionNavigation from '@/features/placement-test-admin/component/question-navigation';
 import StatusManagement from '@/features/placement-test-admin/component/status-management';
-import useDetailPlacementTest from '@/features/placement-test-admin/hooks/use-detail-placement-test';
 import useFetchDetailPlacementTestQuery from '@/features/placement-test-admin/queries/use-fetch-detail-placement-test';
 import { useDisplayedPlacementTestStore } from '@/features/placement-test-admin/stores/displayed-placement-test-stores';
 import { User } from 'lucide-react';

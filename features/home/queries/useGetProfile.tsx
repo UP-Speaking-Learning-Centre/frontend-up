@@ -19,28 +19,6 @@ const useGetProfile = () => {
     const { data, isLoading } = useQuery({
         queryKey: [API_GET_PROFILE],
         queryFn: async () => {
-            return {
-                id: 20,
-                phoneNumber: '+6281211112210122',
-                instagram: 'radit2122',
-                students: [
-                    {
-                        id: 46,
-                        name: 'radit 21.22',
-                        programName: 'Not determined',
-                        groupName: 'Not determined',
-                        levelName: 'Not determined',
-                        schedules: [],
-                        testResults: [
-                            {
-                                testName: 'Placement Test - Junior High',
-                                score: 0,
-                                status: 'pending',
-                            },
-                        ],
-                    },
-                ],
-            } as ResponseProfile;
             const res = await getProfile();
             return res;
         },

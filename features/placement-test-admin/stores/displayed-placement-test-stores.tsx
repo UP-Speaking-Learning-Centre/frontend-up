@@ -16,7 +16,13 @@ const initialState = {
     status: PLACEMENT_TEST_STATUS.doneInterview,
     student: undefined,
     test: undefined,
-    testDate:"",
+    testDate: '',
+    assignedLevel: '',
+    assignedLocation: '',
+    assignedMentor: '',
+    assignedSchedule: '',
+    assignedGrade: '',
+    noteForStudent: '',
 };
 
 interface DisplayedPlacementTestStore {
@@ -28,7 +34,13 @@ interface DisplayedPlacementTestStore {
     status: PlacementTestStatus;
     student?: ResponsePlacementTestStudent;
     test?: ResponsePlacementTestTest;
-    testDate:string
+    testDate: string;
+    assignedLevel: string;
+    assignedLocation: string;
+    assignedMentor: string;
+    assignedSchedule: string;
+    assignedGrade: string;
+    noteForStudent: string;
     setState: (state: Partial<DisplayedPlacementTestStore>) => void;
 }
 

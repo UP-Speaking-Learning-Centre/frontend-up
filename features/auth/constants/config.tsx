@@ -4,10 +4,15 @@ export const PASSWORD = 'password';
 export const CONFIRM_PASSWORD = 'confirm_password';
 export const NEW_ACCOUNT = 'new-account';
 export const PENDING = 'pending';
+export const NOT_GRADED = 'not_graded';
 export const PLACEMENT_TEST = 'placement-test';
 export const DEVELOPMENT = 'development';
-export const ACTIVATION_REQUIRED = 'not_registered';
+export const ACTIVATION_REQUIRED = 'activation_required';
+export const NOT_REGISTERED = 'not_registered';
 export const ACCESS_TOKEN = 'accessToken';
+export const ADMIN = 'admin';
+
+export const IS_DUMMY = false;
 
 // API URLs
 export const API_PHONE_CHECKER = '/auth/check-phone';

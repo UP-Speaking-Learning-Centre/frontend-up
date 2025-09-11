@@ -15,6 +15,8 @@ export interface AuthStoreInterface {
     setIsNewAccount: (isNewAccount: boolean) => void;
     otpForTesting: string;
     setOtpForTesting: (otpForTesting: string) => void;
+    role: string;
+    setRole: (role: string) => void;
 }
 
 export interface PasswordForm {
@@ -24,7 +26,7 @@ export interface PasswordForm {
 
 export interface ResponseCheckPhone {
     message: string;
-    status: 'not_registered';
+    status: 'activation_required' | 'not_registered';
 }
 
 export interface ResponseOTP {
@@ -37,6 +39,7 @@ export interface ResponseFirstLogin {
 }
 export interface ResponseLogin {
     accessToken: string;
+    role: 'admin' | 'user';
 }
 
 export interface RequestFirstLogin {
