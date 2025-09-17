@@ -3,9 +3,10 @@ import Title from '../title';
 import React from 'react';
 import { SUMMARY_STEP } from '@/constants/program-selections';
 import SummaryItem from './summary-item';
+import { Button } from '@/components/ui/button';
 
 const Summary = () => {
-    const { isStepDisplayed } = useProgramSelection();
+    const { isStepDisplayed, handleNextStepAction } = useProgramSelection();
 
     if (!isStepDisplayed(SUMMARY_STEP)) {
         return null;
@@ -18,6 +19,13 @@ const Summary = () => {
                 description="Silahkan periksa kembali pilihan program Anda."
             />
             <SummaryItem />
+            <div className="mt-6 flex items-center w-full justify-center">
+                <Button
+                    onClick={() => handleNextStepAction({ stepId: SUMMARY_STEP, formValue: {} })}
+                >
+                    Berapa perkiraan biaya?
+                </Button>
+            </div>
         </div>
     );
 };

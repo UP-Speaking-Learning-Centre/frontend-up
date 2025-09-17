@@ -39,7 +39,7 @@ export default function TestimonialsSection() {
                     <SectionTitle
                         title="Testimonials"
                         subtitle="Hear From Our Students"
-                        description="Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos"
+                        description="Cerita nyata dari siswa kami yang udah ngerasain gimana UP! bantu mereka lebih percaya diri dan jago English."
                     />
                 </div>
                 <div className="mx-auto mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none">
@@ -73,7 +73,7 @@ export default function TestimonialsSection() {
                 </div>
                 <div className="mt-16 flex justify-center">
                     <Link href={ROUTES.faqTestimonials}>
-                        <Button variant="secondary">Read More Testimonials</Button>
+                        <Button variant="secondary">More Stories</Button>
                     </Link>
                 </div>
             </div>

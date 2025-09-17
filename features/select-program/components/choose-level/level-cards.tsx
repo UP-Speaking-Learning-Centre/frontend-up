@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../card';
 import useProgramSelection from '../../hooks/use-program-selection';
-import { CHOOSE_LEVEL_STEP } from '@/constants/program-selections';
+import { CHOOSE_LEVEL_STEP, GROUP_WITH_PLACEMENT_TEST } from '@/constants/program-selections';
 import useFetchLevelsQuery from '../../queries/use-fetch-levels';
 import WithPlacementTest from './with-placement-test';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -10,7 +10,35 @@ const LevelCards = () => {
     const { handleNextStepAction, formValue } = useProgramSelection();
     const { data: levels, isLoading } = useFetchLevelsQuery();
 
-    console.log(levels);
+    const imageUrl = (idx: number) => {
+        if (idx === 0) {
+            return '/levels/1.svg';
+        }
+        if (idx === 1) {
+            return '/levels/2.svg';
+        }
+        if (idx === 2) {
+            return '/levels/3.svg';
+        }
+        if (idx === 3) {
+            return '/levels/4.png';
+        }
+        if (idx === 4) {
+            return '/levels/5.png';
+        }
+        if (idx === 5) {
+            return '/levels/6.svg';
+        }
+        if (idx === 6) {
+            return '/levels/7.svg';
+        }
+        if (idx === 7) {
+            return '/levels/8.svg';
+        }
+
+        return '/levels/8.svg';
+    };
+
     const renderContent = () => {
         if (isLoading) {
             return [...new Array(4)].map((_, i) => (
@@ -20,19 +48,20 @@ const LevelCards = () => {
 
         return (
             <>
-                {levels?.map(item => {
+                {levels?.map((item, idx) => {
                     const isLevelSelected = formValue.levelId === item.id;
                     return (
                         <Card
+                            className="sm:basis-[calc(50%-18px)] xl:basis-[calc(25%-18px)]"
                             title={item.name}
                             description={item.description}
-                            key={item.name}
-                            imageUrl="/school-program.svg"
+                            key={item.id}
+                            imageUrl={imageUrl(idx)}
                             buttonLabel={isLevelSelected ? 'Level terpilih!' : 'Pilih level'}
                             buttonAction={() =>
                                 handleNextStepAction({
                                     stepId: CHOOSE_LEVEL_STEP,
-                                    formValue: { levelId: item.id },
+                                    formValue: { levelId: item.id, levelName: item.name },
                                 })
                             }
                             selected={isLevelSelected}
@@ -40,13 +69,15 @@ const LevelCards = () => {
                     );
                 })}
 
-                <WithPlacementTest display={true} />
+                <WithPlacementTest
+                    display={GROUP_WITH_PLACEMENT_TEST.includes(Number(formValue.groupId))}
+                />
             </>
         );
     };
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+        <div className="flex flex-col md:flex-row gap-4 justify-center flex-wrap mt-8">
             {renderContent()}
         </div>
     );

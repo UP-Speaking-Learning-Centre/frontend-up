@@ -15,9 +15,18 @@ export type Question = {
     isCorrect?: boolean;
 };
 
-export type PlacementTest = {
-    questions: Question[];
-    sessionId: string;
+export type QuestionForGuest = {
+    id: number;
+    questionText: string;
+    questionType: string;
+    options: string[];
+    instruction: string;
+    studentAnswer: string;
+};
+
+export type PlacementTestResponse = {
+    questions: QuestionForGuest[];
+    testSessionId: string;
 };
 
 export interface ResponsePlacementTestStudent {

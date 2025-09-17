@@ -21,15 +21,48 @@ export type LevelType = {
     prerequisites: string | null;
 };
 
+export type GradeType = {
+    id: number;
+    gradeNumber: number;
+    prerequisites: string;
+    taughtBy: [
+        {
+            id: number;
+            name: string;
+        }
+    ];
+};
+
+export type PackageType = {
+    id: number;
+    name: string;
+    description: string;
+    points: string;
+    prices: {
+        program: number;
+        price: {
+            price: number;
+            duration: number;
+        }[];
+    }[];
+};
+
+export type LocationType = {
+    locationId: number;
+    locationName: string;
+};
+
 export type AvailableScheduleType = {
     scheduleId: number;
     dayOfWeek: string;
     startTime: string;
     endTime: string;
     durationMinutes: number;
+    teacherAlias: string;
     teacherMemberId: number;
     teacherMemberName: string;
     alias: string;
+    taughtBy: string;
     isCoordinator: boolean;
     locationId: number;
     locationName: string;

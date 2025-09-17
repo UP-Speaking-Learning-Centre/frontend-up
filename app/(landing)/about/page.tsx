@@ -1,55 +1,136 @@
 import { Button } from '@/components/ui/button';
+import Mentor from '@/features/home/components/mentors';
 import { CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const values = [
     {
-        name: 'Student-Centered Approach',
+        name: 'Cambridge Curriculum',
         description:
-            'We put students at the center of everything we do, creating an environment where their needs and goals are prioritized.',
+            'Sejak 2023 kami pakai kurikulum Cambridge, lengkap dengan aplikasi, presentasi, dan materi global standar internasional.',
     },
     {
-        name: 'Excellence in Education',
+        name: 'CEFR Leveling',
         description:
-            'We maintain the highest standards in our curriculum and teaching methods to ensure quality education.',
+            'Level pembelajaran dari Pre-A1 sampai C1 (advanced) biar sesuai dengan standar dunia.',
     },
     {
-        name: 'Innovation',
+        name: 'HOTS Method',
         description:
-            'We continuously evolve our programs to incorporate the latest technologies and methodologies.',
+            'Higher Order Thinking Skills jadi standar, bikin siswa gak cuma hafal teori, tapi bisa mikir kritis & aplikatif.',
     },
     {
-        name: 'Inclusivity',
+        name: 'Shooting Examination',
         description:
-            'We believe education should be accessible to all, regardless of background or prior experience.',
+            'Ujian unik berbasis shooting video — boost confidence siswa & bukti nyata kemampuan speaking mereka.',
+    },
+    {
+        name: 'Modern Class',
+        description:
+            'Fasilitas kelas kekinian: Smart TV 43", Air Conditioner, Brainstorming Board.',
+    },
+    {
+        name: 'UP+ Program',
+        description:
+            'Kelas tambahan buat diskusi, latihan, atau persiapan khusus sesuai kebutuhan siswa.',
+    },
+    {
+        name: 'Changed Class',
+        description:
+            'Sistem fleksibel: siswa bisa reschedule kalau ada halangan, jadi tetap konsisten belajar.',
+    },
+    {
+        name: 'UP Club',
+        description:
+            'Komunitas seru: mulai dari UPWatchClub, ReadingUpClub, MakeUpClub, CookingUpClub, SocioUp, dll. Bikin belajar jadi lebih hidup & menyenangkan.',
     },
 ];
 
-const mentors = [
+export const mentors = [
     {
-        name: 'Dr. Aria Putra',
-        role: 'Director of Education',
-        bio: 'With over 15 years of experience in education management, Dr. Putra leads our curriculum development and ensures educational excellence across all programs.',
-        imageUrl: '/placeholder.svg?height=300&width=300',
+        name: 'Mr. Rizky, S.T., MBA',
+        nameWithoutDegree: 'Mr. Rizky',
+        role: 'Mama Bear (Speaking & TOEFL Mentor)',
+        bio: 'Founder sekaligus mentor utama UP SLC, membimbing siswa dalam public speaking & TOEFL dengan pendekatan percaya diri dan fun.',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/mr-rizky.jpg',
     },
     {
-        name: 'Prof. Maya Wijaya',
-        role: 'Head of Technology Programs',
-        bio: 'A former software engineer with 10 years of industry experience, Prof. Wijaya brings practical insights and cutting-edge knowledge to our tech-related courses.',
-        imageUrl: '/placeholder.svg?height=300&width=300',
+        name: 'Mr. Galang, S.Pd., M.Pd',
+        nameWithoutDegree: 'Mr. Galang',
+        role: 'Speaking, TOEFL & High School Mentor',
+        bio: 'Berpengalaman mendampingi siswa SMA dan profesional  dalam persiapan TOEFL & speaking, dengan gaya mengajar interaktif.',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/mr-galang.jpg',
     },
     {
-        name: 'Budi Santoso, MBA',
-        role: 'Business Program Director',
-        bio: 'An entrepreneur who has founded three successful startups, Budi brings real-world business expertise and mentorship to aspiring business leaders.',
+        name: 'Mr. Rafif, S.Pd',
+        nameWithoutDegree: 'Mr. Rafif',
+        role: 'Speaking, TOEFL & High School Mentor',
+        bio: 'Fokus mendukung siswa SMA untuk lebih pede dalam English akademik & komunikasi sehari-hari.',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/mr-rafif.png',
+    },
+    {
+        name: 'Ms. Nuraeni, S.Pd',
+        nameWithoutDegree: 'Ms. Nuraeni',
+        role: 'Speaking, TOEFL & High School Mentor',
+        bio: 'Spesialis speaking & TOEFL, dikenal sabar & mampu membangun kepercayaan diri siswa.',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-nuraeni.jpg',
+    },
+    {
+        name: 'Mr. Noval, S.Pd',
+        nameWithoutDegree: 'Mr. Noval',
+        role: 'Mid & High School Mentor',
+        bio: 'Mendampingi siswa SMP-SMA dengan pembelajaran English yang aplikatif & engaging.',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/mr-noval',
+    },
+    {
+        name: 'Ms. Lieken',
+        nameWithoutDegree: 'Ms. Lieken',
+        role: 'Mid & High School Mentor',
+        bio: 'Membimbing siswa dengan pendekatan kreatif agar nyaman belajar English di usia remaja.',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-lieken.jpg',
+    },
+    {
+        name: 'Ms. Binti',
+        nameWithoutDegree: 'Ms. Binti',
+        role: 'Mid & High School Mentor',
+        bio: 'Membimbing siswa dengan pendekatan kreatif agar nyaman belajar English di usia remaja.',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-binti.jpg',
+    },
+    {
+        name: 'Mr. Firdan, S.Pd',
+        nameWithoutDegree: 'Mr. Firdan',
+        role: 'Elementary & Mid School Mentor',
+        bio: 'Ahli membimbing anak-anak SD-SMP dengan metode playful & mudah dipahami.',
         imageUrl: 'https://media.uplearningcentre.com/foto-tutor/mr-firdan.jpg',
     },
     {
-        name: 'Dr. Siti Rahayu',
-        role: 'Academic Advisor',
-        bio: 'Specialized in educational psychology, Dr. Rahayu helps design learning experiences that maximize student engagement and knowledge retention.',
-        imageUrl: '/placeholder.svg?height=300&width=300',
+        name: 'Ms. Feby, S.Pd',
+        nameWithoutDegree: 'Ms. Feby',
+        role: 'Elementary School Mentor',
+        bio: 'Membantu anak-anak SD belajar English dengan fun activities & friendly approach.',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-feby.HEIC',
+    },
+    {
+        name: 'Ms. Puji, S.Pd',
+        nameWithoutDegree: 'Ms. Puji',
+        role: 'Elementary & Mid School Mentor',
+        bio: 'Mendampingi siswa SD-SMP dengan kombinasi belajar grammar & conversation praktis.',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-puji.jpg',
+    },
+    {
+        name: 'Ms. Denisa, S.Pd',
+        nameWithoutDegree: 'Ms. Ica',
+        role: 'Elementary School Mentor',
+        bio: 'Spesialis anak-anak SD, bikin kelas jadi seru & bikin anak makin pede ngomong English.',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-ica.jpg',
+    },
+    {
+        name: 'Ms. Sella, S.Pd',
+        nameWithoutDegree: 'Ms. Sella',
+        role: 'Elementary & Mid School Mentor',
+        bio: 'Mendampingi siswa SD-SMP dengan kombinasi belajar grammar & conversation praktis.',
+        imageUrl: 'https://media.uplearningcentre.com/foto-tutor/ms-sella.jpg',
     },
 ];
 
@@ -60,13 +141,12 @@ export default function AboutPage() {
             <div className="relative isolate overflow-hidden bg-[#254116] py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-2xl lg:mx-0">
-                        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-                            About UP Education
+                        <h1 className="text-5xl font-bebasNeue font-bold tracking-wider text-white sm:text-6xl">
+                            Turning Fear into Fluency, Building Confidence for the Future.
                         </h1>
                         <p className="mt-6 text-lg leading-8 text-gray-300">
-                            Our mission is to transform lives through accessible, quality education.
-                            We believe in empowering individuals to reach their full potential and
-                            make a positive impact on society.
+                            Kami percaya bahwa setiap anak bisa naik level bukan cuma dalam grammar,
+                            tapi juga dalam percaya diri untuk ngomong English.
                         </p>
                     </div>
                 </div>
@@ -85,16 +165,23 @@ export default function AboutPage() {
                                     A Legacy of Excellence
                                 </p>
                                 <p className="mt-6 text-lg leading-8 text-gray-600">
-                                    Founded in 2010, UP Education began with a simple goal: to make
-                                    quality education accessible to everyone. What started as a
-                                    small tutoring center has grown into a nationwide educational
-                                    institution with multiple campuses across Indonesia.
+                                    UP Speaking Learning Centre (UP SLC) lahir di 2021 di Kabupaten
+                                    Kuningan, Indonesia. Dalam waktu singkat, kami tumbuh jadi
+                                    komunitas lebih dari{' '}
+                                    <span className="font-bold text-primary">500 siswa aktif</span>{' '}
+                                    dengan <span className="font-bold text-primary">3 cabang</span>{' '}
+                                    dan{' '}
+                                    <span className="font-bold text-primary">
+                                        26 tim pengajar & staff yang berdedikasi
+                                    </span>
+                                    .
                                 </p>
                                 <p className="mt-6 text-lg leading-8 text-gray-600">
-                                    Over the years, we've helped thousands of students achieve their
-                                    academic and career goals through our innovative programs and
-                                    dedicated instructors. Our commitment to excellence and student
-                                    success remains at the core of everything we do.
+                                    UP SLC bukan cuma kursus bahasa, tapi sebuah movement. Misi kami
+                                    sederhana: connect and communicate. Kami percaya setiap orang
+                                    punya suara & cerita yang layak dibagikan ke dunia — dan tugas
+                                    kami adalah memberi tools, support, dan environment untuk unlock
+                                    potensi itu. Up your words, up your world!
                                 </p>
                                 <dl className="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none">
                                     {values.map(value => (
@@ -107,6 +194,10 @@ export default function AboutPage() {
                                         </div>
                                     ))}
                                 </dl>
+                                <p className="mt-6 text-lg leading-8 text-gray-600 italic">
+                                    “At UP SLC, everyone belongs. No matter your background, we grow
+                                    together with confidence, with English, with heart.”
+                                </p>
                             </div>
                         </div>
                         <div className="relative">
@@ -117,14 +208,20 @@ export default function AboutPage() {
                                 width={2432}
                                 height={1442}
                             />
-                            <div className="absolute -bottom-12 -left-12 w-72 h-72 bg-[#F7F850] rounded-full blur-3xl opacity-30" />
+                            <Image
+                                src="/placeholder.svg?height=800&width=1200"
+                                alt="About UP Education"
+                                className="w-full rounded-xl shadow-xl mt-12 ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
+                                width={2432}
+                                height={1442}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
 
             {/* Mentors Section */}
-            <div className="bg-white py-24 sm:py-32">
+            <div className="bg-gray-50 py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-2xl lg:text-center">
                         <h2 className="text-base font-semibold leading-7 text-[#CE6439]">
@@ -134,34 +231,15 @@ export default function AboutPage() {
                             Meet Our Expert Mentors
                         </p>
                         <p className="mt-6 text-lg leading-8 text-gray-600">
-                            Our instructors bring a wealth of knowledge and experience from academia
-                            and industry, ensuring you receive the best education possible.
+                            Tim pengajar UP SLC terdiri dari para profesional muda yang
+                            berpengalaman, passionate, dan siap membimbing siswa untuk naik level.
+                            Dengan kombinasi akademik & praktik, mereka bukan hanya guru, tapi juga
+                            mentor perjalanan belajar.
                         </p>
                     </div>
                     <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
                         {mentors.map(mentor => (
-                            <div
-                                key={mentor.name}
-                                className="bg-white rounded-xl shadow-md overflow-hidden"
-                            >
-                                <div className="relative h-48 w-full">
-                                    <Image
-                                        className="object-cover"
-                                        src={mentor.imageUrl || '/placeholder.svg'}
-                                        alt={mentor.name}
-                                        fill
-                                    />
-                                </div>
-                                <div className="p-6">
-                                    <h3 className="text-lg font-bold text-gray-900">
-                                        {mentor.name}
-                                    </h3>
-                                    <p className="text-sm font-medium text-[#CE6439]">
-                                        {mentor.role}
-                                    </p>
-                                    <p className="mt-3 text-sm text-gray-500">{mentor.bio}</p>
-                                </div>
-                            </div>
+                            <Mentor mentor={mentor} key={mentor.name} />
                         ))}
                     </div>
                     <div className="mt-12 flex justify-center">

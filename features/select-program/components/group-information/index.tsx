@@ -15,9 +15,12 @@ const LevelInformation = () => {
     }
 
     return (
-        <div id={GROUP_INFORMATION_STEP} className="py-24">
+        <div
+            id={GROUP_INFORMATION_STEP}
+            className="h-[calc(100vh-64px)] flex flex-col justify-center"
+        >
             <Title
-                title={`Informasi ${groupName}`}
+                title={`Informasi Grup ${groupName}`}
                 description="Learn about the curriculum and expected outcomes for your selected program."
             />
             <GroupInformationTabs />

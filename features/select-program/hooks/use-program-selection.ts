@@ -1,25 +1,27 @@
-import { PROGRAM_SELECTION_STEPS } from '@/constants/program-selections';
+import { PROGRAM_SELECTION_STEPS, REGISTER_STEPS } from '@/constants/program-selections';
 import useProgramSelectionStore, { FormValue } from '../stores/program-selection-store';
 
-const useProgramSelection = () => {
+const useProgramSelection = (
+    steps: typeof PROGRAM_SELECTION_STEPS | typeof REGISTER_STEPS = PROGRAM_SELECTION_STEPS
+) => {
     const currentStep = useProgramSelectionStore(s => s.currentStep);
     const setCurrentStep = useProgramSelectionStore(s => s.setCurrentStep);
     const setFormValue = useProgramSelectionStore(s => s.setFormValue);
     const formValue = useProgramSelectionStore(s => s.formValue);
 
-    const getCurrentStepIndex = (stepId: (typeof PROGRAM_SELECTION_STEPS)[number]) => {
-        return PROGRAM_SELECTION_STEPS.findIndex(step => step === stepId);
+    const getCurrentStepIndex = (stepId: (typeof steps)[number]) => {
+        return steps.findIndex(step => step === stepId);
     };
 
-    const isStepDisplayed = (stepId: (typeof PROGRAM_SELECTION_STEPS)[number]) => {
+    const isStepDisplayed = (stepId: (typeof steps)[number]) => {
         const stepIndex = getCurrentStepIndex(stepId);
         return stepIndex <= currentStep;
     };
 
-    const scrollToStep = (stepId: (typeof PROGRAM_SELECTION_STEPS)[number]) => {
-        const currentStepElement = document.getElementById(PROGRAM_SELECTION_STEPS[currentStep]);
+    const scrollToStep = (stepId: (typeof steps)[number]) => {
+        const currentStepElement = document.getElementById(steps[currentStep]);
         const stepElement = document.getElementById(stepId);
-        var headerOffset = 20;
+        var headerOffset = 60;
 
         setTimeout(() => {
             if (stepElement) {
@@ -46,12 +48,12 @@ const useProgramSelection = () => {
         stepId,
         formValue,
     }: {
-        stepId: (typeof PROGRAM_SELECTION_STEPS)[number];
+        stepId: (typeof steps)[number];
         formValue: Partial<FormValue>;
     }) => {
         const nextStep = getCurrentStepIndex(stepId) + 1;
         setCurrentStep(nextStep);
-        scrollToStep(PROGRAM_SELECTION_STEPS[nextStep]);
+        scrollToStep(steps[nextStep]);
         setFormValue(formValue);
     };
 

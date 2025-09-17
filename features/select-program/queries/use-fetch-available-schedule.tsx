@@ -6,10 +6,10 @@ import useProgramSelectionStore from '../stores/program-selection-store';
 import data from '@/data/available-schedule.json';
 
 const fetchAvailableSchedule = async (locationId: string): Promise<AvailableScheduleType[]> => {
-    // const res = await api.get<GroupType[]>(ENDPOINTS.fetchGroups.expand({ programId }));
-    // return res.data
-    console.log(data, locationId);
-    return data;
+    const res = await api.get<AvailableScheduleType[]>(
+        ENDPOINTS.fetchAvailableSchedule.expand({ locationId })
+    );
+    return res.data;
 };
 
 const useFetchAvailableScheduleQuery = (): UseQueryResult<AvailableScheduleType[]> => {

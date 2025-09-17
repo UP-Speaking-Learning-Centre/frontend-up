@@ -23,7 +23,16 @@ export default function Navbar() {
                 <div className="flex lg:flex-1">
                     <Link href={ROUTES.home} className="-m-1.5 p-1.5">
                         <span className="sr-only">UP Education</span>
-                        <Image src={'/logo-black.png'} width="60" height="60" alt="Logo UP" />
+                        <div className="flex items-center gap-3">
+                            <Image src={'/logo-black.png'} width="40" height="36" alt="Logo UP" />
+                            <div className="w-0.5 h-10 bg-[#CE6439] rounded-sm"></div>
+                            <Image
+                                src={'/logo-cambridge.png'}
+                                width="180"
+                                height="44"
+                                alt="Logo Cambridge"
+                            />
+                        </div>
                     </Link>
                 </div>
                 <div className="flex lg:hidden">

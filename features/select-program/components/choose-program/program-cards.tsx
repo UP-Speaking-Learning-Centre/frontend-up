@@ -9,26 +9,36 @@ const ProgramCards = () => {
     const { handleNextStepAction, formValue } = useProgramSelection();
     const { data: programs, isLoading } = useFetchProgramsQuery();
 
+    const imageUrl = (idx: number) => {
+        if (idx === 0) {
+            return '/programs/school.svg';
+        }
+        if (idx === 1) {
+            return '/programs/adult.svg';
+        }
+
+        return '/programs/school.svg';
+    };
+
     const renderContent = () => {
         if (isLoading) {
             return [...new Array(3)].map((_, i) => <Skeleton key={i} className="h-80 basis-1/3" />);
         }
 
-        console.log(formValue);
-        return programs?.map(item => {
+        return programs?.map((item, idx) => {
             const isProgramSelected = formValue.programId === item.id;
             return (
                 <Card
                     title={item.name}
                     description={item.description}
                     key={item.id}
-                    className="basis-1/3"
-                    imageUrl="/school-program.svg"
+                    className="md:basis-1/2 lg:basis-1/3"
+                    imageUrl={imageUrl(idx)}
                     buttonLabel={isProgramSelected ? 'Kamu pilih program ini!' : 'Pilih program'}
                     buttonAction={() =>
                         handleNextStepAction({
                             stepId: CHOOSE_PROGRAM_STEP,
-                            formValue: { programId: item.id },
+                            formValue: { programId: item.id, programName: item.name },
                         })
                     }
                     selected={isProgramSelected}
@@ -37,7 +47,11 @@ const ProgramCards = () => {
         });
     };
 
-    return <div className="flex items-center justify-center gap-4 mt-8">{renderContent()}</div>;
+    return (
+        <div className="flex items-center flex-col md:flex-row justify-center gap-4 mt-8">
+            {renderContent()}
+        </div>
+    );
 };
 
 export default ProgramCards;

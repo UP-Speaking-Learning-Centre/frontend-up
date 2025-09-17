@@ -10,26 +10,41 @@ export default function Footer() {
             <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
                 <div className="flex flex-col space-y-8 md:w-1/2">
                     <div>
-                        <div className="flex items-center">
+                        <div className="flex items-center gap-4">
                             <Image src={'/logo-black.png'} width="80" height="80" alt="Logo UP" />
+                            <div className="w-1 h-16 bg-white rounded-xl"></div>
+                            <Image
+                                src={'/cambridge-logo-white.png'}
+                                width="200"
+                                height="60"
+                                alt="Logo Cambridge"
+                            />
                         </div>
+                        <p className="text-lg mt-4 font-semibold">Up Your Words, Up Your World.</p>
+                        {/* <p className="text-sm mt-1 w-8/12">
+                            Bersama UP!, setiap langkah kecil jadi bekal besar buat masa depan yang
+                            lebih percaya diri.
+                        </p> */}
                     </div>
 
                     <div>
-                        <h3 className="text-sm font-semibold leading-6">Contact Us</h3>
+                        <h3 className="text-base font-semibold leading-6 text-primary">
+                            Contact Us
+                        </h3>
                         <ul className="mt-2 space-y-2">
                             <li className="flex items-center">
                                 <Mail className="h-4 w-4 mr-2" />
-                                <span className="text-sm">info@upslc.com</span>
+                                <span className="text-sm">upspeakinglearningcentre@gmail.com</span>
                             </li>
                             <li className="flex items-center">
                                 <Phone className="h-4 w-4 mr-2" />
-                                <span className="text-sm">+62 123 4567 890</span>
+                                <span className="text-sm">+62 813-1670-1747</span>
                             </li>
                             <li className="flex items-center">
                                 <MapPin className="h-4 w-4 mr-2" />
-                                <span className="text-sm">
-                                    Jl. Siliwangi No. 123, Kuningan, Jawa Barat
+                                <span className="text-sm w-8/12">
+                                    Cabang Kuningan 1, Jl. Aruji Kartawinata Dalam No.19 , Kuningan,
+                                    Kec. Kuningan, Kabupaten Kuningan, Jawa Barat
                                 </span>
                             </li>
                         </ul>
@@ -39,7 +54,7 @@ export default function Footer() {
                 <div className="mt-8 md:mt-0 md:w-1/2">
                     <div className="grid grid-cols-2 gap-8">
                         <div>
-                            <h3 className="text-sm font-semibold leading-6">Menu</h3>
+                            <h3 className="text-base font-semibold leading-6 text-primary">Menu</h3>
                             <ul className="mt-2 space-y-2">
                                 {HEADER_NAVIGATION.map(item => (
                                     <li key={item.name}>
@@ -54,7 +69,9 @@ export default function Footer() {
                             </ul>
                         </div>
                         <div>
-                            <h3 className="text-sm font-semibold leading-6">Pilih Programs</h3>
+                            <h3 className="text-base font-semibold leading-6 text-primary">
+                                Pilih Programs
+                            </h3>
                             <ul className="mt-2 space-y-2">
                                 {AVAILABLE_PROGRAMS.map(program => (
                                     <li key={program.id}>
