@@ -3,20 +3,24 @@ import api from '@/lib/api';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { getCookiesAuth, getCookiesToken } from '../utils/cookies.helper';
 import { ADMIN } from '../constants/config';
-import { logout } from '../utils/auth-server.helper';
 import useAuthStore from '../stores/authStore';
+import { logout } from '../utils/auth-server.helper';
+import { getCookiesAuth, getCookiesToken } from '../utils/cookies.helper';
 
 const useAuth = () => {
     const router = useRouter();
-    const { setRole } = useAuthStore();
+    const { setRole, role } = useAuthStore();
 
     useEffect(() => {
         const getRole = async () => {
-            await getCookiesAuth().then(res => {
-                setRole(res.role);
-            });
+            await getCookiesAuth()
+                .then(res => {
+                    setRole(res.role);
+                })
+                .catch(() => {
+                    router.replace(ROUTES.login);
+                });
         };
         getRole();
     }, []);
@@ -25,9 +29,9 @@ const useAuth = () => {
         const res = api.interceptors.response.use(
             res => res,
             async (err: AxiosError) => {
-                const role = (await getCookiesAuth()).role;
                 const prevReq = err.config as any;
                 if (err.response?.status === 401) {
+                    if (!role) return router.replace(ROUTES.login);
                     if (role !== ADMIN) {
                         return router.replace(ROUTES.dashboardStudents);
                     }
@@ -56,7 +60,7 @@ const useAuth = () => {
             api.interceptors.response.eject(res);
             api.interceptors.request.eject(req);
         };
-    }, [api]);
+    }, [api, role]);
 };
 
 export default useAuth;

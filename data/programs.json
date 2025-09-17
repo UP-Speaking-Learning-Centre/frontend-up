@@ -1,0 +1,1550 @@
+[
+    {
+        "programId": 2,
+        "programName": "Regular / Adults Program",
+        "groups": [
+            {
+                "groupId": 5,
+                "groupName": "Grammar Program",
+                "levels": [
+                    {
+                        "levelId": 13,
+                        "levelName": "Grammar",
+                        "grades": [
+                            {
+                                "gradeId": 46,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 1,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 499000,
+                                        "price2Months": 899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 2,
+                                        "packageName": "Private",
+                                        "price1Month": 1049000,
+                                        "price2Months": 1899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 3,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 1499000,
+                                        "price2Months": 2599000,
+                                        "price6Months": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 45,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 4,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 499000,
+                                        "price2Months": 899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 5,
+                                        "packageName": "Private",
+                                        "price1Month": 1049000,
+                                        "price2Months": 1899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 6,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 1499000,
+                                        "price2Months": 2599000,
+                                        "price6Months": 0
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "groupId": 6,
+                "groupName": "Speaking Program",
+                "levels": [
+                    {
+                        "levelId": 14,
+                        "levelName": "Speaking",
+                        "grades": [
+                            {
+                                "gradeId": 50,
+                                "gradeNumber": 4,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 139,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 499000,
+                                        "price2Months": 899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 140,
+                                        "packageName": "Private",
+                                        "price1Month": 1049000,
+                                        "price2Months": 1899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 141,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 1499000,
+                                        "price2Months": 2599000,
+                                        "price6Months": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 49,
+                                "gradeNumber": 3,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 142,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 499000,
+                                        "price2Months": 899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 143,
+                                        "packageName": "Private",
+                                        "price1Month": 1049000,
+                                        "price2Months": 1899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 144,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 1499000,
+                                        "price2Months": 2599000,
+                                        "price6Months": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 48,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 145,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 499000,
+                                        "price2Months": 899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 146,
+                                        "packageName": "Private",
+                                        "price1Month": 1049000,
+                                        "price2Months": 1899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 147,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 1499000,
+                                        "price2Months": 2599000,
+                                        "price6Months": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 47,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 148,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 499000,
+                                        "price2Months": 899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 149,
+                                        "packageName": "Private",
+                                        "price1Month": 1049000,
+                                        "price2Months": 1899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 150,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 1499000,
+                                        "price2Months": 2599000,
+                                        "price6Months": 0
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "groupId": 7,
+                "groupName": "TOEFL Preparation",
+                "levels": [
+                    {
+                        "levelId": 15,
+                        "levelName": "TOEFL Preparation",
+                        "grades": [
+                            {
+                                "gradeId": 52,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 151,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 499000,
+                                        "price2Months": 899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 152,
+                                        "packageName": "Private",
+                                        "price1Month": 1049000,
+                                        "price2Months": 1899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 153,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 1499000,
+                                        "price2Months": 2599000,
+                                        "price6Months": 0
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 51,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 154,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 499000,
+                                        "price2Months": 899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 155,
+                                        "packageName": "Private",
+                                        "price1Month": 1049000,
+                                        "price2Months": 1899000,
+                                        "price6Months": 0
+                                    },
+                                    {
+                                        "gradePackageId": 156,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 1499000,
+                                        "price2Months": 2599000,
+                                        "price6Months": 0
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "programId": 1,
+        "programName": "School Program",
+        "groups": [
+            {
+                "groupId": 1,
+                "groupName": "Kindergarten",
+                "levels": [
+                    {
+                        "levelId": 1,
+                        "levelName": "New Star",
+                        "grades": [
+                            {
+                                "gradeId": 2,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 7,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 8,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 9,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 1,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 10,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 11,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 12,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "groupId": 2,
+                "groupName": "Elementary School",
+                "levels": [
+                    {
+                        "levelId": 6,
+                        "levelName": "Intersection",
+                        "grades": [
+                            {
+                                "gradeId": 22,
+                                "gradeNumber": 4,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 13,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 14,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 15,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 21,
+                                "gradeNumber": 3,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 16,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 17,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 18,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 20,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 19,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 20,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 21,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 19,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 22,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 23,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 24,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "levelId": 5,
+                        "levelName": "Super",
+                        "grades": [
+                            {
+                                "gradeId": 18,
+                                "gradeNumber": 4,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 25,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 26,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 27,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 17,
+                                "gradeNumber": 3,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 28,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 29,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 30,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 16,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 31,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 32,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 33,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 15,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 34,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 35,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 36,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "levelId": 4,
+                        "levelName": "Talented",
+                        "grades": [
+                            {
+                                "gradeId": 14,
+                                "gradeNumber": 4,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 37,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 38,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 39,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 13,
+                                "gradeNumber": 3,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 40,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 41,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 42,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 12,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 43,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 44,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 45,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 11,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 46,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 47,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 48,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "levelId": 3,
+                        "levelName": "Elementary",
+                        "grades": [
+                            {
+                                "gradeId": 10,
+                                "gradeNumber": 4,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 49,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 50,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 51,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 9,
+                                "gradeNumber": 3,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 52,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 53,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 54,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 8,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 55,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 56,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 57,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 7,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 58,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 59,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 60,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "levelId": 2,
+                        "levelName": "Novice",
+                        "grades": [
+                            {
+                                "gradeId": 6,
+                                "gradeNumber": 4,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 61,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 62,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 63,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 5,
+                                "gradeNumber": 3,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 64,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 65,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 66,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 4,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 67,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 68,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 69,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 3,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 70,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 71,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 72,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "groupId": 3,
+                "groupName": "Junior High School",
+                "levels": [
+                    {
+                        "levelId": 9,
+                        "levelName": "Competent",
+                        "grades": [
+                            {
+                                "gradeId": 34,
+                                "gradeNumber": 4,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 73,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 74,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 75,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 33,
+                                "gradeNumber": 3,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 76,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 77,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 78,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 32,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 79,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 80,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 81,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 31,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 82,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 83,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 84,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "levelId": 8,
+                        "levelName": "Interchange",
+                        "grades": [
+                            {
+                                "gradeId": 30,
+                                "gradeNumber": 4,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 85,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 86,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 87,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 29,
+                                "gradeNumber": 3,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 88,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 89,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 90,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 28,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 91,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 92,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 93,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 27,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 94,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 95,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 96,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "levelId": 7,
+                        "levelName": "Beginners",
+                        "grades": [
+                            {
+                                "gradeId": 26,
+                                "gradeNumber": 4,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 97,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 98,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 99,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 25,
+                                "gradeNumber": 3,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 100,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 101,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 102,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 24,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 103,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 104,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 105,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 23,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 106,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 107,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 108,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "groupId": 4,
+                "groupName": "Senior High School",
+                "levels": [
+                    {
+                        "levelId": 12,
+                        "levelName": "Flyers",
+                        "grades": [
+                            {
+                                "gradeId": 44,
+                                "gradeNumber": 4,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 109,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 110,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 111,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 43,
+                                "gradeNumber": 3,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 112,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 113,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 114,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 42,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 115,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 116,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 117,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 41,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 118,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 119,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 120,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "levelId": 11,
+                        "levelName": "Movers",
+                        "grades": [
+                            {
+                                "gradeId": 40,
+                                "gradeNumber": 4,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 121,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 122,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 123,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 39,
+                                "gradeNumber": 3,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 124,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 125,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 126,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 38,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 127,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 128,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 129,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 37,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 130,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 131,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 132,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "levelId": 10,
+                        "levelName": "Rookie",
+                        "grades": [
+                            {
+                                "gradeId": 36,
+                                "gradeNumber": 2,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 133,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 134,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 135,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            },
+                            {
+                                "gradeId": 35,
+                                "gradeNumber": 1,
+                                "packages": [
+                                    {
+                                        "gradePackageId": 136,
+                                        "packageName": "Semi Private",
+                                        "price1Month": 349000,
+                                        "price2Months": 0,
+                                        "price6Months": 1999000
+                                    },
+                                    {
+                                        "gradePackageId": 137,
+                                        "packageName": "Private",
+                                        "price1Month": 799000,
+                                        "price2Months": 0,
+                                        "price6Months": 4499000
+                                    },
+                                    {
+                                        "gradePackageId": 138,
+                                        "packageName": "Exclusive",
+                                        "price1Month": 999000,
+                                        "price2Months": 0,
+                                        "price6Months": 5299000
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
