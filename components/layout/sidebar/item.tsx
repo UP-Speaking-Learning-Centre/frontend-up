@@ -1,6 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { useDashboardLayoutStore } from '@/stores/dashboard-layout-store';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
@@ -16,6 +17,7 @@ const SidebarItem = ({
 }) => {
     const pathname = usePathname();
     const isActive = pathname.startsWith(item.href);
+    const setOpen = useDashboardLayoutStore(s => s.setOpenSidebar);
 
     return (
         <div
@@ -32,6 +34,7 @@ const SidebarItem = ({
                         ? 'bg-[#CE6439] text-white border-r-2 border-[#CE6439]'
                         : 'text-white hover:bg-[#CE6439]/80'
                 }`}
+                onClick={() => setOpen(false)}
             >
                 <item.icon className="h-4 w-4 mr-3" />
                 <span>{item.label}</span>

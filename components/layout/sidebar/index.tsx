@@ -1,15 +1,16 @@
 'use client';
 
-import React, { useEffect } from 'react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { FileText, LogOut, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import SidebarItem from './item';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { ROUTES } from '@/constants/routes';
 import useAuthStore from '@/features/auth/stores/authStore';
-import { useRouter } from 'next/navigation';
-import { logout } from '@/features/auth/utils/auth-server.helper';
 import { isAdmin } from '@/features/auth/utils/auth-client.helper';
+import { logout } from '@/features/auth/utils/auth-server.helper';
+import { useDashboardLayoutStore } from '@/stores/dashboard-layout-store';
+import { BookCheckIcon, FileText, Home, LocateIcon, LogOut, Users } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
+import SidebarItem from './item';
 
 const sidebarItemsAdmin = [
     { href: ROUTES.adminStudents, label: 'List Students', icon: Users },
@@ -17,6 +18,21 @@ const sidebarItemsAdmin = [
         href: ROUTES.adminPlacementTests,
         label: 'Placement Tests',
         icon: FileText,
+    },
+    {
+        href: ROUTES.adminTeacherManagement,
+        label: 'Teacher Management',
+        icon: Home,
+    },
+    {
+        href: ROUTES.adminLocationManagement,
+        label: 'Location Management',
+        icon: LocateIcon,
+    },
+    {
+        href: ROUTES.adminProgramManagement,
+        label: 'Program Management',
+        icon: BookCheckIcon,
     },
 ];
 
@@ -30,11 +46,12 @@ const sidebarItemsUser = [
 ];
 
 const Sidebar = () => {
-    const router = useRouter()
-    const [open, setOpen] = React.useState(false);
-
+    const router = useRouter();
     // TODO: get user role from auth store
-    const { role } = useAuthStore();
+    const role = useAuthStore(s => s.role);
+    const open = useDashboardLayoutStore(s => s.openSidebar);
+    const setOpen = useDashboardLayoutStore(s => s.setOpenSidebar);
+
     const [sidebarMenu, setSidebarMenu] = React.useState<
         { href: string; label: string; icon: React.ComponentType<{ className?: string }> }[]
     >([]);
@@ -49,7 +66,10 @@ const Sidebar = () => {
     }, [role]);
 
     const handleLogout = async () => {
-        await logout().then(() => router.replace(ROUTES.login));
+        await logout().then(() => {
+            router.replace(ROUTES.login);
+            setOpen(false);
+        });
     };
 
     const generateSidebarHeader = () => {
@@ -73,8 +93,9 @@ const Sidebar = () => {
     return (
         <>
             <Sheet open={open} onOpenChange={setOpen}>
-                <SheetContent side="left" className="w-full sm:max-w-[280px] p-0">
-                    <div className="py-4 flex flex-col h-full bg-white">
+                <SheetContent side="left" className="w-full sm:max-w-[280px] p-0 border-0">
+                    <SheetTitle/>
+                    <div className="py-4 flex flex-col h-full bg-secondary">
                         <div className="px-6 mb-8">{generateSidebarHeader()}</div>
                         <div className="space-y-1 flex-1 px-3">
                             {sidebarMenu.map(item => {
@@ -84,7 +105,7 @@ const Sidebar = () => {
                         <div className="px-3 pt-4 border-t">
                             <Button
                                 variant="ghost"
-                                className="w-full justify-start font-normal text-red-600 hover:bg-red-50"
+                                className="w-full justify-start font-normal text-white hover:text-white hover:bg-[#CE6439]/80"
                                 onClick={handleLogout}
                             >
                                 <LogOut className="h-4 w-4 mr-3" />
@@ -96,7 +117,7 @@ const Sidebar = () => {
             </Sheet>
 
             {/* Desktop Sidebar */}
-            <div className="hidden fixed left-0 inset-y-0 w-[240px] [grid-area:sidebar] md:flex h-full flex-col bg-secondary shadow-sm border-r">
+            <div className="hidden left-0 inset-y-0 w-[260px] [grid-area:sidebar] md:flex h-full flex-col bg-secondary shadow-sm border-r">
                 <div className="py-6 flex flex-col h-full">
                     <div className="px-6 mb-8">{generateSidebarHeader()}</div>
                     <div className="space-y-1 flex-1">

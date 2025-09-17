@@ -1,54 +1,20 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
-import { ROUTES } from '@/constants/routes';
+
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
+import SelectStudent from '@/features/dashboard/components/select-student';
 import PlacementTestPending from '@/features/home/components/placement-test-pending';
 import PlacementTestSuccess from '@/features/home/components/placement-test-success';
-import useGetProfile from '@/features/home/queries/useGetProfile';
 import useGetProfileById from '@/features/home/queries/useGetProfileById';
 import { isPlacementTest } from '@/utils/api.helper';
 import { BookOpen, Calendar, Home, User } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
-    const { data: students } = useGetProfile();
     const { data } = useGetProfileById();
-    const router = useRouter();
 
     return (
-        <DashboardContentLayout
-            pageTitle="Detail Student"
-            extras={
-                <div className="flex items-center">
-                    <span className="text-sm text-gray-600 mr-3">Current Student:</span>
-                    <Select
-                        value={data?.id.toString()}
-                        onValueChange={id =>
-                            router.replace(ROUTES.dashboardStudentsId.expand({ id }))
-                        }
-                    >
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Select student" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {students?.students.map(student => (
-                                <SelectItem value={student.id.toString()}>
-                                    {student.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-            }
-        >
+        <DashboardContentLayout pageTitle="Detail Student" extras={<SelectStudent />}>
             <div className="space-y-6">
                 {/* Student Overview */}
                 <div className="mb-8">

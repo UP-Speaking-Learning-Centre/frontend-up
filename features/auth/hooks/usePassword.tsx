@@ -48,12 +48,13 @@ const usePassword = () => {
                     isAdmin(res.role) ? ROUTES.adminStudents : ROUTES.dashboardListStudents
                 );
                 setRole(res.role);
-                setStep(PHONE);
             })
-            .catch(err => toast.error(err?.message, { position: 'top-center' }));
+            .catch(err => toast.error(err?.message, { position: 'top-center' }))
+            .finally(() => setIsloading(false));
     };
 
     const handleSuccess = async (data: PasswordForm) => {
+        setIsloading(true);
         if (isNewAccount) {
             mutateAsync({
                 phoneNumber: phone,
@@ -64,16 +65,13 @@ const usePassword = () => {
                     toast.info(res, { position: 'top-center' });
                     await login(data);
                 })
-                .catch(err => toast.info(err?.message, { position: 'top-center' }));
+                .catch(err => toast.info(err?.message, { position: 'top-center' }))
+                .finally(() => setIsloading(false));
         } else await login(data);
     };
 
-    const handleError: SubmitErrorHandler<PasswordForm> = error => {
-        console.log(error);
-    };
-
     return {
-        handleSubmit: handleSubmit(handleSuccess, handleError),
+        handleSubmit: handleSubmit(handleSuccess),
         register,
         formState,
         isLoading,
