@@ -1,6 +1,6 @@
 'use client';
 
-import { ProgramDetailTreeInterface } from '@/types/program-detail';
+import { ProgramDetailTreeInterface } from '@/types/admin';
 import ProgramDetailControl from './program-detail-control';
 
 const ProgramDetailTree = ({ items }: { items: ProgramDetailTreeInterface }) => {
@@ -14,7 +14,12 @@ const ProgramDetailTree = ({ items }: { items: ProgramDetailTreeInterface }) => 
             {/* First Kindergarten with expanded Levels */}
             <div className="relative">
                 {items.items.map(item => (
-                    <ProgramDetailControl children={item.children} isChild />
+                    <ProgramDetailControl
+                        title={item.title}
+                        description={item.description}
+                        children={item.children}
+                        isChild
+                    />
                 ))}
             </div>
         </div>

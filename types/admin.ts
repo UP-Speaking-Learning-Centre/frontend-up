@@ -39,3 +39,42 @@ export interface ProgramDetail {
     programName: string;
     groups: ProgramDetailGroup[];
 }
+
+export type ProgramRecurse =
+    | ProgramDetail
+    | ProgramDetailGroup
+    | ProgramDetailLevel
+    | ProgramDetailGrade
+    | ProgramDetailPackage;
+
+export type ProgramRecurseArray =
+    | ProgramDetail[]
+    | ProgramDetailGroup[]
+    | ProgramDetailLevel[]
+    | ProgramDetailGrade[]
+    | ProgramDetailPackage[];
+
+export interface LocationAdmin {
+    id: number;
+    name: string;
+    address: string | null;
+    img: string | null;
+    googleMapsLink: string | null;
+}
+
+export interface TeacherAdmin {
+    id:number;
+    name: string;
+    img: string;
+    description: string;
+    alias: string;
+    location: string;
+}
+
+export interface PriceData {
+  id: string
+  packageName: string
+  price: string
+  duration: string
+  durationType: "days" | "weeks" | "months" | "years"
+}

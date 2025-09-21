@@ -1,35 +1,45 @@
 'use client';
-import { Badge } from '@/components/ui/badge';
+
+import Overlay from '@/components/layout/overlay';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
+import useCreateLocation from '@/features/admin/hooks/useCreateLocation';
+import useDeleteLocation from '@/features/admin/queries/useDeleteLocation';
+import useGetLocation from '@/features/admin/queries/useGetLocation';
+import { useLocationManagementStore } from '@/features/admin/stores/location';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
-import {
-    Calendar,
-    Edit,
-    Plus,
-    Trash2,
-    X,
-    Link as LinkLucide,
-    Link2,
-    LucideArrowUpRightFromSquare,
-} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import clsx from 'clsx';
+import { Edit, LucideArrowUpRightFromSquare, Plus, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
 const page = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isEdit, setIsEdit] = useState(false);
 
-    const mentors = Array(3).fill({
-        name: 'Cabang Kuningan',
-        image: '/placeholder.svg',
-        address: 'Jln. wqeqwe',
-    });
+    const { isLoading } = useGetLocation();
+    const { handleSubmit, register, formState, handleUpload, setId, handleResetModal, isEdit } =
+        useCreateLocation(setIsModalOpen);
+    const { mutateAsync } = useDeleteLocation();
+    const { errors } = formState;
+
+    const location = useLocationManagementStore(s => s.location);
+
+    if (isLoading) return <Overlay />;
 
     return (
         <DashboardContentLayout pageTitle="Location Management">
@@ -46,63 +56,110 @@ const page = () => {
                         </Button>
                     </div>
 
-                    {/* Mentor Cards Grid */}
+                    {/* Location Cards Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {mentors.map((mentor, index) => (
-                            <Card
-                                key={index}
-                                className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
+                        {location.length ? (
+                            location.map(location => (
+                                <Card
+                                    key={location.id}
+                                    className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
+                                >
+                                    {/* Card Header */}
+                                    <div className="flex items-center justify-between p-4 pb-2">
+                                        <h3 className="font-semibold text-gray-900">
+                                            {location.name}
+                                        </h3>
+                                        <div className="flex items-center gap-2">
+                                            <Button
+                                                onClick={() => {
+                                                    setId(location.id);
+                                                    setIsModalOpen(true);
+                                                }}
+                                                variant={'outline'}
+                                                className="p-3 hover:bg-gray-100 rounded"
+                                            >
+                                                <Edit className="w-4 h-4 text-gray-600" />
+                                            </Button>
+                                            <AlertDialog>
+                                                <AlertDialogTrigger asChild>
+                                                    <Button
+                                                        variant={'outline'}
+                                                        className="p-3 hover:bg-gray-100 rounded"
+                                                    >
+                                                        <Trash2 className="w-4 h-4 text-gray-600" />
+                                                    </Button>
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>
+                                                            Are you sure want to delete this
+                                                            location?
+                                                        </AlertDialogTitle>
+                                                        <AlertDialogDescription>
+                                                            This action cannot be undone. This will
+                                                            permanently delete the location and
+                                                            remove your data from our servers.
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter>
+                                                        <AlertDialogCancel>
+                                                            Cancel
+                                                        </AlertDialogCancel>
+                                                        <AlertDialogAction
+                                                            onClick={() => mutateAsync(location.id)}
+                                                        >
+                                                            Continue
+                                                        </AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                        </div>
+                                    </div>
+
+                                    {/* Profile Image */}
+                                    <div className="px-4 pb-3">
+                                        <div className="relative w-full aspect-[19/10] rounded-lg overflow-hidden">
+                                            <Image
+                                                src={location.img || '/placeholder.svg'}
+                                                alt={location.name}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                        </div>
+                                    </div>
+
+                                    {/* Description */}
+                                    <div className="px-4 pb-4">
+                                        {/* Available Locations */}
+                                        <div className="mb-3">
+                                            <p className="font-semibold text-gray-900 text-sm">
+                                                Address:
+                                            </p>
+                                            <p className="text-gray-700 text-sm">
+                                                {location.address || '-'}
+                                            </p>
+                                        </div>
+                                        {location.googleMapsLink && (
+                                            <Link
+                                                href={location.googleMapsLink || '#'}
+                                                className={clsx(
+                                                    'flex text-sm items-center space-x-2 text-[#2563EB]'
+                                                )}
+                                            >
+                                                <LucideArrowUpRightFromSquare width={16} />
+                                                <p>View on Google Maps</p>
+                                            </Link>
+                                        )}
+                                    </div>
+                                </Card>
+                            ))
+                        ) : (
+                            <p
+                                className="text-center col-span-3 text-primary"
                             >
-                                {/* Card Header */}
-                                <div className="flex items-center justify-between p-4 pb-2">
-                                    <h3 className="font-semibold text-gray-900">{mentor.name}</h3>
-                                    <div className="flex items-center gap-2">
-                                        <Button
-                                            variant={'outline'}
-                                            className="p-3 hover:bg-gray-100 rounded"
-                                        >
-                                            <Edit className="w-4 h-4 text-gray-600" />
-                                        </Button>
-                                        <Button
-                                            variant={'outline'}
-                                            className="p-3 hover:bg-gray-100 rounded"
-                                        >
-                                            <Trash2 className="w-4 h-4 text-gray-600" />
-                                        </Button>
-                                    </div>
-                                </div>
-
-                                {/* Profile Image */}
-                                <div className="px-4 pb-3">
-                                    <div className="relative w-full aspect-[19/10] rounded-lg overflow-hidden">
-                                        <Image
-                                            src={mentor.image || '/placeholder.svg'}
-                                            alt={mentor.name}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Description */}
-                                <div className="px-4 pb-4">
-                                    {/* Available Locations */}
-                                    <div className="mb-3">
-                                        <p className="font-semibold text-gray-900 text-sm">
-                                            Address:
-                                        </p>
-                                        <p className="text-gray-700 text-sm">{mentor.address}</p>
-                                    </div>
-                                    <Link
-                                        href={'#'}
-                                        className="flex text-sm items-center space-x-2 text-[#2563EB]"
-                                    >
-                                        <LucideArrowUpRightFromSquare width={16} />
-                                        <p>View on Google Maps</p>
-                                    </Link>
-                                </div>
-                            </Card>
-                        ))}
+                                No location found ...
+                            </p>
+                        )}
                     </div>
                 </div>
                 {isModalOpen && (
@@ -114,7 +171,7 @@ const page = () => {
                                     {isEdit && 'Edit '}Detail Ms. Feby
                                 </h2>
                                 <button
-                                    onClick={() => setIsModalOpen(false)}
+                                    onClick={handleResetModal}
                                     className="p-1 hover:bg-gray-100 rounded"
                                 >
                                     <X className="w-5 h-5 text-gray-600" />
@@ -122,7 +179,7 @@ const page = () => {
                             </div>
 
                             {/* Modal Content */}
-                            <div className="px-6 pb-6 space-y-6">
+                            <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-6">
                                 {/* Nama Field */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-900 mb-2">
@@ -130,15 +187,35 @@ const page = () => {
                                     </label>
                                     <Input
                                         type="text"
-                                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        className={cn(
+                                            'w-full border border-gray-300 rounded-md px-3 py-2',
+                                            errors.name && 'border-red-500'
+                                        )}
+                                        {...register('name')}
                                     />
+                                    {errors.name && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.name.message?.toString()}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-900 mb-2">
                                         Alamat
                                     </label>
-                                    <Textarea className="w-full border border-gray-300 rounded-md px-3 py-2 min-h-[100px] resize-none" />
+                                    <Textarea
+                                        className={cn(
+                                            'w-full border border-gray-300 rounded-md px-3 py-2 min-h-[100px] resize-none',
+                                            errors.address && 'border-red-500'
+                                        )}
+                                        {...register('address')}
+                                    />
+                                    {errors.address && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.address.message?.toString()}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Foto Field */}
@@ -148,8 +225,17 @@ const page = () => {
                                     </label>
                                     <Input
                                         type="file"
-                                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        className={cn(
+                                            'w-full border border-gray-300 rounded-md px-3 py-2',
+                                            errors.img && 'border-red-500'
+                                        )}
+                                        onChange={handleUpload}
                                     />
+                                    {errors.img && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.img.message?.toString()}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Deskripsi Field */}
@@ -159,8 +245,17 @@ const page = () => {
                                     </label>
                                     <Input
                                         type="text"
-                                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        className={cn(
+                                            'w-full border border-gray-300 rounded-md px-3 py-2',
+                                            errors.googleMapsLink && 'border-red-500'
+                                        )}
+                                        {...register('googleMapsLink')}
                                     />
+                                    {errors.googleMapsLink && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.googleMapsLink.message?.toString()}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Edit Button */}
@@ -169,7 +264,7 @@ const page = () => {
                                         {isEdit ? 'Edit' : 'Add'}
                                     </Button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 )}

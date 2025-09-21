@@ -1,7 +1,9 @@
 'use client';
 
+import { inter } from '@/constants/fonts';
 import useAuth from '@/features/auth/hooks/useAuth';
 import DashboardLayout from '@/features/dashboard/components/dashboard-layout';
+import { Inter } from 'next/font/google';
 import type React from 'react';
 
 // export const metadata: Metadata = {
@@ -12,5 +14,9 @@ import type React from 'react';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     useAuth();
 
-    return <DashboardLayout>{children}</DashboardLayout>;
+    return (
+        <DashboardLayout>
+            <div className={inter.className}>{children}</div>
+        </DashboardLayout>
+    );
 }

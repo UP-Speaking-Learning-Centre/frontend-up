@@ -1,5 +1,6 @@
 'use client';
 
+import { inter } from '@/constants/fonts';
 import { cn } from '@/lib/utils';
 import { useDashboardLayoutStore } from '@/stores/dashboard-layout-store';
 import Link from 'next/link';
@@ -22,6 +23,7 @@ const SidebarItem = ({
     return (
         <div
             className={cn(
+                inter.className,
                 'px-2 relative',
                 isActive &&
                     'after:absolute after:bottom-0 after:top-0 after:left-0 after:w-1 after:bg-[#CE6439] after:rounded-r-md'
