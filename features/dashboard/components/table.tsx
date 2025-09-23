@@ -104,7 +104,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage }: ITable<T>) => 
                                                         return (
                                                             <td
                                                                 key={col.id.toString()}
-                                                                className="h-[56.5px] relative"
+                                                                className="h-[52.5px] relative"
                                                             >
                                                                 {typeof value === 'object' &&
                                                                 'renderCell' in value

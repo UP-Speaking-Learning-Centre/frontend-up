@@ -2,16 +2,15 @@ import { ROUTES } from '@/constants/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { SubmitErrorHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
-import { ADMIN, CONFIRM_PASSWORD, PHONE } from '../constants/config';
+import { CONFIRM_PASSWORD } from '../constants/config';
 import { PasswordForm } from '../constants/interface';
 import usePostFirstLogin from '../queries/usePostFirstLogin';
 import useAuthStore from '../stores/authStore';
-import { postLogin } from '../utils/auth-server.helper';
 import { isAdmin } from '../utils/auth-client.helper';
-import api from '@/lib/api';
+import { postLogin } from '../utils/auth-server.helper';
 
 const usePassword = () => {
     const router = useRouter();

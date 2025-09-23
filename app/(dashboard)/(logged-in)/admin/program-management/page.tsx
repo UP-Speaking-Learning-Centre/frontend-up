@@ -1,9 +1,12 @@
 'use client';
 import { Card } from '@/components/ui/card';
+import { ROUTES } from '@/constants/routes';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const page = () => {
+    const router = useRouter();
     const Programs = Array(2).fill({
         name: 'School Program',
         imageUrl: '/placeholder.svg',
@@ -16,13 +19,17 @@ const page = () => {
         <DashboardContentLayout pageTitle="Location Management">
             <div className="min-h-screen bg-gray-50 p-6">
                 <div className="max-w-7xl mx-auto">
-
                     {/* Program Cards Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {Programs.map((program, index) => (
                             <Card
+                                onClick={() =>
+                                    router.replace(
+                                        ROUTES.adminProgramManagementId.expand({ id: 1 })
+                                    )
+                                }
                                 key={index}
-                                className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
+                                className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:scale-105 cursor-pointer transition-all"
                             >
                                 {/* Card Header */}
                                 <div className="flex items-center justify-between p-4">

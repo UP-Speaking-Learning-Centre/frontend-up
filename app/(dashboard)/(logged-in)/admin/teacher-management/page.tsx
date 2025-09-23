@@ -1,26 +1,46 @@
 'use client';
+
+import Overlay from '@/components/layout/overlay';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
+import { inter } from '@/constants/fonts';
+import useCreateTeacher from '@/features/admin/hooks/useCreateTeacher';
+import useDeleteTeacher from '@/features/admin/queries/useDeleteTeacher';
+import useGetTeachers from '@/features/admin/queries/useGetTeachers';
+import { useTeacherManagementStore } from '@/features/admin/stores/teacher';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
+import { cn } from '@/lib/utils';
 import { Calendar, Edit, Plus, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
 const page = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isEdit, setIsEdit] = useState(false);
 
-    const mentors = Array(4).fill({
-        name: 'Ms. Feby',
-        image: '/placeholder.svg',
-        badge: 'Mama Bear',
-        description: 'Experienced English teacher with 5+ years of teaching elementary students',
-        location: 'UP Education Jakarta',
-    });
+    const { isLoading } = useGetTeachers();
+    const { handleSubmit, register, formState, handleUpload, setId, handleResetModal, isEdit } =
+        useCreateTeacher(setIsModalOpen);
+    const { mutateAsync } = useDeleteTeacher();
+    const { errors } = formState;
+
+    const teachers = useTeacherManagementStore(s => s.teacher);
+
+    if (isLoading) return <Overlay />;
 
     return (
         <DashboardContentLayout pageTitle="Teacher Management">
@@ -39,7 +59,7 @@ const page = () => {
 
                     {/* Mentor Cards Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {mentors.map((mentor, index) => (
+                        {teachers.map((mentor, index) => (
                             <Card
                                 key={index}
                                 className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
@@ -55,17 +75,45 @@ const page = () => {
                                             <Calendar className="w-4 h-4 text-gray-600" />
                                         </Button>
                                         <Button
+                                            onClick={() => {
+                                                setIsModalOpen(true);
+                                                setId(1);
+                                            }}
                                             variant={'outline'}
                                             className="p-2 hover:bg-gray-100 rounded"
                                         >
                                             <Edit className="w-4 h-4 text-gray-600" />
                                         </Button>
-                                        <Button
-                                            variant={'outline'}
-                                            className="p-2 hover:bg-gray-100 rounded"
-                                        >
-                                            <Trash2 className="w-4 h-4 text-gray-600" />
-                                        </Button>
+                                        <AlertDialog>
+                                            <AlertDialogTrigger asChild>
+                                                <Button
+                                                    variant={'outline'}
+                                                    className="p-3 hover:bg-gray-100 rounded"
+                                                >
+                                                    <Trash2 className="w-4 h-4 text-gray-600" />
+                                                </Button>
+                                            </AlertDialogTrigger>
+                                            <AlertDialogContent className={inter.className}>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle>
+                                                        Are you sure want to delete this teacher?
+                                                    </AlertDialogTitle>
+                                                    <AlertDialogDescription>
+                                                        This action cannot be undone. This will
+                                                        permanently delete the teacher and remove
+                                                        your data from our servers.
+                                                    </AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                    <AlertDialogAction
+                                                        onClick={() => mutateAsync(mentor.id)}
+                                                    >
+                                                        Continue
+                                                    </AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
                                     </div>
                                 </div>
 
@@ -73,7 +121,7 @@ const page = () => {
                                 <div className="px-4 pb-3">
                                     <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden">
                                         <Image
-                                            src={mentor.image || '/placeholder.svg'}
+                                            src={mentor.img || '/placeholder.svg'}
                                             alt={mentor.name}
                                             fill
                                             className="object-cover"
@@ -84,7 +132,7 @@ const page = () => {
                                 {/* Badge */}
                                 <div className="px-4 pb-3">
                                     <Badge className="bg-primary hover:bg-primary/80 text-white px-3 py-1 rounded-full text-sm">
-                                        {mentor.badge}
+                                        {mentor.alias}
                                     </Badge>
                                 </div>
 
@@ -116,16 +164,17 @@ const page = () => {
                                 <h2 className="text-xl font-semibold text-gray-900">
                                     {isEdit && 'Edit '}Detail Ms. Feby
                                 </h2>
-                                <button
-                                    onClick={() => setIsModalOpen(false)}
-                                    className="p-1 hover:bg-gray-100 rounded"
+                                <Button
+                                    variant={'ghost'}
+                                    onClick={() => handleResetModal()}
+                                    className="p-1 hover:bg-gray-100 rounded w-10"
                                 >
                                     <X className="w-5 h-5 text-gray-600" />
-                                </button>
+                                </Button>
                             </div>
 
                             {/* Modal Content */}
-                            <div className="px-6 pb-6 space-y-6">
+                            <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-6">
                                 {/* Nama Field */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-900 mb-2">
@@ -133,8 +182,17 @@ const page = () => {
                                     </label>
                                     <Input
                                         type="text"
-                                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        className={cn(
+                                            'w-full border border-gray-300 rounded-md px-3 py-2',
+                                            errors.name && 'border-red-500'
+                                        )}
+                                        {...register('name')}
                                     />
+                                    {errors.name && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.name.message?.toString()}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Foto Field */}
@@ -144,8 +202,17 @@ const page = () => {
                                     </label>
                                     <Input
                                         type="file"
-                                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        className={cn(
+                                            'w-full border border-gray-300 rounded-md px-3 py-2',
+                                            errors.img && 'border-red-500'
+                                        )}
+                                        onChange={handleUpload}
                                     />
+                                    {errors.img && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.img.message?.toString()}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Deskripsi Field */}
@@ -153,7 +220,18 @@ const page = () => {
                                     <label className="block text-sm font-medium text-gray-900 mb-2">
                                         Deskripsi
                                     </label>
-                                    <Textarea className="w-full border border-gray-300 rounded-md px-3 py-2 min-h-[100px] resize-none" />
+                                    <Textarea
+                                        className={cn(
+                                            'w-full border border-gray-300 rounded-md px-3 py-2 min-h-[100px] resize-none',
+                                            errors.description && 'border-red-500'
+                                        )}
+                                        {...register('description')}
+                                    />
+                                    {errors.description && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.description.message?.toString()}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Alias Field */}
@@ -163,8 +241,17 @@ const page = () => {
                                     </label>
                                     <Input
                                         type="text"
-                                        className="w-full border border-gray-300 rounded-md px-3 py-2"
+                                        className={cn(
+                                            'w-full border border-gray-300 rounded-md px-3 py-2',
+                                            errors.alias && 'border-red-500'
+                                        )}
+                                        {...register('alias')}
                                     />
+                                    {errors.alias && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.alias.message?.toString()}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Lokasi Mengajar Section */}
@@ -172,7 +259,7 @@ const page = () => {
                                     <label className="block text-sm font-medium text-gray-900 mb-3">
                                         Lokasi Mengajar
                                     </label>
-                                    <RadioGroup className="space-y-1">
+                                    <RadioGroup className="space-y-1" {...register('location')}>
                                         <div className="flex items-center space-x-2">
                                             <RadioGroupItem value="location1" />
                                             <label
@@ -201,6 +288,11 @@ const page = () => {
                                             </label>
                                         </div>
                                     </RadioGroup>
+                                    {errors.location && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.location.message?.toString()}
+                                        </p>
+                                    )}
                                 </div>
 
                                 {/* Edit Button */}
@@ -209,7 +301,7 @@ const page = () => {
                                         {isEdit ? 'Edit' : 'Add'}
                                     </Button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 )}

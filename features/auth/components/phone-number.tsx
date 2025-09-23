@@ -1,13 +1,12 @@
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Phone } from 'lucide-react';
-import usePhoneNumberLogin from '../hooks/usePhoneNumberLogin';
-import { Label } from '@radix-ui/react-label';
-import { PHONE } from '../constants/config';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { Label } from '@radix-ui/react-label';
+import { Phone } from 'lucide-react';
 import { Toaster } from 'sonner';
-import useAuthStore from '../stores/authStore';
+import { PHONE } from '../constants/config';
+import usePhoneNumberLogin from '../hooks/usePhoneNumberLogin';
 
 const PhoneNumber = () => {
     const { register, handleSubmit, formState, isLoading } = usePhoneNumberLogin();
@@ -32,7 +31,7 @@ const PhoneNumber = () => {
                                 Phone Number
                             </Label>
                             <Input
-                                placeholder='e.g. 08123456789'
+                                placeholder="e.g. 08123456789"
                                 {...register(PHONE)}
                                 className={cn(errors.phone && 'border-red-500')}
                             />
