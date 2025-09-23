@@ -13,6 +13,9 @@ const ENDPOINTS = {
     submitRegistrationFromPlacement: '/auth/register',
     fetchPlacementTest: '/placement-tests/start-guest',
     submitPlacementTest: '/placement-tests/submit-guest',
+    fetchTeacherSchedule: parseTemplate('/admin/teacher-schedules/{locationId}'),
+    fetchStudyGroupDetail: parseTemplate('/admin/study-groups/{studyGroupId}'),
+    fetchStudentOfStudyGroup: parseTemplate('/admin/study-groups/{studyGroupId}/students'),
 } as const;
 
 export default ENDPOINTS;

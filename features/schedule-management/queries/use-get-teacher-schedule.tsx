@@ -1,0 +1,32 @@
+'use client';
+
+import ENDPOINTS from '@/constants/endpoints';
+import api from '@/lib/api';
+import { TeacherScheduleResponse } from '@/types/schedule';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
+
+import scheduleData from '@/data/schedule.json';
+import { useEffect } from 'react';
+import { useScheduleManagementStore } from '../stores/schedule-management-store';
+
+function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+const fetchTeacherSchedule = async (locationId: number): Promise<TeacherScheduleResponse> => {
+    // const response = await api.get<TeacherScheduleResponse>(ENDPOINTS.fetchTeacherSchedule);
+    // return response.data;
+    await sleep(4000);
+    return scheduleData;
+};
+
+export const useGetTeacherScheduleQuery = (): UseQueryResult<TeacherScheduleResponse> => {
+    const locationId = useScheduleManagementStore(s => s.locationId);
+    const query = useQuery({
+        queryKey: ['teacher-schedule', locationId],
+        queryFn: () => fetchTeacherSchedule(locationId as number),
+        enabled: !!locationId,
+    });
+
+    return query;
+};
