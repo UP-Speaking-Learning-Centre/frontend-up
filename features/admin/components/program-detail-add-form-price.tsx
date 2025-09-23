@@ -18,6 +18,8 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { useToast } from '@/components/ui/use-toast';
+import { inter } from '@/constants/fonts';
+import { cn } from '@/lib/utils';
 import { PriceData } from '@/types/admin';
 import { DialogProps } from '@radix-ui/react-dialog';
 import { Plus, X } from 'lucide-react';
@@ -237,7 +239,8 @@ const ProgramDetailAddFormPrice = ({ ...props }: DialogProps) => {
                 <div className="p-3 bg-muted rounded-lg">
                     <p className="text-sm text-muted-foreground">Preview:</p>
                     <p className="font-medium">
-                        {PACKAGE_OPTIONS.find(p => p.value === packageData.packageName)?.label} - Rp.
+                        {PACKAGE_OPTIONS.find(p => p.value === packageData.packageName)?.label} -
+                        Rp.
                         {packageData.price} for {packageData.duration} {packageData.durationType}
                     </p>
                 </div>
@@ -253,7 +256,9 @@ const ProgramDetailAddFormPrice = ({ ...props }: DialogProps) => {
                     Add Price
                 </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogContent
+                className={cn(inter.className, 'max-w-2xl max-h-[90vh] overflow-y-auto')}
+            >
                 <DialogHeader>
                     <DialogTitle>Add Prices</DialogTitle>
                     <DialogDescription>

@@ -39,10 +39,10 @@ const useAuth = () => {
                         prevReq._retry = true;
                         return api(prevReq);
                     }
+                    await logout().then(() => {
+                        return router.replace(ROUTES.login);
+                    });
                 }
-                await logout().then(() => {
-                    return router.replace(ROUTES.login);
-                });
             }
         );
 

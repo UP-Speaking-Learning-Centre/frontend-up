@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { inter } from '@/constants/fonts';
 import useCreateLocation from '@/features/admin/hooks/useCreateLocation';
 import useDeleteLocation from '@/features/admin/queries/useDeleteLocation';
 import useGetLocation from '@/features/admin/queries/useGetLocation';
@@ -89,7 +90,7 @@ const page = () => {
                                                         <Trash2 className="w-4 h-4 text-gray-600" />
                                                     </Button>
                                                 </AlertDialogTrigger>
-                                                <AlertDialogContent>
+                                                <AlertDialogContent className={inter.className}>
                                                     <AlertDialogHeader>
                                                         <AlertDialogTitle>
                                                             Are you sure want to delete this
@@ -154,9 +155,7 @@ const page = () => {
                                 </Card>
                             ))
                         ) : (
-                            <p
-                                className="text-center col-span-3 text-primary"
-                            >
+                            <p className="text-center col-span-3 text-primary">
                                 No location found ...
                             </p>
                         )}

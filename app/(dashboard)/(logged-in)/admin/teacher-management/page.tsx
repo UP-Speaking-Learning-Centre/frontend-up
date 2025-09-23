@@ -1,11 +1,24 @@
 'use client';
+
 import Overlay from '@/components/layout/overlay';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
+import { inter } from '@/constants/fonts';
 import useCreateTeacher from '@/features/admin/hooks/useCreateTeacher';
 import useDeleteTeacher from '@/features/admin/queries/useDeleteTeacher';
 import useGetTeachers from '@/features/admin/queries/useGetTeachers';
@@ -71,13 +84,36 @@ const page = () => {
                                         >
                                             <Edit className="w-4 h-4 text-gray-600" />
                                         </Button>
-                                        <Button
-                                            onClick={() => mutateAsync(mentor.id)}
-                                            variant={'outline'}
-                                            className="p-2 hover:bg-gray-100 rounded"
-                                        >
-                                            <Trash2 className="w-4 h-4 text-gray-600" />
-                                        </Button>
+                                        <AlertDialog>
+                                            <AlertDialogTrigger asChild>
+                                                <Button
+                                                    variant={'outline'}
+                                                    className="p-3 hover:bg-gray-100 rounded"
+                                                >
+                                                    <Trash2 className="w-4 h-4 text-gray-600" />
+                                                </Button>
+                                            </AlertDialogTrigger>
+                                            <AlertDialogContent className={inter.className}>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle>
+                                                        Are you sure want to delete this teacher?
+                                                    </AlertDialogTitle>
+                                                    <AlertDialogDescription>
+                                                        This action cannot be undone. This will
+                                                        permanently delete the teacher and remove
+                                                        your data from our servers.
+                                                    </AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter>
+                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                    <AlertDialogAction
+                                                        onClick={() => mutateAsync(mentor.id)}
+                                                    >
+                                                        Continue
+                                                    </AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
                                     </div>
                                 </div>
 

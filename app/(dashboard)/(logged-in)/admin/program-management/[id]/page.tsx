@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import ProgramDetailControl from '@/features/admin/components/program-detail-control';
 import ProgramDetailDrawer from '@/features/admin/components/program-detail-drawer';
+import ProgramDetailInformasiHarga from '@/features/admin/components/program-detail-informasi-harga';
 import useGetProgramById from '@/features/admin/queries/useGetProgramById';
 import { useProgramDetailStore } from '@/features/admin/stores/program-detail';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
@@ -15,6 +16,14 @@ const page = () => {
     const { data } = useGetProgramById();
     const isDrawerOpen = useProgramDetailStore(s => s.isDrawerOpen);
     const setState = useProgramDetailStore(s => s.setState);
+
+    const handleOpenInformasiHarga = () => {
+        setState({
+            isDrawerOpen: true,
+            title: 'Informasi Harga',
+            content: <ProgramDetailInformasiHarga />,
+        });
+    };
 
     return (
         <DashboardContentLayout pageTitle="Program Detail">
@@ -33,7 +42,7 @@ const page = () => {
                             Program Detail - School Program
                         </h1>
                         <Button
-                            onClick={() => setState({ isDrawerOpen: true })}
+                            onClick={handleOpenInformasiHarga}
                             variant={'ghost'}
                             className="flex items-center gap-2 text-primary group mb-5 hover:bg-transparent"
                         >

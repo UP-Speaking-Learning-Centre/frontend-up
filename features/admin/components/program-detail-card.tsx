@@ -3,8 +3,8 @@
 import { Button } from '@/components/ui/button';
 import clsx from 'clsx';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import React, { useState } from 'react';
 import { useProgramDetailStore } from '../stores/program-detail';
+import ProgramDetailDrawerDetail from './program-detail-drawer-detail';
 
 const ProgramDetailCard = ({
     isActive,
@@ -24,6 +24,14 @@ const ProgramDetailCard = ({
     onOpenCollapse?: () => void;
 }) => {
     const { setState } = useProgramDetailStore();
+
+    const handleOpenDetail = () => {
+        setState({
+            isDrawerOpen: true,
+            title: 'Program Detail',
+            content: <ProgramDetailDrawerDetail title={title} desc={description} />,
+        });
+    };
 
     return (
         <div
@@ -57,7 +65,7 @@ const ProgramDetailCard = ({
                     )}
                 </div>
                 <Button
-                    onClick={() => setState({ isDrawerOpen: true })}
+                    onClick={handleOpenDetail}
                     variant="outline"
                     size="sm"
                     className="text-primary border-2 border-primary hover:bg-orange-50 bg-transparent bg-white"
