@@ -21,6 +21,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { inter } from '@/constants/fonts';
 import useCreateTeacher from '@/features/admin/hooks/useCreateTeacher';
 import useDeleteTeacher from '@/features/admin/queries/useDeleteTeacher';
+import useGetLocation from '@/features/admin/queries/useGetLocation';
 import useGetTeachers from '@/features/admin/queries/useGetTeachers';
 import { useTeacherManagementStore } from '@/features/admin/stores/teacher';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
@@ -37,10 +38,11 @@ const page = () => {
         useCreateTeacher(setIsModalOpen);
     const { mutateAsync } = useDeleteTeacher();
     const { errors } = formState;
+    const { data, isLoading: isLoadingLocation } = useGetLocation();
 
     const teachers = useTeacherManagementStore(s => s.teacher);
 
-    if (isLoading) return <Overlay />;
+    if (isLoading || isLoadingLocation) return <Overlay />;
 
     return (
         <DashboardContentLayout pageTitle="Teacher Management">
@@ -260,33 +262,17 @@ const page = () => {
                                         Lokasi Mengajar
                                     </label>
                                     <RadioGroup className="space-y-1" {...register('location')}>
-                                        <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="location1" />
-                                            <label
-                                                htmlFor="location1"
-                                                className="text-sm text-gray-900"
-                                            >
-                                                Cabang Kuningan
-                                            </label>
-                                        </div>
-                                        <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="location2" />
-                                            <label
-                                                htmlFor="location2"
-                                                className="text-sm text-gray-900"
-                                            >
-                                                Cabang Kuningan
-                                            </label>
-                                        </div>
-                                        <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="location3" />
-                                            <label
-                                                htmlFor="location3"
-                                                className="text-sm text-gray-900"
-                                            >
-                                                Cabang Kuningan
-                                            </label>
-                                        </div>
+                                        {data?.map(item => (
+                                            <div className="flex items-center space-x-2">
+                                                <RadioGroupItem value={item.id.toString()} />
+                                                <label
+                                                    htmlFor="location1"
+                                                    className="text-sm text-gray-900"
+                                                >
+                                                    {item.name}
+                                                </label>
+                                            </div>
+                                        ))}
                                     </RadioGroup>
                                     {errors.location && (
                                         <p className="text-red-500 text-sm mt-1">

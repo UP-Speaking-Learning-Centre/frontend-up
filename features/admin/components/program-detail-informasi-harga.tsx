@@ -20,7 +20,7 @@ const columDuration = [1, 2, 3];
 
 const ProgramDetailInformasiHarga = () => {
     return (
-        <div>
+        <section id='harga' className="p-4 bg-white border mx-4 rounded-lg shadow-lg mb-5">
             <div className="p-4">
                 <Table className="mb-4">
                     <TableCaption>A list of your recent prices. </TableCaption>
@@ -61,7 +61,7 @@ const ProgramDetailInformasiHarga = () => {
                 </Table>
             </div>
             <ProgramDetailAddFormPrice />
-        </div>
+        </section>
     );
 };
 

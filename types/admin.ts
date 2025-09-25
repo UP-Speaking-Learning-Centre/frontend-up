@@ -78,3 +78,17 @@ export interface PriceData {
   duration: string
   durationType: "days" | "weeks" | "months" | "years"
 }
+
+export interface ResponseProgram {
+    id: number;
+    name: string;
+    description: string;
+    groups: ResponseGroup[];
+}
+
+export interface ResponseGroup {
+    id: number;
+    name: string;
+    materi: string;
+    capaian: string;
+}

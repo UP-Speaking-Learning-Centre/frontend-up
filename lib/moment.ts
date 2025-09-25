@@ -14,3 +14,9 @@ export function renderDayToIndonesian(abbr: string): string {
     if (!m.isValid()) return abbr;
     return m.locale('id').format('dddd'); // contoh: "Senin"
 }
+
+export function renderDateToIndonesian(date: string): string {
+    const m = moment(date);
+    if (!m.isValid()) return date;
+    return m.locale('id').format('DD MMMM YYYY'); // contoh: "01 Januari 2025"
+}

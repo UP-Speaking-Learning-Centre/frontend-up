@@ -11,19 +11,21 @@ interface Pagination {
 
 interface StudentsStore {
     filters: {
-        group: { id: number; name: string }[];
+        group: number | undefined;
         mentors: { id: number; name: string }[];
         searchQuery: string | undefined;
-        status: { id: number; name: string }[];
+        program: number | undefined;
     };
 
     filterPlacementTest: {
-        group: { id: number; name: string }[];
+        group: number | undefined;
         mentors: { id: number; name: string }[];
-        searchQuery: string;
+        searchQuery: string | undefined;
+        program: number | undefined;
+        status: number | undefined;
     };
-    onChangeFilter: <T = string>(filter: keyof StudentsStore['filters'], value: T) => void;
-    onChangeFilterPlacementTest: (filter: string, value: string) => void;
+    onChangeFilter: (filter: string, value: any) => void;
+    onChangeFilterPlacementTest: (filter: string, value: any) => void;
 
     students: StudentType[];
     setStudents: (students: StudentType[]) => void;
@@ -40,17 +42,19 @@ interface StudentsStore {
 
 export const useStudentsStore = create<StudentsStore>((set, get) => ({
     filters: {
-        group: [],
+        group: undefined,
         mentors: [],
         searchQuery: undefined,
-        status: [],
+        program: undefined,
     },
     filterPlacementTest: {
-        group: [],
+        group: undefined,
+        program: undefined,
         mentors: [],
         searchQuery: '',
+        status: undefined,
     },
-    onChangeFilter: (filter: keyof StudentsStore['filters'], value: any) => {
+    onChangeFilter: (filter: string, value: any) => {
         const getFilters = get().filters;
         set({
             filters: {
@@ -59,7 +63,7 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
             },
         });
     },
-    onChangeFilterPlacementTest: (filter: string, value: string) => {
+    onChangeFilterPlacementTest: (filter: string, value: any) => {
         const getFilters = get().filterPlacementTest;
         set({
             filterPlacementTest: {

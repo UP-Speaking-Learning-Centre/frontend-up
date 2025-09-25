@@ -30,7 +30,8 @@ const useFetchStudentsWithPlacementQuery = (
 ): UseQueryResult<BaseResponse<StudentPlacementTest[]>> => {
     const filters = useStudentsStore(s => s.filters);
     const setStudentsPlacementTest = useStudentsStore(s => s.setStudentsPlacementTest);
-
+    const setPaginationPlacementTest = useStudentsStore(s => s.setPaginationPlacementTest);
+    
     const res = useQuery({
         queryKey: ['students-with-placement', Object.values(filters), params],
         queryFn: async () => await fetchStudents(params),
@@ -39,6 +40,7 @@ const useFetchStudentsWithPlacementQuery = (
     useEffect(() => {
         if (res.status === 'success') {
             setStudentsPlacementTest(res.data.data);
+            setPaginationPlacementTest(res.data.meta);
         }
     }, [res.status]);
 

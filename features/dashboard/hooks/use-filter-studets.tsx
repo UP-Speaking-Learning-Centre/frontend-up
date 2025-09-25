@@ -1,6 +1,6 @@
 import { PLACEMENT_TEST_FILTER_OPTIONS } from '@/constants/placement-test';
-import useFetchGroupsQuery from '@/features/select-program/queries/use-fetch-groups';
-import { useState } from 'react';
+import { ALL_GROUP, ALL_PROGRAM } from '@/features/admin/constants/config';
+import useGetProgram from '@/features/placement-test-admin/queries/use-get-program';
 import { useStudentsStore } from '../stores/students-store';
 
 const mentors = [
@@ -9,26 +9,10 @@ const mentors = [
     { id: 3, name: 'Mentor 3' },
 ];
 
-const useFilterStudents = () => {
-    const { data: groupsData } = useFetchGroupsQuery();
-    const setPagination = useStudentsStore(s => s.setPagination);
-    const setSearch = useStudentsStore(s => s.onChangeFilter);
+const useFilterStudents = (setSearch: (key: string, value: any) => void, program: number) => {
+    const { data: programsData } = useGetProgram();
 
-    // const onChangeFilter = (filter: string, value: string) => {
-    //     switch (filter) {
-    //         case 'search':
-    //             onChangeSearch(value);
-    //             return;
-    //         case 'group':
-    //             onChangeGroup(value);
-    //             return;
-    //         case 'mentor':
-    //             onChangeMentor(value);
-    //             return;
-    //         default:
-    //             return;
-    //     }
-    // };
+    const setPagination = useStudentsStore(s => s.setPagination);
 
     const onChangePage = (page: number) => {
         setPagination({ currentPage: page });
@@ -36,24 +20,32 @@ const useFilterStudents = () => {
     const onChangeSearch = (string: string) => {
         setSearch('searchQuery', string);
     };
-    const onChangeGroup = (group: string) => {
-        setSearch('group', group);
+    const onChangeGroup = (group?: string) => {
+        if (!group || group === ALL_GROUP) return setSearch('group', undefined);
+        setSearch('group', Number(group));
+    };
+    const onChangeProgram = (program: string) => {
+        onChangeGroup(undefined);
+        if (!program || program === ALL_PROGRAM) return setSearch('program', undefined);
+        setSearch('program', Number(program));
     };
     const onChangeMentor = (mentor: string) => {
         setSearch('mentors', mentor);
     };
+    const onChangeStatus = (status: string) => {
+        setSearch('status', Number(status));
+    };
+
+    const groupsData = programsData?.find(program_ => program_.id === program)?.groups;
 
     return {
-        filters: { groups: [...(groupsData || [])], mentors },
-        filterPlacementTest: {
-            groups: [...(groupsData || [])],
-            mentors,
-            status: PLACEMENT_TEST_FILTER_OPTIONS,
-        },
+        filters: { groups: [...(groupsData || [])], mentors, programs: [...(programsData || [])] },
         onChangePage,
         onChangeSearch,
         onChangeGroup,
+        onChangeProgram,
         onChangeMentor,
+        onChangeStatus,
     };
 };
 

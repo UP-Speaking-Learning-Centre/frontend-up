@@ -12,8 +12,11 @@ import {
 } from '@/types/admin';
 import { useQuery } from '@tanstack/react-query';
 import { API_PROGRAMS } from '../constants/config';
+import api from '@/lib/api';
+import { useParams } from 'next/navigation';
 
 const useGetProgramById = () => {
+    const { id } = useParams();
     const handleProgramMapping = (
         program: ProgramRecurseArray,
         isPackage?: boolean
@@ -57,17 +60,21 @@ const useGetProgramById = () => {
         }));
     };
 
-    const getProgramById = () => {
+    const getProgramById = async () => {
+        // const response = await api.get<ProgramRecurseArray>(API_PROGRAMS);
+        // const data = response.data;
+
         const res = {
             title: 'Programs',
-            items: handleProgramMapping(Programs),
+            items: handleProgramMapping(
+                Programs.filter(program => program.programId.toString() === id)
+            ),
         } as ProgramDetailTreeInterface;
-        console.log(res);
+        
         return res;
     };
 
     const { data, isLoading } = useQuery({ queryKey: [API_PROGRAMS], queryFn: getProgramById });
-    console.log(data);
 
     return { data, isLoading };
 };

@@ -37,6 +37,8 @@ const useAuth = () => {
                     }
                     if (!prevReq?._retry) {
                         prevReq._retry = true;
+                        const accessToken = await getCookiesToken();
+                        prevReq.headers.Authorization = `Bearer ` + accessToken;
                         return api(prevReq);
                     }
                     await logout().then(() => {
@@ -57,8 +59,8 @@ const useAuth = () => {
         );
 
         return () => {
-            api.interceptors.response.eject(res);
             api.interceptors.request.eject(req);
+            api.interceptors.response.eject(res);
         };
     }, [api, role]);
 };

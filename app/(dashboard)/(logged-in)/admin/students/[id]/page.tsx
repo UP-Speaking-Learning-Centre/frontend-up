@@ -1,54 +1,20 @@
 'use client';
 
+import Overlay from '@/components/layout/overlay';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
-import { ROUTES } from '@/constants/routes';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import PlacementTestPending from '@/features/home/components/placement-test-pending';
 import PlacementTestSuccess from '@/features/home/components/placement-test-success';
-import useGetProfile from '@/features/home/queries/useGetProfile';
 import useGetProfileById from '@/features/home/queries/useGetProfileById';
 import { isPlacementTest } from '@/utils/api.helper';
 import { BookOpen, Calendar, Home, User } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 
 export default function DashboardPage() {
-    const { data: students, isLoading: isLoadingStudents } = useGetProfile();
     const { data, isLoading } = useGetProfileById();
-    const router = useRouter();
 
+    if (isLoading) return <Overlay />;
     return (
-        <DashboardContentLayout
-            pageTitle="Detail Student"
-            extras={
-                <div className="flex items-center">
-                    <span className="text-sm text-gray-600 mr-3">Current Student:</span>
-                    <Select
-                        value={data?.id.toString()}
-                        onValueChange={id =>
-                            router.replace(ROUTES.dashboardStudentsId.expand({ id }))
-                        }
-                    >
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Theme" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {students?.students.map(student => (
-                                <SelectItem value={student.id.toString()}>
-                                    {student.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-            }
-        >
+        <DashboardContentLayout pageTitle="Detail Student">
             <div className="space-y-6">
                 {/* Student Overview */}
                 <div className="mb-8">

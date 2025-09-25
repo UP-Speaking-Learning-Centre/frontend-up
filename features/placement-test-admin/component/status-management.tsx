@@ -21,7 +21,6 @@ import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-te
 import AssignLevel from './assign-level';
 
 const StatusManagement = () => {
-    const router = useRouter();
     const { status, setState } = useDetailPlacementTest();
     const { mutateAsync } = useUpdateStatus();
     const { mutateAsync: patchPlacementTest } = useSavePlacementTest();
@@ -29,8 +28,15 @@ const StatusManagement = () => {
         useDisplayedPlacementTestStore();
     const { mutateAsync: patchNotes } = useSaveNotes();
 
-    const handleSave = () => {
-        Promise.all([
+    const handleSave = async () => {
+        if (status !== 'graded' && status !== 'doneInterview') {
+            const res = await mutateAsync({ status });
+            toast.info(res.status, { position: 'top-center' });
+            return;
+        }
+
+        const [resStatus, resNote, resSave] = await Promise.all([
+            mutateAsync({ status }),
             patchNotes({ notes: noteForStudent }),
             patchPlacementTest({
                 gradeId: +assignedGrade,
@@ -38,24 +44,14 @@ const StatusManagement = () => {
                 locationId: +assignedLocation,
                 scheduleIds: [+assignedSchedule],
             }),
-        ]).then(([resNote, resSave]) => {
-            toast.info(resNote.message, { position: 'top-center' });
-            toast.info(resSave.message, { position: 'top-center' });
-        });
+        ]);
+
+        toast.info(resStatus.status, { position: 'top-center' });
+        toast.info(resNote.message, { position: 'top-center' });
+        toast.info(resSave.message, { position: 'top-center' });
     };
+
     const handleChangeStatus = (value: PlacementTestStatus) => {
-        mutateAsync({ status })
-            .then(() => {
-                toast.info('Placement test status updated successfully', {
-                    position: 'top-center',
-                });
-                router.replace(ROUTES.adminPlacementTests);
-            })
-            .catch(() =>
-                toast.error('Error to update status, please try again later', {
-                    position: 'top-center',
-                })
-            );
         setState({ status: value as PlacementTestStatus });
     };
 

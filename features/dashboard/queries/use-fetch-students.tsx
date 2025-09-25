@@ -53,6 +53,7 @@ const fetchStudents = async (params: any) => {
 const useFetchStudentsQuery = (params?: any) => {
     const filters = useStudentsStore(s => s.filters);
     const setStudents = useStudentsStore(s => s.setStudents);
+    const setPagination = useStudentsStore(s => s.setPagination);
 
     const res = useQuery({
         queryKey: [API_ADMIN_LIST_STUDENTS, Object.values(filters), params],
@@ -62,6 +63,7 @@ const useFetchStudentsQuery = (params?: any) => {
     useEffect(() => {
         if (res.status === 'success') {
             setStudents(res.data.data);
+            setPagination(res.data.meta);
         }
     }, [res.status]);
 

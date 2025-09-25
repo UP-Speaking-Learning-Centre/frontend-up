@@ -15,14 +15,10 @@ import Link from 'next/link';
 const page = () => {
     const { data } = useGetProgramById();
     const isDrawerOpen = useProgramDetailStore(s => s.isDrawerOpen);
-    const setState = useProgramDetailStore(s => s.setState);
 
     const handleOpenInformasiHarga = () => {
-        setState({
-            isDrawerOpen: true,
-            title: 'Informasi Harga',
-            content: <ProgramDetailInformasiHarga />,
-        });
+        const el = document.getElementById('harga');
+        el?.scrollIntoView({ behavior: 'smooth' });
     };
 
     return (
@@ -63,6 +59,10 @@ const page = () => {
                             />
                         ))}
                     </div>
+                    <h2 className="text-md font-medium text-[#020817] my-4">
+                        Program Detail - Harga
+                    </h2>
+                    <ProgramDetailInformasiHarga />
                 </div>
                 <ProgramDetailDrawer />
             </div>

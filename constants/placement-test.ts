@@ -14,23 +14,23 @@ export const PLACEMENT_TEST_STATUS = {
 
 export const PLACEMENT_TEST_FILTER_OPTIONS = [
     {
-        id: PLACEMENT_TEST_STATUS.notGraded,
+        id: 1,
         name: 'Not Graded',
     },
     {
-        id: PLACEMENT_TEST_STATUS.reviewed,
+        id: 2,
         name: 'Reviewed',
     },
     {
-        id: PLACEMENT_TEST_STATUS.inInterview,
+        id: 3,
         name: 'In Interview',
     },
     {
-        id: PLACEMENT_TEST_STATUS.doneInterview,
+        id: 4,
         name: 'Done Interview',
     },
     {
-        id: PLACEMENT_TEST_STATUS.graded,
+        id: 5,
         name: 'Graded',
     },
 ];
