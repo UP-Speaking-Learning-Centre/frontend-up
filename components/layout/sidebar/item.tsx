@@ -31,7 +31,7 @@ const SidebarItem = ({
         >
             <Link
                 href={item.href}
-                className={`w-full justify-start font-normal rounded-md flex items-center px-6 py-2 ${
+                className={`w-full justify-start font-normal rounded-md flex items-center px-6 py-3 ${
                     isActive
                         ? 'bg-[#CE6439] text-white border-r-2 border-[#CE6439]'
                         : 'text-white hover:bg-[#CE6439]/80'

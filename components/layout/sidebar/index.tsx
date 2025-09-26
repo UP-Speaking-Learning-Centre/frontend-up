@@ -7,7 +7,7 @@ import useAuthStore from '@/features/auth/stores/authStore';
 import { isAdmin } from '@/features/auth/utils/auth-client.helper';
 import { logout } from '@/features/auth/utils/auth-server.helper';
 import { useDashboardLayoutStore } from '@/stores/dashboard-layout-store';
-import { BookCheckIcon, FileText, Home, LocateIcon, LogOut, Users } from 'lucide-react';
+import { BookCheckIcon, Calendar, FileText, Home, LocateIcon, LogOut, Users } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 import SidebarItem from './item';
@@ -33,6 +33,11 @@ const sidebarItemsAdmin = [
         href: ROUTES.adminProgramManagement,
         label: 'Program Management',
         icon: BookCheckIcon,
+    },
+    {
+        href: ROUTES.adminScheduleManagement,
+        label: 'Schedule Management',
+        icon: Calendar,
     },
 ];
 
@@ -94,7 +99,7 @@ const Sidebar = () => {
         <>
             <Sheet open={open} onOpenChange={setOpen}>
                 <SheetContent side="left" className="w-full sm:max-w-[280px] p-0 border-0">
-                    <SheetTitle/>
+                    <SheetTitle />
                     <div className="py-4 flex flex-col h-full bg-secondary">
                         <div className="px-6 mb-8">{generateSidebarHeader()}</div>
                         <div className="space-y-1 flex-1 px-3">

@@ -1,0 +1,44 @@
+{
+    "id": 14,
+    "name": "Kelompok B",
+    "description": "Matematika dasar",
+    "package": {
+        "id": 1,
+        "name": "Semi Private"
+    },
+    "isPriority": true,
+    "program": "School Program",
+    "group": "Junior High School",
+    "level": "Competent",
+    "grade": "Grade 1",
+    "schedules": [
+        {
+            "id": 191,
+            "dayOfWeek": "THU",
+            "startTime": "09:30:00",
+            "endTime": "11:00:00",
+            "location": "Stadion",
+            "teacherMemberName": "Mr. Firdan",
+            "teacherAlias": "Mama Bear",
+            "isPriority": true,
+            "program": "School Program",
+            "group": "Junior High School",
+            "level": "Competent",
+            "grade": "Grade 1"
+        },
+        {
+            "id": 184,
+            "dayOfWeek": "WED",
+            "startTime": "09:30:00",
+            "endTime": "11:00:00",
+            "location": "Stadion",
+            "teacherMemberName": "Mr. Firdan",
+            "teacherAlias": "Mama Bear",
+            "isPriority": true,
+            "program": "School Program",
+            "group": "Junior High School",
+            "level": "Competent",
+            "grade": "Grade 1"
+        }
+    ]
+}

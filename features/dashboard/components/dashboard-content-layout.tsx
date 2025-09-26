@@ -20,7 +20,7 @@ const DashboardContentLayout = ({
         setDashboardExtras(extras);
     }, [pageTitle, extras]);
 
-    return <div>{children}</div>;
+    return <div className="relative">{children}</div>;
 };
 
 export default DashboardContentLayout;

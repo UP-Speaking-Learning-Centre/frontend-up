@@ -22,5 +22,7 @@ export const ROUTES = {
     adminTeacherManagement: '/admin/teacher-management',
     adminLocationManagement: '/admin/location-management',
     adminProgramManagement: '/admin/program-management',
+    adminScheduleManagement: '/admin/schedule-management',
+    adminScheduleManagementId: parseTemplate('/admin/schedule-management/{id}'),
     adminProgramManagementId: parseTemplate('/admin/program-management/{id}'),
 } as const;

@@ -17,3 +17,11 @@ export type StudentPlacementTest = {
     status: string;
     testDate: string;
 };
+
+export type StudentOfStudyGroup = {
+    id: number;
+    name: string;
+    notes: string | null;
+};
+
+export type StudendOfStudyGrouResponse = Array<StudentOfStudyGroup>;
