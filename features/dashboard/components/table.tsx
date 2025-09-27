@@ -147,9 +147,9 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
             {!!pagination && (
                 <div className="flex items-center justify-between">
                     <p className="text-sm text-gray-600">
-                        Showing {pagination.startIndex + 1} to
-                        {Math.min(pagination.startIndex + pagination.perPage)} of {values.length}
-                        users
+                        {`Showing ${pagination.startIndex + 1} to
+                        ${Math.min(pagination.startIndex + pagination.perPage)} of ${values.length}
+                        users`}
                     </p>
                     <div className="flex items-center gap-2">
                         <Button

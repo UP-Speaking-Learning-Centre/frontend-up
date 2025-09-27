@@ -15,23 +15,29 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { inter } from '@/constants/fonts';
+import { days, timeSlots } from '@/constants/schedule';
 import useCreateTeacher from '@/features/admin/hooks/useCreateTeacher';
 import useDeleteTeacher from '@/features/admin/queries/useDeleteTeacher';
 import useGetLocation from '@/features/admin/queries/useGetLocation';
 import useGetTeachers from '@/features/admin/queries/useGetTeachers';
 import { useTeacherManagementStore } from '@/features/admin/stores/teacher';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
+import ScheduleCell from '@/features/schedule-management/components/schedule-cell';
 import { cn } from '@/lib/utils';
+import { ScheduleItem } from '@/types/schedule';
 import { Calendar, Edit, Plus, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
 const page = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
 
     const { isLoading } = useGetTeachers();
     const { handleSubmit, register, formState, handleUpload, setId, handleResetModal, isEdit } =
@@ -71,6 +77,7 @@ const page = () => {
                                     <h3 className="font-semibold text-gray-900">{mentor.name}</h3>
                                     <div className="flex items-center gap-2">
                                         <Button
+                                            onClick={() => setIsScheduleModalOpen(true)}
                                             variant={'outline'}
                                             className="p-2 hover:bg-gray-100 rounded"
                                         >
@@ -291,6 +298,79 @@ const page = () => {
                         </div>
                     </div>
                 )}
+                <Dialog open={isScheduleModalOpen} onOpenChange={setIsScheduleModalOpen}>
+                    <DialogTitle />
+                    <DialogContent className={cn(inter.className, 'max-w-screen-xl')}>
+                        <Card className="overflow-hidden w-full">
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className="border-b bg-muted/50">
+                                            <th className="sr-only p-3 text-left font-medium text-muted-foreground"></th>
+                                            {days.map(day => (
+                                                <th
+                                                    key={day}
+                                                    className="min-w-[140px] p-3 text-center font-medium text-muted-foreground"
+                                                >
+                                                    <div className="space-y-1 flex items-center flex-col">
+                                                        <Skeleton
+                                                            loading={isLoading}
+                                                            className="h-6 w-20"
+                                                        >
+                                                            <div className="font-semibold text-foreground">
+                                                                {day}
+                                                            </div>
+                                                        </Skeleton>
+                                                        <Skeleton
+                                                            loading={isLoading}
+                                                            className="h-4 w-12"
+                                                        >
+                                                            <div className="text-xs">
+                                                                {/* {scheduleData?.find(
+                                                                (item: ScheduleItem) =>
+                                                                    item.teacherMemberName ===
+                                                                    teacher
+                                                            )?.teacherAlias || ''} */}
+                                                            </div>
+                                                        </Skeleton>
+                                                    </div>
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {timeSlots.map(timeSlot => (
+                                            <tr key={timeSlot.display} className="border-b">
+                                                <td className="p-3 font-medium text-sm text-muted-foreground whitespace-nowrap">
+                                                    <Skeleton
+                                                        loading={isLoading}
+                                                        className="h-14 w-20"
+                                                    >
+                                                        {timeSlot.display}
+                                                    </Skeleton>
+                                                </td>
+                                                {days.map((teacher, index) => {
+                                                    return (
+                                                        <ScheduleCell
+                                                            loading={isLoading}
+                                                            key={`${teacher}-${index}`}
+                                                            bookingInfo={{
+                                                                isAvailable: true,
+                                                                name: 'Tersedia',
+                                                                color: 'border',
+                                                            }}
+                                                            teacher={teacher}
+                                                        />
+                                                    );
+                                                })}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </Card>
+                    </DialogContent>
+                </Dialog>
             </div>
         </DashboardContentLayout>
     );

@@ -8,10 +8,10 @@ import { useEffect } from 'react';
 import { API_ADMIN_LIST_PLACEMENT_TEST } from '../constants/config';
 import { useStudentsStore } from '../stores/students-store';
 import { getCookiesToken } from '@/features/auth/utils/cookies.helper';
+import useAuthStore from '@/features/auth/stores/authStore';
 
-const fetchStudents = (params?: any) => {
+const fetchStudents = (params?: any, accessToken?: string) => {
     return baseService(async () => {
-        const accessToken = await getCookiesToken();
         const res = await api.get<BaseResponse<StudentPlacementTest[]>>(
             API_ADMIN_LIST_PLACEMENT_TEST,
             {
@@ -31,10 +31,11 @@ const useFetchStudentsWithPlacementQuery = (
     const filters = useStudentsStore(s => s.filters);
     const setStudentsPlacementTest = useStudentsStore(s => s.setStudentsPlacementTest);
     const setPaginationPlacementTest = useStudentsStore(s => s.setPaginationPlacementTest);
-    
+    const accessToken = useAuthStore(s => s.token);
+
     const res = useQuery({
         queryKey: ['students-with-placement', Object.values(filters), params],
-        queryFn: async () => await fetchStudents(params),
+        queryFn: async () => await fetchStudents(params, accessToken),
     });
 
     useEffect(() => {

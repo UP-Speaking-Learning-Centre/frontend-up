@@ -1,5 +1,5 @@
 import { PLACEMENT_TEST_FILTER_OPTIONS } from '@/constants/placement-test';
-import { ALL_GROUP, ALL_PROGRAM } from '@/features/admin/constants/config';
+import { ALL_GROUP, ALL_PROGRAM, ALL_STATUS } from '@/features/admin/constants/config';
 import useGetProgram from '@/features/placement-test-admin/queries/use-get-program';
 import { useStudentsStore } from '../stores/students-store';
 
@@ -18,6 +18,7 @@ const useFilterStudents = (setSearch: (key: string, value: any) => void, program
         setPagination({ currentPage: page });
     };
     const onChangeSearch = (string: string) => {
+        if (!string) return setSearch('searhQuery', undefined);
         setSearch('searchQuery', string);
     };
     const onChangeGroup = (group?: string) => {
@@ -33,7 +34,8 @@ const useFilterStudents = (setSearch: (key: string, value: any) => void, program
         setSearch('mentors', mentor);
     };
     const onChangeStatus = (status: string) => {
-        setSearch('status', Number(status));
+        if (status === ALL_STATUS) return setSearch('status', undefined);
+        setSearch('status', status);
     };
 
     const groupsData = programsData?.find(program_ => program_.id === program)?.groups;

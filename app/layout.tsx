@@ -1,7 +1,7 @@
 import TanstackProvider from '@/components/layout/tanstack-provider';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
-import { Bebas_Neue, Inter, Outfit, Roboto } from 'next/font/google';
+import { Bebas_Neue, Outfit, Roboto } from 'next/font/google';
 import type React from 'react';
 import './globals.css';
 

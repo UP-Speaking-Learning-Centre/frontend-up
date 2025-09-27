@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PLACEMENT_TEST_FILTER_OPTIONS } from '@/constants/placement-test';
-import { ALL_GROUP, ALL_PROGRAM } from '@/features/admin/constants/config';
+import { ALL_GROUP, ALL_PROGRAM, STATUS_OPTION } from '@/features/admin/constants/config';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import DashboardFilter from '@/features/dashboard/components/filter';
 import Table from '@/features/dashboard/components/table';
@@ -16,6 +16,7 @@ import { useStudentsStore } from '@/features/dashboard/stores/students-store';
 import { renderDateToIndonesian } from '@/lib/moment';
 import { cn } from '@/lib/utils';
 import { StudentPlacementTest } from '@/types/students';
+import { debounce } from '@/utils/function.helper';
 import { ChevronDown, Eye, Filter } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -39,7 +40,6 @@ const Index = () => {
         onChangePage,
         onChangeGroup,
         onChangeProgram,
-        onChangeMentor,
         onChangeStatus,
         onChangeSearch,
     } = useFilterStudents(onChangeFilterPlacementTest, filter.program!);
@@ -78,7 +78,7 @@ const Index = () => {
                                 <Label>Search Name</Label>
                                 <Input
                                     placeholder="Search..."
-                                    onChange={e => onChangeSearch(e.target.value)}
+                                    onChange={debounce(e => onChangeSearch(e.target.value), 500)}
                                 />
                             </div>
                             <DashboardFilter
@@ -104,7 +104,10 @@ const Index = () => {
                             /> */}
                             <DashboardFilter
                                 label="Status"
-                                options={[]}
+                                options={Object.entries(STATUS_OPTION).map(([name, id]) => ({
+                                    id,
+                                    name: name.split('_').join(' '),
+                                }))}
                                 onSelect={val => onChangeStatus(val)}
                                 value={filter.status?.toString() || ''}
                                 defaultValue="All Status"
