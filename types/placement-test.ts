@@ -1,7 +1,8 @@
-import { PLACEMENT_TEST_STATUS, QUESTION_TYPE } from '@/constants/placement-test';
+import { QUESTION_TYPE } from '@/constants/placement-test';
+import { STATUS_OPTION } from '@/features/admin/constants/config';
 
 export type PlacementTestStatus =
-    (typeof PLACEMENT_TEST_STATUS)[keyof typeof PLACEMENT_TEST_STATUS];
+    (typeof STATUS_OPTION)[keyof typeof STATUS_OPTION];
 
 export type QuestionType = (typeof QUESTION_TYPE)[keyof typeof QUESTION_TYPE];
 
@@ -39,7 +40,9 @@ export interface ResponsePlacementTestTest {
     id: number;
     name: string;
     program: string;
+    programId: number;
     group: string;
+    groupId: number;
 }
 
 export interface ResponsePlacementTest {

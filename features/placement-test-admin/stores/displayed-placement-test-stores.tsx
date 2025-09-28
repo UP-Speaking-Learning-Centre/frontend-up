@@ -1,4 +1,5 @@
 import { PLACEMENT_TEST_STATUS } from '@/constants/placement-test';
+import { STATUS_OPTION } from '@/features/admin/constants/config';
 import {
     PlacementTestStatus,
     Question,
@@ -13,7 +14,7 @@ const initialState = {
     gradedQuestions: 0,
     correctAnswers: 0,
     questions: [],
-    status: PLACEMENT_TEST_STATUS.doneInterview,
+    status: STATUS_OPTION.DONE_INTERVIEW,
     student: undefined,
     test: undefined,
     testDate: '',
@@ -23,6 +24,8 @@ const initialState = {
     assignedSchedule: '',
     assignedGrade: '',
     noteForStudent: '',
+    programId:0,
+    groupId:0,
 };
 
 interface DisplayedPlacementTestStore {

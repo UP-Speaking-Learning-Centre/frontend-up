@@ -13,7 +13,7 @@ const fetchDetailPlacementTest = async ({ id }: { id: string }): Promise<Respons
         },
     });
     const data = await response.data;
-    
+
     return data as ResponsePlacementTest;
 };
 
@@ -39,7 +39,7 @@ const useFetchDetailPlacementTestQuery = ({
                 testDate: query.data.submittedAt,
             });
         }
-    }, [query.status]);
+    }, [query.status, query.data]);
     return query;
 };
 

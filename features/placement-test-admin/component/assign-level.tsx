@@ -6,13 +6,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import useGetAvailableSchedule from '../queries/use-get-available-schedule';
+import useGetGrade from '../queries/use-get-grade';
 import useGetLevel from '../queries/use-get-level';
 import useGetLocation from '../queries/use-get-location';
 import useGetTeacher from '../queries/use-get-teacher';
 import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
-import useGetGrade from '../queries/use-get-grade';
+import useGetStudyGroup from '@/features/admin/queries/useGetStudyGroup';
 
 const AssignLevel = () => {
     const {
@@ -25,10 +27,20 @@ const AssignLevel = () => {
         setState,
     } = useDisplayedPlacementTestStore();
     const { data, isLoading } = useGetLocation();
-    const { data: dataSchedule, isLoading: isLoadingSchedule } = useGetAvailableSchedule();
+    const { data: dataSchedule, isLoading: isLoadingSchedule } = useGetStudyGroup(
+        Number(assignedLocation)
+    );
     const { data: dataTeacher, isLoading: isLoadingTeacher } = useGetTeacher();
-    const { data: dataLevel } = useGetLevel();
-    const { data: dataGrade } = useGetGrade();
+    const { data: dataLevel, isLoading: isLoadingLevel } = useGetLevel();
+    const { data: dataGrade, isLoading: isLoadingGrade } = useGetGrade();
+
+    if (isLoadingLevel || isLoadingGrade || isLoading || isLoadingTeacher || isLoadingSchedule)
+        return (
+            <div>
+                <Skeleton className="h-4 w-16 mb-1" />
+                <Skeleton loading={true} className="h-10"></Skeleton>
+            </div>
+        );
 
     return (
         <div className="space-y-4">
@@ -37,6 +49,7 @@ const AssignLevel = () => {
                 <Select
                     value={assignedLevel}
                     onValueChange={assignedLevel => setState({ assignedLevel })}
+                    disabled={!dataLevel?.length}
                 >
                     <SelectTrigger>
                         <SelectValue placeholder="Select level" />
@@ -53,6 +66,7 @@ const AssignLevel = () => {
                 <Select
                     value={assignedGrade}
                     onValueChange={assignedGrade => setState({ assignedGrade })}
+                    disabled={!dataGrade?.length}
                 >
                     <SelectTrigger>
                         <SelectValue placeholder="Select grade" />
@@ -69,6 +83,7 @@ const AssignLevel = () => {
                 <Select
                     value={assignedLocation}
                     onValueChange={assignedLocation => setState({ assignedLocation })}
+                    disabled={!data?.length}
                 >
                     <SelectTrigger>
                         <SelectValue placeholder="Select mentor" />
@@ -87,6 +102,7 @@ const AssignLevel = () => {
                 <Select
                     value={assignedMentor}
                     onValueChange={assignedMentor => setState({ assignedMentor })}
+                    disabled={!dataTeacher?.length}
                 >
                     <SelectTrigger>
                         <SelectValue placeholder="Select mentor" />
@@ -103,21 +119,21 @@ const AssignLevel = () => {
                 </Select>
             </div>
             <div>
-                <Label>Assigned Schedule</Label>
+                <Label>Assigned Study Group</Label>
                 <Select
                     value={assignedSchedule}
                     onValueChange={assignedSchedule => setState({ assignedSchedule })}
+                    disabled={!dataSchedule?.length}
                 >
                     <SelectTrigger>
-                        <SelectValue placeholder="Select schedule" />
+                        <SelectValue placeholder="Select Study Group" />
                     </SelectTrigger>
                     <SelectContent>
                         {dataSchedule
-                            ?.filter(sch => sch.teacherMemberId.toString() === assignedMentor)
+                            ?.filter(sch => sch.teacherTeamMemberId.toString() === assignedMentor)
                             ?.map(sch => (
-                                <SelectItem value={sch.scheduleId.toString()}>
-                                    {sch.dayOfWeek} {sch.startTime} - {sch.endTime} (
-                                    {sch.durationMinutes} Minutes)
+                                <SelectItem value={sch.studyGroupId.toString()}>
+                                    {sch.studyGroupName}
                                 </SelectItem>
                             ))}
                     </SelectContent>

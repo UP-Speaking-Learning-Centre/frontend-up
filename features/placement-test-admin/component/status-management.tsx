@@ -8,10 +8,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { ROUTES } from '@/constants/routes';
+import { STATUS_OPTION } from '@/features/admin/constants/config';
 import { PlacementTestStatus } from '@/types/placement-test';
 import { FileText, Save } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import useDetailPlacementTest from '../hooks/use-detail-placement-test';
 import useSaveNotes from '../queries/use-save-notes';
@@ -71,16 +70,16 @@ const StatusManagement = () => {
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="notGraded">Not Graded</SelectItem>
-                            <SelectItem value="reviewed">Reviewed</SelectItem>
-                            <SelectItem value="inInterview">In Interview</SelectItem>
-                            <SelectItem value="doneInterview">Done Interview</SelectItem>
-                            <SelectItem value="graded">Graded</SelectItem>
+                            {Object.entries(STATUS_OPTION).map(([key, value]) => (
+                                <SelectItem value={value}>{key.split('_').join(' ')}</SelectItem>
+                            ))}
                         </SelectContent>
                     </Select>
                 </div>
 
-                {(status === 'doneInterview' || status === 'graded') && <AssignLevel />}
+                {(status === STATUS_OPTION.DONE_INTERVIEW || status === STATUS_OPTION.GRADED) && (
+                    <AssignLevel />
+                )}
 
                 <Button onClick={handleSave} className="w-full">
                     <Save className="w-4 h-4 mr-2" />
