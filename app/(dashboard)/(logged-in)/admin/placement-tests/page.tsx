@@ -26,17 +26,10 @@ const Index = () => {
     const router = useRouter();
     const students = useStudentsStore(s => s.studentsPlacementTest);
     const pagination = useStudentsStore(s => s.paginationPlacementTest);
-    const { isLoading } = useFetchStudentsWithPlacementQuery({
-        studentName: filter.searchQuery,
-        programId: filter.program,
-        groupId: filter.group,
-        mentorId: filter.mentors,
-        status: filter.status,
-        currentPage: pagination.currentPage,
-    });
+    const { isLoading } = useFetchStudentsWithPlacementQuery();
     const onChangeFilterPlacementTest = useStudentsStore(s => s.onChangeFilterPlacementTest);
     const {
-        filters: { groups, mentors, programs },
+        filters: { groups, programs },
         onChangePage,
         onChangeGroup,
         onChangeProgram,
@@ -130,8 +123,6 @@ const Index = () => {
                             { name: 'Actions', id: 'actions' },
                         ]}
                         values={students.map(user => {
-                            console.log(user);
-
                             return {
                                 ...user,
                                 status: {

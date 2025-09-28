@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { Pagination } from '@/types/general';
 import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import React from 'react';
 
@@ -13,18 +14,19 @@ type GenericData = Record<string, string | number | RenderCellType | undefined>;
 interface ITable<T> {
     columns: { name: string; id: keyof T | string; width?: string }[];
     values: GenericData[] | [];
-    pagination?: {
-        totalPages: number;
-        currentPage: number;
-        startIndex: number;
-        itemsPerPage: number;
-        perPage: number;
-    };
+    pagination?: Pagination;
     onChangePage: (page: number) => void;
     isLoading?: boolean;
 }
 
 const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITable<T>) => {
+    const startIndex = (currentPage: number, itemsPerPage: number) => {
+        return currentPage + itemsPerPage * (currentPage - 1);
+    };
+    const endIndex = (currentPage: number, itemsPerPage: number) => {
+        return currentPage - 1 + itemsPerPage * currentPage;
+    };
+
     return (
         <>
             <Card>
@@ -147,8 +149,10 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
             {!!pagination && (
                 <div className="flex items-center justify-between">
                     <p className="text-sm text-gray-600">
-                        {`Showing ${pagination.startIndex + 1} to
-                        ${Math.min(pagination.startIndex + pagination.perPage)} of ${values.length}
+                        {`Showing ${startIndex(pagination.currentPage, pagination.itemsPerPage)} to
+                        ${endIndex(pagination.currentPage, pagination.itemsPerPage)} of ${
+                            pagination.totalItems
+                        }
                         users`}
                     </p>
                     <div className="flex items-center gap-2">

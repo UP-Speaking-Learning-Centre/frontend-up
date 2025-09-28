@@ -8,6 +8,7 @@ const ENDPOINTS = {
     fetchPackages: parseTemplate('/packages'),
     fetchLocations: '/locations',
     fetchAvailableSchedule: parseTemplate('/locations/{locationId}/available-schedules'),
+    fetchStudyGroups: parseTemplate('/locations/{locationId}/study-groups'),
     fetchDetailPlacementTest: parseTemplate('/placement-tests/{id}'),
     fetchAdminDetailPlacementTest: parseTemplate('/admin/placement-tests/{id}'),
     submitRegistration: '/registrations',
@@ -17,6 +18,8 @@ const ENDPOINTS = {
     fetchTeacherSchedule: parseTemplate('/admin/teacher-schedules/{locationId}'),
     fetchStudyGroupDetail: parseTemplate('/admin/study-groups/{studyGroupId}'),
     fetchStudentOfStudyGroup: parseTemplate('/admin/study-groups/{studyGroupId}/students'),
+    fetchTeachers: '/admin/teacher-team-members',
+    fetchTeachersById: parseTemplate('/admin/teacher-team-members/{id}'),
 } as const;
 
 export default ENDPOINTS;

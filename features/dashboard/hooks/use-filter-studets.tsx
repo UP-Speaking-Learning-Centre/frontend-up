@@ -2,15 +2,12 @@ import { PLACEMENT_TEST_FILTER_OPTIONS } from '@/constants/placement-test';
 import { ALL_GROUP, ALL_PROGRAM, ALL_STATUS } from '@/features/admin/constants/config';
 import useGetProgram from '@/features/placement-test-admin/queries/use-get-program';
 import { useStudentsStore } from '../stores/students-store';
-
-const mentors = [
-    { id: 1, name: 'Mentor 1' },
-    { id: 2, name: 'Mentor 2' },
-    { id: 3, name: 'Mentor 3' },
-];
+import useGetTeacher from '@/features/placement-test-admin/queries/use-get-teacher';
+import useGetTeachers from '@/features/admin/queries/useGetTeachers';
 
 const useFilterStudents = (setSearch: (key: string, value: any) => void, program: number) => {
-    const { data: programsData } = useGetProgram();
+    const { data: programsData, isLoading } = useGetProgram();
+    const { data, isLoading: isLoadingTeacher } = useGetTeachers();
 
     const setPagination = useStudentsStore(s => s.setPagination);
 
@@ -18,7 +15,7 @@ const useFilterStudents = (setSearch: (key: string, value: any) => void, program
         setPagination({ currentPage: page });
     };
     const onChangeSearch = (string: string) => {
-        if (!string) return setSearch('searhQuery', undefined);
+        if (!string) return setSearch('searchQuery', undefined);
         setSearch('searchQuery', string);
     };
     const onChangeGroup = (group?: string) => {
@@ -41,7 +38,12 @@ const useFilterStudents = (setSearch: (key: string, value: any) => void, program
     const groupsData = programsData?.find(program_ => program_.id === program)?.groups;
 
     return {
-        filters: { groups: [...(groupsData || [])], mentors, programs: [...(programsData || [])] },
+        isLoadingFilter: isLoadingTeacher || isLoading,
+        filters: {
+            groups: groupsData || [],
+            mentors: data?.data || [],
+            programs: programsData || [],
+        },
         onChangePage,
         onChangeSearch,
         onChangeGroup,

@@ -15,22 +15,23 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Textarea } from '@/components/ui/textarea';
 import { inter } from '@/constants/fonts';
 import { days, timeSlots } from '@/constants/schedule';
 import useCreateTeacher from '@/features/admin/hooks/useCreateTeacher';
 import useDeleteTeacher from '@/features/admin/queries/useDeleteTeacher';
 import useGetLocation from '@/features/admin/queries/useGetLocation';
 import useGetTeachers from '@/features/admin/queries/useGetTeachers';
+import useGetTeacherSchedule from '@/features/admin/queries/useGetTeacherSchedule';
 import { useTeacherManagementStore } from '@/features/admin/stores/teacher';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import ScheduleCell from '@/features/schedule-management/components/schedule-cell';
+import useMapTeacherSchedule from '@/features/schedule-management/hooks/use-map-teacher-schedule';
+import { useGetTeacherScheduleQuery } from '@/features/schedule-management/queries/use-get-teacher-schedule';
 import { cn } from '@/lib/utils';
-import { ScheduleItem } from '@/types/schedule';
+import { ScheduleItem, TeacherScheduleResponse } from '@/types/schedule';
 import { Calendar, Edit, Plus, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -45,6 +46,8 @@ const page = () => {
     const { mutateAsync } = useDeleteTeacher();
     const { errors } = formState;
     const { data, isLoading: isLoadingLocation } = useGetLocation();
+    const { data: scheduleData, isLoading: isLoadingSchedule } = useGetTeacherSchedule();
+    const {} = useMapTeacherSchedule({data: scheduleData?.schedules as TeacherScheduleResponse})
 
     const teachers = useTeacherManagementStore(s => s.teacher);
 
@@ -74,7 +77,9 @@ const page = () => {
                             >
                                 {/* Card Header */}
                                 <div className="flex items-center justify-between p-4 pb-2">
-                                    <h3 className="font-semibold text-gray-900">{mentor.name}</h3>
+                                    <h3 className="font-semibold text-gray-900">
+                                        {mentor.memberName}
+                                    </h3>
                                     <div className="flex items-center gap-2">
                                         <Button
                                             onClick={() => setIsScheduleModalOpen(true)}
@@ -130,8 +135,8 @@ const page = () => {
                                 <div className="px-4 pb-3">
                                     <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden">
                                         <Image
-                                            src={mentor.img || '/placeholder.svg'}
-                                            alt={mentor.name}
+                                            src={mentor.photoUrl || '/placeholder.svg'}
+                                            alt={mentor.memberName}
                                             fill
                                             className="object-cover"
                                         />
@@ -141,14 +146,14 @@ const page = () => {
                                 {/* Badge */}
                                 <div className="px-4 pb-3">
                                     <Badge className="bg-primary hover:bg-primary/80 text-white px-3 py-1 rounded-full text-sm">
-                                        {mentor.alias}
+                                        {mentor.teacher.name}
                                     </Badge>
                                 </div>
 
                                 {/* Description */}
                                 <div className="px-4 pb-4">
                                     <p className="text-gray-700 text-sm leading-relaxed mb-4">
-                                        {mentor.description}
+                                        {mentor.memberName}
                                     </p>
 
                                     {/* Available Locations */}
@@ -157,7 +162,8 @@ const page = () => {
                                             Available Locations:
                                         </p>
                                         <p className="text-gray-700 text-sm font-medium border rounded-full w-fit px-3">
-                                            {mentor.location}
+                                            {/* {mentor.location} */}
+                                            Lokasi Belum
                                         </p>
                                     </div>
                                 </div>
@@ -193,13 +199,13 @@ const page = () => {
                                         type="text"
                                         className={cn(
                                             'w-full border border-gray-300 rounded-md px-3 py-2',
-                                            errors.name && 'border-red-500'
+                                            errors.memberName && 'border-red-500'
                                         )}
-                                        {...register('name')}
+                                        {...register('memberName')}
                                     />
-                                    {errors.name && (
+                                    {errors.memberName && (
                                         <p className="text-red-500 text-sm mt-1">
-                                            {errors.name.message?.toString()}
+                                            {errors.memberName.message?.toString()}
                                         </p>
                                     )}
                                 </div>
@@ -213,19 +219,19 @@ const page = () => {
                                         type="file"
                                         className={cn(
                                             'w-full border border-gray-300 rounded-md px-3 py-2',
-                                            errors.img && 'border-red-500'
+                                            errors.photoUrl && 'border-red-500'
                                         )}
                                         onChange={handleUpload}
                                     />
-                                    {errors.img && (
+                                    {errors.photoUrl && (
                                         <p className="text-red-500 text-sm mt-1">
-                                            {errors.img.message?.toString()}
+                                            {errors.photoUrl.message?.toString()}
                                         </p>
                                     )}
                                 </div>
 
                                 {/* Deskripsi Field */}
-                                <div>
+                                {/* <div>
                                     <label className="block text-sm font-medium text-gray-900 mb-2">
                                         Deskripsi
                                     </label>
@@ -241,7 +247,7 @@ const page = () => {
                                             {errors.description.message?.toString()}
                                         </p>
                                     )}
-                                </div>
+                                </div> */}
 
                                 {/* Alias Field */}
                                 <div>
@@ -252,19 +258,19 @@ const page = () => {
                                         type="text"
                                         className={cn(
                                             'w-full border border-gray-300 rounded-md px-3 py-2',
-                                            errors.alias && 'border-red-500'
+                                            errors.teacherId && 'border-red-500'
                                         )}
-                                        {...register('alias')}
+                                        {...register('teacherId')}
                                     />
-                                    {errors.alias && (
+                                    {errors.teacherId && (
                                         <p className="text-red-500 text-sm mt-1">
-                                            {errors.alias.message?.toString()}
+                                            {errors.teacherId.message?.toString()}
                                         </p>
                                     )}
                                 </div>
 
                                 {/* Lokasi Mengajar Section */}
-                                <div>
+                                {/* <div>
                                     <label className="block text-sm font-medium text-gray-900 mb-3">
                                         Lokasi Mengajar
                                     </label>
@@ -286,7 +292,7 @@ const page = () => {
                                             {errors.location.message?.toString()}
                                         </p>
                                     )}
-                                </div>
+                                </div> */}
 
                                 {/* Edit Button */}
                                 <div className="flex justify-end pt-4">
@@ -314,25 +320,25 @@ const page = () => {
                                                 >
                                                     <div className="space-y-1 flex items-center flex-col">
                                                         <Skeleton
-                                                            loading={isLoading}
+                                                            loading={isLoadingSchedule}
                                                             className="h-6 w-20"
                                                         >
                                                             <div className="font-semibold text-foreground">
                                                                 {day}
                                                             </div>
                                                         </Skeleton>
-                                                        <Skeleton
-                                                            loading={isLoading}
+                                                        {/* <Skeleton
+                                                            loading={isLoadingSchedule}
                                                             className="h-4 w-12"
                                                         >
                                                             <div className="text-xs">
-                                                                {/* {scheduleData?.find(
-                                                                (item: ScheduleItem) =>
-                                                                    item.teacherMemberName ===
+                                                                {scheduleData?.schedules.find(
+                                                                (item) =>
+                                                                    item.scheduleId ===
                                                                     teacher
-                                                            )?.teacherAlias || ''} */}
+                                                            )?.teacherAlias || ''}
                                                             </div>
-                                                        </Skeleton>
+                                                        </Skeleton> */}
                                                     </div>
                                                 </th>
                                             ))}
@@ -343,7 +349,7 @@ const page = () => {
                                             <tr key={timeSlot.display} className="border-b">
                                                 <td className="p-3 font-medium text-sm text-muted-foreground whitespace-nowrap">
                                                     <Skeleton
-                                                        loading={isLoading}
+                                                        loading={isLoadingSchedule}
                                                         className="h-14 w-20"
                                                     >
                                                         {timeSlot.display}
@@ -352,7 +358,7 @@ const page = () => {
                                                 {days.map((teacher, index) => {
                                                     return (
                                                         <ScheduleCell
-                                                            loading={isLoading}
+                                                            loading={isLoadingSchedule}
                                                             key={`${teacher}-${index}`}
                                                             bookingInfo={{
                                                                 isAvailable: true,

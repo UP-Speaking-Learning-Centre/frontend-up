@@ -31,14 +31,7 @@ const Page = () => {
         onChangeProgram,
         onChangeMentor,
     } = useFilterStudents(onChangeFilter, filter.program!);
-    const { isLoading } = useFetchStudentsQuery({
-        studentName: filter.searchQuery,
-        mentorId: filter.mentors,
-        programId: filter.program,
-        groupId: filter.group,
-        currentPage: pagination.currentPage,
-    });
-
+    const { isLoading } = useFetchStudentsQuery();
     const [isFilterOpen, setIsFilterOpen] = useState(false);
 
     return (

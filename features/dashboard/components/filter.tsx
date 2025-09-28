@@ -12,7 +12,7 @@ interface IFilter {
     label: string;
     options: { id: number | string; name: string }[];
     onSelect: (value: string) => void;
-    defaultValue: string;
+    defaultValue?: string;
     value?: string;
 }
 
@@ -25,7 +25,7 @@ const Filter: FC<IFilter> = ({ label, options, onSelect, defaultValue, value }) 
                     <SelectValue placeholder={defaultValue} />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectItem value={defaultValue}>{defaultValue}</SelectItem>
+                    <SelectItem value={defaultValue ?? "All"}>{defaultValue}</SelectItem>
                     {options.map(option => (
                         <SelectItem key={option.id} value={option.id.toString()}>
                             {option.name}

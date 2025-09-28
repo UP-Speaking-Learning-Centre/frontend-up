@@ -1,13 +1,6 @@
+import { Pagination } from '@/types/general';
 import { StudentPlacementTest, StudentType } from '@/types/students';
 import { create } from 'zustand';
-
-interface Pagination {
-    totalPages: number;
-    currentPage: number;
-    startIndex: number;
-    itemsPerPage: number;
-    perPage: number;
-}
 
 interface StudentsStore {
     filters: {
@@ -84,7 +77,7 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
             studentsPlacementTest: students,
         });
     },
-    pagination: { totalPages: 0, currentPage: 1, startIndex: 0, itemsPerPage: 10, perPage: 10 },
+    pagination: { totalPages: 0, currentPage: 1, itemsPerPage: 10, itemCount: 0, totalItems: 0 },
     setPagination: (pagination: Partial<Pagination>) => {
         set({
             pagination: {
@@ -96,9 +89,9 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
     paginationPlacementTest: {
         totalPages: 0,
         currentPage: 1,
-        startIndex: 0,
         itemsPerPage: 10,
-        perPage: 10,
+        itemCount: 0,
+        totalItems: 0,
     },
     setPaginationPlacementTest: (pagination: Partial<Pagination>) => {
         set({
