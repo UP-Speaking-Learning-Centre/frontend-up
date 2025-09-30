@@ -22,6 +22,7 @@ interface ScheduleCellProps {
     bookingInfo: BookingInfo | null;
     teacher: string;
     loading: boolean;
+    isTeacherManagement?:boolean
 }
 
 const ScheduleCell = (props: ScheduleCellProps) => {
@@ -71,7 +72,7 @@ const ScheduleCell = (props: ScheduleCellProps) => {
 
             {openDetail && (
                 <Dialog open={openDetail} onOpenChange={setOpenDetail}>
-                    <StudyGroupDetail />
+                    <StudyGroupDetail isTeacherManagement={props.isTeacherManagement}/>
                 </Dialog>
             )}
         </>

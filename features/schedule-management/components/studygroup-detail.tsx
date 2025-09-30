@@ -12,13 +12,12 @@ import { renderDayToIndonesian } from '@/lib/moment';
 import { useScheduleManagementStore } from '../stores/schedule-management-store';
 import AddNewStudyGroupTrigger from './add-new-study-group/trigger';
 
-const StudyGroupDetail = () => {
+const StudyGroupDetail = ({ isTeacherManagement }: { isTeacherManagement?: boolean }) => {
     const { data, isLoading } = useGetStudyGroupDetailQuery();
     const { data: studentOfStudyGroup, isLoading: studentOfStudyGroupLoading } =
         useGetStudentOfStudyGroupQuery();
     const studyGroupId = useScheduleManagementStore(s => s.studyGroupId);
 
-    console.log('asdsa');
     if (studyGroupId === 0) {
         return (
             <DialogContent>
@@ -31,7 +30,7 @@ const StudyGroupDetail = () => {
                             Belum ada kelompok belajar yang mengisi jadwal ini
                         </p>
                     </div>
-                    <AddNewStudyGroupTrigger />
+                    {!isTeacherManagement && <AddNewStudyGroupTrigger />}
                 </div>
             </DialogContent>
         );
@@ -120,12 +119,14 @@ const StudyGroupDetail = () => {
                                   </p>
                               ))}
                     </div>
-                    <div className="flex items-center justify-center mt-6">
-                        <Button variant="ghost" className="text-primary">
-                            <Plus />
-                            Tambah Anggota
-                        </Button>
-                    </div>
+                    {isTeacherManagement || (
+                        <div className="flex items-center justify-center mt-6">
+                            <Button variant="ghost" className="text-primary">
+                                <Plus />
+                                Tambah Anggota
+                            </Button>
+                        </div>
+                    )}
                 </div>
             </Card>
         </DialogContent>

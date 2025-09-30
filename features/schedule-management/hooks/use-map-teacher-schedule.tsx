@@ -23,6 +23,9 @@ const useMapTeacherSchedule = ({ data }: { data: TeacherScheduleResponse }) => {
                 item.teacherMemberName === teacher
         );
 
+        console.log(scheduleItem);
+        
+
         if (scheduleItem) {
             if (scheduleItem.studyGroup) {
                 return {

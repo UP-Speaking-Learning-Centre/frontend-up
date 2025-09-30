@@ -3,8 +3,9 @@ import { BaseResponse } from '@/types/general';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { API_TEACHERS } from '../constants/config';
+import ENDPOINTS from '@/constants/endpoints';
 
-const useGetTeacherSchedule = () => {
+const useGetTeacherSchedule = (id: number) => {
     const getTeacher = async (): Promise<TeacherAdminSchedule> => {
         // const mentors = await api.get<TeacherAdmin[]>(ENDPOINTS.fetchTeachers);
         const dummy = {
@@ -660,11 +661,12 @@ const useGetTeacherSchedule = () => {
                 },
             ],
         } satisfies TeacherAdminSchedule;
+
         return dummy;
     };
 
     const { data, isLoading } = useQuery({
-        queryKey: ['GET' + API_TEACHERS],
+        queryKey: ['GET' + ENDPOINTS.fetchTeachersScheduleById.expand({ id })],
         queryFn: getTeacher,
     });
 

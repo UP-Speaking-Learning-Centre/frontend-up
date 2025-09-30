@@ -20,6 +20,8 @@ const ENDPOINTS = {
     fetchStudentOfStudyGroup: parseTemplate('/admin/study-groups/{studyGroupId}/students'),
     fetchTeachers: '/admin/teacher-team-members',
     fetchTeachersById: parseTemplate('/admin/teacher-team-members/{id}'),
+    fetchTeachersScheduleById: parseTemplate('/admin/teacher-team-members/{id}/schedules'),
+    fetchPrices: parseTemplate('/prices'),
 } as const;
 
 export default ENDPOINTS;

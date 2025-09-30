@@ -70,6 +70,7 @@ export interface TeacherAdmin {
     teacher: {
         id: number;
         name: string;
+        coordinator?: string | null;
     };
 }
 
@@ -118,4 +119,18 @@ export interface ResponseGroup {
     name: string;
     materi: string;
     capaian: string;
+}
+
+export interface Price {
+    id: number;
+    program: {
+        id: number;
+        name: string;
+    };
+    package: {
+        id: number;
+        name: string;
+    };
+    timeframe: string;
+    amount: number;
 }

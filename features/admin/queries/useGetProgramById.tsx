@@ -1,4 +1,4 @@
-import Programs from '@/data/programs.json';
+import api from '@/lib/api';
 import {
     ProgramDetail,
     ProgramDetailGrade,
@@ -8,12 +8,11 @@ import {
     ProgramDetailTreeInterface,
     ProgramDetailTreeInterfaceItems,
     ProgramRecurse,
-    ProgramRecurseArray,
+    ProgramRecurseArray
 } from '@/types/admin';
 import { useQuery } from '@tanstack/react-query';
-import { API_PROGRAMS } from '../constants/config';
-import api from '@/lib/api';
 import { useParams } from 'next/navigation';
+import { API_PROGRAMS } from '../constants/config';
 
 const useGetProgramById = () => {
     const { id } = useParams();
@@ -61,13 +60,13 @@ const useGetProgramById = () => {
     };
 
     const getProgramById = async () => {
-        // const response = await api.get<ProgramRecurseArray>(API_PROGRAMS);
-        // const data = response.data;
+        const response = await api.get<ProgramDetail[]>(API_PROGRAMS);
+        const data = response.data;
 
         const res = {
             title: 'Programs',
             items: handleProgramMapping(
-                Programs.filter(program => program.programId.toString() === id)
+                data.filter(program => program.programId.toString() === id) 
             ),
         } as ProgramDetailTreeInterface;
         

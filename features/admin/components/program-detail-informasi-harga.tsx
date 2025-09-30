@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
     Table,
     TableBody,
@@ -8,19 +7,16 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { Edit, Trash } from 'lucide-react';
+import useGetPrices from '../queries/useGetPrices';
 import ProgramDetailAddFormPrice from './program-detail-add-form-price';
-
-const packages = [
-    { name: 'Semi-Private', items: [{ duration: 1, price: 100000 }] },
-    { name: 'Private', items: [{ duration: 2, price: 200000 }] },
-    { name: 'Eksklusif', items: [{ duration: 3, price: 300000 }] },
-];
-const columDuration = [1, 2, 3];
+import { Button } from '@/components/ui/button';
+import { Edit, Trash } from 'lucide-react';
 
 const ProgramDetailInformasiHarga = () => {
+    const { packages, isLoading, columnDuration } = useGetPrices();
+
     return (
-        <section id='harga' className="p-4 bg-white border mx-4 rounded-lg shadow-lg mb-5">
+        <section id="harga" className="p-4 bg-white border mx-4 rounded-lg shadow-lg mb-5">
             <div className="p-4">
                 <Table className="mb-4">
                     <TableCaption>A list of your recent prices. </TableCaption>
@@ -28,23 +24,22 @@ const ProgramDetailInformasiHarga = () => {
                         <TableRow>
                             <TableHead className="w-[100px]">No</TableHead>
                             <TableHead>Package</TableHead>
-                            {columDuration.map(col => (
+                            {columnDuration.map(col => (
                                 <TableHead>
-                                    {col} month{col > 1 && 's'}
+                                    {col} month{Number(col) > 1 && 's'}
                                 </TableHead>
                             ))}
                             <TableHead>Action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {packages.map((package_, index) => (
+                        {Object.keys(packages)?.map((package_, index) => (
                             <TableRow key={index}>
                                 <TableCell className="font-medium">{index + 1}</TableCell>
-                                <TableCell>{package_.name}</TableCell>
-                                {columDuration.map(col => (
+                                <TableCell>{package_}</TableCell>
+                                {columnDuration.map(col => (
                                     <TableCell>
-                                        {package_.items.find(item => item.duration === col)
-                                            ?.price ?? '-'}
+                                        {packages[package_].price.find(price => price.timeframe === col)?.amount}
                                     </TableCell>
                                 ))}
                                 <TableCell className="flex gap-2">

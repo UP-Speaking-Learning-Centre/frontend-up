@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ROUTES } from '@/constants/routes';
 import ProgramDetailControl from '@/features/admin/components/program-detail-control';
 import ProgramDetailDrawer from '@/features/admin/components/program-detail-drawer';
@@ -13,7 +14,7 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 const page = () => {
-    const { data } = useGetProgramById();
+    const { data, isLoading } = useGetProgramById();
     const isDrawerOpen = useProgramDetailStore(s => s.isDrawerOpen);
 
     const handleOpenInformasiHarga = () => {
@@ -50,14 +51,16 @@ const page = () => {
                     </div>
                     <div className="p-4 space-y-4">
                         {/* School Program Section */}
-                        {data?.items.map(item => (
-                            <ProgramDetailControl
-                                title={item.title}
-                                description={item.description}
-                                children={item.children}
-                                isChild={false}
-                            />
-                        ))}
+                        <Skeleton loading={isLoading} className="h-28">
+                            {data?.items.map(item => (
+                                <ProgramDetailControl
+                                    title={item.title}
+                                    description={item.description}
+                                    children={item.children}
+                                    isChild={false}
+                                />
+                            ))}
+                        </Skeleton>
                     </div>
                     <h2 className="text-md font-medium text-[#020817] my-4">
                         Program Detail - Harga
