@@ -1,44 +1,58 @@
-{
-    "id": 14,
-    "name": "Kelompok B",
-    "description": "Matematika dasar",
-    "package": {
-        "id": 1,
-        "name": "Semi Private"
-    },
-    "isPriority": true,
-    "program": "School Program",
-    "group": "Junior High School",
-    "level": "Competent",
-    "grade": "Grade 1",
-    "schedules": [
-        {
-            "id": 191,
-            "dayOfWeek": "THU",
-            "startTime": "09:30:00",
-            "endTime": "11:00:00",
-            "location": "Stadion",
-            "teacherMemberName": "Mr. Firdan",
-            "teacherAlias": "Mama Bear",
-            "isPriority": true,
-            "program": "School Program",
-            "group": "Junior High School",
-            "level": "Competent",
-            "grade": "Grade 1"
-        },
-        {
-            "id": 184,
+[
+    {
+        "teacherTeamMemberId": 3,
+        "teacherTeamMemberName": "Ms. Nuraeni",
+        "teacherTeamMemberPhoto": null,
+        "teacherAlias": "Baby Bear",
+        "studyGroupId": 33,
+        "studyGroupName": "Kelompok D",
+        "locationId": 1,
+        "locationName": "Stadion",
+        "programId": 1,
+        "groupId": 2,
+        "levelId": 4,
+        "gradeId": 11,
+        "schedule1": {
+            "scheduleId": 45,
             "dayOfWeek": "WED",
-            "startTime": "09:30:00",
-            "endTime": "11:00:00",
-            "location": "Stadion",
-            "teacherMemberName": "Mr. Firdan",
-            "teacherAlias": "Mama Bear",
-            "isPriority": true,
-            "program": "School Program",
-            "group": "Junior High School",
-            "level": "Competent",
-            "grade": "Grade 1"
+            "startTime": "11:00:00",
+            "endTime": "12:30:00",
+            "durationMinutes": 90
+        },
+        "schedule2": {
+            "scheduleId": 46,
+            "dayOfWeek": "FRI",
+            "startTime": "13:45:00",
+            "endTime": "15:15:00",
+            "durationMinutes": 90
         }
-    ]
-}
+    },
+    {
+        "teacherTeamMemberId": 3,
+        "teacherTeamMemberName": "Mr. Rafif",
+        "teacherTeamMemberPhoto": null,
+        "teacherAlias": "Baby Bear",
+        "studyGroupId": 34,
+        "studyGroupName": "Kelompok D",
+        "locationId": 1,
+        "locationName": "Stadion",
+        "programId": 1,
+        "groupId": 2,
+        "levelId": 4,
+        "gradeId": 11,
+        "schedule1": {
+            "scheduleId": 45,
+            "dayOfWeek": "SAT",
+            "startTime": "11:00:00",
+            "endTime": "12:30:00",
+            "durationMinutes": 90
+        },
+        "schedule2": {
+            "scheduleId": 46,
+            "dayOfWeek": "MON",
+            "startTime": "13:45:00",
+            "endTime": "15:15:00",
+            "durationMinutes": 90
+        }
+    }
+]

@@ -29,11 +29,13 @@ const WithPlacementTest = ({ display }: { display: boolean }) => {
         <>
             {display && (
                 <Card
-                    className="sm:basis-[calc(50%-18px)] xl:basis-[calc(25%-18px)]"
+                    className="sm:basis-[calc(50%-18px)] md:basis-[calc(33%-18px)] lg:basis-[calc(25%-18px)]"
                     title="Belum tau levelmu?"
                     description="Cari tahu levelmu dengan Placement Test!"
                     imageUrl="/levels/10.svg"
                     buttonLabel="Pilih"
+                    textClassName="text-white"
+                    contentClassName="bg-secondary text-white"
                     buttonAction={() => setOpenDialogPlacement(true)}
                     selected={false}
                 />

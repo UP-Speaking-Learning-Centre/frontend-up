@@ -237,7 +237,7 @@ export default function WhyUsSection() {
 
                 <div className="mt-16 flex justify-center">
                     <Link href={ROUTES.about}>
-                        <Button variant="secondary">More 'Why Us'</Button>
+                        <Button variant="default">More 'Why Us'</Button>
                     </Link>
                 </div>
             </div>

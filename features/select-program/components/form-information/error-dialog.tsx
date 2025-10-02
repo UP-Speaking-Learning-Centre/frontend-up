@@ -21,7 +21,7 @@ const ErrorDialog = ({
     };
 
     const getSubTitle = () => {
-        return 'Sedang ada perbaikan pada website, silahkan coba lagi nanti atau hubungi Admin UP (+62 813-1670-1747) untuk informasi lebih lanjut';
+        return 'Terjadi kesalahan. silahkan coba lagi nanti atau hubungi Admin UP <b>(081316701747)</b> untuk informasi lebih lanjut';
     };
 
     return (
@@ -35,17 +35,29 @@ const ErrorDialog = ({
                     </div>
                     <div className="text-center">
                         <p className="text-[#020817] font-semibold text-lg">{getTitle()}</p>
-                        <p className="text-[#64748B] text-sm mt-1">{getSubTitle()}</p>
+                        <p
+                            className="text-[#64748B] text-sm mt-1"
+                            dangerouslySetInnerHTML={{ __html: getSubTitle() }}
+                        ></p>
                     </div>
                     <div className="flex gap-2 justify-center w-full">
                         <Button
-                            className="flex-1 bg-[#CE6439] text-white w-fit"
+                            className="flex-1"
+                            variant="outline"
                             onClick={() => {
                                 onOpenChange(false);
                                 router.push(ROUTES.home);
                             }}
                         >
-                            Okay
+                            Kembali ke Beranda
+                        </Button>
+                        <Button
+                            className="flex-1 bg-[#CE6439] text-white w-fit"
+                            onClick={() => {
+                                onOpenChange(false);
+                            }}
+                        >
+                            Periksa Kembali
                         </Button>
                     </div>
                 </>

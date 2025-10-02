@@ -63,7 +63,7 @@ export interface LocationAdmin {
 }
 
 export interface TeacherAdmin {
-    id:number;
+    id: number;
     name: string;
     img: string;
     description: string;
@@ -72,9 +72,17 @@ export interface TeacherAdmin {
 }
 
 export interface PriceData {
-  id: string
-  packageName: string
-  price: string
-  duration: string
-  durationType: "days" | "weeks" | "months" | "years"
+    id: string;
+    packageName: string;
+    price: string;
+    duration: string;
+    durationType: 'days' | 'weeks' | 'months' | 'years';
+}
+export interface ProgramDetailPrice {
+    amount: number;
+    package: {
+        id: number;
+        name: string;
+    };
+    timeframe: string;
 }

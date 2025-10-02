@@ -1,36 +1,28 @@
 import { DayOfWeekType } from './programs-selection';
 
-export type Package = {
-    id: number;
-    name: string;
-};
-
 export type Schedule = {
-    id: number;
-    dayOfWeek: DayOfWeekType | string;
-    startTime: string; // format HH:mm:ss
-    endTime: string;
-    location: string;
-    teacherMemberName: string;
-    teacherAlias: string;
-    isPriority: boolean;
-    program: string;
-    group: string;
-    level: string;
-    grade: string;
+    scheduleId?: number;
+    dayOfWeek: string; // bisa kamu ganti ke union type "MON" | "TUE" | ...
+    startTime: string; // format "HH:mm:ss"
+    endTime: string; // format "HH:mm:ss"
+    durationMinutes: number;
 };
 
 export type StudyGroup = {
-    id: number;
-    name: string;
-    description: string;
-    package: Package;
-    isPriority: boolean;
-    program: string;
-    group: string;
-    level: string;
-    grade: string;
-    schedules: Schedule[];
+    teacherTeamMemberId: number;
+    teacherTeamMemberName: string;
+    teacherTeamMemberPhoto: string | null;
+    teacherAlias: string;
+    studyGroupId: number;
+    studyGroupName: string;
+    locationId: number;
+    locationName: string;
+    programId: number;
+    groupId: number;
+    levelId: number;
+    gradeId: number;
+    schedule1: Schedule;
+    schedule2: Schedule;
 };
 
 export type CreateStudyGroupPayload = {

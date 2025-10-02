@@ -15,6 +15,12 @@ interface SubmitRegistrationProps {
     testSessionId: string;
 }
 
+interface Payload {
+    name: string;
+    phoneNumber: string;
+    instagram: string;
+}
+
 const submitRegistration = async (data: SubmitRegistrationProps) => {
     const res = await api.post(ENDPOINTS.submitRegistrationFromPlacement, data);
     return res.data;
@@ -23,15 +29,12 @@ const submitRegistration = async (data: SubmitRegistrationProps) => {
 const useRegisterFromPlacementMutation = (): UseMutationResult<
     SubmitRegistrationProps,
     unknown,
-    {}
+    Payload
 > => {
     const formValue = useProgramSelectionStore(s => s.formValue);
     const testSessionId = usePlacementTestGuestStore(s => s.testSessionId);
 
     const payload = {
-        phoneNumber: formValue.personalInformation.phone,
-        instagram: formValue.personalInformation.instagram,
-        studentName: formValue.personalInformation.name,
         programId: Number(formValue.programId),
         groupId: Number(formValue.groupId),
         packageId: Number(formValue.packageId),
@@ -39,7 +42,13 @@ const useRegisterFromPlacementMutation = (): UseMutationResult<
     };
 
     return useMutation({
-        mutationFn: () => submitRegistration(payload),
+        mutationFn: (data: Payload) =>
+            submitRegistration({
+                ...payload,
+                studentName: data.name,
+                phoneNumber: data.phoneNumber,
+                instagram: data.instagram,
+            }),
     });
 };
 

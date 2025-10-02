@@ -41,18 +41,17 @@ const GroupCards = () => {
         return '/groups/1.svg';
     };
 
+    console.log(isLoading);
     const renderContent = () => {
         if (isLoading) {
-            return [...new Array(4)].map((_, i) => (
-                <Skeleton key={i} className="h-72 col-span-1" />
-            ));
+            return [...new Array(3)].map((_, i) => <Skeleton key={i} className="h-64 basis-1/5" />);
         }
 
         return groups?.map((item, idx) => {
             const isGroupSelected = formValue.groupId === item.id;
             return (
                 <Card
-                    className="sm:basis-[calc(50%-18px)] xl:basis-[calc(25%-18px)]"
+                    className="sm:basis-[calc(50%-18px)] md:basis-[calc(33%-18px)] lg:basis-[calc(25%-18px)]"
                     title={item.name}
                     description={`Group tersedia`}
                     key={item.name}
@@ -72,7 +71,7 @@ const GroupCards = () => {
     };
 
     return (
-        <div className="flex flex-col md:flex-row gap-4 justify-center flex-wrap mt-8">
+        <div className="flex flex-col md:flex-row items-start gap-4 justify-center flex-wrap mt-8">
             {renderContent()}
         </div>
     );

@@ -30,9 +30,15 @@ const ScheduleCell = (props: ScheduleCellProps) => {
     const [openDetail, setOpenDetail] = useState(false);
     const setStudyGroupId = useScheduleManagementStore(s => s.setStudyGroupId);
 
+    const onCloseDialog = () => {
+        setOpenDetail(false);
+        setStudyGroupId(0);
+    };
+
     const onClickCell = () => {
         setOpenDetail(true);
         if (!isAvailable) {
+            // TODO: ganti sama id yang benerannya
             setStudyGroupId(1);
         } else {
             setStudyGroupId(0);
@@ -70,7 +76,7 @@ const ScheduleCell = (props: ScheduleCellProps) => {
             </td>
 
             {openDetail && (
-                <Dialog open={openDetail} onOpenChange={setOpenDetail}>
+                <Dialog open={openDetail} onOpenChange={onCloseDialog}>
                     <StudyGroupDetail />
                 </Dialog>
             )}

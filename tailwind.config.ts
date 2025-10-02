@@ -15,6 +15,10 @@ module.exports = {
                 outfit: ['Outfit', 'sans'],
                 roboto: ['Roboto', 'sans'],
                 bebasNeue: ['Bebas Neue', 'sans'],
+                dmSerifDisplay: ['DM Serif Display', 'serif'],
+                raleway: ['Raleway', 'sans'],
+                merriweather: ['Merriweather', 'sans'],
+                oswald: ['Oswald', 'sans'],
             },
             colors: {
                 border: 'hsl(var(--border))',

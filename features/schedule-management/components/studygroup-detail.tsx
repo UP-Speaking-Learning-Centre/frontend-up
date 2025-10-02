@@ -11,14 +11,16 @@ import { useGetStudentOfStudyGroupQuery } from '../queries/use-get-student-of-st
 import { renderDayToIndonesian } from '@/lib/moment';
 import { useScheduleManagementStore } from '../stores/schedule-management-store';
 import AddNewStudyGroupTrigger from './add-new-study-group/trigger';
+import { useUpdatePriorityMutation } from '../queries/use-update-priority';
 
 const StudyGroupDetail = () => {
-    const { data, isLoading } = useGetStudyGroupDetailQuery();
+    const { isLoading } = useGetStudyGroupDetailQuery();
     const { data: studentOfStudyGroup, isLoading: studentOfStudyGroupLoading } =
         useGetStudentOfStudyGroupQuery();
     const studyGroupId = useScheduleManagementStore(s => s.studyGroupId);
+    const selectedStudyGroup = useScheduleManagementStore(s => s.selectedStudyGroup);
+    const { mutateAsync, isPending: updatePriorityLoading } = useUpdatePriorityMutation();
 
-    console.log('asdsa');
     if (studyGroupId === 0) {
         return (
             <DialogContent>
@@ -40,38 +42,51 @@ const StudyGroupDetail = () => {
     return (
         <DialogContent className="w-[600px] max-w-7xl max-h-screen">
             <DialogTitle>Detail Kelompok Belajar</DialogTitle>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 gap-4">
                 <div className="space-y-3">
                     <div className="flex flex-col gap-1">
                         <p className="text-xs text-[#9CA3AF]">Nama Kelompok</p>
                         <Skeleton className="w-20 h-4" loading={isLoading}>
-                            <p className="text-base text-[#020817]">{data?.name}</p>
+                            <p className="text-base text-[#020817]">{selectedStudyGroup?.name}</p>
                         </Skeleton>
                     </div>
                     <div className="flex flex-col gap-1">
                         <p className="text-xs text-[#9CA3AF]">Teacher</p>
                         <Skeleton className="w-20 h-4" loading={isLoading}>
                             <p className="text-base text-[#020817]">
-                                {data?.schedules[0].teacherMemberName}
+                                {selectedStudyGroup?.schedules[0].teacherMemberName}
                             </p>
                         </Skeleton>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <p className="text-xs text-[#9CA3AF]">Jadwal 1</p>
+                        <p className="text-xs text-[#9CA3AF]">Package</p>
                         <Skeleton className="w-20 h-4" loading={isLoading}>
                             <p className="text-base text-[#020817]">
-                                {renderDayToIndonesian(data?.schedules[0].dayOfWeek as string)},{' '}
-                                {data?.schedules[0].startTime} - {data?.schedules[0].endTime}
+                                {selectedStudyGroup?.package.name}
                             </p>
                         </Skeleton>
                     </div>
                     <div className="flex flex-col gap-1">
-                        <p className="text-xs text-[#9CA3AF]">Jadwal 2</p>
+                        <p className="text-xs text-[#9CA3AF]">Status Prioritas</p>
                         <Skeleton className="w-20 h-4" loading={isLoading}>
-                            <p className="text-base text-[#020817]">
-                                {renderDayToIndonesian(data?.schedules[1].dayOfWeek as string)},{' '}
-                                {data?.schedules[1].startTime} - {data?.schedules[1].endTime}
+                            <p className="text-base text-primary">
+                                {selectedStudyGroup?.isPriority ? 'Prioritas' : 'Tidak Prioritas'}
                             </p>
+                            <Button
+                                size="sm"
+                                onClick={() =>
+                                    mutateAsync({
+                                        isPriority: !selectedStudyGroup?.isPriority,
+                                        studyGroupId: (selectedStudyGroup?.id as number) || 0,
+                                    })
+                                }
+                            >
+                                {updatePriorityLoading
+                                    ? 'Loading...'
+                                    : selectedStudyGroup?.isPriority
+                                    ? 'Batalkan Prioritas'
+                                    : 'Prioritaskan'}
+                            </Button>
                         </Skeleton>
                     </div>
                 </div>
@@ -79,28 +94,82 @@ const StudyGroupDetail = () => {
                     <div className="flex flex-col gap-1">
                         <p className="text-xs text-[#9CA3AF]">Program</p>
                         <Skeleton className="w-20 h-4" loading={isLoading}>
-                            <p className="text-base text-[#020817]">{data?.program}</p>
+                            <p className="text-base text-[#020817]">
+                                {selectedStudyGroup?.program}
+                            </p>
                         </Skeleton>
                     </div>
                     <div className="flex flex-col gap-1">
                         <p className="text-xs text-[#9CA3AF]">Group</p>
                         <Skeleton className="w-20 h-4" loading={isLoading}>
-                            <p className="text-base text-[#020817]">{data?.group}</p>
+                            <p className="text-base text-[#020817]">{selectedStudyGroup?.group}</p>
                         </Skeleton>
                     </div>
                     <div className="flex flex-col gap-1">
                         <p className="text-xs text-[#9CA3AF]">Level (Grade)</p>
                         <Skeleton className="w-20 h-4" loading={isLoading}>
                             <p className="text-base text-[#020817]">
-                                {data?.level} ({data?.grade})
+                                {selectedStudyGroup?.level} ({selectedStudyGroup?.grade})
                             </p>
                         </Skeleton>
                     </div>
-                    <div className="flex flex-col gap-1">
-                        <p className="text-xs text-[#9CA3AF]">Package</p>
-                        <Skeleton className="w-20 h-4" loading={isLoading}>
-                            <p className="text-base text-[#020817]">{data?.package.name}</p>
-                        </Skeleton>
+                </div>
+                <div className="bg-secondary rounded-md p-3">
+                    <div className="rounded-md h-full flex flex-col justify-between bg-white p-2 space-y-3">
+                        <div className="flex flex-col gap-1">
+                            <p className="text-base font-semibold">Jadwal 1</p>
+                            <Skeleton className="w-20 h-4" loading={isLoading}>
+                                <div className="text-base text-[#020817]">
+                                    <div className="flex items-center justify-between gap-1">
+                                        <p className="text-xs text-neutral-500">Hari:</p>
+                                        <p className="text-sm">
+                                            {renderDayToIndonesian(
+                                                selectedStudyGroup?.schedules[0].dayOfWeek as string
+                                            )}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center justify-between gap-1">
+                                        <p className="text-xs text-neutral-500">Mulai:</p>
+                                        <p className="text-sm">
+                                            {selectedStudyGroup?.schedules[0].startTime}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center justify-between gap-1">
+                                        <p className="text-xs text-neutral-500">Selesai:</p>
+                                        <p className="text-sm">
+                                            {selectedStudyGroup?.schedules[0].endTime}
+                                        </p>
+                                    </div>
+                                </div>
+                            </Skeleton>
+                        </div>
+                        <div className="flex flex-col gap-1">
+                            <p className="text-base font-semibold">Jadwal 2</p>
+                            <Skeleton className="w-20 h-4" loading={isLoading}>
+                                <div className="text-base text-[#020817]">
+                                    <div className="flex items-center justify-between gap-1">
+                                        <p className="text-xs text-neutral-500">Hari:</p>
+                                        <p className="text-sm">
+                                            {renderDayToIndonesian(
+                                                selectedStudyGroup?.schedules[1].dayOfWeek as string
+                                            )}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center justify-between gap-1">
+                                        <p className="text-xs text-neutral-500">Mulai:</p>
+                                        <p className="text-sm">
+                                            {selectedStudyGroup?.schedules[1].startTime}
+                                        </p>
+                                    </div>
+                                    <div className="flex items-center justify-between gap-1">
+                                        <p className="text-xs text-neutral-500">Selesai:</p>
+                                        <p className="text-sm">
+                                            {selectedStudyGroup?.schedules[1].endTime}
+                                        </p>
+                                    </div>
+                                </div>
+                            </Skeleton>
+                        </div>
                     </div>
                 </div>
             </div>

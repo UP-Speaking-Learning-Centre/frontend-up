@@ -9,15 +9,11 @@ import scheduleData from '@/data/schedule.json';
 import { useEffect } from 'react';
 import { useScheduleManagementStore } from '../stores/schedule-management-store';
 
-function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 const fetchTeacherSchedule = async (locationId: number): Promise<TeacherScheduleResponse> => {
-    // const response = await api.get<TeacherScheduleResponse>(ENDPOINTS.fetchTeacherSchedule);
-    // return response.data;
-    await sleep(4000);
-    return scheduleData;
+    const response = await api.get<TeacherScheduleResponse>(
+        ENDPOINTS.fetchTeacherSchedule.expand({ locationId })
+    );
+    return response.data;
 };
 
 export const useGetTeacherScheduleQuery = (): UseQueryResult<TeacherScheduleResponse> => {

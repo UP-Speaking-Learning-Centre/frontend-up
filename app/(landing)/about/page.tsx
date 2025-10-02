@@ -140,11 +140,12 @@ export default function AboutPage() {
             {/* Hero Section */}
             <div className="relative isolate overflow-hidden bg-[#254116] py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="mx-auto max-w-2xl lg:mx-0">
-                        <h1 className="text-5xl font-bebasNeue font-bold tracking-wider text-white sm:text-6xl">
-                            Turning Fear into Fluency, Building Confidence for the Future.
+                    <div className="mx-auto max-w-5xl lg:mx-0">
+                        <h1 className="text-5xl font-oswald uppercase font-semibold tracking-wide text-white sm:text-6xl">
+                            Turning Fear into Fluency, <br />
+                            Building Confidence for the Future.
                         </h1>
-                        <p className="mt-6 text-lg leading-8 text-gray-300">
+                        <p className="mt-6 text-lg leading-8 w-2/3 text-gray-300">
                             Kami percaya bahwa setiap anak bisa naik level bukan cuma dalam grammar,
                             tapi juga dalam percaya diri untuk ngomong English.
                         </p>

@@ -9,7 +9,6 @@ const locations = [
         address:
             'Jl. Aruji Kartawinata Dalam No.19 , Kuningan, Kec. Kuningan, Kabupaten Kuningan, Jawa Barat',
         image: '/placeholder.svg?height=300&width=400',
-        phone: '+62 813-1670-1747',
         mapUrl: 'https://maps.app.goo.gl/X1T1FTcSiazf5f1U9',
     },
     {
@@ -17,7 +16,6 @@ const locations = [
         address:
             'Jl. Aruji Kartawinata No.X, Kuningan, Kec. Kuningan, Kabupaten Kuningan, Jawa Barat 45511',
         image: '/placeholder.svg?height=300&width=400',
-        phone: '+62 813-1670-1747',
         mapUrl: 'https://maps.app.goo.gl/fWfGkcu7tPYM4vLj6',
     },
     {
@@ -25,7 +23,6 @@ const locations = [
         address:
             'Jl. Raya Luragung - Kuningan, Sindangsuka, Kec. Luragung, Kabupaten Kuningan, Jawa Barat 45581 (sebrang Kolam Renang Tirta Agung Mas)',
         image: '/placeholder.svg?height=300&width=400',
-        phone: '+62 813-1670-1747',
         mapUrl: 'https://maps.app.goo.gl/c9Av9zLYduEzu3P6A',
     },
 ];
@@ -67,11 +64,6 @@ export default function LocationsSection() {
                                     <p className="mt-3 text-base text-gray-500">
                                         {location.address}
                                     </p>
-                                    <div className="mt-4 space-y-1">
-                                        <p className="text-sm text-gray-500">
-                                            Phone: {location.phone}
-                                        </p>
-                                    </div>
                                 </div>
                                 <Link
                                     className="mt-4 text-sm underline text-primary"
