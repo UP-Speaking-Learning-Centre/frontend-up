@@ -11,9 +11,15 @@ import useGetPrices from '../queries/useGetPrices';
 import ProgramDetailAddFormPrice from './program-detail-add-form-price';
 import { Button } from '@/components/ui/button';
 import { Edit, Trash } from 'lucide-react';
+import useEditPrice from '../hooks/useEditPrice';
+import { useProgramDetailStore } from '../stores/program-detail';
 
 const ProgramDetailInformasiHarga = () => {
+    const isPriceModalOpen = useProgramDetailStore(s => s.isPriceModalOpen);
+    const setState = useProgramDetailStore(s => s.setState);
+
     const { packages, isLoading, columnDuration } = useGetPrices();
+    const { handleEdit } = useEditPrice();
 
     return (
         <section id="harga" className="p-4 bg-white border mx-4 rounded-lg shadow-lg mb-5">
@@ -39,14 +45,21 @@ const ProgramDetailInformasiHarga = () => {
                                 <TableCell>{package_}</TableCell>
                                 {columnDuration.map(col => (
                                     <TableCell>
-                                        {packages[package_].price.find(price => price.timeframe === col)?.amount}
+                                        {
+                                            packages[package_].price.find(
+                                                price => price.timeframe === col
+                                            )?.amount
+                                        }
                                     </TableCell>
                                 ))}
                                 <TableCell className="flex gap-2">
-                                    <Button variant={'outline'}>
+                                    <Button
+                                        onClick={() => handleEdit(index + 1)}
+                                        variant={'outline'}
+                                    >
                                         <Edit />
                                     </Button>
-                                    <Button variant={'destructive'}>
+                                    <Button onClick={() => {}} variant={'destructive'}>
                                         <Trash />
                                     </Button>
                                 </TableCell>
@@ -55,7 +68,10 @@ const ProgramDetailInformasiHarga = () => {
                     </TableBody>
                 </Table>
             </div>
-            <ProgramDetailAddFormPrice />
+            <ProgramDetailAddFormPrice
+                open={isPriceModalOpen}
+                onOpenChange={open => setState({ isPriceModalOpen: open })}
+            />
         </section>
     );
 };

@@ -13,31 +13,31 @@ const useGetProfileById = () => {
     const accessToken = useAuthStore(s => s.token);
 
     const getProfileById = async () => {
-        return {
-            "id": 39,
-            "name": "Siswa Dengan Jadwal 2",
-            "programName": "School Program",
-            "groupName": "Senior High School",
-            "levelName": "Rookie",
-            "gradeNumber": 2,
-            "schedules": [
-                {
-                    "dayOfWeek": "MON",
-                    "startTime": "08:00:00",
-                    "endTime": "09:30:00",
-                    "locationName": "Stadion",
-                    "teacherName": "Ms. Nuraeni"
-                },
-                {
-                    "dayOfWeek": "MON",
-                    "startTime": "11:00:00",
-                    "endTime": "12:30:00",
-                    "locationName": "Stadion",
-                    "teacherName": "Ms. Nuraeni"
-                }
-            ],
-            "testResults": []
-        }
+        // return {
+        //     "id": 39,
+        //     "name": "Siswa Dengan Jadwal 2",
+        //     "programName": "School Program",
+        //     "groupName": "Senior High School",
+        //     "levelName": "Rookie",
+        //     "gradeNumber": 2,
+        //     "schedules": [
+        //         {
+        //             "dayOfWeek": "MON",
+        //             "startTime": "08:00:00",
+        //             "endTime": "09:30:00",
+        //             "locationName": "Stadion",
+        //             "teacherName": "Ms. Nuraeni"
+        //         },
+        //         {
+        //             "dayOfWeek": "MON",
+        //             "startTime": "11:00:00",
+        //             "endTime": "12:30:00",
+        //             "locationName": "Stadion",
+        //             "teacherName": "Ms. Nuraeni"
+        //         }
+        //     ],
+        //     "testResults": []
+        // }
         return baseService(async () => {
             const res = await api.get<ResponseUserDetail>(API_GET_STUDENT_BY_ID(id ?? ''), {
                 headers: { Authorization: 'Bearer ' + accessToken },

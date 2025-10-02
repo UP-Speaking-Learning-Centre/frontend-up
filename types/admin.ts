@@ -4,6 +4,7 @@ export interface ProgramDetailTreeInterface {
 }
 
 export interface ProgramDetailTreeInterfaceItems {
+    id: number;
     title: string;
     description: string;
     children?: ProgramDetailTreeInterface;
@@ -74,7 +75,12 @@ export interface TeacherAdmin {
     };
 }
 
-export type RequestTeacherAdmin = Omit<TeacherAdmin, 'id' | 'teacher'> & { teacherId: number };
+export type RequestTeacherAdmin = {
+    memberName: string;
+    photo: File;
+    teacherId: number;
+    isCoordinator: boolean;
+};
 export interface TeacherAdminSchedule {
     teacherTeamMember: Partial<TeacherAdmin>;
     schedules: {
@@ -101,7 +107,6 @@ export interface TeacherAdminSchedule {
 
 export interface PriceData {
     id: string;
-    packageName: string;
     price: string;
     duration: string;
     durationType: 'days' | 'weeks' | 'months' | 'years';
@@ -133,4 +138,17 @@ export interface Price {
     };
     timeframe: string;
     amount: number;
+}
+
+export interface ResponseAlias {
+    id: number;
+    alias: string;
+    coordinator: string | null;
+}
+
+export interface RequestPrice {
+    programId: number;
+    packageId: number;
+    prices: { timeframe: string; amount: number }[];
+    replaceAll: boolean;
 }

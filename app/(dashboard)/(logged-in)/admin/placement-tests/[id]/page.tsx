@@ -14,8 +14,8 @@ import { useParams } from 'next/navigation';
 
 export default function PlacementTestDetailPage() {
     const { id } = useParams();
-
     const { isLoading } = useFetchDetailPlacementTestQuery({ id: id as string });
+
     const student = useDisplayedPlacementTestStore(s => s.student);
     const test = useDisplayedPlacementTestStore(s => s.test);
     const testDate = useDisplayedPlacementTestStore(s => s.testDate);

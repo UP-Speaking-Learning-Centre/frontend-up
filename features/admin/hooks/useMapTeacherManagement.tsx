@@ -1,7 +1,6 @@
 import { getPackageColor } from '@/lib/schedule';
-import { TimeSlot } from '@/types/schedule';
-import useGetTeacherSchedule from '../queries/useGetTeacherSchedule';
 import { TeacherAdminSchedule } from '@/types/admin';
+import { TimeSlot } from '@/types/schedule';
 
 const useMapTeacherManagement = (schedules: TeacherAdminSchedule['schedules']) => {
 

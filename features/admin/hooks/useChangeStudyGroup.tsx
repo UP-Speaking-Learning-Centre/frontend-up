@@ -4,7 +4,7 @@ import useGetStudyGroup from '../queries/useGetStudyGroup';
 
 const useChangeStudyGroup = () => {
     const { data, isLoading } = useGetGradeAdmin();
-    const { data: studyGroups, isLoading: isLoadingStudyGroup } = useGetStudyGroup();
+    const { data: studyGroups, isLoading: isLoadingStudyGroup } = useGetStudyGroup(1);
     const [isOpen, setIsOpen] = useState(false);
 
     return {

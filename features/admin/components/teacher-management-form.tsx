@@ -3,25 +3,36 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { RequestTeacherAdmin } from '@/types/admin';
 import { X } from 'lucide-react';
-import React, { ChangeEventHandler, FC, FormEventHandler } from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import React, { ChangeEventHandler, FC, FormEventHandler, useState } from 'react';
+import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
+import useGetAlias from '../queries/useGetAlias';
+import AdminSelect from './admin-select';
 
 interface Props {
+    teacherId?: number;
     isEdit?: boolean;
     onClose: () => void;
-    onSubmit:FormEventHandler<HTMLFormElement>;
+    onSubmit: FormEventHandler<HTMLFormElement>;
     errors: FieldErrors<RequestTeacherAdmin>;
     register: UseFormRegister<RequestTeacherAdmin>;
     onUpload: ChangeEventHandler<HTMLInputElement>;
+    isLoading?: boolean;
+    setValue: UseFormSetValue<RequestTeacherAdmin>;
 }
 const TeacherManagementForm: FC<Props> = ({
+    teacherId,
     isEdit,
     onClose,
     onSubmit,
     errors,
     register,
     onUpload,
+    isLoading,
+    setValue,
 }) => {
+    const { data: aliasData, isLoading: isLoadingAlias } = useGetAlias();
+    const [alias, setAlias] = useState(teacherId);
+
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
@@ -66,13 +77,13 @@ const TeacherManagementForm: FC<Props> = ({
                             type="file"
                             className={cn(
                                 'w-full border border-gray-300 rounded-md px-3 py-2',
-                                errors.photoUrl && 'border-red-500'
+                                errors.photo && 'border-red-500'
                             )}
                             onChange={onUpload}
                         />
-                        {errors.photoUrl && (
+                        {errors.photo && (
                             <p className="text-red-500 text-sm mt-1">
-                                {errors.photoUrl.message?.toString()}
+                                {errors.photo.message?.toString()}
                             </p>
                         )}
                     </div>
@@ -98,16 +109,25 @@ const TeacherManagementForm: FC<Props> = ({
 
                     {/* Alias Field */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">
-                            Alias
-                        </label>
-                        <Input
+                        {/* <Input
                             type="text"
                             className={cn(
                                 'w-full border border-gray-300 rounded-md px-3 py-2',
                                 errors.teacherId && 'border-red-500'
                             )}
                             {...register('teacherId')}
+                        /> */}
+                        <AdminSelect
+                            label="Alias"
+                            loading={isLoadingAlias}
+                            options={
+                                aliasData?.map(alias => ({ id: alias.id, name: alias.alias })) || []
+                            }
+                            value={alias?.toString()}
+                            onValueChange={value => {
+                                setAlias(Number(value));
+                                setValue('teacherId', Number(value));
+                            }}
                         />
                         {errors.teacherId && (
                             <p className="text-red-500 text-sm mt-1">
@@ -144,7 +164,13 @@ const TeacherManagementForm: FC<Props> = ({
                     {/* Edit Button */}
                     <div className="flex justify-end pt-4">
                         <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-2 rounded-lg">
-                            {isEdit ? 'Edit' : 'Add'}
+                            {isEdit
+                                ? !isLoading
+                                    ? 'Edit'
+                                    : 'Editing'
+                                : !isLoading
+                                ? 'Add'
+                                : 'Adding'}
                         </Button>
                     </div>
                 </form>

@@ -3,7 +3,9 @@
 import Overlay from '@/components/layout/overlay';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogFooter, DialogTitle } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
 import { inter } from '@/constants/fonts';
 import AdminSelect from '@/features/admin/components/admin-select';
@@ -15,7 +17,7 @@ import { cn } from '@/lib/utils';
 import { Calendar, Clock } from 'lucide-react';
 
 export default function DashboardPage() {
-    const { isEdit, setIsEdit } = useEditNote();
+    const { isEdit, setIsEdit, notes, setNotes, handleSave } = useEditNote();
     const {
         isOpen,
         setIsOpen,
@@ -40,9 +42,7 @@ export default function DashboardPage() {
                                 <div className="space-y-4">
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">Nama</p>
-                                        <p className="font-semibold text-gray-900">
-                                            {data?.name}
-                                        </p>
+                                        <p className="font-semibold text-gray-900">{data?.name}</p>
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">No. HP</p>
@@ -62,16 +62,20 @@ export default function DashboardPage() {
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">Group</p>
-                                        <p className="font-semibold text-gray-900">{data?.groupName}</p>
+                                        <p className="font-semibold text-gray-900">
+                                            {data?.groupName}
+                                        </p>
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">Level</p>
-                                        <p className="font-semibold text-gray-900">{data?.levelName}</p>
+                                        <p className="font-semibold text-gray-900">
+                                            {data?.levelName}
+                                        </p>
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">Grade</p>
                                         <p className="font-semibold text-gray-900">
-                                            {data?.gradeNumber || "Belum ditentukan"}
+                                            {data?.gradeNumber || 'Belum ditentukan'}
                                         </p>
                                     </div>
                                 </div>
@@ -88,7 +92,7 @@ export default function DashboardPage() {
                                     {!isEdit ? (
                                         <>
                                             <p className="text-gray-900 font-medium mb-4">
-                                                Murid kurengg
+                                                {notes}
                                             </p>
                                             <Button
                                                 onClick={() => setIsEdit(true)}
@@ -100,7 +104,11 @@ export default function DashboardPage() {
                                         </>
                                     ) : (
                                         <>
-                                            <Textarea className="mb-4">Murid kurengg</Textarea>
+                                            <Textarea
+                                                className="mb-4"
+                                                value={notes}
+                                                onChange={e => setNotes(e.target.value)}
+                                            />
                                             <div className="space-x-3 ml-auto">
                                                 <Button
                                                     onClick={() => setIsEdit(false)}
@@ -111,7 +119,7 @@ export default function DashboardPage() {
                                                     Cancel
                                                 </Button>
                                                 <Button
-                                                    onClick={() => setIsEdit(false)}
+                                                    onClick={handleSave}
                                                     className="px-6 w-fit"
                                                     size="sm"
                                                 >
@@ -205,14 +213,33 @@ export default function DashboardPage() {
                                     Ganti Kelompok
                                 </Button>
                                 <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                                    <DialogTitle />
                                     <DialogContent className={cn(inter.className)}>
-                                        <h2 className="font-medium">Ganti Kelompok</h2>
+                                        <DialogTitle>Ganti Kelompok</DialogTitle>
                                         <AdminSelect label="Grade" options={grades || []} />
                                         <AdminSelect
                                             label="Kelompok Belajar"
                                             options={studyGroups || []}
                                         />
+                                        <div>
+                                            <Label className="mb-2 block">Jadwal Trial Class</Label>
+                                            <RadioGroup>
+                                                <div className="flex gap-4 items-center">
+                                                    <RadioGroupItem value="1"></RadioGroupItem>
+                                                    <p className="text-[#020217] text-sm">
+                                                        Rabu, 18 Juni 2021
+                                                    </p>
+                                                </div>
+                                                <div className="flex gap-4 items-center">
+                                                    <RadioGroupItem value="1"></RadioGroupItem>
+                                                    <p className="text-[#020217] text-sm">
+                                                        Rabu, 18 Juni 2021
+                                                    </p>
+                                                </div>
+                                            </RadioGroup>
+                                        </div>
+                                        <DialogFooter>
+                                            <Button onClick={() => setIsOpen(false)}>Ganti</Button>
+                                        </DialogFooter>
                                     </DialogContent>
                                 </Dialog>
                             </div>

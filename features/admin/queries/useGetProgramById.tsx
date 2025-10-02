@@ -8,7 +8,7 @@ import {
     ProgramDetailTreeInterface,
     ProgramDetailTreeInterfaceItems,
     ProgramRecurse,
-    ProgramRecurseArray
+    ProgramRecurseArray,
 } from '@/types/admin';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
@@ -38,6 +38,15 @@ const useGetProgramById = () => {
                 (item as ProgramDetailGrade)?.packages
             );
         };
+        const getId = (item: ProgramRecurse) => {
+            return (
+                (item as ProgramDetail)?.programId ??
+                (item as ProgramDetailGroup)?.groupId ??
+                (item as ProgramDetailLevel)?.levelId ??
+                (item as ProgramDetailGrade)?.gradeId??
+                (item as ProgramDetailPackage)?.gradePackageId
+            );
+        };
         const getChildTitle = (item: ProgramRecurse) => {
             if ((item as ProgramDetail)?.groups?.length) return 'Groups';
             if ((item as ProgramDetailGroup)?.levels?.length) return 'Levels';
@@ -47,6 +56,7 @@ const useGetProgramById = () => {
         };
 
         return program?.map(item => ({
+            id: getId(item),
             title: getTitle(item),
             description: 'Lorem Ipsum',
             children:
@@ -66,10 +76,10 @@ const useGetProgramById = () => {
         const res = {
             title: 'Programs',
             items: handleProgramMapping(
-                data.filter(program => program.programId.toString() === id) 
+                data.filter(program => program.programId.toString() === id)
             ),
         } as ProgramDetailTreeInterface;
-        
+
         return res;
     };
 

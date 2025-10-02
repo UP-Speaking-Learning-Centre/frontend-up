@@ -15,6 +15,7 @@ interface IAdminSelect {
     defaultValue?: string;
     value?: string;
     placeholder?: string;
+    loading?: boolean;
 }
 
 const AdminSelect: FC<IAdminSelect & SelectProps> = ({
@@ -22,13 +23,14 @@ const AdminSelect: FC<IAdminSelect & SelectProps> = ({
     options,
     defaultValue,
     placeholder,
+    loading,
     ...props
 }) => {
     return (
         <div className="col-span-1 flex flex-col items-start gap-2">
             <Label>{label}</Label>
-            <Select {...props}>
-                <SelectTrigger>
+            <Select {...props} disabled={loading}>
+                <SelectTrigger >
                     <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
                 <SelectContent>

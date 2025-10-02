@@ -45,3 +45,11 @@ export interface ResponseLocation {
     locationId: number;
     locationName: string;
 }
+
+export interface FormStatusManagement {
+    level: string;
+    grade: string;
+    location: string;
+    mentor: string;
+    studyGroup: string;
+}

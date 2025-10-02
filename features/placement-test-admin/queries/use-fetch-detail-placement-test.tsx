@@ -37,9 +37,11 @@ const useFetchDetailPlacementTestQuery = ({
                 student: query.data.student,
                 test: query.data.test,
                 testDate: query.data.submittedAt,
+                status: query.data.status,
             });
         }
     }, [query.status, query.data]);
+
     return query;
 };
 

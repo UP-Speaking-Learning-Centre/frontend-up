@@ -1,33 +1,29 @@
-import { LocationAdmin, TeacherAdmin } from '@/types/admin';
-import { useQuery } from '@tanstack/react-query';
-import { API_LOCATION, API_TEACHERS } from '../constants/config';
-import { useLocationManagementStore } from '../stores/location';
-import { useEffect } from 'react';
-import { useTeacherManagementStore } from '../stores/teacher';
-import api from '@/lib/api';
 import ENDPOINTS from '@/constants/endpoints';
-import { BaseResponse } from '@/types/general';
+import api from '@/lib/api';
+import { TeacherAdmin } from '@/types/admin';
+import { useQuery } from '@tanstack/react-query';
 
-const useGetTeacherById = () => {
+const useGetTeacherById = (id: number) => {
     const getTeacher = async (): Promise<TeacherAdmin> => {
-        // const mentors = await api.get<TeacherAdmin[]>(ENDPOINTS.fetchTeachers);
-        const dummy = {
-            id: 14,
-            memberName: 'Jane Updated',
-            isCoordinator: false,
-            teacher: {
-                id: 2,
-                name: 'Papa Bear',
-                coordinator: null,
-            },
-            photoUrl: 'https://example.com/photo.jpg',
-        } satisfies TeacherAdmin;
-        return dummy;
+        const mentors = await api.get<TeacherAdmin>(ENDPOINTS.fetchTeachersById.expand({ id }));
+        // const dummy = {
+        //     id: 14,
+        //     memberName: 'Jane Updated',
+        //     isCoordinator: false,
+        //     teacher: {
+        //         id: 2,
+        //         name: 'Papa Bear',
+        //         coordinator: null,
+        //     },
+        //     photoUrl: 'https://example.com/photo.jpg',
+        // } satisfies TeacherAdmin;
+        return mentors.data;
     };
 
     const { data, isLoading } = useQuery({
-        queryKey: [ENDPOINTS.fetchTeachersById],
+        queryKey: [ENDPOINTS.fetchTeachersById.expand({ id })],
         queryFn: getTeacher,
+        enabled: !!id,
     });
 
     return { data, isLoading };

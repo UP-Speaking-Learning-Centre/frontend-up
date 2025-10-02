@@ -8,7 +8,11 @@ const usePostTeacher = () => {
     const queryClient = useQueryClient();
 
     const postLocation = async (data: RequestTeacherAdmin): Promise<TeacherAdmin> => {
-        const res = await api.post<TeacherAdmin>(ENDPOINTS.fetchTeachers, data);
+        const res = await api.post<TeacherAdmin>(ENDPOINTS.fetchTeachers, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         queryClient.invalidateQueries({ queryKey: ['GET' + API_LOCATION] });
         return res.data;
     };

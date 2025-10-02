@@ -14,7 +14,7 @@ const initialState = {
     gradedQuestions: 0,
     correctAnswers: 0,
     questions: [],
-    status: STATUS_OPTION.DONE_INTERVIEW,
+    status: STATUS_OPTION.NOT_GRADED,
     student: undefined,
     test: undefined,
     testDate: '',

@@ -21,7 +21,12 @@ const ENDPOINTS = {
     fetchTeachers: '/admin/teacher-team-members',
     fetchTeachersById: parseTemplate('/admin/teacher-team-members/{id}'),
     fetchTeachersScheduleById: parseTemplate('/admin/teacher-team-members/{id}/schedules'),
-    fetchPrices: parseTemplate('/prices'),
+    fetchPrices: '/prices',
+    patchpricesByProgram: '/admin/program-packages/by-program-package',
+    patchNoteByUserId: parseTemplate('/admin/students/{id}/notes'),
+    fetchAlias: '/admin/teachers',
+    fetchAdminLocations: '/admin/locations',
+    fetchAdminLocationsById: parseTemplate('/admin/locations/{id}'),
 } as const;
 
 export default ENDPOINTS;

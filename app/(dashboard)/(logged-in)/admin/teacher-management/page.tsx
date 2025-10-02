@@ -20,7 +20,6 @@ import { useState } from 'react';
 
 const page = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
 
     const {
         handleSubmit,
@@ -29,13 +28,20 @@ const page = () => {
         handleUpload,
         handleResetModal,
         isEdit,
-        id,
         isLoading: isLoadingCreateTeacher,
         handleEdit,
+        data,
+        setValue,
     } = useCreateTeacher(setIsModalOpen);
     const { mutateAsync } = useDeleteTeacher();
     const { errors } = formState;
-    const { data: scheduleData, isLoading: isLoadingSchedule } = useGetTeacherSchedule(id);
+    const {
+        data: scheduleData,
+        isLoading: isLoadingSchedule,
+        handleOpenSchedule,
+        isScheduleModalOpen,
+        setIsScheduleModalOpen,
+    } = useGetTeacherSchedule();
     const { getBookingInfo } = useMapTeacherManagement(scheduleData?.schedules || []);
 
     return (
@@ -55,19 +61,22 @@ const page = () => {
 
                     {/* Mentor Cards Grid */}
                     <TeacherManagementCardList
-                        onOpenSchedule={() => setIsScheduleModalOpen(true)}
+                        onOpenSchedule={handleOpenSchedule}
                         onEdit={handleEdit}
                         onDelete={mutateAsync}
                     />
                 </div>
                 {isModalOpen && (
                     <TeacherManagementForm
+                        teacherId={data?.teacher.id}
                         errors={errors}
                         onClose={handleResetModal}
                         onSubmit={handleSubmit}
                         onUpload={handleUpload}
                         register={register}
                         isEdit={isEdit}
+                        isLoading={isLoadingCreateTeacher}
+                        setValue={setValue}
                     />
                 )}
                 <Dialog open={isScheduleModalOpen} onOpenChange={setIsScheduleModalOpen}>

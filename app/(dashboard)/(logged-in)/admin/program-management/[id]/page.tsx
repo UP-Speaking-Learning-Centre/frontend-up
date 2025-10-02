@@ -52,8 +52,9 @@ const page = () => {
                     <div className="p-4 space-y-4">
                         {/* School Program Section */}
                         <Skeleton loading={isLoading} className="h-28">
-                            {data?.items.map(item => (
+                            {data?.items.map((item, idx) => (
                                 <ProgramDetailControl
+                                    id={idx.toString()}
                                     title={item.title}
                                     description={item.description}
                                     children={item.children}

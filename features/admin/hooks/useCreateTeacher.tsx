@@ -3,11 +3,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import z from 'zod';
+import useGetTeacherById from '../queries/useGetTeacherById';
 import usePostTeacher from '../queries/usePostTeacher';
 import usePutTeacher from '../queries/usePutTeacher';
 import useUploadFile from '../queries/useUploadFile';
-import { useTeacherManagementStore } from '../stores/teacher';
-import useGetTeacherById from '../queries/useGetTeacherById';
 
 const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
     const [id, setId] = useState(0);
@@ -15,35 +14,46 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
     const { mutateAsync } = useUploadFile();
     const { mutateAsync: postTeacher } = usePostTeacher();
     const { mutateAsync: putTeacher } = usePutTeacher(id);
-    const { data, isLoading } = useGetTeacherById();
+    const { data, isLoading } = useGetTeacherById(id);
 
     const Teacher = z.object({
         memberName: z.string().min(1, 'This field is required'),
-        photoUrl: z.string().min(1, 'This field is required'),
-        teacherId: z.string().min(1, 'This field is required'),
-        isCoordinator: z.string().min(1, 'This field is required'),
+        photo: z
+            .instanceof(File)
+            .refine(
+                file =>
+                    ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml', 'image/gif'].includes(
+                        file.type
+                    ),
+                { message: 'Invalid image file type' }
+            ),
+        teacherId: z.number().min(1, 'This field is required'),
+        // isCoordinator: z.string().min(1, 'This field is required'),
     });
     const { register, handleSubmit, formState, setValue, reset } = useForm<RequestTeacherAdmin>({
         resolver: zodResolver(Teacher),
     });
 
     useEffect(() => {
-        setValue('photoUrl', data?.photoUrl ?? '');
-        setValue('memberName', data?.memberName ?? '');
-        // setValue('description', getOne?.description ?? '');
-        setValue('teacherId', data?.teacher.id || 0);
-        setValue('isCoordinator', data?.isCoordinator || false);
+        if (id) {
+            // setValue('photoUrl', data?.photoUrl ?? '');
+            setValue('memberName', data?.memberName ?? '');
+            // setValue('description', getOne?.description ?? '');
+            setValue('teacherId', data?.teacher.id || 0);
+            // setValue('isCoordinator', data?.isCoordinator || false);
+        }
     }, [id, data]);
 
     const handleUpload: ChangeEventHandler<HTMLInputElement> = e => {
         if (!e.target.files?.length) throw new Error('No file to upload');
-        mutateAsync().then(res => setValue('photoUrl', res));
+        setValue('photo', e.target.files[0]);
+        // mutateAsync().then(res => setValue('photoUrl', res));
     };
 
-    const handleEdit = (id:number) =>{
+    const handleEdit = (id: number) => {
         setIsModalOpen(true);
-        setId(id)
-    }
+        setId(id);
+    };
 
     const handleResetModal = () => {
         setIsModalOpen(false);
@@ -56,7 +66,7 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
             putTeacher(value).then(res => handleResetModal());
             return;
         }
-        postTeacher(value).then(res => {
+        postTeacher({ ...value, isCoordinator: false }).then(res => {
             handleResetModal();
         });
     };
@@ -74,7 +84,9 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
         handleResetModal,
         isEdit: !!id,
         isLoading,
-        handleEdit
+        handleEdit,
+        data,
+        setValue,
     };
 };
 

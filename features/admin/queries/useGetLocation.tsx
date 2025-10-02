@@ -3,38 +3,23 @@ import { useQuery } from '@tanstack/react-query';
 import { API_LOCATION } from '../constants/config';
 import { useLocationManagementStore } from '../stores/location';
 import { useEffect } from 'react';
+import api from '@/lib/api';
+import { BaseResponse } from '@/types/general';
+import ENDPOINTS from '@/constants/endpoints';
 
-const useGetLocation = () => {
+const useGetLocation = (params?: any) => {
     const setLocation = useLocationManagementStore(s => s.setLocation);
-    
-    const getLocation = (): LocationAdmin[] => {
-        return [
-            {
-                id: 1,
-                name: 'Stadion',
-                address: null,
-                img: null,
-                googleMapsLink: null,
-            },
-            {
-                id: 2,
-                name: 'Luragung',
-                address: null,
-                img: null,
-                googleMapsLink: null,
-            },
-            {
-                id: 3,
-                name: 'Alam Asri',
-                address: null,
-                img: null,
-                googleMapsLink: null,
-            },
-        ];
+
+    const getLocation = async (): Promise<LocationAdmin[]> => {
+        const res = await api.get<LocationAdmin[]>(ENDPOINTS.fetchAdminLocations, {
+            params,
+        });
+
+        return res.data;
     };
 
     const { data, isLoading } = useQuery({
-        queryKey: ['GET' + API_LOCATION],
+        queryKey: [ENDPOINTS.fetchAdminLocations],
         queryFn: getLocation,
     });
 

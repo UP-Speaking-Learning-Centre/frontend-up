@@ -10,24 +10,15 @@ const usePutTeacher = (id: number) => {
     const teacher = useLocationManagementStore(s => s.teacher);
 
     const putLocation = async (data: RequestTeacherAdmin): Promise<TeacherAdmin> => {
-        const res = await api.patch(ENDPOINTS.fetchTeachersById.expand({ id }));
+        const res = await api.patch(ENDPOINTS.fetchTeachersById.expand({ id }),data);
         const index = teacher.findIndex(teach => teach.id === id);
-        // teacher[index] = {
-        //     id: teacher.length * -1,
-        //     isCoordinator: data.isCoordinator,
-        //     memberName: data.memberName,
-        //     photoUrl: data.photoUrl,
-        //     teacher: {
-        //         id:data.teacherId,
-        //         name:
-        //     }
-        // } satisfies TeacherAdmin;
-        // setTeacher([...teacher]);
+        teacher[index] = res.data;
+        setTeacher([...teacher]);
         return res.data;
     };
 
     const { mutateAsync } = useMutation({
-        mutationKey: ['PUT' + API_LOCATION],
+        mutationKey: ['PUT' + ENDPOINTS.fetchTeachersById.expand({ id })],
         mutationFn: putLocation,
     });
 
