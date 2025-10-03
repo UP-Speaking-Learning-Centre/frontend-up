@@ -6,32 +6,36 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PLACEMENT_TEST_FILTER_OPTIONS } from '@/constants/placement-test';
+import { ALL_GROUP, ALL_PROGRAM, STATUS_OPTION } from '@/features/admin/constants/config';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import DashboardFilter from '@/features/dashboard/components/filter';
 import Table from '@/features/dashboard/components/table';
 import useFilterStudents from '@/features/dashboard/hooks/use-filter-studets';
 import useFetchStudentsWithPlacementQuery from '@/features/dashboard/queries/use-fetch-students-with-placement';
 import { useStudentsStore } from '@/features/dashboard/stores/students-store';
+import { renderDateToIndonesian } from '@/lib/moment';
 import { cn } from '@/lib/utils';
 import { StudentPlacementTest } from '@/types/students';
+import { debounce } from '@/utils/function.helper';
 import { ChevronDown, Eye, Filter } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const Index = () => {
-    const filter = useStudentsStore(s => s.filters);
-    const { isLoading } = useFetchStudentsWithPlacementQuery({
-        search: filter.searchQuery,
-        group: filter.group[0]?.id,
-    });
+    const filter = useStudentsStore(s => s.filterPlacementTest);
     const router = useRouter();
     const students = useStudentsStore(s => s.studentsPlacementTest);
     const pagination = useStudentsStore(s => s.paginationPlacementTest);
-    const onChangeFilter = useStudentsStore(s => s.onChangeFilter);
+    const { isLoading } = useFetchStudentsWithPlacementQuery();
+    const onChangeFilterPlacementTest = useStudentsStore(s => s.onChangeFilterPlacementTest);
     const {
-        filterPlacementTest: { groups, mentors, status },
+        filters: { groups, programs },
         onChangePage,
-    } = useFilterStudents();
+        onChangeGroup,
+        onChangeProgram,
+        onChangeStatus,
+        onChangeSearch,
+    } = useFilterStudents(onChangeFilterPlacementTest, filter.program!);
 
     const [isFilterOpen, setIsFilterOpen] = React.useState(true);
 
@@ -64,43 +68,41 @@ const Index = () => {
                             )}
                         >
                             <div className="flex flex-col items-start gap-2">
-                                <Label>Search Name/Phone</Label>
+                                <Label>Search Name</Label>
                                 <Input
                                     placeholder="Search..."
-                                    onChange={e => onChangeFilter('searchQuery', e.target.value)}
+                                    onChange={debounce(e => onChangeSearch(e.target.value), 500)}
                                 />
                             </div>
                             <DashboardFilter
+                                label="Program"
+                                options={programs}
+                                onSelect={val => onChangeProgram(val)}
+                                value={filter.program?.toString() || ''}
+                                defaultValue={ALL_PROGRAM}
+                            />
+                            <DashboardFilter
                                 label="Group"
                                 options={groups}
-                                onSelect={val =>
-                                    onChangeFilter<{ id: number; name: string }>('group', {
-                                        id: groups.find(group => group.name === val)?.id!,
-                                        name: val,
-                                    })
-                                }
-                                defaultValue="All Groups"
+                                onSelect={val => onChangeGroup(val)}
+                                value={filter.group?.toString() || ''}
+                                defaultValue={ALL_GROUP}
                             />
-                            <DashboardFilter
+                            {/* <DashboardFilter
                                 label="Mentor"
                                 options={mentors}
-                                onSelect={val =>
-                                    onChangeFilter('mentors', {
-                                        id: mentors.find(group => group.name === val)?.id!,
-                                        name: val,
-                                    })
-                                }
+                                onSelect={val => onChangeMentor(val)}
+                                value={filter.mentors.toString() || ''}
                                 defaultValue="All Mentors"
-                            />
+                            /> */}
                             <DashboardFilter
                                 label="Status"
-                                options={status}
-                                onSelect={val =>
-                                    onChangeFilter('status', {
-                                        id: status.find(group => group.name === val)?.id!,
-                                        name: val,
-                                    })
-                                }
+                                options={Object.entries(STATUS_OPTION).map(([name, id]) => ({
+                                    id,
+                                    name: name.split('_').join(' '),
+                                }))}
+                                onSelect={val => onChangeStatus(val)}
+                                value={filter.status?.toString() || ''}
                                 defaultValue="All Status"
                             />
                         </div>
@@ -114,7 +116,8 @@ const Index = () => {
                         columns={[
                             { name: 'Name', id: 'studentName', width: '20%' },
                             { name: 'Phone', id: 'parentPhoneNumber' },
-                            { name: 'Program (Group)', id: 'program' },
+                            { name: 'Program', id: 'program' },
+                            { name: 'Group', id: 'group' },
                             { name: 'Status', id: 'status' },
                             { name: 'Test Date', id: 'testDate' },
                             { name: 'Actions', id: 'actions' },
@@ -122,20 +125,12 @@ const Index = () => {
                         values={students.map(user => {
                             return {
                                 ...user,
-                                program: {
-                                    renderCell: () => (
-                                        <div className="flex items-center gap-2">
-                                            {user.program} ({user.group})
-                                        </div>
-                                    ),
-                                },
                                 status: {
                                     renderCell: () => (
-                                        <Badge className="flex items-center gap-2">
+                                        <Badge className="flex items-center justify-center gap-2">
                                             {
                                                 PLACEMENT_TEST_FILTER_OPTIONS.find(
-                                                    option =>
-                                                        option.id === user.resultId?.toString()
+                                                    option => option.id === user.resultId
                                                 )?.name
                                             }
                                         </Badge>
@@ -144,7 +139,7 @@ const Index = () => {
                                 testDate: {
                                     renderCell: () => (
                                         <div className="flex items-center gap-2">
-                                            {user.testDate}
+                                            {renderDateToIndonesian(user.testDate || '')}
                                         </div>
                                     ),
                                 },

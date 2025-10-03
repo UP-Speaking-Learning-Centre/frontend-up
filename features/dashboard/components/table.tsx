@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Pagination } from '@/types/general';
+import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import React from 'react';
 
 type RenderCellType = {
@@ -13,83 +14,46 @@ type GenericData = Record<string, string | number | RenderCellType | undefined>;
 interface ITable<T> {
     columns: { name: string; id: keyof T | string; width?: string }[];
     values: GenericData[] | [];
-    pagination?: {
-        totalPages: number;
-        currentPage: number;
-        startIndex: number;
-        itemsPerPage: number;
-        perPage: number;
-    };
+    pagination?: Pagination;
     onChangePage: (page: number) => void;
+    isLoading?: boolean;
 }
 
-const Table = <T,>({ columns, values, pagination, onChangePage }: ITable<T>) => {
+const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITable<T>) => {
+    const startIndex = (currentPage: number, itemsPerPage: number) => {
+        return currentPage + itemsPerPage * (currentPage - 1);
+    };
+    const endIndex = (currentPage: number, itemsPerPage: number) => {
+        return currentPage - 1 + itemsPerPage * currentPage;
+    };
+
     return (
         <>
             <Card>
                 <CardContent className="p-0 relative overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <table className="w-full max-w-full relative">
-                            <thead className="bg-gray-50 border-b">
-                                <tr>
-                                    {columns
-                                        .filter(col => col.id !== 'actions')
-                                        .map((column, idx) => (
-                                            <th
-                                                key={column.id.toString()}
-                                                className={cn(
-                                                    'text-left p-4 font-medium',
-                                                    idx === columns.length - 2 && 'pr-24'
-                                                )}
-                                                style={{ width: column.width }}
-                                            >
-                                                {column.name}
-                                            </th>
-                                        ))}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {!!values.length ? (
-                                    values.map((row, rowIndex) => (
-                                        <tr key={rowIndex}>
-                                            {columns
-                                                .filter(col => col.id !== 'actions')
-                                                .map((col, idx) => {
-                                                    const value = row[col.id as keyof GenericData];
-                                                    return (
-                                                        <td
-                                                            key={col.id.toString()}
-                                                            className={cn(
-                                                                'p-4 truncate',
-                                                                idx === columns.length - 2 &&
-                                                                    'pr-24'
-                                                            )}
-                                                        >
-                                                            {typeof value === 'object' &&
-                                                            'renderCell' in value
-                                                                ? value.renderCell()
-                                                                : `${value}` || '-'}
-                                                        </td>
-                                                    );
-                                                })}
-                                        </tr>
-                                    ))
-                                ) : (
-                                    <tr>
-                                        <td colSpan={columns.length} className="p-4 text-center">
-                                            No data available
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                        <div className="absolute bottom-0 right-0 top-0 w-[80px] bg-white shadow-[rgba(0,0,0,0.05)_-1px_0px_2px_1px]">
+                    {isLoading ? (
+                        <div className="p-4 text-center w-full">
+                            <Loader2 className="h-4 w-4 animate-spin mx-auto" />
+                        </div>
+                    ) : (
+                        <div className="overflow-x-auto">
                             <table className="w-full max-w-full relative">
                                 <thead className="bg-gray-50 border-b">
                                     <tr>
-                                        <th key="actions" className="text-left p-4 font-medium">
-                                            Action
-                                        </th>
+                                        {columns
+                                            .filter(col => col.id !== 'actions')
+                                            .map((column, idx) => (
+                                                <th
+                                                    key={column.id.toString()}
+                                                    className={cn(
+                                                        'text-left p-4 font-medium',
+                                                        idx === columns.length - 2 && 'pr-24'
+                                                    )}
+                                                    style={{ width: column.width }}
+                                                >
+                                                    {column.name}
+                                                </th>
+                                            ))}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -97,20 +61,23 @@ const Table = <T,>({ columns, values, pagination, onChangePage }: ITable<T>) => 
                                         values.map((row, rowIndex) => (
                                             <tr key={rowIndex}>
                                                 {columns
-                                                    .filter(col => col.id === 'actions')
-                                                    .map(col => {
+                                                    .filter(col => col.id !== 'actions')
+                                                    .map((col, idx) => {
                                                         const value =
                                                             row[col.id as keyof GenericData];
                                                         return (
                                                             <td
                                                                 key={col.id.toString()}
-                                                                className="h-[52.5px] relative"
+                                                                className={cn(
+                                                                    'p-4 truncate',
+                                                                    idx === columns.length - 2 &&
+                                                                        'pr-24'
+                                                                )}
                                                             >
                                                                 {typeof value === 'object' &&
                                                                 'renderCell' in value
                                                                     ? value.renderCell()
-                                                                    : `${value} ${value} ${value}` ||
-                                                                      '-'}
+                                                                    : `${value}` || '-'}
                                                             </td>
                                                         );
                                                     })}
@@ -122,23 +89,71 @@ const Table = <T,>({ columns, values, pagination, onChangePage }: ITable<T>) => 
                                                 colSpan={columns.length}
                                                 className="p-4 text-center"
                                             >
-                                                -
+                                                No data available
                                             </td>
                                         </tr>
                                     )}
                                 </tbody>
                             </table>
+                            <div className="absolute bottom-0 right-0 top-0 w-[80px] bg-white shadow-[rgba(0,0,0,0.05)_-1px_0px_2px_1px]">
+                                <table className="w-full max-w-full relative">
+                                    <thead className="bg-gray-50 border-b">
+                                        <tr>
+                                            <th key="actions" className="text-left p-4 font-medium">
+                                                Action
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {!!values.length ? (
+                                            values.map((row, rowIndex) => (
+                                                <tr key={rowIndex}>
+                                                    {columns
+                                                        .filter(col => col.id === 'actions')
+                                                        .map(col => {
+                                                            const value =
+                                                                row[col.id as keyof GenericData];
+                                                            return (
+                                                                <td
+                                                                    key={col.id.toString()}
+                                                                    className="h-[52.5px] relative"
+                                                                >
+                                                                    {typeof value === 'object' &&
+                                                                    'renderCell' in value
+                                                                        ? value.renderCell()
+                                                                        : `${value} ${value} ${value}` ||
+                                                                          '-'}
+                                                                </td>
+                                                            );
+                                                        })}
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td
+                                                    colSpan={columns.length}
+                                                    className="p-4 text-center"
+                                                >
+                                                    -
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </CardContent>
             </Card>
 
             {!!pagination && (
                 <div className="flex items-center justify-between">
                     <p className="text-sm text-gray-600">
-                        Showing {pagination.startIndex + 1} to
-                        {Math.min(pagination.startIndex + pagination.perPage)} of {values.length}
-                        users
+                        {`Showing ${startIndex(pagination.currentPage, pagination.itemsPerPage)} to
+                        ${endIndex(pagination.currentPage, pagination.itemsPerPage)} of ${
+                            pagination.totalItems
+                        }
+                        users`}
                     </p>
                     <div className="flex items-center gap-2">
                         <Button

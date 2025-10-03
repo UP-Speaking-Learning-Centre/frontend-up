@@ -1,29 +1,24 @@
+import { Pagination } from '@/types/general';
 import { StudentPlacementTest, StudentType } from '@/types/students';
 import { create } from 'zustand';
 
-interface Pagination {
-    totalPages: number;
-    currentPage: number;
-    startIndex: number;
-    itemsPerPage: number;
-    perPage: number;
-}
-
 interface StudentsStore {
     filters: {
-        group: { id: number; name: string }[];
+        group: number | undefined;
         mentors: { id: number; name: string }[];
         searchQuery: string | undefined;
-        status: { id: number; name: string }[];
+        program: number | undefined;
     };
 
     filterPlacementTest: {
-        group: { id: number; name: string }[];
+        group: number | undefined;
         mentors: { id: number; name: string }[];
-        searchQuery: string;
+        searchQuery: string | undefined;
+        program: number | undefined;
+        status: number | undefined;
     };
-    onChangeFilter: <T = string>(filter: keyof StudentsStore['filters'], value: T) => void;
-    onChangeFilterPlacementTest: (filter: string, value: string) => void;
+    onChangeFilter: (filter: string, value: any) => void;
+    onChangeFilterPlacementTest: (filter: string, value: any) => void;
 
     students: StudentType[];
     setStudents: (students: StudentType[]) => void;
@@ -40,17 +35,19 @@ interface StudentsStore {
 
 export const useStudentsStore = create<StudentsStore>((set, get) => ({
     filters: {
-        group: [],
+        group: undefined,
         mentors: [],
         searchQuery: undefined,
-        status: [],
+        program: undefined,
     },
     filterPlacementTest: {
-        group: [],
+        group: undefined,
+        program: undefined,
         mentors: [],
         searchQuery: '',
+        status: undefined,
     },
-    onChangeFilter: (filter: keyof StudentsStore['filters'], value: any) => {
+    onChangeFilter: (filter: string, value: any) => {
         const getFilters = get().filters;
         set({
             filters: {
@@ -59,7 +56,7 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
             },
         });
     },
-    onChangeFilterPlacementTest: (filter: string, value: string) => {
+    onChangeFilterPlacementTest: (filter: string, value: any) => {
         const getFilters = get().filterPlacementTest;
         set({
             filterPlacementTest: {
@@ -80,7 +77,7 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
             studentsPlacementTest: students,
         });
     },
-    pagination: { totalPages: 0, currentPage: 1, startIndex: 0, itemsPerPage: 10, perPage: 10 },
+    pagination: { totalPages: 0, currentPage: 1, itemsPerPage: 10, itemCount: 0, totalItems: 0 },
     setPagination: (pagination: Partial<Pagination>) => {
         set({
             pagination: {
@@ -92,9 +89,9 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
     paginationPlacementTest: {
         totalPages: 0,
         currentPage: 1,
-        startIndex: 0,
         itemsPerPage: 10,
-        perPage: 10,
+        itemCount: 0,
+        totalItems: 0,
     },
     setPaginationPlacementTest: (pagination: Partial<Pagination>) => {
         set({

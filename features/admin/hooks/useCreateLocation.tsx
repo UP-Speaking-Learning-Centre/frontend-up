@@ -71,7 +71,7 @@ const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
         handleUpload,
         setId,
         handleResetModal,
-        isEdit: !!id
+        isEdit: !!id,
     };
 };
 

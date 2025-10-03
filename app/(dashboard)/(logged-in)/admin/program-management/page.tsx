@@ -1,19 +1,17 @@
 'use client';
+import Overlay from '@/components/layout/overlay';
 import { Card } from '@/components/ui/card';
 import { ROUTES } from '@/constants/routes';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
+import useGetProgram from '@/features/placement-test-admin/queries/use-get-program';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 const page = () => {
     const router = useRouter();
-    const Programs = Array(2).fill({
-        name: 'School Program',
-        imageUrl: '/placeholder.svg',
-        description: 'Program',
-        price: 'Rp 10.000.000',
-        months: 6,
-    });
+    const { data, isLoading } = useGetProgram();
+
+    if (isLoading) return <Overlay />;
 
     return (
         <DashboardContentLayout pageTitle="Location Management">
@@ -21,7 +19,7 @@ const page = () => {
                 <div className="max-w-7xl mx-auto">
                     {/* Program Cards Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {Programs.map((program, index) => (
+                        {data?.map((program, index) => (
                             <Card
                                 onClick={() =>
                                     router.replace(
@@ -40,7 +38,7 @@ const page = () => {
                                 <div className="px-4 pb-3">
                                     <div className="relative w-full aspect-[19/10] rounded-lg overflow-hidden">
                                         <Image
-                                            src={program.image || '/placeholder.svg'}
+                                            src={'/placeholder.svg'}
                                             alt={program.name}
                                             fill
                                             className="object-cover"
@@ -55,7 +53,7 @@ const page = () => {
                                         <p className="font-semibold text-gray-900 text-sm">
                                             Description:
                                         </p>
-                                        <p className="text-gray-700 text-sm">{program.address}</p>
+                                        {/* <p className="text-gray-700 text-sm">{program.address}</p> */}
                                     </div>
                                     <p className="text-sm">{program.description}</p>
                                 </div>

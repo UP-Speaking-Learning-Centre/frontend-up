@@ -1,46 +1,48 @@
 'use client';
 
-import Overlay from '@/components/layout/overlay';
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Skeleton } from '@/components/ui/skeleton';
 import { inter } from '@/constants/fonts';
+import { days, timeSlots } from '@/constants/schedule';
+import TeacherManagementCardList from '@/features/admin/components/teacher-management-card-list';
+import TeacherManagementForm from '@/features/admin/components/teacher-management-form';
 import useCreateTeacher from '@/features/admin/hooks/useCreateTeacher';
+import useMapTeacherManagement from '@/features/admin/hooks/useMapTeacherManagement';
 import useDeleteTeacher from '@/features/admin/queries/useDeleteTeacher';
-import useGetTeachers from '@/features/admin/queries/useGetTeachers';
-import { useTeacherManagementStore } from '@/features/admin/stores/teacher';
+import useGetTeacherSchedule from '@/features/admin/queries/useGetTeacherSchedule';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
+import ScheduleCell from '@/features/schedule-management/components/schedule-cell';
 import { cn } from '@/lib/utils';
-import { Calendar, Edit, Plus, Trash2, X } from 'lucide-react';
-import Image from 'next/image';
+import { Plus } from 'lucide-react';
 import { useState } from 'react';
 
 const page = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const { isLoading } = useGetTeachers();
-    const { handleSubmit, register, formState, handleUpload, setId, handleResetModal, isEdit } =
-        useCreateTeacher(setIsModalOpen);
+    const {
+        handleSubmit,
+        register,
+        formState,
+        handleUpload,
+        handleResetModal,
+        isEdit,
+        isLoading: isLoadingCreateTeacher,
+        handleEdit,
+        data,
+        setValue,
+    } = useCreateTeacher(setIsModalOpen);
     const { mutateAsync } = useDeleteTeacher();
     const { errors } = formState;
-
-    const teachers = useTeacherManagementStore(s => s.teacher);
-
-    if (isLoading) return <Overlay />;
+    const {
+        data: scheduleData,
+        isLoading: isLoadingSchedule,
+        handleOpenSchedule,
+        isScheduleModalOpen,
+        setIsScheduleModalOpen,
+    } = useGetTeacherSchedule();
+    const { getBookingInfo } = useMapTeacherManagement(scheduleData?.schedules || []);
 
     return (
         <DashboardContentLayout pageTitle="Teacher Management">
@@ -58,253 +60,98 @@ const page = () => {
                     </div>
 
                     {/* Mentor Cards Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {teachers.map((mentor, index) => (
-                            <Card
-                                key={index}
-                                className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
-                            >
-                                {/* Card Header */}
-                                <div className="flex items-center justify-between p-4 pb-2">
-                                    <h3 className="font-semibold text-gray-900">{mentor.name}</h3>
-                                    <div className="flex items-center gap-2">
-                                        <Button
-                                            variant={'outline'}
-                                            className="p-2 hover:bg-gray-100 rounded"
-                                        >
-                                            <Calendar className="w-4 h-4 text-gray-600" />
-                                        </Button>
-                                        <Button
-                                            onClick={() => {
-                                                setIsModalOpen(true);
-                                                setId(1);
-                                            }}
-                                            variant={'outline'}
-                                            className="p-2 hover:bg-gray-100 rounded"
-                                        >
-                                            <Edit className="w-4 h-4 text-gray-600" />
-                                        </Button>
-                                        <AlertDialog>
-                                            <AlertDialogTrigger asChild>
-                                                <Button
-                                                    variant={'outline'}
-                                                    className="p-3 hover:bg-gray-100 rounded"
-                                                >
-                                                    <Trash2 className="w-4 h-4 text-gray-600" />
-                                                </Button>
-                                            </AlertDialogTrigger>
-                                            <AlertDialogContent className={inter.className}>
-                                                <AlertDialogHeader>
-                                                    <AlertDialogTitle>
-                                                        Are you sure want to delete this teacher?
-                                                    </AlertDialogTitle>
-                                                    <AlertDialogDescription>
-                                                        This action cannot be undone. This will
-                                                        permanently delete the teacher and remove
-                                                        your data from our servers.
-                                                    </AlertDialogDescription>
-                                                </AlertDialogHeader>
-                                                <AlertDialogFooter>
-                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                                    <AlertDialogAction
-                                                        onClick={() => mutateAsync(mentor.id)}
-                                                    >
-                                                        Continue
-                                                    </AlertDialogAction>
-                                                </AlertDialogFooter>
-                                            </AlertDialogContent>
-                                        </AlertDialog>
-                                    </div>
-                                </div>
-
-                                {/* Profile Image */}
-                                <div className="px-4 pb-3">
-                                    <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden">
-                                        <Image
-                                            src={mentor.img || '/placeholder.svg'}
-                                            alt={mentor.name}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Badge */}
-                                <div className="px-4 pb-3">
-                                    <Badge className="bg-primary hover:bg-primary/80 text-white px-3 py-1 rounded-full text-sm">
-                                        {mentor.alias}
-                                    </Badge>
-                                </div>
-
-                                {/* Description */}
-                                <div className="px-4 pb-4">
-                                    <p className="text-gray-700 text-sm leading-relaxed mb-4">
-                                        {mentor.description}
-                                    </p>
-
-                                    {/* Available Locations */}
-                                    <div>
-                                        <p className="font-semibold text-gray-900 text-sm mb-2">
-                                            Available Locations:
-                                        </p>
-                                        <p className="text-gray-700 text-sm font-medium border rounded-full w-fit px-3">
-                                            {mentor.location}
-                                        </p>
-                                    </div>
-                                </div>
-                            </Card>
-                        ))}
-                    </div>
+                    <TeacherManagementCardList
+                        onOpenSchedule={handleOpenSchedule}
+                        onEdit={handleEdit}
+                        onDelete={mutateAsync}
+                    />
                 </div>
                 {isModalOpen && (
-                    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-                        <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
-                            {/* Modal Header */}
-                            <div className="flex items-center justify-between p-6 pb-4">
-                                <h2 className="text-xl font-semibold text-gray-900">
-                                    {isEdit && 'Edit '}Detail Ms. Feby
-                                </h2>
-                                <Button
-                                    variant={'ghost'}
-                                    onClick={() => handleResetModal()}
-                                    className="p-1 hover:bg-gray-100 rounded w-10"
-                                >
-                                    <X className="w-5 h-5 text-gray-600" />
-                                </Button>
-                            </div>
-
-                            {/* Modal Content */}
-                            <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-6">
-                                {/* Nama Field */}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-2">
-                                        Nama
-                                    </label>
-                                    <Input
-                                        type="text"
-                                        className={cn(
-                                            'w-full border border-gray-300 rounded-md px-3 py-2',
-                                            errors.name && 'border-red-500'
-                                        )}
-                                        {...register('name')}
-                                    />
-                                    {errors.name && (
-                                        <p className="text-red-500 text-sm mt-1">
-                                            {errors.name.message?.toString()}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Foto Field */}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-2">
-                                        Foto
-                                    </label>
-                                    <Input
-                                        type="file"
-                                        className={cn(
-                                            'w-full border border-gray-300 rounded-md px-3 py-2',
-                                            errors.img && 'border-red-500'
-                                        )}
-                                        onChange={handleUpload}
-                                    />
-                                    {errors.img && (
-                                        <p className="text-red-500 text-sm mt-1">
-                                            {errors.img.message?.toString()}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Deskripsi Field */}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-2">
-                                        Deskripsi
-                                    </label>
-                                    <Textarea
-                                        className={cn(
-                                            'w-full border border-gray-300 rounded-md px-3 py-2 min-h-[100px] resize-none',
-                                            errors.description && 'border-red-500'
-                                        )}
-                                        {...register('description')}
-                                    />
-                                    {errors.description && (
-                                        <p className="text-red-500 text-sm mt-1">
-                                            {errors.description.message?.toString()}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Alias Field */}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-2">
-                                        Alias
-                                    </label>
-                                    <Input
-                                        type="text"
-                                        className={cn(
-                                            'w-full border border-gray-300 rounded-md px-3 py-2',
-                                            errors.alias && 'border-red-500'
-                                        )}
-                                        {...register('alias')}
-                                    />
-                                    {errors.alias && (
-                                        <p className="text-red-500 text-sm mt-1">
-                                            {errors.alias.message?.toString()}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Lokasi Mengajar Section */}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-900 mb-3">
-                                        Lokasi Mengajar
-                                    </label>
-                                    <RadioGroup className="space-y-1" {...register('location')}>
-                                        <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="location1" />
-                                            <label
-                                                htmlFor="location1"
-                                                className="text-sm text-gray-900"
-                                            >
-                                                Cabang Kuningan
-                                            </label>
-                                        </div>
-                                        <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="location2" />
-                                            <label
-                                                htmlFor="location2"
-                                                className="text-sm text-gray-900"
-                                            >
-                                                Cabang Kuningan
-                                            </label>
-                                        </div>
-                                        <div className="flex items-center space-x-2">
-                                            <RadioGroupItem value="location3" />
-                                            <label
-                                                htmlFor="location3"
-                                                className="text-sm text-gray-900"
-                                            >
-                                                Cabang Kuningan
-                                            </label>
-                                        </div>
-                                    </RadioGroup>
-                                    {errors.location && (
-                                        <p className="text-red-500 text-sm mt-1">
-                                            {errors.location.message?.toString()}
-                                        </p>
-                                    )}
-                                </div>
-
-                                {/* Edit Button */}
-                                <div className="flex justify-end pt-4">
-                                    <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-2 rounded-lg">
-                                        {isEdit ? 'Edit' : 'Add'}
-                                    </Button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                    <TeacherManagementForm
+                        teacherId={data?.teacher.id}
+                        errors={errors}
+                        onClose={handleResetModal}
+                        onSubmit={handleSubmit}
+                        onUpload={handleUpload}
+                        register={register}
+                        isEdit={isEdit}
+                        isLoading={isLoadingCreateTeacher}
+                        setValue={setValue}
+                    />
                 )}
+                <Dialog open={isScheduleModalOpen} onOpenChange={setIsScheduleModalOpen}>
+                    <DialogTitle />
+                    <DialogContent className={cn(inter.className, 'max-w-screen-xl')}>
+                        <Card className="overflow-hidden w-full">
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className="border-b bg-muted/50">
+                                            <th className="sr-only p-3 text-left font-medium text-muted-foreground"></th>
+                                            {days.map(day => (
+                                                <th
+                                                    key={day}
+                                                    className="min-w-[140px] p-3 text-center font-medium text-muted-foreground"
+                                                >
+                                                    <div className="space-y-1 flex items-center flex-col">
+                                                        <Skeleton
+                                                            loading={isLoadingSchedule}
+                                                            className="h-6 w-20"
+                                                        >
+                                                            <div className="font-semibold text-foreground">
+                                                                {day}
+                                                            </div>
+                                                        </Skeleton>
+                                                        {/* <Skeleton
+                                                            loading={isLoadingSchedule}
+                                                            className="h-4 w-12"
+                                                        >
+                                                            <div className="text-xs">
+                                                                {scheduleData?.schedules.find(
+                                                                (item) =>
+                                                                    item.scheduleId ===
+                                                                    teacher
+                                                            )?.teacherAlias || ''}
+                                                            </div>
+                                                        </Skeleton> */}
+                                                    </div>
+                                                </th>
+                                            ))}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {timeSlots.map(timeSlot => (
+                                            <tr key={timeSlot.display} className="border-b">
+                                                <td className="p-3 font-medium text-sm text-muted-foreground whitespace-nowrap">
+                                                    <Skeleton
+                                                        loading={isLoadingSchedule}
+                                                        className="h-14 w-20"
+                                                    >
+                                                        {timeSlot.display}
+                                                    </Skeleton>
+                                                </td>
+                                                {days.map((day, index) => {
+                                                    return (
+                                                        <ScheduleCell
+                                                            isTeacherManagement
+                                                            loading={isLoadingSchedule}
+                                                            key={`${day}-${index}`}
+                                                            bookingInfo={getBookingInfo(
+                                                                day,
+                                                                timeSlot
+                                                            )}
+                                                            teacher={day}
+                                                        />
+                                                    );
+                                                })}
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </Card>
+                    </DialogContent>
+                </Dialog>
             </div>
         </DashboardContentLayout>
     );

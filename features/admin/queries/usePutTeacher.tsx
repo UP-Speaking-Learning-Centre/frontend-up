@@ -1,21 +1,24 @@
-import { LocationAdmin, TeacherAdmin } from '@/types/admin';
+import { LocationAdmin, RequestTeacherAdmin, TeacherAdmin } from '@/types/admin';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API_LOCATION } from '../constants/config';
 import { useLocationManagementStore } from '../stores/location';
+import api from '@/lib/api';
+import ENDPOINTS from '@/constants/endpoints';
 
-const usePutTeacher = () => {
+const usePutTeacher = (id: number) => {
     const setTeacher = useLocationManagementStore(s => s.setTeacher);
     const teacher = useLocationManagementStore(s => s.teacher);
 
-    const putLocation = async (data: TeacherAdmin): Promise<string> => {
-        const index = teacher.findIndex(teach => teach.id === data.id);
-        teacher[index] = data;
+    const putLocation = async (data: RequestTeacherAdmin): Promise<TeacherAdmin> => {
+        const res = await api.patch(ENDPOINTS.fetchTeachersById.expand({ id }),data);
+        const index = teacher.findIndex(teach => teach.id === id);
+        teacher[index] = res.data;
         setTeacher([...teacher]);
-        return 'Success';
+        return res.data;
     };
 
     const { mutateAsync } = useMutation({
-        mutationKey: ['PUT' + API_LOCATION],
+        mutationKey: ['PUT' + ENDPOINTS.fetchTeachersById.expand({ id })],
         mutationFn: putLocation,
     });
 

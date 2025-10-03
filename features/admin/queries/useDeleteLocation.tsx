@@ -1,20 +1,22 @@
-import { LocationAdmin } from '@/types/admin';
+import ENDPOINTS from '@/constants/endpoints';
+import api from '@/lib/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { API_LOCATION } from '../constants/config';
-import { useLocationManagementStore } from '../stores/location';
 
 const useDeleteLocation = () => {
-    const setLocation = useLocationManagementStore(s => s.setLocation);
-    const location = useLocationManagementStore(s => s.location);
+    const queryClient = useQueryClient();
 
-    const deleteLocation = async (id: number): Promise<string> => {
-        const newLocation = location.filter(locate => locate.id !== id);
-        setLocation(newLocation);
-        return 'Success';
+    const deleteLocation = async (id: number): Promise<{ deleted: boolean }> => {
+        const res = await api.delete<{ deleted: boolean }>(
+            ENDPOINTS.fetchAdminLocationsById.expand({ id })
+        );
+        if (res.data.deleted) {
+            queryClient.invalidateQueries({ queryKey: [ENDPOINTS.fetchAdminLocations] });
+        }
+        return res.data;
     };
 
     const { mutateAsync } = useMutation({
-        mutationKey: ['DELETE' + API_LOCATION],
+        mutationKey: [ENDPOINTS.fetchAdminLocations],
         mutationFn: deleteLocation,
     });
 

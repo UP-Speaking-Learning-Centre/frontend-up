@@ -1,4 +1,4 @@
-import Programs from '@/data/programs.json';
+import api from '@/lib/api';
 import {
     ProgramDetail,
     ProgramDetailGrade,
@@ -11,9 +11,11 @@ import {
     ProgramRecurseArray,
 } from '@/types/admin';
 import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
 import { API_PROGRAMS } from '../constants/config';
 
 const useGetProgramById = () => {
+    const { id } = useParams();
     const handleProgramMapping = (
         program: ProgramRecurseArray,
         isPackage?: boolean
@@ -36,6 +38,15 @@ const useGetProgramById = () => {
                 (item as ProgramDetailGrade)?.packages
             );
         };
+        const getId = (item: ProgramRecurse) => {
+            return (
+                (item as ProgramDetail)?.programId ??
+                (item as ProgramDetailGroup)?.groupId ??
+                (item as ProgramDetailLevel)?.levelId ??
+                (item as ProgramDetailGrade)?.gradeId??
+                (item as ProgramDetailPackage)?.gradePackageId
+            );
+        };
         const getChildTitle = (item: ProgramRecurse) => {
             if ((item as ProgramDetail)?.groups?.length) return 'Groups';
             if ((item as ProgramDetailGroup)?.levels?.length) return 'Levels';
@@ -45,6 +56,7 @@ const useGetProgramById = () => {
         };
 
         return program?.map(item => ({
+            id: getId(item),
             title: getTitle(item),
             description: 'Lorem Ipsum',
             children:
@@ -57,17 +69,21 @@ const useGetProgramById = () => {
         }));
     };
 
-    const getProgramById = () => {
+    const getProgramById = async () => {
+        const response = await api.get<ProgramDetail[]>(API_PROGRAMS);
+        const data = response.data;
+
         const res = {
             title: 'Programs',
-            items: handleProgramMapping(Programs),
+            items: handleProgramMapping(
+                data.filter(program => program.programId.toString() === id)
+            ),
         } as ProgramDetailTreeInterface;
-        console.log(res);
+
         return res;
     };
 
     const { data, isLoading } = useQuery({ queryKey: [API_PROGRAMS], queryFn: getProgramById });
-    console.log(data);
 
     return { data, isLoading };
 };

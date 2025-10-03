@@ -14,6 +14,7 @@ const ProgramDetailCard = ({
     onOpenCollapse,
     title,
     description,
+    id,
 }: {
     title: string;
     description: string;
@@ -21,12 +22,14 @@ const ProgramDetailCard = ({
     isOpen: boolean;
     isChild?: boolean;
     hasChild?: boolean;
+    id: string;
     onOpenCollapse?: () => void;
 }) => {
     const { setState } = useProgramDetailStore();
 
     const handleOpenDetail = () => {
         setState({
+            id,
             isDrawerOpen: true,
             title: 'Program Detail',
             content: <ProgramDetailDrawerDetail title={title} desc={description} />,

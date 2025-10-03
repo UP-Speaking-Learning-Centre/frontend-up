@@ -1,12 +1,19 @@
-import data from '@/data/placement-test-answered.json';
+import ENDPOINTS from '@/constants/endpoints';
+import api from '@/lib/api';
 import { ResponsePlacementTest } from '@/types/placement-test';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
+import { getCookiesToken } from '@/features/auth/utils/cookies.helper';
 
 const fetchDetailPlacementTest = async ({ id }: { id: string }): Promise<ResponsePlacementTest> => {
-    // const response = await api.get(ENDPOINTS.fetchDetailPlacementTest.expand({ id }));
-    // const data = await response.data;
+    const response = await api.get(ENDPOINTS.fetchAdminDetailPlacementTest.expand({ id }), {
+        headers: {
+            Authorization: `Bearer ` + (await getCookiesToken()),
+        },
+    });
+    const data = await response.data;
+
     return data as ResponsePlacementTest;
 };
 
@@ -30,9 +37,11 @@ const useFetchDetailPlacementTestQuery = ({
                 student: query.data.student,
                 test: query.data.test,
                 testDate: query.data.submittedAt,
+                status: query.data.status,
             });
         }
-    }, [query.status]);
+    }, [query.status, query.data]);
+
     return query;
 };
 

@@ -8,54 +8,17 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { ROUTES } from '@/constants/routes';
+import { STATUS_OPTION } from '@/features/admin/constants/config';
 import { PlacementTestStatus } from '@/types/placement-test';
 import { FileText, Save } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 import useDetailPlacementTest from '../hooks/use-detail-placement-test';
-import useSaveNotes from '../queries/use-save-notes';
-import useSavePlacementTest from '../queries/use-save-placement-test';
-import useUpdateStatus from '../queries/use-update-status';
-import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
 import AssignLevel from './assign-level';
 
 const StatusManagement = () => {
-    const router = useRouter();
-    const { status, setState } = useDetailPlacementTest();
-    const { mutateAsync } = useUpdateStatus();
-    const { mutateAsync: patchPlacementTest } = useSavePlacementTest();
-    const { assignedGrade, assignedLevel, assignedSchedule, assignedLocation, noteForStudent } =
-        useDisplayedPlacementTestStore();
-    const { mutateAsync: patchNotes } = useSaveNotes();
+    const { status, setState, handleSubmit, formState, register,setValue } = useDetailPlacementTest();
+    const { errors } = formState;
 
-    const handleSave = () => {
-        Promise.all([
-            patchNotes({ notes: noteForStudent }),
-            patchPlacementTest({
-                gradeId: +assignedGrade,
-                levelId: +assignedLevel,
-                locationId: +assignedLocation,
-                scheduleIds: [+assignedSchedule],
-            }),
-        ]).then(([resNote, resSave]) => {
-            toast.info(resNote.message, { position: 'top-center' });
-            toast.info(resSave.message, { position: 'top-center' });
-        });
-    };
     const handleChangeStatus = (value: PlacementTestStatus) => {
-        mutateAsync({ status })
-            .then(() => {
-                toast.info('Placement test status updated successfully', {
-                    position: 'top-center',
-                });
-                router.replace(ROUTES.adminPlacementTests);
-            })
-            .catch(() =>
-                toast.error('Error to update status, please try again later', {
-                    position: 'top-center',
-                })
-            );
         setState({ status: value as PlacementTestStatus });
     };
 
@@ -68,28 +31,33 @@ const StatusManagement = () => {
                 </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-                <div>
-                    <Label>Status</Label>
-                    <Select value={status} onValueChange={handleChangeStatus}>
-                        <SelectTrigger>
-                            <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="notGraded">Not Graded</SelectItem>
-                            <SelectItem value="reviewed">Reviewed</SelectItem>
-                            <SelectItem value="inInterview">In Interview</SelectItem>
-                            <SelectItem value="doneInterview">Done Interview</SelectItem>
-                            <SelectItem value="graded">Graded</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
+                <form onSubmit={handleSubmit} className='space-y-4'>
+                    <div>
+                        <Label>Status</Label>
+                        <Select value={status} onValueChange={handleChangeStatus}>
+                            <SelectTrigger>
+                                <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {Object.entries(STATUS_OPTION).map(([key, value]) => (
+                                    <SelectItem value={value}>
+                                        {key.split('_').join(' ')}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
 
-                {(status === 'doneInterview' || status === 'graded') && <AssignLevel />}
+                    {(status === STATUS_OPTION.DONE_INTERVIEW ||
+                        status === STATUS_OPTION.GRADED) && (
+                        <AssignLevel errors={errors} register={register} setValue={setValue} />
+                    )}
 
-                <Button onClick={handleSave} className="w-full">
-                    <Save className="w-4 h-4 mr-2" />
-                    Save Changes
-                </Button>
+                    <Button className="w-full">
+                        <Save className="w-4 h-4 mr-2" />
+                        Save Changes
+                    </Button>
+                </form>
             </CardContent>
         </Card>
     );

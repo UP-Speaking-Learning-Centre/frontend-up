@@ -1,28 +1,28 @@
 import api from '@/lib/api';
 import { ResponseLevel } from '@/types/placement-test';
-import { API_LEVEL, API_LOCATION } from '../constants/config';
-import useGetProgram from './use-get-program';
-import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
-import useGetGroup from './use-get-group';
 import { useQuery } from '@tanstack/react-query';
+import { API_LEVEL } from '../constants/config';
+import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
 
 const useGetLevel = () => {
-    const program = useDisplayedPlacementTestStore(s => s.test?.program);
-    const group = useDisplayedPlacementTestStore(s => s.test?.group);
-    const { data: dataProgram } = useGetProgram();
-    const { data: dataGroup } = useGetGroup();
+    const programId = useDisplayedPlacementTestStore(s => s.test?.programId);
+    const groupId = useDisplayedPlacementTestStore(s => s.test?.groupId);
 
     const get = async () => {
+        if (!programId || !groupId) return;
         const res = await api.get<ResponseLevel[]>(
             API_LEVEL.expand({
-                programId: dataProgram?.find(program_ => program_.name === program)?.id ?? '',
-                groupId: dataGroup?.find(group_ => group_.name === group)?.id ?? '',
+                programId,
+                groupId,
             })
         );
         return res.data;
     };
 
-    const { data, isLoading } = useQuery({ queryKey: [API_LEVEL,dataProgram,dataGroup], queryFn: get });
+    const { data, isLoading } = useQuery({
+        queryKey: [API_LEVEL, programId, groupId],
+        queryFn: get,
+    });
 
     return { data, isLoading };
 };

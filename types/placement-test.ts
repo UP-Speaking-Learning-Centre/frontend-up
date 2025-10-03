@@ -1,7 +1,8 @@
-import { PLACEMENT_TEST_STATUS, QUESTION_TYPE } from '@/constants/placement-test';
+import { QUESTION_TYPE } from '@/constants/placement-test';
+import { STATUS_OPTION } from '@/features/admin/constants/config';
 
 export type PlacementTestStatus =
-    (typeof PLACEMENT_TEST_STATUS)[keyof typeof PLACEMENT_TEST_STATUS];
+    (typeof STATUS_OPTION)[keyof typeof STATUS_OPTION];
 
 export type QuestionType = (typeof QUESTION_TYPE)[keyof typeof QUESTION_TYPE];
 
@@ -39,7 +40,9 @@ export interface ResponsePlacementTestTest {
     id: number;
     name: string;
     program: string;
+    programId: number;
     group: string;
+    groupId: number;
 }
 
 export interface ResponsePlacementTest {
@@ -48,7 +51,7 @@ export interface ResponsePlacementTest {
     test: ResponsePlacementTestTest;
     status: string;
     score: number;
-    determinedLevel: string | null;
+    determinedLevel: string | string | null;
     submittedAt: string;
     qa: Question[];
 }
@@ -72,6 +75,35 @@ export interface ResponseGrade {
     gradeNumber: number;
     prerequisites: string;
 }
+export interface ResponseStudyGroup {
+    teacherTeamMemberId: number;
+    teacherTeamMemberName: string;
+    teacherTeamMemberPhoto: string | null;
+    teacherAlias: string;
+    studyGroupId: number;
+    studyGroupName: string;
+    locationId: number;
+    locationName: string;
+    programId: number;
+    groupId: number;
+    levelId: number;
+    gradeId: number;
+    schedule1: {
+        scheduleId: number;
+        dayOfWeek: string;
+        startTime: string;
+        endTime: string;
+        durationMinutes: number;
+    };
+    schedule2: {
+        scheduleId: number;
+        dayOfWeek: string;
+        startTime: string;
+        endTime: string;
+        durationMinutes: number;
+    };
+}
+
 export interface ResponseLevel {
     id: number;
     name: string;

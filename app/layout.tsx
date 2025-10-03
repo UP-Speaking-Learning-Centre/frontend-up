@@ -1,9 +1,9 @@
-import type React from 'react';
-import './globals.css';
-import type { Metadata } from 'next';
-import { Outfit, Roboto, Bebas_Neue, Merriweather_Sans, Raleway, Oswald } from 'next/font/google';
 import TanstackProvider from '@/components/layout/tanstack-provider';
 import { cn } from '@/lib/utils';
+import type { Metadata } from 'next';
+import { Bebas_Neue, Merriweather_Sans, Oswald, Outfit, Raleway, Roboto } from 'next/font/google';
+import type React from 'react';
+import './globals.css';
 
 const merriweather = Merriweather_Sans({
     subsets: ['latin'],

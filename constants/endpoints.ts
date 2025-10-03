@@ -8,7 +8,9 @@ const ENDPOINTS = {
     fetchPackages: parseTemplate('/packages'),
     fetchLocations: '/locations',
     fetchAvailableSchedule: parseTemplate('/locations/{locationId}/available-schedules'),
+    fetchStudyGroups: parseTemplate('/locations/{locationId}/study-groups'),
     fetchDetailPlacementTest: parseTemplate('/placement-tests/{id}'),
+    fetchAdminDetailPlacementTest: parseTemplate('/admin/placement-tests/{id}'),
     submitRegistration: '/registrations',
     submitRegistrationFromPlacement: '/auth/register',
     fetchPlacementTest: '/placement-tests/start-guest',
@@ -20,6 +22,15 @@ const ENDPOINTS = {
     fetchAvailableStudyGroup: parseTemplate(
         '/locations/{locationId}/study-groups?programId={programId}&groupId={groupId}&levelId={levelId}&packageId={packageId}'
     ),
+    fetchTeachers: '/admin/teacher-team-members',
+    fetchTeachersById: parseTemplate('/admin/teacher-team-members/{id}'),
+    fetchTeachersScheduleById: parseTemplate('/admin/teacher-team-members/{id}/schedules'),
+    fetchPrices: '/prices',
+    patchpricesByProgram: '/admin/program-packages/by-program-package',
+    patchNoteByUserId: parseTemplate('/admin/students/{id}/notes'),
+    fetchAlias: '/admin/teachers',
+    fetchAdminLocations: '/admin/locations',
+    fetchAdminLocationsById: parseTemplate('/admin/locations/{id}'),
 } as const;
 
 export default ENDPOINTS;

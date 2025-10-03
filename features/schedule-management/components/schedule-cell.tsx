@@ -22,10 +22,11 @@ interface ScheduleCellProps {
     bookingInfo: BookingInfo | null;
     teacher: string;
     loading: boolean;
+    isTeacherManagement?: boolean;
 }
 
 const ScheduleCell = (props: ScheduleCellProps) => {
-    const { bookingInfo, teacher, loading } = props;
+    const { bookingInfo, teacher, loading, isTeacherManagement } = props;
     const { isAvailable, name, color, isPriority, students } = bookingInfo || {};
     const [openDetail, setOpenDetail] = useState(false);
     const setStudyGroupId = useScheduleManagementStore(s => s.setStudyGroupId);
@@ -77,7 +78,7 @@ const ScheduleCell = (props: ScheduleCellProps) => {
 
             {openDetail && (
                 <Dialog open={openDetail} onOpenChange={onCloseDialog}>
-                    <StudyGroupDetail />
+                    <StudyGroupDetail isTeacherManagement={isTeacherManagement} />
                 </Dialog>
             )}
         </>

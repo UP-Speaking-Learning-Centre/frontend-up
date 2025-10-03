@@ -1,50 +1,58 @@
-import { LocationAdmin, TeacherAdmin } from '@/types/admin';
+import { LocationAdmin, RequestTeacherAdmin } from '@/types/admin';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
 import z from 'zod';
+import useGetTeacherById from '../queries/useGetTeacherById';
 import usePostTeacher from '../queries/usePostTeacher';
 import usePutTeacher from '../queries/usePutTeacher';
 import useUploadFile from '../queries/useUploadFile';
-import { useLocationManagementStore } from '../stores/location';
-import { useTeacherManagementStore } from '../stores/teacher';
 
 const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
     const [id, setId] = useState(0);
 
     const { mutateAsync } = useUploadFile();
     const { mutateAsync: postTeacher } = usePostTeacher();
-    const { mutateAsync: putTeacher } = usePutTeacher();
-
-    const teacher = useTeacherManagementStore(s => s.teacher);
+    const { mutateAsync: putTeacher } = usePutTeacher(id);
+    const { data, isLoading } = useGetTeacherById(id);
 
     const Teacher = z.object({
-        name: z.string().min(1, 'This field is required'),
-        img: z.string().min(1, 'This field is required'),
-        description: z.string().min(1, 'This field is required'),
-        alias: z.string().min(1, 'This field is required'),
-        location: z.string().min(1, 'This field is required'),
+        memberName: z.string().min(1, 'This field is required'),
+        photo: z
+            .instanceof(File)
+            .refine(
+                file =>
+                    ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml', 'image/gif'].includes(
+                        file.type
+                    ),
+                { message: 'Invalid image file type' }
+            ),
+        teacherId: z.number().min(1, 'This field is required'),
+        // isCoordinator: z.string().min(1, 'This field is required'),
     });
-    const { register, handleSubmit, formState, setValue, reset } = useForm<
-        Omit<TeacherAdmin, 'id'>
-    >({
+    const { register, handleSubmit, formState, setValue, reset } = useForm<RequestTeacherAdmin>({
         resolver: zodResolver(Teacher),
     });
 
     useEffect(() => {
-        const getOne = teacher.find(teacher => teacher.id === id);
-        console.log(getOne,id,teacher);
-        
-        setValue('img', getOne?.img ?? '');
-        setValue('name', getOne?.name ?? '');
-        setValue('description', getOne?.description ?? '');
-        setValue('alias', getOne?.alias ?? '');
-        setValue('location', getOne?.location ?? '');
-    }, [id]);
+        if (id) {
+            // setValue('photoUrl', data?.photoUrl ?? '');
+            setValue('memberName', data?.memberName ?? '');
+            // setValue('description', getOne?.description ?? '');
+            setValue('teacherId', data?.teacher.id || 0);
+            // setValue('isCoordinator', data?.isCoordinator || false);
+        }
+    }, [id, data]);
 
     const handleUpload: ChangeEventHandler<HTMLInputElement> = e => {
         if (!e.target.files?.length) throw new Error('No file to upload');
-        mutateAsync().then(res => setValue('img', res));
+        setValue('photo', e.target.files[0]);
+        // mutateAsync().then(res => setValue('photoUrl', res));
+    };
+
+    const handleEdit = (id: number) => {
+        setIsModalOpen(true);
+        setId(id);
     };
 
     const handleResetModal = () => {
@@ -53,12 +61,12 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
         reset();
     };
 
-    const handleSuccess: SubmitHandler<Omit<TeacherAdmin, 'id'>> = value => {
+    const handleSuccess: SubmitHandler<RequestTeacherAdmin> = value => {
         if (id) {
-            putTeacher({ id, ...value }).then(res => handleResetModal());
+            putTeacher(value).then(res => handleResetModal());
             return;
         }
-        postTeacher(value).then(res => {
+        postTeacher({ ...value, isCoordinator: false }).then(res => {
             handleResetModal();
         });
     };
@@ -71,9 +79,14 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
         handleSubmit: handleSubmit(handleSuccess, handleError),
         formState,
         handleUpload,
+        id,
         setId,
         handleResetModal,
         isEdit: !!id,
+        isLoading,
+        handleEdit,
+        data,
+        setValue,
     };
 };
 
