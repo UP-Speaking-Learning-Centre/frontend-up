@@ -4,6 +4,7 @@ export interface ProgramDetailTreeInterface {
 }
 
 export interface ProgramDetailTreeInterfaceItems {
+    id: number;
     title: string;
     description: string;
     children?: ProgramDetailTreeInterface;
@@ -64,25 +65,90 @@ export interface LocationAdmin {
 
 export interface TeacherAdmin {
     id: number;
-    name: string;
-    img: string;
-    description: string;
-    alias: string;
-    location: string;
+    memberName: string;
+    isCoordinator: boolean;
+    photoUrl: string | null;
+    teacher: {
+        id: number;
+        name: string;
+        coordinator?: string | null;
+    };
+}
+
+export type RequestTeacherAdmin = {
+    memberName: string;
+    photo: File;
+    teacherId: number;
+    isCoordinator: boolean;
+};
+export interface TeacherAdminSchedule {
+    teacherTeamMember: Partial<TeacherAdmin>;
+    schedules: {
+        scheduleId: number;
+        dayOfWeek: string;
+        startTime: string;
+        endTime: string;
+        durationMinutes: number;
+        isFull: boolean;
+        hasStudyGroup: boolean;
+        location: {
+            id: number;
+            name: string;
+        };
+        studyGroup: {
+            id: number;
+            name: string;
+            packageId: number;
+            packageName: string;
+        } | null;
+        totalActiveStudents: number;
+    }[];
 }
 
 export interface PriceData {
     id: string;
-    packageName: string;
     price: string;
     duration: string;
     durationType: 'days' | 'weeks' | 'months' | 'years';
 }
-export interface ProgramDetailPrice {
-    amount: number;
+
+export interface ResponseProgram {
+    id: number;
+    name: string;
+    description: string;
+    groups: ResponseGroup[];
+}
+
+export interface ResponseGroup {
+    id: number;
+    name: string;
+    materi: string;
+    capaian: string;
+}
+
+export interface Price {
+    id: number;
+    program: {
+        id: number;
+        name: string;
+    };
     package: {
         id: number;
         name: string;
     };
     timeframe: string;
+    amount: number;
+}
+
+export interface ResponseAlias {
+    id: number;
+    alias: string;
+    coordinator: string | null;
+}
+
+export interface RequestPrice {
+    programId: number;
+    packageId: number;
+    prices: { timeframe: string; amount: number }[];
+    replaceAll: boolean;
 }

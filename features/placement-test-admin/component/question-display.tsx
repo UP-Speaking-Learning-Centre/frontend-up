@@ -10,19 +10,26 @@ const QuestionDisplay = () => {
     const currentQuestion = questions[currentQuestionIndex];
     const { mutateAsync } = useSubmitMark();
     const handleGradeQuestion = (question: any, isCorrect: boolean, isGraded: boolean) => {
-        mutateAsync({
-            check: isCorrect ? 'correct' : 'incorrect',
-            questionId: question.questionId,
-        })
-            .then(res => toast.info(res.message, { position: 'top-center' }))
-            .catch(() =>
-                toast.error('Failed to update, please try again later', { position: 'top-center' })
-            );
         setState({
             questions: questions.map(q =>
                 q.questionId === question.questionId ? { ...q, isCorrect, isGraded } : q
             ),
         });
+        mutateAsync({
+            check: isCorrect ? 'correct' : 'incorrect',
+            questionId: question.questionId,
+        })
+            .then(res => toast.info(res.message, { position: 'top-center' }))
+            .catch(() => {
+                toast.error('Failed to update, please try again later', { position: 'top-center' });
+                setState({
+                    questions: questions.map(q =>
+                        q.questionId === question.questionId
+                            ? { ...q, isCorrect: undefined, isGraded: undefined }
+                            : q
+                    ),
+                });
+            });
     };
 
     return (

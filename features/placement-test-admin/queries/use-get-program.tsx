@@ -1,11 +1,11 @@
 import api from '@/lib/api';
-import { ResponseLevel } from '@/types/placement-test';
+import { ResponseProgram } from '@/types/admin';
 import { useQuery } from '@tanstack/react-query';
 import { API_PROGRAM } from '../constants/config';
 
 const useGetProgram = () => {
     const get = async () => {
-        const res = await api.get<ResponseLevel[]>(API_PROGRAM);
+        const res = await api.get<ResponseProgram[]>(API_PROGRAM);
         return res.data;
     };
 

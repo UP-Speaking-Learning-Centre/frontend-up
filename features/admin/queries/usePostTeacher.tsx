@@ -1,13 +1,20 @@
-import { LocationAdmin, TeacherAdmin } from '@/types/admin';
+import { LocationAdmin, RequestTeacherAdmin, TeacherAdmin } from '@/types/admin';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API_LOCATION, API_TEACHERS } from '../constants/config';
+import api from '@/lib/api';
+import ENDPOINTS from '@/constants/endpoints';
 
 const usePostTeacher = () => {
     const queryClient = useQueryClient();
 
-    const postLocation = async (data: Omit<TeacherAdmin,'id'>): Promise<string> => {
+    const postLocation = async (data: RequestTeacherAdmin): Promise<TeacherAdmin> => {
+        const res = await api.post<TeacherAdmin>(ENDPOINTS.fetchTeachers, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         queryClient.invalidateQueries({ queryKey: ['GET' + API_LOCATION] });
-        return 'Success';
+        return res.data;
     };
 
     const { mutateAsync } = useMutation({

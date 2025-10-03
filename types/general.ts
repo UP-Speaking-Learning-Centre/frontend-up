@@ -8,3 +8,4 @@ export interface BaseResponse<T> {
         currentPage: number;
     };
 }
+export type Pagination = BaseResponse<any>['meta'];

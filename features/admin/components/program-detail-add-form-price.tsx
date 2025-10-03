@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
     Dialog,
     DialogContent,
@@ -17,18 +16,22 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { useToast } from '@/components/ui/use-toast';
 import { inter } from '@/constants/fonts';
 import { cn } from '@/lib/utils';
 import { PriceData } from '@/types/admin';
 import { DialogProps } from '@radix-ui/react-dialog';
 import { Plus, X } from 'lucide-react';
-import React, { useState } from 'react';
+import { useParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import useGetPrices from '../queries/useGetPrices';
+import { useProgramDetailStore } from '../stores/program-detail';
+import usePatchPrice from '../queries/usePatchPrice';
+import { toast } from 'sonner';
 
 const PACKAGE_OPTIONS = [
-    { value: 'Semi-Private', label: 'Semi-Private' },
-    { value: 'Private', label: 'Private' },
-    { value: 'Ekslusif', label: 'Ekslusif' },
+    { value: 1, label: 'Semi Private' },
+    { value: 2, label: 'Private' },
+    { value: 3, label: 'Ekslusif' },
 ];
 
 const DURATION_TYPES = [
@@ -37,22 +40,45 @@ const DURATION_TYPES = [
 ];
 
 const ProgramDetailAddFormPrice = ({ ...props }: DialogProps) => {
-    const [packages, setPackages] = useState<PriceData[]>([
+    const { id } = useParams();
+    const packageId = useProgramDetailStore(s => s.packageId);
+    const setState = useProgramDetailStore(s => s.setState);
+    const { data } = useGetPrices({ packageId, programId: id });
+    const { mutateAsync } = usePatchPrice();
+
+    const initialState: PriceData[] = [
         {
             id: Date.now().toString(),
-            packageName: '',
             price: '',
             duration: '',
             durationType: 'months',
         },
-    ]);
+    ];
+    const [packages, setPackages] = useState<PriceData[]>(initialState);
+    const [packageId_, setPackageId_] = useState(0);
+
+    useEffect(() => {
+        if (id && packageId) {
+            setPackageId_(packageId);
+            setPackages(
+                data?.data.map(
+                    price =>
+                        ({
+                            durationType: 'months',
+                            duration: price.timeframe.split('_')[0],
+                            id: price.id.toString(),
+                            price: price.amount.toString(),
+                        } satisfies PriceData)
+                ) || []
+            );
+        }
+    }, [id, packageId, data]);
+
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const { toast } = useToast();
 
     const addPackage = () => {
         const newPackage: PriceData = {
             id: Date.now().toString(),
-            packageName: '',
             price: '',
             duration: '',
             durationType: 'months',
@@ -69,30 +95,10 @@ const ProgramDetailAddFormPrice = ({ ...props }: DialogProps) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const invalidPackages = packages.filter(
-            pkg => !pkg.packageName || !pkg.price || !pkg.duration
-        );
+        const invalidPackages = packages.filter(pkg => !pkg.price || !pkg.duration);
 
         if (invalidPackages.length > 0) {
-            toast({
-                title: 'Missing Information',
-                description: 'Please fill in all required fields for all packages.',
-                variant: 'destructive',
-            });
-            return;
-        }
-
-        const packageNames = packages.map(pkg => pkg.packageName);
-        const duplicates = packageNames.filter(
-            (name, index) => packageNames.indexOf(name) !== index
-        );
-
-        if (duplicates.length > 0) {
-            toast({
-                title: 'Duplicate Packages',
-                description: 'Please select different packages for each entry.',
-                variant: 'destructive',
-            });
+            toast('Missing Information');
             return;
         }
 
@@ -100,41 +106,31 @@ const ProgramDetailAddFormPrice = ({ ...props }: DialogProps) => {
 
         try {
             // Simulate API call - replace with your actual API endpoint
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            mutateAsync({
+                packageId: packageId_,
+                programId: Number(id),
+                replaceAll: false,
+                prices: packages.map(item => ({
+                    timeframe: item.duration + '_' + item.durationType,
+                    amount: Number(item.price),
+                })),
+            }).then(() => {
+                toast('Prices Added Successfully');
 
-            console.log(
-                'Multiple price data submitted:',
-                packages.map(pkg => ({
-                    ...pkg,
-                    price: Number.parseFloat(pkg.price),
-                    duration: Number.parseInt(pkg.duration),
-                }))
-            );
-
-            toast({
-                title: 'Prices Added Successfully',
-                description: `${packages.length} package pricing${
-                    packages.length > 1 ? 's' : ''
-                } have been configured.`,
+                setPackages([
+                    {
+                        id: '1',
+                        price: '',
+                        duration: '',
+                        durationType: 'months',
+                    },
+                ]);
             });
-
-            setPackages([
-                {
-                    id: '1',
-                    packageName: '',
-                    price: '',
-                    duration: '',
-                    durationType: 'months',
-                },
-            ]);
         } catch (error) {
-            toast({
-                title: 'Error',
-                description: 'Failed to add prices. Please try again.',
-                variant: 'destructive',
-            });
+            toast('Failed to add prices. Please try again.');
         } finally {
             setIsSubmitting(false);
+            setState({ isPriceModalOpen: false });
         }
     };
 
@@ -157,26 +153,6 @@ const ProgramDetailAddFormPrice = ({ ...props }: DialogProps) => {
                         <X className="h-4 w-4" />
                     </Button>
                 )}
-            </div>
-
-            {/* Package Selection */}
-            <div className="space-y-2">
-                <Label htmlFor={`${packageData.id}-package`}>Package</Label>
-                <Select
-                    value={packageData.packageName}
-                    onValueChange={value => handleInputChange(packageData.id, 'packageName', value)}
-                >
-                    <SelectTrigger>
-                        <SelectValue placeholder="Select a package" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {PACKAGE_OPTIONS.map(option => (
-                            <SelectItem key={option.value} value={option.value}>
-                                {option.label}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
             </div>
 
             {/* Price Input */}
@@ -235,21 +211,26 @@ const ProgramDetailAddFormPrice = ({ ...props }: DialogProps) => {
             </div>
 
             {/* Individual Preview */}
-            {packageData.packageName && packageData.price && packageData.duration && (
+            {packageData.price && packageData.duration && (
                 <div className="p-3 bg-muted rounded-lg">
                     <p className="text-sm text-muted-foreground">Preview:</p>
                     <p className="font-medium">
-                        {PACKAGE_OPTIONS.find(p => p.value === packageData.packageName)?.label} -
-                        Rp.
+                        {PACKAGE_OPTIONS.find(p => p.value === packageId_)?.label} - Rp.
                         {packageData.price} for {packageData.duration} {packageData.durationType}
                     </p>
                 </div>
             )}
         </div>
     );
+    const handleOpenChange = (open: boolean) => {
+        props.onOpenChange?.(open);
+        if (open) {
+            setPackages(initialState);
+        }
+    };
 
     return (
-        <Dialog {...props}>
+        <Dialog {...props} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>
                 <Button variant={'outline'} className="w-full">
                     <Plus />
@@ -265,6 +246,25 @@ const ProgramDetailAddFormPrice = ({ ...props }: DialogProps) => {
                         Configure pricing for multiple packages with custom duration settings.
                     </DialogDescription>
                 </DialogHeader>
+                {/* Package Selection */}
+                <div className="space-y-2">
+                    <Label htmlFor={`${packageId_}-package`}>Package</Label>
+                    <Select
+                        value={packageId_.toString()}
+                        onValueChange={value => setPackageId_(Number(value))}
+                    >
+                        <SelectTrigger>
+                            <SelectValue placeholder="Select a package" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {PACKAGE_OPTIONS.map(option => (
+                                <SelectItem key={option.value} value={option.value.toString()}>
+                                    {option.label}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+                </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {packages.map((packageData, index) => renderPackageForm(packageData, index))}
@@ -283,7 +283,9 @@ const ProgramDetailAddFormPrice = ({ ...props }: DialogProps) => {
                     <Button type="submit" className="w-full" disabled={isSubmitting}>
                         {isSubmitting
                             ? 'Adding Prices...'
-                            : `Add ${packages.length} Price${packages.length > 1 ? 's' : ''}`}
+                            : `${!packageId ? 'Add' : 'Edit'} ${packages.length} Price${
+                                  packages.length > 1 ? 's' : ''
+                              }`}
                     </Button>
                 </form>
             </DialogContent>

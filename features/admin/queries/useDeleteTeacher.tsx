@@ -1,15 +1,18 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API_TEACHERS } from '../constants/config';
 import { useTeacherManagementStore } from '../stores/teacher';
+import api from '@/lib/api';
+import ENDPOINTS from '@/constants/endpoints';
 
 const useDeleteTeacher = () => {
-    const teacher = useTeacherManagementStore(s => s.teacher);
-    const setTeacher = useTeacherManagementStore(s => s.setTeacher);
+    const queryClient = useQueryClient();
 
-    const deleteLocation = async (id: number): Promise<string> => {
-        const newLocation = teacher.filter(teach => teach.id !== id);
-        setTeacher(newLocation);
-        return 'Success';
+    const deleteLocation = async (id: number): Promise<{ success: string }> => {
+        const res = await api.delete(ENDPOINTS.fetchTeachersById.expand({ id }));
+        if (res.data.success) {
+            queryClient.invalidateQueries({ queryKey: [ENDPOINTS.fetchTeachers] });
+        }
+        return res.data;
     };
 
     const { mutateAsync } = useMutation({

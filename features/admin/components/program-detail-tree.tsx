@@ -3,7 +3,7 @@
 import { ProgramDetailTreeInterface } from '@/types/admin';
 import ProgramDetailControl from './program-detail-control';
 
-const ProgramDetailTree = ({ items }: { items: ProgramDetailTreeInterface }) => {
+const ProgramDetailTree = ({ items, id }: { items: ProgramDetailTreeInterface; id: string }) => {
     return (
         <div className="ml-20 border-l-4 pl-4 rounded-lg border-primary py-2 mb-2.5">
             {/* Groups Header */}
@@ -13,8 +13,9 @@ const ProgramDetailTree = ({ items }: { items: ProgramDetailTreeInterface }) => 
 
             {/* First Kindergarten with expanded Levels */}
             <div className="relative">
-                {items.items.map(item => (
+                {items.items.map((item, idx) => (
                     <ProgramDetailControl
+                        id={`${id}-${idx}`}
                         title={item.title}
                         description={item.description}
                         children={item.children}

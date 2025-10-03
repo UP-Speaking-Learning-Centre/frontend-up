@@ -2,18 +2,18 @@
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 import { Skeleton } from '@/components/ui/skeleton';
-import { Plus } from 'lucide-react';
-import { useGetStudyGroupDetailQuery } from '../queries/use-get-study-group-detail';
-import { useGetStudentOfStudyGroupQuery } from '../queries/use-get-student-of-study-group';
 import { renderDayToIndonesian } from '@/lib/moment';
+import { Plus } from 'lucide-react';
+import { useGetStudentOfStudyGroupQuery } from '../queries/use-get-student-of-study-group';
+import { useGetStudyGroupDetailQuery } from '../queries/use-get-study-group-detail';
+import { useUpdatePriorityMutation } from '../queries/use-update-priority';
 import { useScheduleManagementStore } from '../stores/schedule-management-store';
 import AddNewStudyGroupTrigger from './add-new-study-group/trigger';
-import { useUpdatePriorityMutation } from '../queries/use-update-priority';
 
-const StudyGroupDetail = () => {
+const StudyGroupDetail = ({ isTeacherManagement }: { isTeacherManagement?: boolean }) => {
     const { isLoading } = useGetStudyGroupDetailQuery();
     const { data: studentOfStudyGroup, isLoading: studentOfStudyGroupLoading } =
         useGetStudentOfStudyGroupQuery();
@@ -33,7 +33,7 @@ const StudyGroupDetail = () => {
                             Belum ada kelompok belajar yang mengisi jadwal ini
                         </p>
                     </div>
-                    <AddNewStudyGroupTrigger />
+                    {!isTeacherManagement && <AddNewStudyGroupTrigger />}
                 </div>
             </DialogContent>
         );
@@ -189,12 +189,14 @@ const StudyGroupDetail = () => {
                                   </p>
                               ))}
                     </div>
-                    <div className="flex items-center justify-center mt-6">
-                        <Button variant="ghost" className="text-primary">
-                            <Plus />
-                            Tambah Anggota
-                        </Button>
-                    </div>
+                    {isTeacherManagement || (
+                        <div className="flex items-center justify-center mt-6">
+                            <Button variant="ghost" className="text-primary">
+                                <Plus />
+                                Tambah Anggota
+                            </Button>
+                        </div>
+                    )}
                 </div>
             </Card>
         </DialogContent>

@@ -1,230 +1,251 @@
 'use client';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
-import { ROUTES } from '@/constants/routes';
+import Overlay from '@/components/layout/overlay';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogFooter, DialogTitle } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Textarea } from '@/components/ui/textarea';
+import { inter } from '@/constants/fonts';
+import AdminSelect from '@/features/admin/components/admin-select';
+import useChangeStudyGroup from '@/features/admin/hooks/useChangeStudyGroup';
+import useEditNote from '@/features/admin/hooks/useEditNote';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
-import PlacementTestPending from '@/features/home/components/placement-test-pending';
-import PlacementTestSuccess from '@/features/home/components/placement-test-success';
-import useGetProfile from '@/features/home/queries/useGetProfile';
 import useGetProfileById from '@/features/home/queries/useGetProfileById';
-import { isPlacementTest } from '@/utils/api.helper';
-import { BookOpen, Calendar, Home, User } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { Calendar, Clock } from 'lucide-react';
 
 export default function DashboardPage() {
-    const { data: students, isLoading: isLoadingStudents } = useGetProfile();
+    const { isEdit, setIsEdit, notes, setNotes, handleSave } = useEditNote();
+    const {
+        isOpen,
+        setIsOpen,
+        grades,
+        isLoading: isLoadingChangeStudy,
+        studyGroups,
+    } = useChangeStudyGroup();
     const { data, isLoading } = useGetProfileById();
-    const router = useRouter();
 
+    if (isLoading) return <Overlay />;
     return (
-        <DashboardContentLayout
-            pageTitle="Detail Student"
-            extras={
-                <div className="flex items-center">
-                    <span className="text-sm text-gray-600 mr-3">Current Student:</span>
-                    <Select
-                        value={data?.id.toString()}
-                        onValueChange={id =>
-                            router.replace(ROUTES.dashboardStudentsId.expand({ id }))
-                        }
-                    >
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Theme" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {students?.students.map(student => (
-                                <SelectItem value={student.id.toString()}>
-                                    {student.name}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                </div>
-            }
-        >
-            <div className="space-y-6">
-                {/* Student Overview */}
-                <div className="mb-8">
-                    <h1 className="text-lg text-gray-600 font-normal">
-                        Detail student dari{' '}
-                        <span className="text-gray-800 font-semibold">{data?.name}</span>
-                    </h1>
-                </div>
-                {isPlacementTest(data?.testResults ?? []) ? (
-                    <PlacementTestPending />
-                ) : (
-                    <>
-                        {isPlacementTest(data?.testResults ?? [], 'success') && (
-                            <PlacementTestSuccess />
-                        )}
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                            <Card className="col-span-2">
-                                <CardContent className="p-6">
-                                    <div className="flex items-center">
-                                        <div className="p-2 bg-green-100 rounded-lg">
-                                            <BookOpen className="w-6 h-6 text-green-600" />
-                                        </div>
-                                        <div className="ml-4">
-                                            <p className="text-sm font-medium text-gray-600">
-                                                Current Program
-                                            </p>
-                                            <p className="text-lg font-semibold text-gray-900">
-                                                {data?.programName}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card>
-                                <CardContent className="p-6">
-                                    <div className="flex items-center">
-                                        <div className="p-2 bg-purple-100 rounded-lg">
-                                            <Calendar className="w-6 h-6 text-purple-600" />
-                                        </div>
-                                        <div className="ml-4">
-                                            <p className="text-sm font-medium text-gray-600">
-                                                Current Level
-                                            </p>
-                                            <p className="text-lg font-semibold text-gray-900">
-                                                {data?.levelName}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-
-                            <Card>
-                                <CardContent className="p-6">
-                                    <div className="flex items-center">
-                                        <div className="p-2 bg-green-100 rounded-lg">
-                                            <User className="w-6 h-6 text-blue-600" />
-                                        </div>
-                                        <div className="ml-4">
-                                            <p className="text-sm font-medium text-gray-600">
-                                                Package
-                                            </p>
-                                            <p className="text-lg font-semibold text-gray-900">-</p>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </div>
-
-                        {/* Student Details */}
-                        <div className="">
-                            {/* Schedule Information */}
-                            <Card>
-                                <CardHeader className="border-b">
-                                    <CardTitle className="flex items-center">
-                                        <Calendar className="w-5 h-5 mr-2 text-orange-500" />
-                                        Class Schedule
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent className="grid grid-cols-2 p-4 gap-6">
-                                    {(data?.schedules.length ?? 0) > 0 &&
-                                        data?.schedules.map(schedule => (
-                                            <div className="grid grid-cols-1 gap-4 p-4 border border-green-200 rounded-lg">
-                                                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                                                    <div className="flex items-center">
-                                                        <Calendar className="w-4 h-4 text-gray-500 mr-2" />
-                                                        <span className="text-sm text-gray-600">
-                                                            Days
-                                                        </span>
-                                                    </div>
-                                                    <span className="font-semibold">
-                                                        {schedule.dayOfWeek}
-                                                    </span>
-                                                </div>
-                                                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                                                    <div className="flex items-center">
-                                                        <Calendar className="w-4 h-4 text-gray-500 mr-2" />
-                                                        <span className="text-sm text-gray-600">
-                                                            Time
-                                                        </span>
-                                                    </div>
-                                                    <span className="font-semibold">
-                                                        {schedule.startTime}
-                                                    </span>
-                                                </div>
-                                                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                                                    <div className="flex items-center">
-                                                        <Home className="w-4 h-4 text-gray-500 mr-2" />
-                                                        <span className="text-sm text-gray-600">
-                                                            Location
-                                                        </span>
-                                                    </div>
-                                                    <span className="font-semibold">
-                                                        {schedule.locationName}
-                                                    </span>
-                                                </div>
-                                                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                                                    <div className="flex items-center">
-                                                        <User className="w-4 h-4 text-gray-500 mr-2" />
-                                                        <span className="text-sm text-gray-600">
-                                                            Mentor
-                                                        </span>
-                                                    </div>
-                                                    <span className="font-semibold">
-                                                        {schedule.teacherName}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        ))}
-                                </CardContent>
-                            </Card>
-                        </div>
-
-                        {/* Progress Section */}
-                        {/* <Card>
-                            <CardHeader>
-                                <CardTitle className="flex items-center">
-                                    <BookOpen className="w-5 h-5 mr-2" />
-                                    Learning Progress
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <DashboardContentLayout pageTitle="Detail Student">
+            <div className="min-h-screen bg-gray-50 p-6">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Detail Student Section */}
+                    <div className="lg:col-span-2 space-y-6">
+                        <Card className="overflow-hidden">
+                            <div className="bg-secondary text-white p-4">
+                                <h2 className="text-lg font-semibold">Detail Student</h2>
+                            </div>
+                            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-4">
                                     <div>
-                                        <div className="flex justify-between items-center mb-2">
-                                            <span className="text-sm font-medium">
-                                                Attendance Rate
-                                            </span>
-                                            <span className="text-sm text-gray-600">85%</span>
-                                        </div>
-                                        <div className="w-full bg-gray-200 rounded-full h-2">
-                                            <div
-                                                className="bg-green-600 h-2 rounded-full"
-                                                style={{ width: '85%' }}
-                                            ></div>
-                                        </div>
+                                        <p className="text-sm text-gray-600 mb-1">Nama</p>
+                                        <p className="font-semibold text-gray-900">{data?.name}</p>
                                     </div>
                                     <div>
-                                        <div className="flex justify-between items-center mb-2">
-                                            <span className="text-sm font-medium">
-                                                Average Score
-                                            </span>
-                                            <span className="text-sm text-gray-600">8.5/10</span>
-                                        </div>
-                                        <div className="w-full bg-gray-200 rounded-full h-2">
-                                            <div
-                                                className="bg-blue-600 h-2 rounded-full"
-                                                style={{ width: '85%' }}
-                                            ></div>
-                                        </div>
+                                        <p className="text-sm text-gray-600 mb-1">No. HP</p>
+                                        <p className="font-semibold text-gray-900">082295102312</p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-600 mb-1">Instagram</p>
+                                        <p className="font-semibold text-gray-900">radityapppp</p>
                                     </div>
                                 </div>
-                            </CardContent>
-                        </Card> */}
-                    </>
-                )}
+                                <div className="space-y-4">
+                                    <div>
+                                        <p className="text-sm text-gray-600 mb-1">Program</p>
+                                        <p className="font-semibold text-gray-900">
+                                            {data?.programName}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-600 mb-1">Group</p>
+                                        <p className="font-semibold text-gray-900">
+                                            {data?.groupName}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-600 mb-1">Level</p>
+                                        <p className="font-semibold text-gray-900">
+                                            {data?.levelName}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-600 mb-1">Grade</p>
+                                        <p className="font-semibold text-gray-900">
+                                            {data?.gradeNumber || 'Belum ditentukan'}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
+
+                        {/* Catatan Section */}
+                        <Card className="overflow-hidden">
+                            <div className="bg-secondary text-white p-4">
+                                <h2 className="text-lg font-semibold">Catatan</h2>
+                            </div>
+                            <div className="p-6">
+                                <div className="grid items-start">
+                                    {!isEdit ? (
+                                        <>
+                                            <p className="text-gray-900 font-medium mb-4">
+                                                {notes}
+                                            </p>
+                                            <Button
+                                                onClick={() => setIsEdit(true)}
+                                                className="px-6 w-fit ml-auto"
+                                                size="sm"
+                                            >
+                                                Edit
+                                            </Button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Textarea
+                                                className="mb-4"
+                                                value={notes}
+                                                onChange={e => setNotes(e.target.value)}
+                                            />
+                                            <div className="space-x-3 ml-auto">
+                                                <Button
+                                                    onClick={() => setIsEdit(false)}
+                                                    className="px-6 w-fit"
+                                                    size="sm"
+                                                    variant={'outline'}
+                                                >
+                                                    Cancel
+                                                </Button>
+                                                <Button
+                                                    onClick={handleSave}
+                                                    className="px-6 w-fit"
+                                                    size="sm"
+                                                >
+                                                    Save
+                                                </Button>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                        </Card>
+                    </div>
+
+                    {/* Kelompok Belajar Section */}
+                    <div className="space-y-6">
+                        <Card className="overflow-hidden">
+                            <div className="bg-secondary text-white p-4">
+                                <h2 className="text-lg font-semibold">Kelompok Belajar</h2>
+                            </div>
+                            <div className="p-6 space-y-3">
+                                <div>
+                                    <p className="text-sm text-gray-600 mb-1">Cabang</p>
+                                    <p className="font-semibold text-gray-900">Stadion</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-600 mb-1">Nama Kelompok</p>
+                                    <p className="font-semibold text-gray-900">Penerbang Roket</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-600 mb-1">Teacher</p>
+                                    <p className="font-semibold text-gray-900">Mr. Firdan</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm text-gray-600 mb-1">Jadwal Trial Class</p>
+                                    <p className="font-semibold text-gray-900">
+                                        Senin, 10 Oktober 2025, 15:00 - 17:30
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="px-6 py-4 border-t">
+                                <p className="text-sm text-gray-600 mb-2">Jadwal Kelas 1</p>
+
+                                <div className="space-y-3">
+                                    <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
+                                        <div className="flex items-center gap-2">
+                                            <Calendar className="w-4 h-4 text-orange-600" />
+                                            <span className="text-sm text-gray-600">Hari</span>
+                                        </div>
+                                        <span className="font-semibold text-gray-900">Senin</span>
+                                    </div>
+
+                                    <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
+                                        <div className="flex items-center gap-2">
+                                            <Clock className="w-4 h-4 text-orange-600" />
+                                            <span className="text-sm text-gray-600">Waktu</span>
+                                        </div>
+                                        <span className="font-semibold text-gray-900">
+                                            15:00 - 17:00
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="px-6 py-4 border-t">
+                                <p className="text-sm text-gray-600 mb-2">Jadwal Kelas 2</p>
+
+                                <div className="space-y-3 mb-4">
+                                    <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
+                                        <div className="flex items-center gap-2">
+                                            <Calendar className="w-4 h-4 text-orange-600" />
+                                            <span className="text-sm text-gray-600">Hari</span>
+                                        </div>
+                                        <span className="font-semibold text-gray-900">Selasa</span>
+                                    </div>
+
+                                    <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
+                                        <div className="flex items-center gap-2">
+                                            <Clock className="w-4 h-4 text-orange-600" />
+                                            <span className="text-sm text-gray-600">Waktu</span>
+                                        </div>
+                                        <span className="font-semibold text-gray-900">
+                                            15:00 - 17:00
+                                        </span>
+                                    </div>
+                                </div>
+                                <Button
+                                    onClick={() => setIsOpen(true)}
+                                    className="w-full"
+                                    size="lg"
+                                >
+                                    Ganti Kelompok
+                                </Button>
+                                <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                                    <DialogContent className={cn(inter.className)}>
+                                        <DialogTitle>Ganti Kelompok</DialogTitle>
+                                        <AdminSelect label="Grade" options={grades || []} />
+                                        <AdminSelect
+                                            label="Kelompok Belajar"
+                                            options={studyGroups || []}
+                                        />
+                                        <div>
+                                            <Label className="mb-2 block">Jadwal Trial Class</Label>
+                                            <RadioGroup>
+                                                <div className="flex gap-4 items-center">
+                                                    <RadioGroupItem value="1"></RadioGroupItem>
+                                                    <p className="text-[#020217] text-sm">
+                                                        Rabu, 18 Juni 2021
+                                                    </p>
+                                                </div>
+                                                <div className="flex gap-4 items-center">
+                                                    <RadioGroupItem value="1"></RadioGroupItem>
+                                                    <p className="text-[#020217] text-sm">
+                                                        Rabu, 18 Juni 2021
+                                                    </p>
+                                                </div>
+                                            </RadioGroup>
+                                        </div>
+                                        <DialogFooter>
+                                            <Button onClick={() => setIsOpen(false)}>Ganti</Button>
+                                        </DialogFooter>
+                                    </DialogContent>
+                                </Dialog>
+                            </div>
+                        </Card>
+                    </div>
+                </div>
             </div>
         </DashboardContentLayout>
     );

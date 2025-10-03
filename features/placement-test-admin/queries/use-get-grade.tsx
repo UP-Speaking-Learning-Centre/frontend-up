@@ -1,24 +1,20 @@
-import React from 'react';
-import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
 import api from '@/lib/api';
 import { ResponseGrade } from '@/types/placement-test';
-import { API_AVAIL_SCHEDULE, API_GRADE } from '../constants/config';
 import { useQuery } from '@tanstack/react-query';
-import useGetProgram from './use-get-program';
-import useGetGroup from './use-get-group';
+import { API_GRADE } from '../constants/config';
+import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
 
 const useGetGrade = () => {
-    const program = useDisplayedPlacementTestStore(s => s.test?.program);
-    const group = useDisplayedPlacementTestStore(s => s.test?.group);
-    const { data: dataProgram } = useGetProgram();
-    const { data: dataGroup } = useGetGroup();
+    const programId = useDisplayedPlacementTestStore(s => s.test?.programId);
+    const groupId = useDisplayedPlacementTestStore(s => s.test?.groupId);
     const { assignedLevel } = useDisplayedPlacementTestStore();
 
     const get = async () => {
+        if (!programId || !groupId) return;
         const res = await api.get<ResponseGrade[]>(
             API_GRADE.expand({
-                programId: dataProgram?.find(program_ => program_.name === program)?.id ?? '',
-                groupId: dataGroup?.find(group_ => group_.name === group)?.id ?? '',
+                programId,
+                groupId,
                 levelId: assignedLevel,
             })
         );
@@ -26,7 +22,7 @@ const useGetGrade = () => {
     };
 
     const { data, isLoading } = useQuery({
-        queryKey: [API_GRADE, dataProgram, dataGroup, assignedLevel],
+        queryKey: [API_GRADE, assignedLevel],
         queryFn: get,
     });
 

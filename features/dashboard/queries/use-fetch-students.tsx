@@ -1,3 +1,4 @@
+import useAuthStore from '@/features/auth/stores/authStore';
 import api, { baseService } from '@/lib/api';
 import { BaseResponse } from '@/types/general';
 import { StudentType } from '@/types/students';
@@ -5,7 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { API_ADMIN_LIST_STUDENTS } from '../constants/config';
 import { useStudentsStore } from '../stores/students-store';
-import { getCookiesToken } from '@/features/auth/utils/cookies.helper';
 
 const allUsers = {
     data: [
@@ -37,33 +37,48 @@ const allUsers = {
     },
 };
 
-const fetchStudents = async (params: any) => {
+const fetchStudents = async (params: any, accessToken: string) => {
     // return allUsers as BaseResponse<StudentType[]>;
     return baseService(async () => {
         const res = await api.get<BaseResponse<StudentType[]>>(API_ADMIN_LIST_STUDENTS, {
             params,
             headers: {
-                Authorization: 'Bearer ' + (await getCookiesToken()),
+                Authorization: 'Bearer ' + accessToken,
             },
         });
         return res.data;
     });
 };
 
-const useFetchStudentsQuery = (params?: any) => {
-    const filters = useStudentsStore(s => s.filters);
+const useFetchStudentsQuery = () => {
+    const filter = useStudentsStore(s => s.filters);
+    const pagination = useStudentsStore(s => s.pagination);
     const setStudents = useStudentsStore(s => s.setStudents);
+    const setPagination = useStudentsStore(s => s.setPagination);
+    const accessToken = useAuthStore(s => s.token);
 
     const res = useQuery({
-        queryKey: [API_ADMIN_LIST_STUDENTS, Object.values(filters), params],
-        queryFn: async () => await fetchStudents(params),
+        queryKey: [API_ADMIN_LIST_STUDENTS, Object.values(filter), Object.values(pagination)],
+        queryFn: async () =>
+            await fetchStudents(
+                {
+                    studentName: filter.searchQuery,
+                    teacherTeamMemberId: filter.mentors,
+                    programId: filter.program,
+                    groupId: filter.group,
+                    currentPage: pagination.currentPage,
+                },
+                accessToken
+            ),
+        staleTime: 0,
     });
 
     useEffect(() => {
         if (res.status === 'success') {
             setStudents(res.data.data);
+            setPagination(res.data.meta);
         }
-    }, [res.status]);
+    }, [res.data, res.status]);
 
     return res;
 };
