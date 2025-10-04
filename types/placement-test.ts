@@ -1,8 +1,7 @@
 import { QUESTION_TYPE } from '@/constants/placement-test';
 import { STATUS_OPTION } from '@/features/admin/constants/config';
 
-export type PlacementTestStatus =
-    (typeof STATUS_OPTION)[keyof typeof STATUS_OPTION];
+export type PlacementTestStatus = (typeof STATUS_OPTION)[keyof typeof STATUS_OPTION];
 
 export type QuestionType = (typeof QUESTION_TYPE)[keyof typeof QUESTION_TYPE];
 
@@ -12,8 +11,8 @@ export type Question = {
     questionType: string;
     options: string[];
     studentAnswer: string;
-    isGraded?: boolean;
-    isCorrect?: boolean;
+    checkAnswer: 'correct' | 'incorrect';
+    isGraded?:boolean
 };
 
 export type QuestionForGuest = {

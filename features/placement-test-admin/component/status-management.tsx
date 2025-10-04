@@ -15,11 +15,14 @@ import useDetailPlacementTest from '../hooks/use-detail-placement-test';
 import AssignLevel from './assign-level';
 
 const StatusManagement = () => {
-    const { status, setState, handleSubmit, formState, register,setValue } = useDetailPlacementTest();
+    const { status, setState, handleSubmit, formState, register, setValue } =
+        useDetailPlacementTest();
     const { errors } = formState;
 
     const handleChangeStatus = (value: PlacementTestStatus) => {
-        setState({ status: value as PlacementTestStatus });
+        if (value) {
+            setState({ status: value as PlacementTestStatus });
+        }
     };
 
     return (
@@ -31,7 +34,7 @@ const StatusManagement = () => {
                 </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-                <form onSubmit={handleSubmit} className='space-y-4'>
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <Label>Status</Label>
                         <Select value={status} onValueChange={handleChangeStatus}>

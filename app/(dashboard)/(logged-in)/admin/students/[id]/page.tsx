@@ -6,26 +6,30 @@ import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogFooter, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { inter } from '@/constants/fonts';
 import AdminSelect from '@/features/admin/components/admin-select';
 import useChangeStudyGroup from '@/features/admin/hooks/useChangeStudyGroup';
 import useEditNote from '@/features/admin/hooks/useEditNote';
+import useGetStudyGroupDetail from '@/features/admin/queries/useGetStudyGroupDetail';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import useGetProfileById from '@/features/home/queries/useGetProfileById';
 import { cn } from '@/lib/utils';
 import { Calendar, Clock } from 'lucide-react';
 
 export default function DashboardPage() {
-    const { isEdit, setIsEdit, notes, setNotes, handleSave } = useEditNote();
+    const { data, isLoading } = useGetProfileById();
+    const { isEdit, setIsEdit, notes, setNotes, handleSave } = useEditNote(data?.notes);
+    const { data: studyGroupDetail, isLoading: isLoadingStudyGroupDetail } = useGetStudyGroupDetail(
+        data?.primaryStudyGroupId || 0
+    );
     const {
         isOpen,
         setIsOpen,
-        grades,
         isLoading: isLoadingChangeStudy,
         studyGroups,
-    } = useChangeStudyGroup();
-    const { data, isLoading } = useGetProfileById();
+    } = useChangeStudyGroup(studyGroupDetail?.schedules[0].location || '');
 
     if (isLoading) return <Overlay />;
     return (
@@ -57,25 +61,21 @@ export default function DashboardPage() {
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">Program</p>
                                         <p className="font-semibold text-gray-900">
-                                            {data?.programName}
+                                            {data?.program}
                                         </p>
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">Group</p>
-                                        <p className="font-semibold text-gray-900">
-                                            {data?.groupName}
-                                        </p>
+                                        <p className="font-semibold text-gray-900">{data?.group}</p>
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">Level</p>
-                                        <p className="font-semibold text-gray-900">
-                                            {data?.levelName}
-                                        </p>
+                                        <p className="font-semibold text-gray-900">{data?.level}</p>
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">Grade</p>
                                         <p className="font-semibold text-gray-900">
-                                            {data?.gradeNumber || 'Belum ditentukan'}
+                                            {data?.gradeLabel || 'Belum ditentukan'}
                                         </p>
                                     </div>
                                 </div>
@@ -134,117 +134,120 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Kelompok Belajar Section */}
-                    <div className="space-y-6">
-                        <Card className="overflow-hidden">
-                            <div className="bg-secondary text-white p-4">
-                                <h2 className="text-lg font-semibold">Kelompok Belajar</h2>
-                            </div>
-                            <div className="p-6 space-y-3">
-                                <div>
-                                    <p className="text-sm text-gray-600 mb-1">Cabang</p>
-                                    <p className="font-semibold text-gray-900">Stadion</p>
+                    <Skeleton loading={isLoadingStudyGroupDetail} className="h-40">
+                        <div className="space-y-6">
+                            <Card className="overflow-hidden">
+                                <div className="bg-secondary text-white p-4">
+                                    <h2 className="text-lg font-semibold">Kelompok Belajar</h2>
                                 </div>
-                                <div>
-                                    <p className="text-sm text-gray-600 mb-1">Nama Kelompok</p>
-                                    <p className="font-semibold text-gray-900">Penerbang Roket</p>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-600 mb-1">Teacher</p>
-                                    <p className="font-semibold text-gray-900">Mr. Firdan</p>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-gray-600 mb-1">Jadwal Trial Class</p>
-                                    <p className="font-semibold text-gray-900">
-                                        Senin, 10 Oktober 2025, 15:00 - 17:30
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="px-6 py-4 border-t">
-                                <p className="text-sm text-gray-600 mb-2">Jadwal Kelas 1</p>
-
-                                <div className="space-y-3">
-                                    <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
-                                        <div className="flex items-center gap-2">
-                                            <Calendar className="w-4 h-4 text-orange-600" />
-                                            <span className="text-sm text-gray-600">Hari</span>
-                                        </div>
-                                        <span className="font-semibold text-gray-900">Senin</span>
+                                <div className="p-6 space-y-3">
+                                    <div>
+                                        <p className="text-sm text-gray-600 mb-1">Cabang</p>
+                                        <p className="font-semibold text-gray-900">
+                                            {studyGroupDetail?.schedules[0]?.location || '-'}
+                                        </p>
                                     </div>
-
-                                    <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
-                                        <div className="flex items-center gap-2">
-                                            <Clock className="w-4 h-4 text-orange-600" />
-                                            <span className="text-sm text-gray-600">Waktu</span>
-                                        </div>
-                                        <span className="font-semibold text-gray-900">
-                                            15:00 - 17:00
-                                        </span>
+                                    <div>
+                                        <p className="text-sm text-gray-600 mb-1">Nama Kelompok</p>
+                                        <p className="font-semibold text-gray-900">
+                                            {studyGroupDetail?.name}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-600 mb-1">Teacher</p>
+                                        <p className="font-semibold text-gray-900">
+                                            {studyGroupDetail?.schedules[0].teacherMemberName ||
+                                                '-'}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-600 mb-1">
+                                            Jadwal Trial Class
+                                        </p>
+                                        <p className="font-semibold text-gray-900">
+                                            {/* {data?.schedules} */} -
+                                        </p>
                                     </div>
                                 </div>
-                            </div>
+                                {studyGroupDetail?.schedules.map(schedule => (
+                                    <div key={schedule.id} className="px-6 py-4 border-t">
+                                        <p className="text-sm text-gray-600 mb-2">Jadwal Kelas 1</p>
 
-                            <div className="px-6 py-4 border-t">
-                                <p className="text-sm text-gray-600 mb-2">Jadwal Kelas 2</p>
-
-                                <div className="space-y-3 mb-4">
-                                    <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
-                                        <div className="flex items-center gap-2">
-                                            <Calendar className="w-4 h-4 text-orange-600" />
-                                            <span className="text-sm text-gray-600">Hari</span>
-                                        </div>
-                                        <span className="font-semibold text-gray-900">Selasa</span>
-                                    </div>
-
-                                    <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
-                                        <div className="flex items-center gap-2">
-                                            <Clock className="w-4 h-4 text-orange-600" />
-                                            <span className="text-sm text-gray-600">Waktu</span>
-                                        </div>
-                                        <span className="font-semibold text-gray-900">
-                                            15:00 - 17:00
-                                        </span>
-                                    </div>
-                                </div>
-                                <Button
-                                    onClick={() => setIsOpen(true)}
-                                    className="w-full"
-                                    size="lg"
-                                >
-                                    Ganti Kelompok
-                                </Button>
-                                <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                                    <DialogContent className={cn(inter.className)}>
-                                        <DialogTitle>Ganti Kelompok</DialogTitle>
-                                        <AdminSelect label="Grade" options={grades || []} />
-                                        <AdminSelect
-                                            label="Kelompok Belajar"
-                                            options={studyGroups || []}
-                                        />
-                                        <div>
-                                            <Label className="mb-2 block">Jadwal Trial Class</Label>
-                                            <RadioGroup>
-                                                <div className="flex gap-4 items-center">
-                                                    <RadioGroupItem value="1"></RadioGroupItem>
-                                                    <p className="text-[#020217] text-sm">
-                                                        Rabu, 18 Juni 2021
-                                                    </p>
+                                        <div className="space-y-3">
+                                            <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
+                                                <div className="flex items-center gap-2">
+                                                    <Calendar className="w-4 h-4 text-orange-600" />
+                                                    <span className="text-sm text-gray-600">
+                                                        Hari
+                                                    </span>
                                                 </div>
-                                                <div className="flex gap-4 items-center">
-                                                    <RadioGroupItem value="1"></RadioGroupItem>
-                                                    <p className="text-[#020217] text-sm">
-                                                        Rabu, 18 Juni 2021
-                                                    </p>
+                                                <span className="font-semibold text-gray-900">
+                                                    {schedule.dayOfWeek}
+                                                </span>
+                                            </div>
+
+                                            <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
+                                                <div className="flex items-center gap-2">
+                                                    <Clock className="w-4 h-4 text-orange-600" />
+                                                    <span className="text-sm text-gray-600">
+                                                        Waktu
+                                                    </span>
                                                 </div>
-                                            </RadioGroup>
+                                                <span className="font-semibold text-gray-900">
+                                                    {schedule.startTime.substring(0, 5)} -{' '}
+                                                    {schedule.endTime.substring(0, 5)}
+                                                </span>
+                                            </div>
                                         </div>
-                                        <DialogFooter>
-                                            <Button onClick={() => setIsOpen(false)}>Ganti</Button>
-                                        </DialogFooter>
-                                    </DialogContent>
-                                </Dialog>
-                            </div>
-                        </Card>
-                    </div>
+                                    </div>
+                                ))}
+                                <div className="m-4">
+                                    <Button
+                                        onClick={() => setIsOpen(true)}
+                                        className="w-full"
+                                        size="lg"
+                                    >
+                                        Ganti Kelompok
+                                    </Button>
+                                    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                                        <DialogContent className={cn(inter.className)}>
+                                            <DialogTitle>Ganti Kelompok</DialogTitle>
+                                            <AdminSelect
+                                                label="Kelompok Belajar"
+                                                options={studyGroups || []}
+                                            />
+                                            <div>
+                                                <Label className="mb-2 block">
+                                                    Jadwal Trial Class
+                                                </Label>
+                                                <RadioGroup>
+                                                    <div className="flex gap-4 items-center">
+                                                        <RadioGroupItem value="1"></RadioGroupItem>
+                                                        <p className="text-[#020217] text-sm">
+                                                            Rabu, 18 Juni 2021
+                                                        </p>
+                                                    </div>
+                                                    <div className="flex gap-4 items-center">
+                                                        <RadioGroupItem value="1"></RadioGroupItem>
+                                                        <p className="text-[#020217] text-sm">
+                                                            Rabu, 18 Juni 2021
+                                                        </p>
+                                                    </div>
+                                                </RadioGroup>
+                                            </div>
+                                            <DialogFooter>
+                                                <Button onClick={() => setIsOpen(false)}>
+                                                    {!isLoadingChangeStudy
+                                                        ? 'Ganti'
+                                                        : 'Sedang mengganti...'}
+                                                </Button>
+                                            </DialogFooter>
+                                        </DialogContent>
+                                    </Dialog>
+                                </div>
+                            </Card>
+                        </div>
+                    </Skeleton>
                 </div>
             </div>
         </DashboardContentLayout>

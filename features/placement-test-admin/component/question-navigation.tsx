@@ -30,8 +30,8 @@ const QuestionNavigation = () => {
             <CardContent>
                 <div className="grid grid-cols-7 gap-2">
                     {questions.map((question, index) => {
-                        const isGraded = question.isGraded || false;
-                        const isCorrect = question.isCorrect || false;
+                        const isGraded = !!question.checkAnswer || question.isGraded || false;
+                        const isCorrect = question.checkAnswer === 'correct' || false;
                         const isCurrent = index === currentQuestionIndex;
 
                         return (

@@ -1,3 +1,5 @@
+import { PriceData } from '@/types/admin';
+
 export const API_PROGRAMS = '/admin/program-packages/';
 export const API_LOCATION = '/admin/locations/';
 export const API_TEACHERS = '/admin/teachers/';
@@ -15,3 +17,17 @@ export const STATUS_OPTION = {
     DONE_INTERVIEW: 'done_interview',
     GRADED: 'graded',
 };
+
+export const INITIAL_PRICE: PriceData[] = [
+    {
+        id: Date.now().toString(),
+        price: '',
+        duration: '',
+        durationType: 'months',
+    },
+];
+export const PACKAGE_OPTIONS = [
+    { value: 1, label: 'Semi Private' },
+    { value: 2, label: 'Private' },
+    { value: 3, label: 'Ekslusif' },
+];

@@ -1,4 +1,3 @@
-import { PLACEMENT_TEST_STATUS } from '@/constants/placement-test';
 import { STATUS_OPTION } from '@/features/admin/constants/config';
 import {
     PlacementTestStatus,
@@ -49,5 +48,5 @@ interface DisplayedPlacementTestStore {
 
 export const useDisplayedPlacementTestStore = create<DisplayedPlacementTestStore>(set => ({
     ...initialState,
-    setState: (state: Partial<DisplayedPlacementTestStore>) => set(state),
+    setState: (state: Partial<DisplayedPlacementTestStore>) => set({...state}),
 }));

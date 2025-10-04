@@ -1,5 +1,6 @@
 import { PriceData } from '@/types/admin';
 import { ReactNode } from 'react';
+import { ZodFormattedError } from 'zod';
 import { create } from 'zustand';
 
 interface DashboardLayoutStore {
@@ -9,9 +10,11 @@ interface DashboardLayoutStore {
     content?: ReactNode;
     title: string;
     id: string;
-    packageId: number,
-    packages: PriceData[]
+    packageId?: number;
+    packages: PriceData[];
     setState: (value: Partial<DashboardLayoutStore>) => void;
+    handleInputChange: (id: string, field: keyof PriceData, value: string) => void;
+    error?: ZodFormattedError<{ timeframe: string; amount: number }[]>;
 }
 
 const initialState = {
@@ -21,14 +24,21 @@ const initialState = {
     content: undefined,
     title: '',
     id: '',
-    packageId: 0,
+    packageId: undefined,
     packages: [],
+    error: undefined,
 };
 
-export const useProgramDetailStore = create<DashboardLayoutStore>(set => ({
+export const useProgramDetailStore = create<DashboardLayoutStore>((set, get) => ({
     ...initialState,
     setState(value) {
         set(value);
+    },
+    handleInputChange(id: string, field: keyof PriceData, value: string) {
+        const packages = get().packages;
+        set({
+            packages: packages.map(pkg => (pkg.id === id ? { ...pkg, [field]: value } : pkg)),
+        });
     },
 }));
 

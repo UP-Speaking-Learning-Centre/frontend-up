@@ -24,12 +24,12 @@ const useFetchDetailPlacementTestQuery = ({
 }): UseQueryResult<ResponsePlacementTest, Error> => {
     const setState = useDisplayedPlacementTestStore(state => state.setState);
     const query = useQuery({
-        queryKey: ['detail-placement-test'],
+        queryKey: [ENDPOINTS.fetchAdminDetailPlacementTest],
         queryFn: () => fetchDetailPlacementTest({ id }),
     });
 
     useEffect(() => {
-        if (query.status === 'success') {
+        if (query.status === 'success' && query.data.status) {
             setState({
                 questions: query.data.qa,
                 totalQuestions: query.data.qa.length,
@@ -37,10 +37,10 @@ const useFetchDetailPlacementTestQuery = ({
                 student: query.data.student,
                 test: query.data.test,
                 testDate: query.data.submittedAt,
-                status: query.data.status,
+                status: query.data?.status,
             });
         }
-    }, [query.status, query.data]);
+    }, [query.data, query.status]);
 
     return query;
 };
