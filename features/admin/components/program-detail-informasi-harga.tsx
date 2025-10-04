@@ -54,7 +54,7 @@ const ProgramDetailInformasiHarga = () => {
                                 ))}
                                 <TableCell className="flex gap-2">
                                     <Button
-                                        onClick={() => handleEdit(index + 1)}
+                                        onClick={() => handleEdit(packages[package_].packageId)}
                                         variant={'outline'}
                                     >
                                         <Edit />

@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import usePatchNoteByUserId from '../queries/usePatchNoteByUserId';
 
-const useEditNote = () => {
+const useEditNote = (notes_?: string | null) => {
     const [isEdit, setIsEdit] = useState(false);
-    const [notes, setNotes] = useState('');
+    const [notes, setNotes] = useState<string>('');
+
+    useEffect(() => {
+        setNotes(notes_ || '');
+    }, [notes_]);
 
     const { mutateAsync } = usePatchNoteByUserId();
 

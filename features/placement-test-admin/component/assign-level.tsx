@@ -34,6 +34,7 @@ const AssignLevel: FC<Props> = ({ errors, register, setValue }) => {
         assignedGrade,
         setState,
     } = useDisplayedPlacementTestStore();
+    
     const { data, isLoading } = useGetLocation();
     const { data: dataSchedule, isLoading: isLoadingSchedule } = useGetStudyGroup(
         Number(assignedLocation)

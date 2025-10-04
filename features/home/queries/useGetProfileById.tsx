@@ -1,5 +1,6 @@
 'use client';
 
+import ENDPOINTS from '@/constants/endpoints';
 import { API_GET_STUDENT_BY_ID } from '@/features/auth/constants/config';
 import { ResponseUserDetail } from '@/features/auth/constants/interface';
 import useAuthStore from '@/features/auth/stores/authStore';
@@ -39,15 +40,18 @@ const useGetProfileById = () => {
         //     "testResults": []
         // }
         return baseService(async () => {
-            const res = await api.get<ResponseUserDetail>(API_GET_STUDENT_BY_ID(id ?? ''), {
-                headers: { Authorization: 'Bearer ' + accessToken },
-            });
+            const res = await api.get<ResponseUserDetail>(
+                ENDPOINTS.fetchAdminStudentById.expand({ id }),
+                {
+                    headers: { Authorization: 'Bearer ' + accessToken },
+                }
+            );
             return res.data;
         });
     };
 
     const { data, isLoading } = useQuery({
-        queryKey: [API_GET_STUDENT_BY_ID],
+        queryKey: [ENDPOINTS.fetchAdminStudentById.expand({ id })],
         queryFn: async () => {
             const res = await getProfileById();
             return res;

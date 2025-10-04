@@ -1,17 +1,19 @@
 import { useState } from 'react';
-import useGetGradeAdmin from '../queries/useGetGradeAdmin';
+import useGetLocation from '../queries/useGetLocation';
 import useGetStudyGroup from '../queries/useGetStudyGroup';
 
-const useChangeStudyGroup = () => {
-    const { data, isLoading } = useGetGradeAdmin();
-    const { data: studyGroups, isLoading: isLoadingStudyGroup } = useGetStudyGroup(1);
+const useChangeStudyGroup = (locationName: string) => {
+    const { data, isLoading } = useGetLocation();
+    const { data: studyGroups, isLoading: isLoadingStudyGroup } = useGetStudyGroup(
+        data?.find(loc => loc.name?.toLocaleLowerCase() === locationName?.toLocaleLowerCase())
+            ?.id || 0
+    );
     const [isOpen, setIsOpen] = useState(false);
 
     return {
-        isLoading: isLoading || isLoadingStudyGroup,
+        isLoading: isLoadingStudyGroup || isLoading,
         isOpen,
         setIsOpen,
-        grades: data,
         studyGroups,
     };
 };

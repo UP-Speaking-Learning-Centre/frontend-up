@@ -8,11 +8,14 @@ import { toast, Toaster } from 'sonner';
 const QuestionDisplay = () => {
     const { questions, currentQuestionIndex, totalQuestions, setState } = useDetailPlacementTest();
     const currentQuestion = questions[currentQuestionIndex];
+
     const { mutateAsync } = useSubmitMark();
     const handleGradeQuestion = (question: any, isCorrect: boolean, isGraded: boolean) => {
         setState({
             questions: questions.map(q =>
-                q.questionId === question.questionId ? { ...q, isCorrect, isGraded } : q
+                q.questionId === question.questionId
+                    ? { ...q, checkAnswer: isCorrect ? 'correct' : 'incorrect', isGraded }
+                    : q
             ),
         });
         mutateAsync({
@@ -129,10 +132,12 @@ const QuestionDisplay = () => {
                             <div className="flex gap-3">
                                 <Button
                                     variant={
-                                        currentQuestion.isCorrect === true ? 'default' : 'outline'
+                                        currentQuestion.checkAnswer === 'correct'
+                                            ? 'default'
+                                            : 'outline'
                                     }
                                     className={`flex-1 ${
-                                        currentQuestion.isCorrect === true
+                                        currentQuestion.checkAnswer === 'correct'
                                             ? 'bg-green-600 hover:bg-green-700'
                                             : 'border-green-300 text-green-600 hover:bg-green-50'
                                     }`}
@@ -143,10 +148,12 @@ const QuestionDisplay = () => {
                                 </Button>
                                 <Button
                                     variant={
-                                        currentQuestion.isCorrect === false ? 'default' : 'outline'
+                                        currentQuestion.checkAnswer === 'incorrect'
+                                            ? 'default'
+                                            : 'outline'
                                     }
                                     className={`flex-1 ${
-                                        currentQuestion.isCorrect === false
+                                        currentQuestion.checkAnswer === 'incorrect'
                                             ? 'bg-red-600 hover:bg-red-700'
                                             : 'border-red-300 text-red-600 hover:bg-red-50'
                                     }`}

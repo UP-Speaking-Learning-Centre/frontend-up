@@ -13,13 +13,21 @@ const useGetPrices = (params?: any) => {
         return price.data;
     };
 
+    const handleEnabled = () =>{
+        if(!params) return true;
+        const params_ = Object.values(params)
+        if(!params_.length) return true
+        return params_.every(param => param)
+    }
+
     const { data, isLoading } = useQuery({
-        queryKey: [ENDPOINTS.fetchPrices,params],
+        queryKey: [ENDPOINTS.fetchPrices, params],
         queryFn: get,
         select: data => ({
             ...data,
             data: data.data.filter(item => item.program.id === Number(id)),
         }),
+        enabled: handleEnabled()
     });
 
     const columnDuration = useMemo(() => {
@@ -41,7 +49,7 @@ const useGetPrices = (params?: any) => {
     const packages = useMemo(() => {
         const packages: Record<
             string,
-            { price: { amount: number; timeframe: string; packageId: number }[] }
+            { price: { amount: number; timeframe: string }[]; packageId: number }
         > = {};
         data?.data.forEach(item => {
             const packageName = item.package.name;
@@ -53,16 +61,16 @@ const useGetPrices = (params?: any) => {
                         {
                             amount: item.amount,
                             timeframe: number_,
-                            packageId: item.package.id,
                         },
                     ],
+                    packageId: item.package.id,
                 };
                 return;
             }
             if (!packages[packageName].price.some(price => price.timeframe === number_)) {
                 packages[packageName].price = [
                     ...packages[packageName].price,
-                    { amount: item.amount, timeframe: number_, packageId: item.package.id },
+                    { amount: item.amount, timeframe: number_ },
                 ];
                 return;
             }
@@ -70,7 +78,7 @@ const useGetPrices = (params?: any) => {
         return packages;
     }, [data?.data]);
 
-    return { isLoading, columnDuration, packages,data };
+    return { isLoading, columnDuration, packages, data };
 };
 
 export default useGetPrices;

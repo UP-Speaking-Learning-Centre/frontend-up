@@ -68,10 +68,22 @@ export interface ResponseUserDetailTestResults {
 export interface ResponseUserDetail {
     id: number;
     name: string;
-    programName: string;
-    groupName: string;
-    levelName: string;
-    gradeNumber?: number;
+    phoneNumber: string;
+    preferredGroupId: string | null;
+    preferredGroupName: string | null;
+    preferredProgramId: string | null;
+    preferredProgramName: string | null;
+    notes?: string | null;
+    programId: number;
+    program: string;
+    groupId: number;
+    group: string;
+    levelId: number;
+    level: string;
+    gradeId: number;
+    gradeLabel: string;
+    studyGroupIds: number[];
+    primaryStudyGroupId: number;
     schedules: ResponseUserDetailSchedule[];
     testResults: ResponseUserDetailTestResults[];
 }

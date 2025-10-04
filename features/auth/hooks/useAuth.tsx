@@ -2,8 +2,12 @@ import api from '@/lib/api';
 import { AxiosError } from 'axios';
 import { useEffect } from 'react';
 import useAuthStore from '../stores/authStore';
+import { logout } from '../utils/auth-server.helper';
+import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/constants/routes';
 
 const useAuth = () => {
+    const router = useRouter();
     const { token } = useAuthStore();
 
     useEffect(() => {

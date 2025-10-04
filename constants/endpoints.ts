@@ -11,6 +11,7 @@ const ENDPOINTS = {
     fetchStudyGroups: parseTemplate('/locations/{locationId}/study-groups'),
     fetchDetailPlacementTest: parseTemplate('/placement-tests/{id}'),
     fetchAdminDetailPlacementTest: parseTemplate('/admin/placement-tests/{id}'),
+    fetchAdminDetailPlacementTestStatus: parseTemplate('/admin/placement-tests/{id}/status'),
     submitRegistration: '/registrations',
     submitRegistrationFromPlacement: '/auth/register',
     fetchPlacementTest: '/placement-tests/start-guest',
@@ -37,6 +38,7 @@ const ENDPOINTS = {
     fetchAdminLocations: '/admin/locations',
     fetchAdminLocationsById: parseTemplate('/admin/locations/{id}'),
     createNewStudyGroup: '/admin/study-groups',
+    fetchAdminStudentById: parseTemplate('/admin/students/{id}'),
 } as const;
 
 export default ENDPOINTS;
