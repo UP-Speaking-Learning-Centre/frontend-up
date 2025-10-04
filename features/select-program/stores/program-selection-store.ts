@@ -1,5 +1,4 @@
 import {
-    CHOOSE_GRADE_STEP,
     CHOOSE_GROUP_STEP,
     CHOOSE_LEVEL_STEP,
     CHOOSE_PACKAGE_STEP,
@@ -9,7 +8,7 @@ import {
     CHOOSE_TRIAL_CLASS_STEP,
     PROGRAM_SELECTION_STEPS,
 } from '@/constants/program-selections';
-import { ProgramDetailPrice } from '@/types/program-detail';
+import { ProgramDetailPrice } from '@/types/admin';
 import { StudyGroup } from '@/types/study-group';
 import { create } from 'zustand';
 

@@ -12,30 +12,35 @@ const SelectProgram = ({
     value,
     onChange,
 }: {
-    value: number;
-    onChange: (value: number) => void;
+    value: number | string;
+    onChange: (value: number | string) => void;
 }) => {
     const { data, isLoading } = useFetchProgramsQuery();
+
+    const renderOptions = () => {
+        if (isLoading) {
+            return (
+                <SelectItem disabled value="loading">
+                    Loading...
+                </SelectItem>
+            );
+        }
+
+        return data?.map(program => (
+            <SelectItem key={program.id} value={program.id.toString()}>
+                {program.name}
+            </SelectItem>
+        ));
+    };
+
     return (
         <div>
             <Label>Program*</Label>
-            <Select>
+            <Select onValueChange={value => onChange(value)} value={value.toString()}>
                 <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Pilih Program" />
                 </SelectTrigger>
-                <SelectContent>
-                    {isLoading ? (
-                        <SelectItem value="loading" disabled>
-                            Loading...
-                        </SelectItem>
-                    ) : (
-                        data?.map(program => (
-                            <SelectItem key={program.id} value={program.id.toString()}>
-                                {program.name}
-                            </SelectItem>
-                        ))
-                    )}
-                </SelectContent>
+                <SelectContent>{renderOptions()}</SelectContent>
             </Select>
         </div>
     );

@@ -25,6 +25,50 @@ export type StudyGroup = {
     schedule2: Schedule;
 };
 
+export type ScheduleDetailAdmin = {
+    id: number;
+    dayOfWeek: string;
+    startTime: string;
+    endTime: string;
+    location: string;
+    locationId: number;
+    studyGroupId: number;
+    teacherTeamMemberId: number;
+    teacherMemberName: string;
+    teacherAlias: string;
+    isPriority: boolean;
+    programId: number;
+    program: string;
+    groupId: number;
+    group: string;
+    levelId: number;
+    level: string;
+    gradeId: number;
+    grade: string;
+    gradeNumber: number;
+};
+
+export type StudyGroupDetailAdmin = {
+    id: number;
+    name: string;
+    description: string;
+    package: {
+        id: number;
+        name: string;
+    };
+    isPriority: boolean;
+    programId: number;
+    program: string;
+    groupId: number;
+    group: string;
+    levelId: number;
+    level: string;
+    gradeId: number;
+    grade: string;
+    gradeNumber: number;
+    schedules: ScheduleDetailAdmin[];
+};
+
 export type CreateStudyGroupPayload = {
     name: string;
     description: string;
@@ -38,5 +82,52 @@ export type CreateStudyGroupPayload = {
 };
 
 export type AssignStudentToStudyGroupPayload = {
+    studyGroupId: number;
     studentIds: number[];
+    markFullScheduleId: number;
+};
+
+export type CreateStudyGroupResponse = {
+    studyGroupId: number;
+    studyGroupName: string;
+    package: {
+        id: number;
+        name: string;
+    };
+    programId: number;
+    groupId: number;
+    levelId: number;
+    gradeId: number;
+    packageId: number;
+    teacherTeamMemberId: number;
+    scheduleIds: number[];
+    description: string;
+    createdSchedules: [];
+    schedulesCreated: number;
+    linkedScheduleIds: number[];
+    schedulesLinked: number;
+    notLinkedScheduleIds: [];
+};
+
+export type AssignStudentToStudyGroupResponse = {
+    studyGroupId: number;
+    totalSchedules: number;
+    requestedStudents: number[];
+    createdAssignments: number;
+    invalidStudentIds: number[];
+    perStudentCreated: {
+        '3': 2;
+    };
+};
+
+export type UnassignStudentFromStudyGroupPayload = {
+    studentIds: number[];
+    hard: boolean;
+};
+
+export type UnassignStudentFromStudyGroupResponse = {
+    mode: string;
+    deletedIds: number[];
+    affected: number;
+    updated: number;
 };

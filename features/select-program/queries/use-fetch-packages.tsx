@@ -79,21 +79,16 @@ const dummy = [
 ];
 
 const fetchPackages = async (): Promise<PackageType[]> => {
-    // const res = await api.get<PackageType[]>(ENDPOINTS.fetchPackages.expand({}));
+    // const res = await api.get<PackageType[]>(ENDPOINTS.fetchPackages);
     // return res.data;
 
     return dummy;
 };
 
 const useFetchPackagesQuery = (): UseQueryResult<PackageType[], Error> => {
-    const { programId: programIdFromStore, groupId: groupIdFromStore } = useProgramSelectionStore(
-        s => s.formValue
-    );
-
     const res = useQuery({
-        queryKey: ['packages', programIdFromStore, groupIdFromStore],
+        queryKey: ['packages'],
         queryFn: () => fetchPackages(),
-        enabled: !!programIdFromStore && !!groupIdFromStore,
     });
 
     return res;

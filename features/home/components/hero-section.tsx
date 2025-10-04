@@ -7,7 +7,7 @@ export default function HeroSection() {
         <div className="relative isolate overflow-hidden">
             <div className="absolute inset-0">
                 <div
-                    className="absolute inset-0 bg-gradient-to-r from-[#254116]/90 to-[#254116]/70"
+                    className="absolute inset-0 bg-gradient-to-r filter blur-sm from-[#254116]/80 to-[#254116]/70"
                     style={{
                         backgroundImage: `url(/bg-image/hero.svg)`,
                         backgroundSize: 'cover',

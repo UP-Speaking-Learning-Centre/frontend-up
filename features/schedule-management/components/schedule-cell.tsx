@@ -16,6 +16,7 @@ interface BookingInfo {
     isPriority?: boolean;
     students?: number;
     color: string;
+    studyGroupId?: number;
 }
 
 interface ScheduleCellProps {
@@ -31,6 +32,7 @@ const ScheduleCell = (props: ScheduleCellProps) => {
     const [openDetail, setOpenDetail] = useState(false);
     const setStudyGroupId = useScheduleManagementStore(s => s.setStudyGroupId);
 
+    const studyGroupId = bookingInfo?.studyGroupId || 0;
     const onCloseDialog = () => {
         setOpenDetail(false);
         setStudyGroupId(0);
@@ -39,8 +41,7 @@ const ScheduleCell = (props: ScheduleCellProps) => {
     const onClickCell = () => {
         setOpenDetail(true);
         if (!isAvailable) {
-            // TODO: ganti sama id yang benerannya
-            setStudyGroupId(1);
+            setStudyGroupId(studyGroupId);
         } else {
             setStudyGroupId(0);
         }
@@ -78,7 +79,10 @@ const ScheduleCell = (props: ScheduleCellProps) => {
 
             {openDetail && (
                 <Dialog open={openDetail} onOpenChange={onCloseDialog}>
-                    <StudyGroupDetail isTeacherManagement={isTeacherManagement} />
+                    <StudyGroupDetail
+                        isTeacherManagement={isTeacherManagement}
+                        closeDetailPopup={onCloseDialog}
+                    />
                 </Dialog>
             )}
         </>

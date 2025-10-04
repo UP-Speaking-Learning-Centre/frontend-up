@@ -19,6 +19,14 @@ import SelectLocation from './select-location';
 import SelectGroup from './select-group';
 import SelectLevel from './select-level';
 import { InitialValue, useNewStudyGroupStore } from '../../stores/new-study-group-store';
+import useFetchGradesQuery from '@/features/select-program/queries/use-fetch-grades';
+import { useScheduleOptions } from '../../hooks/use-map-teacher';
+import { useGetTeacherScheduleQuery } from '../../queries/use-get-teacher-schedule';
+import { SelectDayOne, SelectTimeOne } from './select-schedule-one';
+import { useEffect } from 'react';
+import { SelectDayTwo, SelectTimeTwo } from './select-schedule-two';
+import { useCreateNewStudyGroupMutation } from '../../queries/use-create-new-study-group';
+import { toast } from 'sonner';
 
 const AddNewStudyGroup = ({
     open,
@@ -27,26 +35,96 @@ const AddNewStudyGroup = ({
     open: boolean;
     setOpen: (open: boolean) => void;
 }) => {
-    const initialValue = useNewStudyGroupStore(s => s.initialValue);
+    const formValue = useNewStudyGroupStore(s => s.formValue);
     const setValue = useNewStudyGroupStore(s => s.setValue);
+    const resetFormValue = useNewStudyGroupStore(s => s.resetFormValue);
+    const resetAll = useNewStudyGroupStore(s => s.resetAll);
+    const { mutate, isPending } = useCreateNewStudyGroupMutation();
 
-    console.log('asdd');
+    const onSubmit = (data: InitialValue) => {
+        mutate(data, {
+            onSuccess: () => {
+                setOpen(false);
+            },
+        });
+    };
+
     const form = useForm({
-        defaultValues: initialValue,
+        defaultValues: formValue,
     });
 
-    const onChange = (key: keyof InitialValue, data: any) => {
-        setValue(key, data);
-    };
+    const { data: gradeData } = useFetchGradesQuery(true);
+    const { data: scheduleData } = useGetTeacherScheduleQuery(true);
 
     const { handleSubmit, control } = form;
 
+    const onChange = (key: keyof InitialValue, data: any) => {
+        if (key === 'teacherMemberName') {
+            console.log(scheduleData?.find(schedule => schedule.teacherMemberName === data)?.ke);
+        }
+        resetFormValue(key);
+        setValue({
+            [key]: data,
+            ...(key === 'gradeId'
+                ? {
+                      alias: gradeData
+                          ?.find(grade => grade.id === data)
+                          ?.taughtBy.map(taughtBy => taughtBy.name),
+                  }
+                : {}),
+            ...(key === 'teacherMemberName'
+                ? {
+                      teacherTeamMemberId: scheduleData?.find(
+                          schedule => schedule.teacherMemberName === data
+                      )?.ke,
+                  }
+                : {}),
+        });
+    };
+
+    useEffect(() => {
+        if (formValue.day1 && formValue.time1 && formValue.teacherTeamMemberId) {
+            const getScheduleid = scheduleData?.find(
+                schedule =>
+                    schedule.day === formValue.day1 &&
+                    schedule.startTime === formValue.time1 &&
+                    Number(schedule.ke) === Number(formValue.teacherTeamMemberId)
+            );
+
+            if (getScheduleid) {
+                onChange('scheduleId1', getScheduleid.scheduleId);
+            }
+        }
+    }, [formValue.day1, formValue.time1, formValue.teacherTeamMemberId]);
+
+    useEffect(() => {
+        if (formValue.day2 && formValue.time2 && formValue.teacherTeamMemberId) {
+            const getScheduleid = scheduleData?.find(
+                schedule =>
+                    schedule.day === formValue.day2 &&
+                    schedule.startTime === formValue.time2 &&
+                    Number(schedule.ke) === Number(formValue.teacherTeamMemberId)
+            );
+
+            if (getScheduleid) {
+                onChange('scheduleId2', getScheduleid.scheduleId);
+            }
+        }
+    }, [formValue.day2, formValue.time2, formValue.teacherTeamMemberId]);
+
+    console.log(formValue);
     return (
         <>
-            <Dialog open={open} onOpenChange={setOpen}>
+            <Dialog
+                open={open}
+                onOpenChange={() => {
+                    setOpen(false);
+                    resetAll();
+                }}
+            >
                 <DialogContent className="h-[calc(100vh-10rem)] overflow-y-auto">
                     <DialogTitle>Tambah Kelompok Belajar</DialogTitle>
-                    <form className="space-y-4" onSubmit={handleSubmit(data => console.log(data))}>
+                    <form className="space-y-4" onSubmit={handleSubmit(data => onSubmit(data))}>
                         <Controller
                             control={control}
                             name="title"
@@ -55,7 +133,7 @@ const AddNewStudyGroup = ({
                                     <Label>Nama Kelompok*</Label>
                                     <Input
                                         className="mt-1"
-                                        value={field.value}
+                                        value={formValue.title}
                                         onChange={e => {
                                             onChange('title', e.target.value);
                                             field.onChange(e);
@@ -73,7 +151,7 @@ const AddNewStudyGroup = ({
                                     <Label>Deskripsi</Label>
                                     <Input
                                         className="mt-1"
-                                        value={field.value}
+                                        value={formValue.description}
                                         onChange={e => {
                                             onChange('description', e.target.value);
                                             field.onChange(e);
@@ -88,7 +166,7 @@ const AddNewStudyGroup = ({
                             name="programId"
                             render={({ field }) => (
                                 <SelectProgram
-                                    value={field.value}
+                                    value={formValue.programId}
                                     onChange={value => {
                                         onChange('programId', value);
                                         field.onChange(value);
@@ -100,15 +178,18 @@ const AddNewStudyGroup = ({
                         <Controller
                             control={control}
                             name="groupId"
-                            render={({ field }) => (
-                                <SelectGroup
-                                    value={field.value}
-                                    onChange={value => {
-                                        onChange('groupId', value);
-                                        field.onChange(value);
-                                    }}
-                                />
-                            )}
+                            render={({ field }) => {
+                                console.log(field.value);
+                                return (
+                                    <SelectGroup
+                                        value={formValue.groupId}
+                                        onChange={value => {
+                                            onChange('groupId', value);
+                                            field.onChange(value);
+                                        }}
+                                    />
+                                );
+                            }}
                         />
 
                         <Controller
@@ -116,7 +197,7 @@ const AddNewStudyGroup = ({
                             name="levelId"
                             render={({ field }) => (
                                 <SelectLevel
-                                    value={field.value}
+                                    value={formValue.levelId}
                                     onChange={value => {
                                         onChange('levelId', value);
                                         field.onChange(value);
@@ -130,7 +211,7 @@ const AddNewStudyGroup = ({
                             name="gradeId"
                             render={({ field }) => (
                                 <SelectGrade
-                                    value={field.value}
+                                    value={formValue.gradeId}
                                     onChange={value => {
                                         onChange('gradeId', value);
                                         field.onChange(value);
@@ -144,23 +225,9 @@ const AddNewStudyGroup = ({
                             name="packageId"
                             render={({ field }) => (
                                 <SelectPackage
-                                    value={field.value}
+                                    value={formValue.packageId}
                                     onChange={value => {
                                         onChange('packageId', value);
-                                        field.onChange(value);
-                                    }}
-                                />
-                            )}
-                        />
-
-                        <Controller
-                            control={control}
-                            name="teacherTeamMemberId"
-                            render={({ field }) => (
-                                <SelectTeacher
-                                    value={field.value}
-                                    onChange={value => {
-                                        onChange('teacherTeamMemberId', value);
                                         field.onChange(value);
                                     }}
                                 />
@@ -172,9 +239,23 @@ const AddNewStudyGroup = ({
                             name="locationId"
                             render={({ field }) => (
                                 <SelectLocation
-                                    value={field.value}
+                                    value={formValue.locationId}
                                     onChange={value => {
                                         onChange('locationId', value);
+                                        field.onChange(value);
+                                    }}
+                                />
+                            )}
+                        />
+
+                        <Controller
+                            control={control}
+                            name="teacherTeamMemberId"
+                            render={({ field }) => (
+                                <SelectTeacher
+                                    value={formValue.teacherMemberName}
+                                    onChange={value => {
+                                        onChange('teacherMemberName', value);
                                         field.onChange(value);
                                     }}
                                 />
@@ -188,44 +269,26 @@ const AddNewStudyGroup = ({
                                     control={control}
                                     name="day1"
                                     render={({ field }) => (
-                                        <div className="grow shrink-0">
-                                            <Label className="font-normal">Hari</Label>
-                                            <Select>
-                                                <SelectTrigger className="mt-1">
-                                                    <SelectValue placeholder="Pilih Jadwal" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="schedule1">
-                                                        Jadwal 1
-                                                    </SelectItem>
-                                                    <SelectItem value="schedule2">
-                                                        Jadwal 2
-                                                    </SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
+                                        <SelectDayOne
+                                            value={formValue.day1}
+                                            onChange={value => {
+                                                onChange('day1', value);
+                                                field.onChange(value);
+                                            }}
+                                        />
                                     )}
                                 />
                                 <Controller
                                     control={control}
                                     name="time1"
                                     render={({ field }) => (
-                                        <div className="grow shrink-0">
-                                            <Label className="font-normal">Waktu</Label>
-                                            <Select>
-                                                <SelectTrigger className="mt-1">
-                                                    <SelectValue placeholder="Pilih Jadwal" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="schedule1">
-                                                        Jadwal 1
-                                                    </SelectItem>
-                                                    <SelectItem value="schedule2">
-                                                        Jadwal 2
-                                                    </SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
+                                        <SelectTimeOne
+                                            value={formValue.time1}
+                                            onChange={value => {
+                                                onChange('time1', value);
+                                                field.onChange(value);
+                                            }}
+                                        />
                                     )}
                                 />
                             </div>
@@ -238,51 +301,35 @@ const AddNewStudyGroup = ({
                                     control={control}
                                     name="day2"
                                     render={({ field }) => (
-                                        <div className="grow shrink-0">
-                                            <Label className="font-normal">Hari</Label>
-                                            <Select>
-                                                <SelectTrigger className="mt-1">
-                                                    <SelectValue placeholder="Pilih Jadwal" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="schedule1">
-                                                        Jadwal 1
-                                                    </SelectItem>
-                                                    <SelectItem value="schedule2">
-                                                        Jadwal 2
-                                                    </SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
+                                        <SelectDayTwo
+                                            value={formValue.day2}
+                                            onChange={value => {
+                                                onChange('day2', value);
+                                                field.onChange(value);
+                                            }}
+                                        />
                                     )}
                                 />
                                 <Controller
                                     control={control}
                                     name="time2"
                                     render={({ field }) => (
-                                        <div className="grow shrink-0">
-                                            <Label className="text-sm font-normal">Waktu</Label>
-                                            <Select>
-                                                <SelectTrigger className="mt-1">
-                                                    <SelectValue placeholder="Pilih Jadwal" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="schedule1">
-                                                        Jadwal 1
-                                                    </SelectItem>
-                                                    <SelectItem value="schedule2">
-                                                        Jadwal 2
-                                                    </SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
+                                        <SelectTimeTwo
+                                            value={formValue.time2}
+                                            onChange={value => {
+                                                onChange('time2', value);
+                                                field.onChange(value);
+                                            }}
+                                        />
                                     )}
                                 />
                             </div>
                         </div>
 
                         <div className="flex justify-end">
-                            <Button type="submit">Buat Kelompok Belajar</Button>
+                            <Button type="submit" disabled={isPending}>
+                                {isPending ? 'Membuat...' : 'Buat Kelompok Belajar'}
+                            </Button>
                         </div>
                     </form>
                 </DialogContent>

@@ -8,14 +8,16 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import studyGroup from '@/data/study-group-detail.json';
 import { useEffect } from 'react';
 import { useScheduleManagementStore } from '../stores/schedule-management-store';
-import { StudyGroup } from '@/types/study-group';
+import { StudyGroupDetailAdmin } from '@/types/study-group';
 import { sleep } from '@/lib/mock';
 
 const fetchStudyGroupDetail = async (studyGroupId: number) => {
-    // const response = await api.get<TeacherScheduleResponse>(ENDPOINTS.fetchTeacherSchedule);
-    // return response.data;
-    await sleep(4000);
-    // return studyGroup;
+    const response = await api.get<StudyGroupDetailAdmin>(
+        ENDPOINTS.fetchStudyGroupDetail.expand({
+            studyGroupId,
+        })
+    );
+    return response.data;
 };
 
 export const useGetStudyGroupDetailQuery = (): UseQueryResult => {
@@ -30,7 +32,7 @@ export const useGetStudyGroupDetailQuery = (): UseQueryResult => {
 
     useEffect(() => {
         if (query.status === 'success') {
-            // setSelectedStudyGroup(query.data as StudyGroup);
+            setSelectedStudyGroup(query.data as StudyGroupDetailAdmin);
         }
     }, [query.status, query.data]);
 

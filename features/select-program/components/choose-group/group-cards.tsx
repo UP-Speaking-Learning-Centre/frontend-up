@@ -41,7 +41,6 @@ const GroupCards = () => {
         return '/groups/1.svg';
     };
 
-    console.log(isLoading);
     const renderContent = () => {
         if (isLoading) {
             return [...new Array(3)].map((_, i) => <Skeleton key={i} className="h-64 basis-1/5" />);
@@ -71,7 +70,7 @@ const GroupCards = () => {
     };
 
     return (
-        <div className="flex flex-col md:flex-row items-start gap-4 justify-center flex-wrap mt-8">
+        <div className="flex flex-col md:flex-row gap-4 justify-center flex-wrap mt-8">
             {renderContent()}
         </div>
     );

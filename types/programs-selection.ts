@@ -1,5 +1,5 @@
 import { DAY } from '@/constants/program-selections';
-import { ProgramDetailPrice } from './program-detail';
+import { ProgramDetailPrice } from '@/types/admin';
 
 export type ProgramType = {
     id: number;

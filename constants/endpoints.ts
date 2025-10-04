@@ -5,7 +5,7 @@ const ENDPOINTS = {
     fetchGroups: parseTemplate('/programs/{programId}/groups'),
     fetchLevels: parseTemplate('/programs/{programId}/groups/{groupId}/levels'),
     fetchGrades: parseTemplate('/programs/{programId}/groups/{groupId}/levels/{levelId}/grades'),
-    fetchPackages: parseTemplate('/packages'),
+    fetchPackages: '/packages',
     fetchLocations: '/locations',
     fetchAvailableSchedule: parseTemplate('/locations/{locationId}/available-schedules'),
     fetchStudyGroups: parseTemplate('/locations/{locationId}/study-groups'),
@@ -17,7 +17,12 @@ const ENDPOINTS = {
     submitPlacementTest: '/placement-tests/submit-guest',
     fetchTeacherSchedule: parseTemplate('/admin/teacher-schedules/location/{locationId}'),
     fetchStudyGroupDetail: parseTemplate('/admin/study-groups/{studyGroupId}'),
-    fetchStudentOfStudyGroup: parseTemplate('/admin/study-groups/{studyGroupId}/students'),
+    fetchStudentOfStudyGroup: parseTemplate('/admin/study-groups/{studyGroupId}/assigned-students'),
+    fetchAvailableStudent: parseTemplate('/admin/study-groups/{studyGroupId}/available-students'),
+    assignStudentToStudyGroup: '/admin/study-groups/assign-students',
+    unassignStudentFromStudyGroup: parseTemplate(
+        '/admin/study-groups/{studyGroupId}/unassign-students'
+    ),
     updatePriority: parseTemplate('/admin/study-groups/{studyGroupId}/priority'),
     fetchAvailableStudyGroup: parseTemplate(
         '/locations/{locationId}/study-groups?programId={programId}&groupId={groupId}&levelId={levelId}&packageId={packageId}'
@@ -31,6 +36,7 @@ const ENDPOINTS = {
     fetchAlias: '/admin/teachers',
     fetchAdminLocations: '/admin/locations',
     fetchAdminLocationsById: parseTemplate('/admin/locations/{id}'),
+    createNewStudyGroup: '/admin/study-groups',
 } as const;
 
 export default ENDPOINTS;
