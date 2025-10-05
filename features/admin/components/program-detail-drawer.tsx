@@ -12,7 +12,7 @@ const ProgramDetailDrawer = () => {
     return (
         <div
             className={clsx(
-                'block fixed bg-white w-[400px] min-h-[100vh] shadow-lg right-0 top-0 transition-all p-4 overflow-auto',
+                'block fixed bg-white w-[400px] h-[100vh] shadow-lg right-0 top-0 transition-all p-4 overflow-auto',
                 !isDrawerOpen ? 'translate-x-full' : 'translate-x-0'
             )}
         >

@@ -1,6 +1,13 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import {
+    ProgramDetail,
+    ProgramDetailGrade,
+    ProgramDetailGroup,
+    ProgramDetailTreeInterfaceItems,
+    ProgramRecurse,
+} from '@/types/admin';
 import clsx from 'clsx';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useProgramDetailStore } from '../stores/program-detail';
@@ -10,30 +17,36 @@ const ProgramDetailCard = ({
     isActive,
     isOpen,
     isChild,
-    hasChild,
     onOpenCollapse,
-    title,
-    description,
-    id,
+    item,
+    section,
 }: {
     title: string;
-    description: string;
     isActive: boolean;
     isOpen: boolean;
     isChild?: boolean;
-    hasChild?: boolean;
-    id: string;
     onOpenCollapse?: () => void;
+    item: ProgramDetailTreeInterfaceItems;
+    section: string;
 }) => {
+    const { id, title, children } = item;
     const { setState } = useProgramDetailStore();
 
     const handleOpenDetail = () => {
         setState({
-            id,
+            id: id.toString(),
             isDrawerOpen: true,
-            title: 'Program Detail',
-            content: <ProgramDetailDrawerDetail title={title} desc={description} />,
+            title: section + ' Detail',
+            content: <ProgramDetailDrawerDetail title={title} props={item} />,
         });
+    };
+
+    const getDescription = (item: ProgramRecurse) => {
+        return (
+            (item as ProgramDetail).description ||
+            (item as ProgramDetailGroup).materi ||
+            (item as ProgramDetailGrade).prerequisites
+        );
     };
 
     return (
@@ -50,8 +63,10 @@ const ProgramDetailCard = ({
                 <div className="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0"></div>
                 <div className="flex-1 truncate">
                     <h2 className="text-lg font-semibold text-[#020817] mb-2">{title}</h2>
-                    <p className="text-sm text-gray-600 leading-relaxed mb-4 truncate">{description}</p>
-                    {hasChild && (
+                    <p className="text-sm text-gray-600 leading-relaxed mb-4 truncate">
+                        {getDescription(item as ProgramRecurse)}
+                    </p>
+                    {!!children && (
                         <div className="flex items-center justify-center">
                             <button
                                 onClick={onOpenCollapse}

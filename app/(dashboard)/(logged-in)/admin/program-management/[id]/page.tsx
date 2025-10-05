@@ -55,10 +55,9 @@ const page = () => {
                             {data?.items.map((item, idx) => (
                                 <ProgramDetailControl
                                     id={idx.toString()}
-                                    title={item.title}
-                                    description={item.description}
-                                    children={item.children}
+                                    item={item}
                                     isChild={false}
+                                    section='Program'
                                 />
                             ))}
                         </Skeleton>

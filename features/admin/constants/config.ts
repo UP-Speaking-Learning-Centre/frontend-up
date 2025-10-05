@@ -31,3 +31,27 @@ export const PACKAGE_OPTIONS = [
     { value: 2, label: 'Private' },
     { value: 3, label: 'Ekslusif' },
 ];
+
+export const EXCLUDE_ITEMS = [
+    'id',
+    'title',
+    'children',
+    'programId',
+    'programName',
+    'groups',
+    'groupId',
+    'groupName',
+    'levels',
+    'levelId',
+    'levelName',
+    'grades',
+    'gradeId',
+    'gradeNumber',
+    'packages',
+    'gradePackageId',
+    'packageName',
+    'price1month',
+    'price2months',
+    'price6months',
+    'prices',
+];

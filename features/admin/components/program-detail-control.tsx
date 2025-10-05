@@ -1,38 +1,37 @@
 'use client';
-import { ProgramDetailTreeInterface } from '@/types/admin';
+import { ProgramDetailTreeInterfaceItems } from '@/types/admin';
 import { useState } from 'react';
+import { useProgramDetailStore } from '../stores/program-detail';
 import ProgramDetailCard from './program-detail-card';
 import ProgramDetailTree from './program-detail-tree';
-import { useProgramDetailStore } from '../stores/program-detail';
 
 const ProgramDetailControl = ({
     id,
-    children,
     isChild,
-    title,
-    description,
+    item,
+    section
 }: {
     id: string;
-    children?: ProgramDetailTreeInterface;
     isChild?: boolean;
-    title: string;
-    description: string;
+    item: ProgramDetailTreeInterfaceItems;
+    section:string
 }) => {
     const [open, setOpen] = useState(false);
     const id_ = useProgramDetailStore(s => s.id);
     return (
         <>
             <ProgramDetailCard
-                id={id.toString()}
-                title={title}
-                description={description}
+                title={item.title}
                 isActive={id === id_}
                 isOpen={open}
                 isChild={isChild}
-                hasChild={!!children}
                 onOpenCollapse={() => setOpen(!open)}
+                item={item}
+                section={section}
             />
-            {!!children && open && <ProgramDetailTree id={id.toString()} items={children} />}
+            {!!item.children && open && (
+                <ProgramDetailTree id={id.toString()} items={item.children} />
+            )}
         </>
     );
 };

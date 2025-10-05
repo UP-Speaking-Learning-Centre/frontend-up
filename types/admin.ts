@@ -3,10 +3,9 @@ export interface ProgramDetailTreeInterface {
     items: ProgramDetailTreeInterfaceItems[];
 }
 
-export interface ProgramDetailTreeInterfaceItems {
+export interface ProgramDetailTreeInterfaceItems extends ProgramDetail {
     id: number;
     title: string;
-    description: string;
     children?: ProgramDetailTreeInterface;
 }
 
