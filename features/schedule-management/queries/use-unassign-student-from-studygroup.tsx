@@ -30,6 +30,7 @@ export const useUnassignStudentFromStudyGroupMutation = (): UseMutationResult<
     UnassignStudentFromStudyGroupPayload
 > => {
     const studyGroupId = useScheduleManagementStore(s => s.studyGroupId);
+    const locationId = useScheduleManagementStore(s => s.locationId);
     const queryClient = useQueryClient();
 
     return useMutation({
@@ -41,7 +42,11 @@ export const useUnassignStudentFromStudyGroupMutation = (): UseMutationResult<
                 className: 'bg-green-200 border-green-300',
                 position: 'top-center',
             });
-            queryClient.invalidateQueries({ queryKey: ['student-of-study-group'] });
+            Promise.all([
+                queryClient.invalidateQueries({ queryKey: ['student-of-study-group'] }),
+                queryClient.invalidateQueries({ queryKey: ['available-student'], exact: false }),
+                queryClient.invalidateQueries({ queryKey: ['teacher-schedule', locationId] }),
+            ]);
         },
     });
 };

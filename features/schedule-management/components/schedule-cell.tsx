@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
-import { Plus } from 'lucide-react';
+import { Plus, Star, StarIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useScheduleManagementStore } from '../stores/schedule-management-store';
 import StudyGroupDetail from './studygroup-detail';
@@ -93,8 +93,8 @@ export default ScheduleCell;
 
 const PriorityTag = () => {
     return (
-        <div className="h-5 w-5 absolute -top-1 -right-1 rounded bg-red-100 border border-red-500 flex items-center justify-center text-red-600">
-            P
+        <div className="h-5 w-5 absolute -top-1 -right-1 rounded bg-yellow-100 border border-yellow-500 flex items-center justify-center text-yellow-600">
+            <Star className="w-3 h-3" />
         </div>
     );
 };

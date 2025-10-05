@@ -7,6 +7,7 @@ import { useScheduleManagementStore } from '../stores/schedule-management-store'
 import { AvailableStudentForStudyGroup, StudendOfStudyGrouResponse } from '@/types/students';
 import ENDPOINTS from '@/constants/endpoints';
 import api from '@/lib/api';
+import { useEffect } from 'react';
 
 const fetchAvailableStudent = async (
     studyGroupId: number
@@ -19,11 +20,19 @@ const fetchAvailableStudent = async (
 
 export const useGetAvailableStudentQuery = (): UseQueryResult<AvailableStudentForStudyGroup[]> => {
     const studyGroupId = useScheduleManagementStore(s => s.studyGroupId);
+    const setListAvailableStudent = useScheduleManagementStore(s => s.setListAvailableStudent);
 
     const query = useQuery({
         queryKey: ['available-student', studyGroupId],
         queryFn: () => fetchAvailableStudent(studyGroupId as number),
         enabled: !!studyGroupId,
     });
+
+    useEffect(() => {
+        if (query.isSuccess && query.isFetchedAfterMount) {
+            setListAvailableStudent(query.data);
+        }
+    }, [query.data, query.isSuccess, query.isFetchedAfterMount]);
+
     return query;
 };

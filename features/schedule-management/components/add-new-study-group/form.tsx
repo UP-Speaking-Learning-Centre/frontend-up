@@ -1,15 +1,7 @@
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
-import { Plus } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import SelectProgram from './select-program';
 import SelectPackage from './select-package';
@@ -20,13 +12,11 @@ import SelectGroup from './select-group';
 import SelectLevel from './select-level';
 import { InitialValue, useNewStudyGroupStore } from '../../stores/new-study-group-store';
 import useFetchGradesQuery from '@/features/select-program/queries/use-fetch-grades';
-import { useScheduleOptions } from '../../hooks/use-map-teacher';
 import { useGetTeacherScheduleQuery } from '../../queries/use-get-teacher-schedule';
 import { SelectDayOne, SelectTimeOne } from './select-schedule-one';
 import { useEffect } from 'react';
 import { SelectDayTwo, SelectTimeTwo } from './select-schedule-two';
 import { useCreateNewStudyGroupMutation } from '../../queries/use-create-new-study-group';
-import { toast } from 'sonner';
 
 const AddNewStudyGroup = ({
     open,
@@ -53,10 +43,12 @@ const AddNewStudyGroup = ({
         defaultValues: formValue,
     });
 
+    const { handleSubmit, control, watch } = form;
+    // useEffect(() => {
+    // }, [watch('teacherMemberName')]);
+
     const { data: gradeData } = useFetchGradesQuery(true);
     const { data: scheduleData } = useGetTeacherScheduleQuery(true);
-
-    const { handleSubmit, control } = form;
 
     const onChange = (key: keyof InitialValue, data: any) => {
         if (key === 'teacherMemberName') {
@@ -112,7 +104,20 @@ const AddNewStudyGroup = ({
         }
     }, [formValue.day2, formValue.time2, formValue.teacherTeamMemberId]);
 
-    console.log(formValue);
+    const disabled =
+        !formValue.title ||
+        !formValue.description ||
+        !formValue.programId ||
+        !formValue.groupId ||
+        !formValue.gradeId ||
+        !formValue.teacherMemberName ||
+        !formValue.day1 ||
+        !formValue.time1 ||
+        !formValue.day2 ||
+        !formValue.time2 ||
+        !formValue.scheduleId1 ||
+        !formValue.scheduleId2;
+
     return (
         <>
             <Dialog
@@ -264,7 +269,7 @@ const AddNewStudyGroup = ({
 
                         <div>
                             <Label>Jadwal 1*</Label>
-                            <div className="flex gap-4">
+                            <div className="flex gap-4 w-full">
                                 <Controller
                                     control={control}
                                     name="day1"
@@ -296,7 +301,7 @@ const AddNewStudyGroup = ({
 
                         <div>
                             <Label>Jadwal 2*</Label>
-                            <div className="flex gap-4">
+                            <div className="flex gap-4 w-full">
                                 <Controller
                                     control={control}
                                     name="day2"
@@ -327,7 +332,7 @@ const AddNewStudyGroup = ({
                         </div>
 
                         <div className="flex justify-end">
-                            <Button type="submit" disabled={isPending}>
+                            <Button type="submit" disabled={isPending || disabled}>
                                 {isPending ? 'Membuat...' : 'Buat Kelompok Belajar'}
                             </Button>
                         </div>

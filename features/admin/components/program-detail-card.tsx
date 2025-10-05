@@ -71,7 +71,7 @@ const ProgramDetailCard = ({
                     onClick={handleOpenDetail}
                     variant="outline"
                     size="sm"
-                    className="text-primary border-2 border-primary hover:bg-orange-50 bg-transparent bg-white"
+                    className="border border-primary"
                 >
                     Lihat Detail
                 </Button>

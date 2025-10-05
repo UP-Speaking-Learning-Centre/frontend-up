@@ -5,7 +5,7 @@ export const getPackageColor = (packageType: string | null) => {
         case 'Private':
             return 'bg-green-100 text-green-800 border border-green-500 hover:bg-green-200';
         case 'Exclusive':
-            return 'bg-yellow-100 text-yellow-800 border border-yellow-500 hover:bg-yellow-200';
+            return 'bg-red-100 text-red-800 border border-red-500 hover:bg-red-200';
         default:
             return 'bg-gray-50 text-gray-600 border border-gray-500 hover:bg-gray-200';
     }

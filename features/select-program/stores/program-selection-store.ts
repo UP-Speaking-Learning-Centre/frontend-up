@@ -8,7 +8,7 @@ import {
     CHOOSE_TRIAL_CLASS_STEP,
     PROGRAM_SELECTION_STEPS,
 } from '@/constants/program-selections';
-import { ProgramDetailPrice } from '@/types/admin';
+import { ProgramDetailPrice } from '@/types/programs-selection';
 import { StudyGroup } from '@/types/study-group';
 import { create } from 'zustand';
 

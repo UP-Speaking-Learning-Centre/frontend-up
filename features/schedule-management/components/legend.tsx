@@ -1,4 +1,5 @@
 import { Card } from '@/components/ui/card';
+import { Star } from 'lucide-react';
 import React from 'react';
 
 const Legend = () => {
@@ -14,12 +15,12 @@ const Legend = () => {
                     <span>Private</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="h-5 w-5 shrink-0 rounded bg-yellow-100 border border-yellow-500"></div>
+                    <div className="h-5 w-5 shrink-0 rounded bg-red-100 border border-red-500"></div>
                     <span>Exclusive</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="h-5 w-5 shrink-0 rounded bg-red-100 border border-red-500 flex items-center justify-center text-red-600">
-                        P
+                    <div className="h-5 w-5 shrink-0 rounded bg-yellow-100 border border-yellow-500 flex items-center justify-center text-yellow-600">
+                        <Star className="w-3 h-3" />
                     </div>
                     <span>Prioritas</span>
                 </div>

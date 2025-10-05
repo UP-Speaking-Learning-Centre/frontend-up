@@ -20,16 +20,16 @@ const SuccessDialog = ({
 
     const getTitle = () => {
         if (isFromPlacement) {
-            return ' Pengisian Data Diri Berhasil!';
+            return 'Pengisian Data Diri Berhasil!';
         }
         return 'Pendaftaran program berhasil!';
     };
 
     const getSubTitle = () => {
         if (isFromPlacement) {
-            return 'Tim UP SLC akan menghubungi anda secepatnya!';
+            return 'Terima kasih telah mendaftar! Tim UP SLC akan menghubungi anda secepatnya.';
         }
-        return 'Tim UP SLC akan menghubungi anda secepatnya jika terdapat perubahan.';
+        return 'Terima kasih telah mendaftar! Tim UP SLC akan menghubungi anda secepatnya.';
     };
 
     return (
@@ -43,7 +43,7 @@ const SuccessDialog = ({
                     </div>
                     <div className="text-center">
                         <p className="text-[#020817] font-semibold text-lg">{getTitle()}</p>
-                        <p className="text-[#64748B] text-sm mt-1">{getSubTitle()}</p>
+                        <p className="text-[#64748B] text-base mt-2">{getSubTitle()}</p>
                     </div>
                     <div className="flex gap-2 justify-center w-full">
                         <Button

@@ -1,4 +1,4 @@
-import { StudentOfStudyGroup } from '@/types/students';
+import { AvailableStudentForStudyGroup, StudentOfStudyGroup } from '@/types/students';
 import { StudyGroupDetailAdmin } from '@/types/study-group';
 import { create } from 'zustand';
 
@@ -8,11 +8,13 @@ type ScheduleManagementStore = {
     selectedStudyGroup: StudyGroupDetailAdmin | null;
     locationId: number | null;
     setLocationId: (locationId: number) => void;
+    listAvailableStudent: AvailableStudentForStudyGroup[];
     studentsOfSelectedStudyGroup: StudentOfStudyGroup[];
     studyGroupId: number | null;
     setSelectedStudyGroup: (studyGroup: StudyGroupDetailAdmin) => void;
     setStudyGroupId: (studyGroupId: number) => void;
     setStudentsOfSelectedStudyGroup: (students: StudentOfStudyGroup[]) => void;
+    setListAvailableStudent: (students: AvailableStudentForStudyGroup[]) => void;
 };
 
 export const useScheduleManagementStore = create<ScheduleManagementStore>()(set => ({
@@ -23,9 +25,12 @@ export const useScheduleManagementStore = create<ScheduleManagementStore>()(set 
     setLocationId: (locationId: number) => set({ locationId: locationId }),
     studyGroupId: null,
     studentsOfSelectedStudyGroup: [],
+    listAvailableStudent: [],
     setSelectedStudyGroup: (studyGroup: StudyGroupDetailAdmin) =>
         set({ selectedStudyGroup: studyGroup }),
     setStudyGroupId: (studyGroupId: number) => set({ studyGroupId: studyGroupId }),
     setStudentsOfSelectedStudyGroup: (students: StudentOfStudyGroup[]) =>
         set({ studentsOfSelectedStudyGroup: students }),
+    setListAvailableStudent: (students: AvailableStudentForStudyGroup[]) =>
+        set({ listAvailableStudent: students }),
 }));

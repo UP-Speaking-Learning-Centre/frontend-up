@@ -37,7 +37,7 @@ export const usePlacementTest = (
 
     useEffect(() => {
         if (questions.length > 0) {
-            localStorage.setItem(QUESTION_KEY, JSON.stringify(questions));
+            sessionStorage.setItem(QUESTION_KEY, JSON.stringify(questions));
         }
     }, [questions]);
 
@@ -46,7 +46,7 @@ export const usePlacementTest = (
     useEffect(() => {
         try {
             setLoadSavedState(true);
-            const savedState = localStorage.getItem(STORAGE_KEY);
+            const savedState = sessionStorage.getItem(STORAGE_KEY);
 
             if (savedState) {
                 const parsedState = JSON.parse(savedState) as StoredTestState;
@@ -68,7 +68,7 @@ export const usePlacementTest = (
                 setStartedAt(Date.now());
             }
 
-            const savedQuestion = localStorage.getItem(QUESTION_KEY);
+            const savedQuestion = sessionStorage.getItem(QUESTION_KEY);
 
             if (savedQuestion) {
                 const parsedData = JSON.parse(savedQuestion) as QuestionForGuest[];
@@ -99,7 +99,7 @@ export const usePlacementTest = (
         };
 
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+            sessionStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
         } catch (error) {
             console.error('Failed to save test state:', error);
         }
@@ -111,7 +111,7 @@ export const usePlacementTest = (
 
     const clearSavedState = useCallback(() => {
         try {
-            localStorage.removeItem(STORAGE_KEY);
+            sessionStorage.removeItem(STORAGE_KEY);
         } catch (error) {
             console.error('Failed to clear saved test state:', error);
         }
@@ -185,8 +185,8 @@ export const usePlacementTest = (
                         `${ROUTES.placementTest}?testSessionId=${testSessionId}&isCompleted=true`
                     );
                     setIsCompleted(true);
-                    localStorage.removeItem(STORAGE_KEY);
-                    localStorage.removeItem(QUESTION_KEY);
+                    sessionStorage.removeItem(STORAGE_KEY);
+                    sessionStorage.removeItem(QUESTION_KEY);
                 },
             }
         );

@@ -1,5 +1,4 @@
 import { DAY } from '@/constants/program-selections';
-import { ProgramDetailPrice } from '@/types/admin';
 
 export type ProgramType = {
     id: number;
@@ -68,6 +67,15 @@ export type AvailableScheduleType = {
     isCoordinator: boolean;
     locationId: number;
     locationName: string;
+};
+
+export type ProgramDetailPrice = {
+    timeframe: string;
+    amount: number;
+    package: {
+        id: number;
+        name: string;
+    };
 };
 
 export type DayOfWeekType = (typeof DAY)[number] | '' | null;

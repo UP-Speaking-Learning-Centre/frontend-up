@@ -14,7 +14,7 @@ const navigation = ({
     goToQuestion: (index: number) => void;
 }) => {
     return (
-        <Card className="col-span-4 h-fit">
+        <Card className="md:col-span-4 h-fit">
             <CardHeader>
                 <CardTitle className="text-sm">Navigasi Soal</CardTitle>
             </CardHeader>

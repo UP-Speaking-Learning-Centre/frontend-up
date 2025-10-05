@@ -91,9 +91,9 @@ const WithPlacementTest = ({ display }: { display: boolean }) => {
                                     className="flex-1 bg-[#CE6439] text-white"
                                     onClick={() => {
                                         setOpenDialogPlacement(false);
-                                        localStorage.removeItem(STORAGE_KEY);
-                                        localStorage.removeItem(QUESTION_KEY);
-                                        localStorage.setItem(
+                                        sessionStorage.removeItem(STORAGE_KEY);
+                                        sessionStorage.removeItem(QUESTION_KEY);
+                                        sessionStorage.setItem(
                                             FORM_VALUE_KEY,
                                             JSON.stringify(formValue)
                                         );

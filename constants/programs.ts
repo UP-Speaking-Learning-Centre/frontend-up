@@ -17,3 +17,9 @@ export const AVAILABLE_PROGRAMS = [
         href: ROUTES.programs,
     },
 ];
+
+export const MAX_STUDENT = {
+    ['Exclusive']: 1,
+    ['Private']: 2,
+    ['Semi Private']: 10,
+};

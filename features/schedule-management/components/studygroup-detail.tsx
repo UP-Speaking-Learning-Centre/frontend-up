@@ -2,11 +2,11 @@
 
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { DialogContent, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { renderDayToIndonesian } from '@/lib/moment';
-import { Plus } from 'lucide-react';
+import { Minus, MinusCircle, Plus } from 'lucide-react';
 import { useGetStudentOfStudyGroupQuery } from '../queries/use-get-student-of-study-group';
 import { useGetStudyGroupDetailQuery } from '../queries/use-get-study-group-detail';
 import { useScheduleManagementStore } from '../stores/schedule-management-store';
@@ -14,8 +14,10 @@ import AddNewStudyGroupTrigger from './add-new-study-group/trigger';
 import { useUpdatePriorityMutation } from '../queries/use-update-priority';
 import { useGetAvailableStudentQuery } from '../queries/use-get-available-student';
 import AvailableStudent from './available-student';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useUnassignStudentFromStudyGroupMutation } from '../queries/use-unassign-student-from-studygroup';
+import { MAX_STUDENT } from '@/constants/programs';
+import { StudentOfStudyGroup } from '@/types/students';
 
 const StudyGroupDetail = ({
     isTeacherManagement,
@@ -32,8 +34,66 @@ const StudyGroupDetail = ({
     const studyGroupId = useScheduleManagementStore(s => s.studyGroupId);
     const selectedStudyGroup = useScheduleManagementStore(s => s.selectedStudyGroup);
     const { mutateAsync, isPending: updatePriorityLoading } = useUpdatePriorityMutation();
+    const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
+    const [selectedStudent, setSelectedStudent] = useState<StudentOfStudyGroup>(
+        {} as StudentOfStudyGroup
+    );
     const { mutateAsync: unassignStudentFromStudyGroup } =
         useUnassignStudentFromStudyGroupMutation();
+
+    const isDisabledAddStudent = useMemo(() => {
+        const studyGroupPackage = selectedStudyGroup?.package;
+        const maxStudent = MAX_STUDENT[studyGroupPackage?.name as keyof typeof MAX_STUDENT];
+        return (studentOfStudyGroup?.students?.length || 0) >= maxStudent;
+    }, [studentOfStudyGroup, selectedStudyGroup]);
+
+    const renderDeleteConfirmation = () => {
+        if (openDeleteConfirmation) {
+            return (
+                <Dialog open={openDeleteConfirmation} onOpenChange={setOpenDeleteConfirmation}>
+                    <DialogContent>
+                        <DialogTitle className="sr-only"></DialogTitle>
+                        <div className="flex items-center flex-col mt-4 gap-8 justify-center">
+                            <div>
+                                <h4 className="text-center text-2xl font-semibold">
+                                    Hapus siswa dari study group?
+                                </h4>
+                                <p className="text-center text-base mt-2 font-normal">
+                                    Apakah kamu yakin akan menghapus{' '}
+                                    <span className="font-medium text-primary">
+                                        {selectedStudent.studentName}
+                                    </span>{' '}
+                                    dari kelompok ini?
+                                </p>
+                            </div>
+                            <div className="flex items-center w-full justify-center gap-2">
+                                <Button
+                                    className="flex-1 w-full"
+                                    variant="outline"
+                                    onClick={() => setOpenDeleteConfirmation(false)}
+                                >
+                                    Batal
+                                </Button>
+                                <Button
+                                    className="flex-1"
+                                    variant="default"
+                                    onClick={() => {
+                                        unassignStudentFromStudyGroup({
+                                            studentIds: [selectedStudent.studentId],
+                                            hard: true,
+                                        });
+                                        setOpenDeleteConfirmation(false);
+                                    }}
+                                >
+                                    Ya
+                                </Button>
+                            </div>
+                        </div>
+                    </DialogContent>
+                </Dialog>
+            );
+        }
+    };
 
     if (studyGroupId === 0) {
         return (
@@ -56,20 +116,17 @@ const StudyGroupDetail = ({
     }
 
     return (
-        <DialogContent className="w-[600px] max-w-7xl max-h-screen">
+        <DialogContent className="md:w-[600px] overflow-auto max-w-7xl max-h-[calc(100vh-10rem)]">
             <DialogTitle>Detail Kelompok Belajar</DialogTitle>
-            <div className="grid grid-cols-3 gap-4">
+
+            <Skeleton className="w-56 mx-auto my-4 h-5" loading={isLoading}>
+                <p className="text-xl text-center font-semibold my-4 text-[#020817]">
+                    Nama Kelompok: {selectedStudyGroup?.name}
+                </p>
+            </Skeleton>
+
+            <div className="grid grid-col-1 md:grid-cols-3 gap-4">
                 <div className="space-y-3">
-                    <div className="p-3 bg-secondary rounded-md">
-                        <div className="flex flex-col bg-white p-2 rounded-md">
-                            <p className="text-xs text-[#9CA3AF]">Nama Kelompok</p>
-                            <Skeleton className="w-20 h-4" loading={isLoading}>
-                                <p className="text-base text-[#020817]">
-                                    {selectedStudyGroup?.name}
-                                </p>
-                            </Skeleton>
-                        </div>
-                    </div>
                     <div className="flex flex-col">
                         <p className="text-xs text-[#9CA3AF]">Teacher</p>
                         <Skeleton className="w-20 h-4" loading={isLoading}>
@@ -94,6 +151,7 @@ const StudyGroupDetail = ({
                             </p>
                             <Button
                                 size="sm"
+                                className="mt-1 w-fit"
                                 onClick={() =>
                                     mutateAsync({
                                         isPriority: !selectedStudyGroup?.isPriority,
@@ -138,8 +196,8 @@ const StudyGroupDetail = ({
                     <div className="rounded-md h-full flex flex-col justify-between bg-white p-2 space-y-3">
                         <div className="flex flex-col">
                             <p className="text-base font-semibold">Jadwal 1</p>
-                            <Skeleton className="w-20 h-4" loading={isLoading}>
-                                <div className="text-base text-[#020817]">
+                            <div className="text-base text-[#020817]">
+                                <Skeleton className="w-20 h-4" loading={isLoading}>
                                     <div className="flex items-center justify-between gap-1">
                                         <p className="text-xs text-neutral-500">Hari:</p>
                                         <p className="text-sm">
@@ -149,26 +207,30 @@ const StudyGroupDetail = ({
                                             )}
                                         </p>
                                     </div>
+                                </Skeleton>
+                                <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
                                     <div className="flex items-center justify-between gap-1">
                                         <p className="text-xs text-neutral-500">Mulai:</p>
                                         <p className="text-sm">
                                             {selectedStudyGroup?.schedules[0]?.startTime}
                                         </p>
                                     </div>
+                                </Skeleton>
+                                <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
                                     <div className="flex items-center justify-between gap-1">
                                         <p className="text-xs text-neutral-500">Selesai:</p>
                                         <p className="text-sm">
                                             {selectedStudyGroup?.schedules[0]?.endTime}
                                         </p>
                                     </div>
-                                </div>
-                            </Skeleton>
+                                </Skeleton>
+                            </div>
                         </div>
                         {selectedStudyGroup?.schedules.length === 2 && (
                             <div className="flex flex-col">
                                 <p className="text-base font-semibold">Jadwal 2</p>
-                                <Skeleton className="w-20 h-4" loading={isLoading}>
-                                    <div className="text-base text-[#020817]">
+                                <div className="text-base text-[#020817]">
+                                    <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
                                         <div className="flex items-center justify-between gap-1">
                                             <p className="text-xs text-neutral-500">Hari:</p>
                                             <p className="text-sm">
@@ -178,20 +240,25 @@ const StudyGroupDetail = ({
                                                 )}
                                             </p>
                                         </div>
+                                    </Skeleton>
+                                    <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
                                         <div className="flex items-center justify-between gap-1">
                                             <p className="text-xs text-neutral-500">Mulai:</p>
                                             <p className="text-sm">
                                                 {selectedStudyGroup?.schedules[1]?.startTime}
                                             </p>
                                         </div>
+                                    </Skeleton>
+
+                                    <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
                                         <div className="flex items-center justify-between gap-1">
                                             <p className="text-xs text-neutral-500">Selesai:</p>
                                             <p className="text-sm">
                                                 {selectedStudyGroup?.schedules[1]?.endTime}
                                             </p>
                                         </div>
-                                    </div>
-                                </Skeleton>
+                                    </Skeleton>
+                                </div>
                             </div>
                         )}
                     </div>
@@ -215,21 +282,18 @@ const StudyGroupDetail = ({
                                       <p className="font-normal">
                                           {index + 1}. {student.studentName}
                                       </p>
-                                      <Button
-                                          size="sm"
-                                          onClick={() =>
-                                              unassignStudentFromStudyGroup({
-                                                  studentIds: [student.studentId],
-                                                  hard: true,
-                                              })
-                                          }
-                                      >
-                                          Hapus
-                                      </Button>
+                                      <MinusCircle
+                                          className="text-primary cursor-pointer"
+                                          onClick={() => {
+                                              setOpenDeleteConfirmation(true);
+                                              setSelectedStudent(student);
+                                          }}
+                                      />
                                   </div>
                               ))}
                     </div>
-                    {isTeacherManagement || (
+
+                    {!isDisabledAddStudent && !isTeacherManagement && (
                         <>
                             <div className="flex items-center justify-center mt-6">
                                 <Button
@@ -249,6 +313,8 @@ const StudyGroupDetail = ({
                             )}
                         </>
                     )}
+
+                    {renderDeleteConfirmation()}
                 </div>
             </Card>
         </DialogContent>

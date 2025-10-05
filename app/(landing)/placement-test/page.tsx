@@ -50,7 +50,48 @@ function PlacementTestPage() {
         router.push(`${ROUTES.register}?testSessionId=${testSessionId}`);
     };
 
-    if (!testSessionId) {
+    if (isCompleted) {
+        return (
+            <div className="mx-auto my-20 flex items-center justify-center p-4">
+                <Card className="w-full max-w-md">
+                    <CardHeader className="text-center">
+                        <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                            <CheckCircle className="w-8 h-8 text-green-600" />
+                        </div>
+                        <CardTitle>Test Selesai!</CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-center">
+                        <p className="text-base text-[#1E3A8A]">
+                            Terima kasih telah mengikuti test placement, Tim UP SLC akan menghubungi
+                            anda dalam waktu dekat.
+                        </p>
+
+                        <Button onClick={handleContinueToForm} className="w-full mt-5">
+                            Isi Data Diri
+                        </Button>
+                    </CardContent>
+                </Card>
+            </div>
+        );
+    }
+
+    if (loadSavedState) {
+        return (
+            <div className="min-h-screen max-w bg-gray-50 pt-4">
+                <div className="mx-auto max-w-7xl px-6 lg:px-8 gap-4 grid grid-cols-12">
+                    <div className="col-span-8">
+                        <Skeleton className="w-full h-32" />
+                        <Skeleton className="w-full h-32 mt-4" />
+                    </div>
+                    <div className="col-span-4">
+                        <Skeleton className="w-full h-32" />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (!testSessionId || !currentQuestion) {
         return (
             <div className="mx-auto my-20 flex items-center justify-center p-4">
                 <Card className="w-full max-w-md">
@@ -80,59 +121,12 @@ function PlacementTestPage() {
         );
     }
 
-    if (isCompleted) {
-        return (
-            <div className="mx-auto my-20 flex items-center justify-center p-4">
-                <Card className="w-full max-w-md">
-                    <CardHeader className="text-center">
-                        <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                            <CheckCircle className="w-8 h-8 text-green-600" />
-                        </div>
-                        <CardTitle>Test Selesai!</CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-center space-y-4">
-                        <div className="bg-[#EFF6FF] text-[#1E3A8A] px-4 py-6 rounded-lg">
-                            <p className="text-xs">Langkah Selanjutnya:</p>
-                            <p className="font-semibold text-lg">Interview dengan pihak UP SLC</p>
-                        </div>
-                        <p className="text-sm text-[#4B5563]">
-                            Tim UP SLC akan menghubungi anda dalam waktu dekat untuk interview, tapi
-                            sebelum itu{' '}
-                            <span className="font-semibold text-[#1E3A8A]">
-                                anda harus mengisi data diri terlebih dahulu!
-                            </span>
-                        </p>
-                        <Button onClick={handleContinueToForm} className="w-full">
-                            Isi Data Diri
-                        </Button>
-                    </CardContent>
-                </Card>
-            </div>
-        );
-    }
-
-    if (loadSavedState) {
-        return (
-            <div className="min-h-screen max-w bg-gray-50 pt-4">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8 gap-4 grid grid-cols-12">
-                    <div className="col-span-8">
-                        <Skeleton className="w-full h-32" />
-                        <Skeleton className="w-full h-32 mt-4" />
-                    </div>
-                    <div className="col-span-4">
-                        <Skeleton className="w-full h-32" />
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <>
             {isPending && <Overlay opacity={10} />}
             <div className="min-h-screen max-w bg-gray-50 pt-4">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8 gap-4 grid grid-cols-12">
-                    <div className="col-span-8">
+                <div className="mx-auto max-w-7xl px-6 lg:px-8 gap-4 grid grid-cols-1 md:grid-cols-12">
+                    <div className="md:col-span-8">
                         {/* Header */}
                         <Header
                             timeLeft={timeLeft}

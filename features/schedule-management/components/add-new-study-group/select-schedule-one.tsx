@@ -8,6 +8,8 @@ import {
 } from '@/components/ui/select';
 import { useGetTeacherScheduleQuery } from '../../queries/use-get-teacher-schedule';
 import { useScheduleOptions } from '../../hooks/use-map-teacher';
+import { useNewStudyGroupStore } from '../../stores/new-study-group-store';
+import { dayNames, days } from '@/constants/schedule';
 
 export const SelectDayOne = ({
     value,
@@ -17,24 +19,35 @@ export const SelectDayOne = ({
     onChange: (value: string) => void;
 }) => {
     const { data } = useGetTeacherScheduleQuery(true);
-    const { days } = useScheduleOptions(data || []);
+    const { teacherTeamMemberId } = useNewStudyGroupStore(s => s.formValue);
+    const { days: availableDays } = useScheduleOptions(data || []);
 
-    console.log(days);
+    const renderOptions = () => {
+        if (!teacherTeamMemberId) {
+            return (
+                <SelectItem disabled value="loading">
+                    Pilih Guru terlebih dahulu
+                </SelectItem>
+            );
+        }
+
+        return availableDays
+            .sort((a, b) => days.indexOf(a) - days.indexOf(b))
+            .map(day => (
+                <SelectItem key={day} value={day}>
+                    {dayNames[days.indexOf(day)]}
+                </SelectItem>
+            ));
+    };
 
     return (
-        <div className="grow shrink-0">
+        <div className="flex-1 w-full">
             <Label className="font-normal">Hari</Label>
             <Select onValueChange={value => onChange(value)} value={value}>
                 <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Pilih Jadwal" />
                 </SelectTrigger>
-                <SelectContent>
-                    {days.map(day => (
-                        <SelectItem key={day} value={day}>
-                            {day}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
+                <SelectContent>{renderOptions()}</SelectContent>
             </Select>
         </div>
     );
@@ -49,23 +62,32 @@ export const SelectTimeOne = ({
 }) => {
     const { data } = useGetTeacherScheduleQuery(true);
     const { getStartTimes } = useScheduleOptions(data || []);
+    const { day1 } = useNewStudyGroupStore(s => s.formValue);
 
-    console.log(getStartTimes(true));
+    const renderOptions = () => {
+        if (!day1) {
+            return (
+                <SelectItem disabled value="loading">
+                    Pilih Hari 1 terlebih dahulu
+                </SelectItem>
+            );
+        }
+
+        return getStartTimes(true).map(startTime => (
+            <SelectItem key={startTime} value={startTime}>
+                {startTime}
+            </SelectItem>
+        ));
+    };
 
     return (
-        <div className="grow shrink-0">
+        <div className="flex-1 w-full">
             <Label className="font-normal">Waktu</Label>
             <Select onValueChange={value => onChange(value)} value={value}>
                 <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Pilih Jadwal" />
                 </SelectTrigger>
-                <SelectContent>
-                    {getStartTimes(true).map(startTime => (
-                        <SelectItem key={startTime} value={startTime}>
-                            {startTime}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
+                <SelectContent>{renderOptions()}</SelectContent>
             </Select>
         </div>
     );

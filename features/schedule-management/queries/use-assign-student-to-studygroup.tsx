@@ -39,7 +39,7 @@ export const useAssignStudentToStudyGroupMutation = (): UseMutationResult<
                 className: 'bg-green-200 border-green-300',
                 position: 'top-center',
             });
-            queryClient.invalidateQueries({ queryKey: ['student-of-study-group'] });
+            queryClient.invalidateQueries({ queryKey: ['student-of-study-group'], exact: false });
         },
     });
 };
