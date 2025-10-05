@@ -21,23 +21,28 @@ export interface ProgramDetailPackage {
 export interface ProgramDetailGrade {
     gradeId: number;
     gradeNumber: number;
+    prerequisites: string;
     packages: ProgramDetailPackage[];
 }
 export interface ProgramDetailLevel {
     levelId: number;
     levelName: string;
+    description: string;
     grades: ProgramDetailGrade[];
 }
 
 export interface ProgramDetailGroup {
     groupId: number;
     groupName: string;
+    materi: string;
+    capaian: string;
     levels: ProgramDetailLevel[];
 }
 
 export interface ProgramDetail {
     programId: number;
     programName: string;
+    description: string;
     groups: ProgramDetailGroup[];
 }
 

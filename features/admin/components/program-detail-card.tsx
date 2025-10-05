@@ -48,9 +48,9 @@ const ProgramDetailCard = ({
         >
             <div className="flex items-start gap-4">
                 <div className="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0"></div>
-                <div className="flex-1">
+                <div className="flex-1 truncate">
                     <h2 className="text-lg font-semibold text-[#020817] mb-2">{title}</h2>
-                    <p className="text-sm text-gray-600 leading-relaxed mb-4">{description}</p>
+                    <p className="text-sm text-gray-600 leading-relaxed mb-4 truncate">{description}</p>
                     {hasChild && (
                         <div className="flex items-center justify-center">
                             <button

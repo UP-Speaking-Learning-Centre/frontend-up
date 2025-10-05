@@ -43,7 +43,7 @@ const useGetProgramById = () => {
                 (item as ProgramDetail)?.programId ??
                 (item as ProgramDetailGroup)?.groupId ??
                 (item as ProgramDetailLevel)?.levelId ??
-                (item as ProgramDetailGrade)?.gradeId??
+                (item as ProgramDetailGrade)?.gradeId ??
                 (item as ProgramDetailPackage)?.gradePackageId
             );
         };
@@ -54,11 +54,18 @@ const useGetProgramById = () => {
             if ((item as ProgramDetailGrade)?.packages?.length) return 'Packages';
             return '';
         };
+        const getDescription = (item: ProgramRecurse) => {
+            return (
+                (item as ProgramDetail).description ||
+                (item as ProgramDetailGroup).materi ||
+                (item as ProgramDetailGrade).prerequisites
+            );
+        };
 
         return program?.map(item => ({
             id: getId(item),
             title: getTitle(item),
-            description: 'Lorem Ipsum',
+            description: getDescription(item),
             children:
                 getChild(item)?.length > 0
                     ? {

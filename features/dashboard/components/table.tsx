@@ -165,7 +165,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                             <ChevronLeft className="h-4 w-4" />
                         </Button>
                         <span className="text-sm">
-                            Page {pagination.currentPage} of {pagination.totalPages}
+                            Page {pagination.currentPage} of {pagination.totalPages || 1}
                         </span>
                         <Button
                             variant="outline"
@@ -175,7 +175,10 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                     Math.min(pagination.totalPages, pagination.currentPage + 1)
                                 )
                             }
-                            disabled={pagination.currentPage === pagination.totalPages}
+                            disabled={
+                                pagination.currentPage === pagination.totalPages ||
+                                !pagination.totalPages
+                            }
                         >
                             <ChevronRight className="h-4 w-4" />
                         </Button>
