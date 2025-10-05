@@ -152,3 +152,27 @@ export interface RequestPrice {
     prices: { timeframe: string; amount: number }[];
     replaceAll: boolean;
 }
+
+export interface ReqUnassign {
+    studentIds: number[];
+    hard: boolean;
+}
+export interface ReqAssign {
+    studentIds: number[];
+}
+export interface ResUnassign {
+    mode: string;
+    deletedIds: number[];
+    affected: number;
+    updated: number;
+}
+export interface ResAssign {
+    studyGroupId: number;
+    totalSchedules: number;
+    requestedStudents: number[];
+    createdAssignments: number;
+    invalidStudentIds: number[];
+    perStudentCreated: {
+        [x: string]: number;
+    };
+}

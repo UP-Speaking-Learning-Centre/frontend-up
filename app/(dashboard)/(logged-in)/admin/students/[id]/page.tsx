@@ -1,6 +1,5 @@
 'use client';
 
-import Overlay from '@/components/layout/overlay';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogFooter, DialogTitle } from '@/components/ui/dialog';
@@ -29,112 +28,131 @@ export default function DashboardPage() {
         setIsOpen,
         isLoading: isLoadingChangeStudy,
         studyGroups,
-    } = useChangeStudyGroup(studyGroupDetail?.schedules[0].location || '');
+        selectedStudyGroup,
+        setSelectedStudyGroup,
+        handleChangeStudyGroup,
+    } = useChangeStudyGroup(
+        studyGroupDetail?.schedules[0].locationId || 0,
+        data?.primaryStudyGroupId || 0
+    );
 
-    if (isLoading) return <Overlay />;
     return (
         <DashboardContentLayout pageTitle="Detail Student">
             <div className="min-h-screen bg-gray-50 p-6">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Detail Student Section */}
                     <div className="lg:col-span-2 space-y-6">
-                        <Card className="overflow-hidden">
-                            <div className="bg-secondary text-white p-4">
-                                <h2 className="text-lg font-semibold">Detail Student</h2>
-                            </div>
-                            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-4">
-                                    <div>
-                                        <p className="text-sm text-gray-600 mb-1">Nama</p>
-                                        <p className="font-semibold text-gray-900">{data?.name}</p>
+                        <Skeleton className="h-72" loading={isLoading}>
+                            <Card className="overflow-hidden">
+                                <div className="bg-secondary text-white p-4">
+                                    <h2 className="text-lg font-semibold">Detail Student</h2>
+                                </div>
+                                <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-4">
+                                        <div>
+                                            <p className="text-sm text-gray-600 mb-1">Nama</p>
+                                            <p className="font-semibold text-gray-900">
+                                                {data?.name}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600 mb-1">No. HP</p>
+                                            <p className="font-semibold text-gray-900">
+                                                082295102312
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600 mb-1">Instagram</p>
+                                            <p className="font-semibold text-gray-900">
+                                                radityapppp
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 mb-1">No. HP</p>
-                                        <p className="font-semibold text-gray-900">082295102312</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 mb-1">Instagram</p>
-                                        <p className="font-semibold text-gray-900">radityapppp</p>
+                                    <div className="space-y-4">
+                                        <div>
+                                            <p className="text-sm text-gray-600 mb-1">Program</p>
+                                            <p className="font-semibold text-gray-900">
+                                                {data?.program}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600 mb-1">Group</p>
+                                            <p className="font-semibold text-gray-900">
+                                                {data?.group}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600 mb-1">Level</p>
+                                            <p className="font-semibold text-gray-900">
+                                                {data?.level}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm text-gray-600 mb-1">Grade</p>
+                                            <p className="font-semibold text-gray-900">
+                                                {data?.gradeLabel || 'Belum ditentukan'}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="space-y-4">
-                                    <div>
-                                        <p className="text-sm text-gray-600 mb-1">Program</p>
-                                        <p className="font-semibold text-gray-900">
-                                            {data?.program}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 mb-1">Group</p>
-                                        <p className="font-semibold text-gray-900">{data?.group}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 mb-1">Level</p>
-                                        <p className="font-semibold text-gray-900">{data?.level}</p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 mb-1">Grade</p>
-                                        <p className="font-semibold text-gray-900">
-                                            {data?.gradeLabel || 'Belum ditentukan'}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </Card>
+                            </Card>
+                        </Skeleton>
 
                         {/* Catatan Section */}
-                        <Card className="overflow-hidden">
-                            <div className="bg-secondary text-white p-4">
-                                <h2 className="text-lg font-semibold">Catatan</h2>
-                            </div>
-                            <div className="p-6">
-                                <div className="grid items-start">
-                                    {!isEdit ? (
-                                        <>
-                                            <p className="text-gray-900 font-medium mb-4">
-                                                {notes}
-                                            </p>
-                                            <Button
-                                                onClick={() => setIsEdit(true)}
-                                                className="px-6 w-fit ml-auto"
-                                                size="sm"
-                                            >
-                                                Edit
-                                            </Button>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Textarea
-                                                className="mb-4"
-                                                value={notes}
-                                                onChange={e => setNotes(e.target.value)}
-                                            />
-                                            <div className="space-x-3 ml-auto">
-                                                <Button
-                                                    onClick={() => setIsEdit(false)}
-                                                    className="px-6 w-fit"
-                                                    size="sm"
-                                                    variant={'outline'}
-                                                >
-                                                    Cancel
-                                                </Button>
-                                                <Button
-                                                    onClick={handleSave}
-                                                    className="px-6 w-fit"
-                                                    size="sm"
-                                                >
-                                                    Save
-                                                </Button>
-                                            </div>
-                                        </>
-                                    )}
+                        <Skeleton className="h-28" loading={isLoading}>
+                            <Card className="overflow-hidden">
+                                <div className="bg-secondary text-white p-4">
+                                    <h2 className="text-lg font-semibold">Catatan</h2>
                                 </div>
-                            </div>
-                        </Card>
+                                <div className="p-6">
+                                    <div className="grid items-start">
+                                        {!isEdit ? (
+                                            <>
+                                                <p className="text-gray-900 font-medium mb-4">
+                                                    {notes}
+                                                </p>
+                                                <Button
+                                                    onClick={() => setIsEdit(true)}
+                                                    className="px-6 w-fit ml-auto"
+                                                    size="sm"
+                                                >
+                                                    Edit
+                                                </Button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Textarea
+                                                    className="mb-4"
+                                                    value={notes}
+                                                    onChange={e => setNotes(e.target.value)}
+                                                />
+                                                <div className="space-x-3 ml-auto">
+                                                    <Button
+                                                        onClick={() => setIsEdit(false)}
+                                                        className="px-6 w-fit"
+                                                        size="sm"
+                                                        variant={'outline'}
+                                                    >
+                                                        Cancel
+                                                    </Button>
+                                                    <Button
+                                                        onClick={handleSave}
+                                                        className="px-6 w-fit"
+                                                        size="sm"
+                                                    >
+                                                        Save
+                                                    </Button>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            </Card>
+                        </Skeleton>
                     </div>
 
                     {/* Kelompok Belajar Section */}
-                    <Skeleton loading={isLoadingStudyGroupDetail} className="h-40">
+                    <Skeleton loading={isLoadingStudyGroupDetail || isLoading} className="h-40">
                         <div className="space-y-6">
                             <Card className="overflow-hidden">
                                 <div className="bg-secondary text-white p-4">
@@ -215,6 +233,8 @@ export default function DashboardPage() {
                                             <AdminSelect
                                                 label="Kelompok Belajar"
                                                 options={studyGroups || []}
+                                                value={selectedStudyGroup}
+                                                onValueChange={setSelectedStudyGroup}
                                             />
                                             <div>
                                                 <Label className="mb-2 block">
@@ -236,7 +256,7 @@ export default function DashboardPage() {
                                                 </RadioGroup>
                                             </div>
                                             <DialogFooter>
-                                                <Button onClick={() => setIsOpen(false)}>
+                                                <Button onClick={handleChangeStudyGroup}>
                                                     {!isLoadingChangeStudy
                                                         ? 'Ganti'
                                                         : 'Sedang mengganti...'}

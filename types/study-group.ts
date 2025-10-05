@@ -11,6 +11,7 @@ export type Schedule = {
     startTime: string; // format HH:mm:ss
     endTime: string;
     location: string;
+    locationId: number;
     teacherMemberName: string;
     teacherAlias: string;
     isPriority: boolean;
@@ -30,6 +31,24 @@ export type StudyGroup = {
     group: string;
     level: string;
     grade: string;
+    schedules: Schedule[];
+};
+
+export type StudyGroupDetail = {
+    description: string;
+    grade: string;
+    gradeId: number;
+    gradeNumber: number;
+    group: string;
+    groupId: number;
+    id: number;
+    isPriority: boolean;
+    level: string;
+    levelId: number;
+    name: string;
+    package: { id: number; name: string };
+    program: string;
+    programId: number;
     schedules: Schedule[];
 };
 
