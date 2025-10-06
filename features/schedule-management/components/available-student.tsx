@@ -56,40 +56,59 @@ const AvailableStudent = ({
         }
 
         if (availabelStudents?.length === 0) {
-            return <p>Tidak ada student tersedia</p>;
+            return (
+                <p className="text-base text-neutral-500 mt-2 h-32 flex items-center justify-center">
+                    Tidak ada student tersedia
+                </p>
+            );
         }
 
-        return availabelStudents?.map(student => (
-            <div key={student.id}>
-                <div className="flex items-center gap-2 justify-between border-b border-[#E5E7EB] p-2">
-                    <p className="text-base text-[#020817]">{student.name}</p>
-                    <PlusCircleIcon
-                        className={cn(
-                            'w-6 h-6',
-                            isDisabledAddStudent
-                                ? 'cursor-not-allowed text-neutral-500'
-                                : 'cursor-pointer text-primary'
-                        )}
-                        onClick={() => {
-                            if (isDisabledAddStudent) return;
+        return (
+            <>
+                {availabelStudents?.map(student => (
+                    <div key={student.id}>
+                        <div className="flex items-center gap-2 justify-between border-b border-[#E5E7EB] p-2">
+                            <p className="text-base text-[#020817]">{student.name}</p>
+                            <PlusCircleIcon
+                                className={cn(
+                                    'w-6 h-6',
+                                    isDisabledAddStudent
+                                        ? 'cursor-not-allowed text-neutral-500'
+                                        : 'cursor-pointer text-primary'
+                                )}
+                                onClick={() => {
+                                    if (isDisabledAddStudent) return;
 
-                            setListAvailableStudent(
-                                listAvailableStudent.filter(s => s.id !== student.id)
-                            );
-                            setSelectedStudent([...selectedStudent, student]);
-                        }}
-                    />
-                </div>
-            </div>
-        ));
+                                    setListAvailableStudent(
+                                        listAvailableStudent.filter(s => s.id !== student.id)
+                                    );
+                                    setSelectedStudent([...selectedStudent, student]);
+                                }}
+                            />
+                        </div>
+                    </div>
+                ))}
+                {isDisabledAddStudent && (
+                    <div className="absolute inset-0 flex items-center flex-col bg-white/60 text-center backdrop-blur-sm p-8 justify-center z-10">
+                        <p className="text-lg font-semibold text-primary">
+                            Tidak dapat menambahkan student lagi ke dalam kelompok ini!
+                        </p>
+                        <p className="text-base text-neutral-500 mt-2">
+                            Jumlah student sudah mencapai batas maksimal berdasarkan package dari
+                            kelompok ini
+                        </p>
+                    </div>
+                )}
+            </>
+        );
     };
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="md:w-[800px] max-w-7xl">
                 <DialogTitle>Daftar Student Tersedia</DialogTitle>
-                <div className="grid grid-cols-2 h-[calc(100vh-30rem)] overflow-hidden gap-4">
-                    <div className="col-span-1">
+                <div className="grid grid-cols-2 h-[calc(80vh)] overflow-hidden gap-4">
+                    <div className="col-span-1 relative">
                         <input
                             type="text"
                             placeholder="Cari Student"
@@ -97,13 +116,13 @@ const AvailableStudent = ({
                             value={keyword}
                             onChange={e => setKeyword(e.target.value)}
                         />
-                        <div className="flex flex-col mt-2 gap-4 max-h-[calc(100vh-35rem)] overflow-y-auto">
+                        <div className="flex flex-col mt-2 gap-4 max-h-[calc(80vh)] overflow-y-auto">
                             {renderContent()}
                         </div>
                     </div>
 
                     <div className="border-l-2 border-secondary pl-4">
-                        <div className="flex flex-col mt-2 gap-4 max-h-[calc(100vh-30rem)] overflow-y-auto">
+                        <div className="flex flex-col mt-2 gap-4 max-h-[calc(80vh)] overflow-y-auto">
                             <p className="text-lg text-[#020817]">Student yang dipilih</p>
 
                             {selectedStudent.map(student => (

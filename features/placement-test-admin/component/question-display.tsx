@@ -35,7 +35,6 @@ const QuestionDisplay = () => {
             });
     };
 
-    console.log(questions);
     return (
         <Card>
             <Toaster />
