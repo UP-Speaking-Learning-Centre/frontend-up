@@ -19,9 +19,23 @@ export type StudentPlacementTest = {
 };
 
 export type StudentOfStudyGroup = {
+    studentId: number;
+    studentName: string;
+    parentPhoneNumber: string;
+};
+
+export type AvailableStudentForStudyGroup = {
     id: number;
     name: string;
     notes: string | null;
+    program: string;
+    group: string;
+    level: string;
+    grade: string;
 };
 
-export type StudendOfStudyGrouResponse = Array<StudentOfStudyGroup>;
+export type StudendOfStudyGrouResponse = {
+    studyGroupId: number;
+    count: number;
+    students: Array<StudentOfStudyGroup>;
+};

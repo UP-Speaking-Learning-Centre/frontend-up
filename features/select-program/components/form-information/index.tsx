@@ -9,84 +9,57 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import useProgramSelectionStore from '../../stores/program-selection-store';
-import useSubmitRegistrationMutation from '../../queries/use-submit-registration';
-import { PROGRAM_SELECTION_STEPS, REGISTER_STEPS } from '@/constants/program-selections';
-import useRegisterFromPlacementMutation from '../../queries/use-submit-registration-from-placement';
-import { Dialog } from '@/components/ui/dialog';
 import SuccessDialog from './success-dialog';
-import usePlacementTestGuestStore from '../../stores/placemenet-test-guest-store';
 import Overlay from '@/components/layout/overlay';
 import ErrorDialog from './error-dialog';
+import { useForm } from 'react-hook-form';
+import z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import useSubmitRegistration from '../../hooks/use-submit-registration';
+import { Form, FormField, FormItem } from '@/components/ui/form';
 
-const FormInformation = ({
-    steps,
-}: {
-    steps?: typeof PROGRAM_SELECTION_STEPS | typeof REGISTER_STEPS;
-}) => {
-    const { isStepDisplayed, handleNextStepAction } = useProgramSelection(steps);
+const FormInformation = ({ isFromPlacement = false }: { isFromPlacement?: boolean }) => {
+    const { isStepDisplayed } = useProgramSelection(isFromPlacement);
     const formValue = useProgramSelectionStore(s => s.formValue);
-    const setStudentInfo = useProgramSelectionStore(s => s.setStudentInfo);
-    const testSessionId = usePlacementTestGuestStore(s => s.testSessionId);
-    const { mutate, isPending: isPendingFromProgram } = useSubmitRegistrationMutation();
-    const { mutate: mutateRegisterFromPlacement, isPending: isPendingFromPlacement } =
-        useRegisterFromPlacementMutation();
-    const [isSuccess, setIsSuccess] = useState(false);
-    const [isError, setIsError] = useState(false);
+    const { submitRegistration, schema, isLoading, status, setStatus } =
+        useSubmitRegistration(isFromPlacement);
 
-    if (!isStepDisplayed(FILL_PERSONAL_INFORMATION_STEP)) {
-        return null;
-    }
+    const form = useForm<z.infer<typeof schema>>({
+        resolver: zodResolver(schema),
+        mode: 'onChange',
+        defaultValues: {
+            name: formValue.personalInformation.name,
+            phone: formValue.personalInformation.phone,
+            instagram: formValue.personalInformation.instagram,
+        },
+    });
 
-    const onSuccess = () => {
-        setIsSuccess(true);
-    };
-
-    const onError = () => {
-        setIsError(true);
-    };
-
-    const handleSave = () => {
-        if (steps === REGISTER_STEPS) {
-            mutateRegisterFromPlacement(
-                {},
-                {
-                    onSuccess,
-                    onError,
-                }
-            );
-        } else {
-            mutate(
-                {},
-                {
-                    onSuccess,
-                    onError,
-                }
-            );
-        }
-    };
-
-    const isPhoneNumberValid = (phone: string) => {
-        const phoneRegex = /^08[1-9][0-9]{6,9}$/;
-        return phoneRegex.test(phone);
-    };
+    const {
+        handleSubmit,
+        formState: { errors, isValid },
+    } = form;
 
     const getTitle = () => {
-        if (steps === REGISTER_STEPS) {
+        if (isFromPlacement) {
             return 'Formulir Pendaftaran';
         }
         return 'Amankan Promo!';
     };
 
     const getDescription = () => {
-        if (steps === REGISTER_STEPS) {
+        if (isFromPlacement) {
             return 'Silahkan isi data diri anda';
         }
         return 'Silahkan isi formulir supaya anda mendapatkan antrian teratas untuk mendapatkan promo';
     };
 
+    if (!isStepDisplayed(FILL_PERSONAL_INFORMATION_STEP)) {
+        return null;
+    }
+
     return (
         <>
-            <Overlay opacity={30} show={isPendingFromProgram || isPendingFromPlacement} />
+            <Overlay opacity={30} show={isLoading} />
 
             <div
                 id={FILL_PERSONAL_INFORMATION_STEP}
@@ -95,78 +68,74 @@ const FormInformation = ({
                 <Title title={getTitle()} description={getDescription()} />
 
                 <Card className="w-full md:w-[500px] mx-auto mt-8 p-6">
-                    {/* <form> */}
-                    <div>
-                        <Label>Nama Student*</Label>
-                        <Input
-                            className="mt-1"
-                            value={formValue.personalInformation.name}
-                            onChange={e =>
-                                setStudentInfo({
-                                    name: e.target.value,
-                                })
-                            }
-                        />
-                    </div>
+                    <Form {...form}>
+                        <form onSubmit={handleSubmit(submitRegistration)}>
+                            <FormField
+                                name="name"
+                                control={form.control}
+                                render={({ field }) => {
+                                    return (
+                                        <FormItem>
+                                            <Label>Nama Student*</Label>
+                                            <Input className="mt-1" {...field} />
+                                        </FormItem>
+                                    );
+                                }}
+                            />
 
-                    <div className="mt-6">
-                        <Label>No HP (WhatsApp)*</Label>
-                        <Input
-                            className="mt-1"
-                            value={formValue.personalInformation.phone}
-                            onChange={e =>
-                                setStudentInfo({
-                                    phone: e.target.value,
-                                })
-                            }
-                        />
-                        {formValue.personalInformation.phone &&
-                            !isPhoneNumberValid(formValue.personalInformation.phone) && (
-                                <p className="text-red-500 mt-1">
-                                    Format No HP tidak valid (Gunakan format 08xxxxxx)
-                                </p>
-                            )}
-                    </div>
+                            <FormField
+                                name="phone"
+                                control={form.control}
+                                render={({ field }) => {
+                                    return (
+                                        <FormItem className="mt-6">
+                                            <Label>No HP (WhatsApp)*</Label>
+                                            <Input className="mt-1" {...field} />
+                                            {errors.phone && (
+                                                <p className="text-red-500 text-sm">
+                                                    {errors.phone.message}
+                                                </p>
+                                            )}
+                                        </FormItem>
+                                    );
+                                }}
+                            />
 
-                    <div className="mt-6">
-                        <Label>Username Instagram (Opsional)</Label>
-                        <Input
-                            className="mt-1"
-                            value={formValue.personalInformation.instagram}
-                            onChange={e =>
-                                setStudentInfo({
-                                    instagram: e.target.value,
-                                })
-                            }
-                        />
-                    </div>
+                            <FormField
+                                name="instagram"
+                                control={form.control}
+                                render={({ field }) => {
+                                    return (
+                                        <FormItem className="mt-6">
+                                            <Label>Username Instagram (Opsional)</Label>
+                                            <Input className="mt-1" {...field} />
+                                        </FormItem>
+                                    );
+                                }}
+                            />
 
-                    <div className="mt-12">
-                        <Button
-                            className="w-full"
-                            disabled={
-                                isPendingFromProgram ||
-                                isPendingFromPlacement ||
-                                !formValue.personalInformation.name ||
-                                !formValue.personalInformation.phone ||
-                                !isPhoneNumberValid(formValue.personalInformation.phone)
-                            }
-                            onClick={() => {
-                                handleSave();
-                            }}
-                        >
-                            Simpan
-                        </Button>
-                    </div>
-                    {/* </form> */}
+                            <div className="mt-12">
+                                <Button
+                                    className="w-full"
+                                    type="submit"
+                                    disabled={isLoading || !isValid}
+                                >
+                                    Simpan
+                                </Button>
+                            </div>
+                        </form>
+                    </Form>
                 </Card>
             </div>
 
-            <ErrorDialog open={isError} onOpenChange={setIsError} />
+            <ErrorDialog
+                open={status.open && status.status === 'error'}
+                onOpenChange={() => setStatus({ status: '', open: false })}
+            />
             <SuccessDialog
-                open={isSuccess}
-                onOpenChange={setIsSuccess}
-                isFromPlacement={steps === REGISTER_STEPS}
+                open={status.open && status.status === 'success'}
+                onOpenChange={() => setStatus({ status: '', open: false })}
+                isFromPlacement={isFromPlacement}
             />
         </>
     );

@@ -1,10 +1,12 @@
 import { DAY } from '@/constants/program-selections';
+import { ProgramDetailPrice } from '@/types/admin';
 
 export type ProgramType = {
     id: number;
     name: string;
     description: string;
     groups: GroupType[];
+    prices: ProgramDetailPrice[];
 };
 
 export type GroupType = {

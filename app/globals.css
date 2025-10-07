@@ -71,6 +71,6 @@
         @apply border-border;
     }
     body {
-        @apply bg-[#F9FAFB] text-foreground font-outfit !leading-tight;
+        @apply bg-[#F9FAFB] text-foreground font-raleway !leading-tight;
     }
 }

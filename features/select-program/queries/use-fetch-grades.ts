@@ -3,6 +3,7 @@ import api from '@/lib/api';
 import { GradeType } from '@/types/programs-selection';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import useProgramSelectionStore from '../stores/program-selection-store';
+import { useNewStudyGroupStore } from '@/features/schedule-management/stores/new-study-group-store';
 
 const fetchGrades = async ({
     programId,
@@ -19,21 +20,31 @@ const fetchGrades = async ({
     return res.data;
 };
 
-const useFetchGradesQuery = (): UseQueryResult<GradeType[], Error> => {
+const useFetchGradesQuery = (fromStudyGroup = false): UseQueryResult<GradeType[], Error> => {
     const {
         programId: programIdFromStore,
         groupId: groupIdFromStore,
         levelId: levelIdFromStore,
     } = useProgramSelectionStore(s => s.formValue);
+
+    const { programId, groupId, levelId } = useNewStudyGroupStore(s => s.formValue);
+
     const res = useQuery({
-        queryKey: ['grades', programIdFromStore, groupIdFromStore, levelIdFromStore],
+        queryKey: [
+            'grades',
+            fromStudyGroup ? programId : programIdFromStore,
+            fromStudyGroup ? groupId : groupIdFromStore,
+            fromStudyGroup ? levelId : levelIdFromStore,
+        ],
         queryFn: () =>
             fetchGrades({
-                programId: programIdFromStore as string,
-                groupId: groupIdFromStore as string,
-                levelId: levelIdFromStore as string,
+                programId: fromStudyGroup ? (programId as string) : (programIdFromStore as string),
+                groupId: fromStudyGroup ? (groupId as string) : (groupIdFromStore as string),
+                levelId: fromStudyGroup ? (levelId as string) : (levelIdFromStore as string),
             }),
-        enabled: !!programIdFromStore && !!groupIdFromStore && !!levelIdFromStore,
+        enabled: fromStudyGroup
+            ? !!programId && !!groupId && !!levelId
+            : !!programIdFromStore && !!groupIdFromStore && !!levelIdFromStore,
     });
 
     return res;

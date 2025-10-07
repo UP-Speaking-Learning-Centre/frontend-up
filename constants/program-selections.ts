@@ -5,6 +5,9 @@ export const CHOOSE_LEVEL_STEP = 'choose_level' as const;
 export const CHOOSE_GRADE_STEP = 'choose_grade' as const;
 export const CHOOSE_PACKAGE_STEP = 'choose_package' as const;
 export const CHOOSE_SCHEDULE_STEP = 'choose_schedule' as const;
+export const CHOOSE_TRIAL_CLASS_STEP = 'choose_trial_class' as const;
+export const CHOOSE_SELF_SCHEDULE_STEP = 'choose_self_schedule' as const;
+export const CONFIRMATION_STEP = 'confirmation' as const;
 export const SUMMARY_STEP = 'summary_step' as const;
 export const PRICE_STEP = 'price_step' as const;
 export const FILL_PERSONAL_INFORMATION_STEP = 'fill_personal_information' as const;
@@ -14,11 +17,13 @@ export const PROGRAM_SELECTION_STEPS = [
     CHOOSE_GROUP_STEP,
     GROUP_INFORMATION_STEP,
     CHOOSE_LEVEL_STEP,
-    CHOOSE_GRADE_STEP,
     CHOOSE_PACKAGE_STEP,
     CHOOSE_SCHEDULE_STEP,
+    CHOOSE_SELF_SCHEDULE_STEP,
+    CHOOSE_TRIAL_CLASS_STEP,
     SUMMARY_STEP,
     PRICE_STEP,
+    CONFIRMATION_STEP,
     FILL_PERSONAL_INFORMATION_STEP,
 ] as const;
 

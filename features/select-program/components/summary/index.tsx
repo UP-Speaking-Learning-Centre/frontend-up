@@ -19,7 +19,7 @@ const Summary = () => {
                 description="Silahkan periksa kembali pilihan program Anda."
             />
             <SummaryItem />
-            <div className="mt-6 flex items-center w-full justify-center">
+            <div className="mt-12 flex items-center w-full justify-center">
                 <Button
                     onClick={() => handleNextStepAction({ stepId: SUMMARY_STEP, formValue: {} })}
                 >

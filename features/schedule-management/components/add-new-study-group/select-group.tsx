@@ -6,19 +6,53 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import useFetchGroupsQuery from '@/features/select-program/queries/use-fetch-groups';
+import { useNewStudyGroupStore } from '@/features/schedule-management/stores/new-study-group-store';
 
-const SelectGroup = ({ value, onChange }: { value: number; onChange: (value: number) => void }) => {
+const SelectGroup = ({
+    value,
+    onChange,
+}: {
+    value: number | string;
+    onChange: (value: number | string) => void;
+}) => {
+    const { data, isLoading } = useFetchGroupsQuery();
+    const formValue = useNewStudyGroupStore(s => s.formValue);
+
+    const renderOptions = () => {
+        if (!formValue.programId) {
+            return (
+                <SelectItem disabled value="empty">
+                    Pilih Program Terlebih Dahulu
+                </SelectItem>
+            );
+        }
+
+        if (isLoading) {
+            return (
+                <SelectItem disabled value="loading">
+                    Loading...
+                </SelectItem>
+            );
+        }
+
+        return data?.map(group => (
+            <SelectItem key={group.id} value={group.id.toString()}>
+                {group.name}
+            </SelectItem>
+        ));
+    };
+
+    console.log(value);
+
     return (
         <div>
             <Label>Grup*</Label>
-            <Select>
+            <Select onValueChange={value => onChange(value)} value={value.toString()}>
                 <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Pilih Program" />
+                    <SelectValue placeholder="Pilih Grup" />
                 </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="program1">Program 1</SelectItem>
-                    <SelectItem value="program2">Program 2</SelectItem>
-                </SelectContent>
+                <SelectContent>{renderOptions()}</SelectContent>
             </Select>
         </div>
     );

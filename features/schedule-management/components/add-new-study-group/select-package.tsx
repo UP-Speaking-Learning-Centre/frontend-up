@@ -6,25 +6,51 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { useNewStudyGroupStore } from '../../stores/new-study-group-store';
+import useFetchPackagesQuery from '@/features/select-program/queries/use-fetch-packages';
 
 const SelectPackage = ({
     value,
     onChange,
 }: {
-    value: number;
-    onChange: (value: number) => void;
+    value: number | string;
+    onChange: (value: number | string) => void;
 }) => {
+    const { gradeId } = useNewStudyGroupStore(s => s.formValue);
+    const { data, isLoading } = useFetchPackagesQuery();
+
+    const renderOptions = () => {
+        if (!gradeId) {
+            return (
+                <SelectItem disabled value="loading">
+                    Pilih Grade terlebih dahulu
+                </SelectItem>
+            );
+        }
+
+        if (isLoading) {
+            return (
+                <SelectItem disabled value="loading">
+                    Loading...
+                </SelectItem>
+            );
+        }
+
+        return data?.map(pckg => (
+            <SelectItem key={pckg.id} value={pckg.id.toString()}>
+                {pckg.name}
+            </SelectItem>
+        ));
+    };
+
     return (
         <div>
             <Label>Package*</Label>
-            <Select>
+            <Select onValueChange={value => onChange(Number(value))} value={value.toString()}>
                 <SelectTrigger className="mt-1">
                     <SelectValue placeholder="Pilih Paket" />
                 </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="package1">Paket 1</SelectItem>
-                    <SelectItem value="package2">Paket 2</SelectItem>
-                </SelectContent>
+                <SelectContent>{renderOptions()}</SelectContent>
             </Select>
         </div>
     );

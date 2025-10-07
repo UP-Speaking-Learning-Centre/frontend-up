@@ -30,6 +30,7 @@ const useMapTeacherSchedule = ({ data }: { data: TeacherScheduleResponse }) => {
             if (scheduleItem.studyGroup) {
                 return {
                     isAvailable: false,
+                    studyGroupId: scheduleItem.studyGroupId || undefined,
                     name: scheduleItem.studyGroup,
                     isPriority: scheduleItem.isPriority,
                     students: scheduleItem.totalStudent,
@@ -39,6 +40,7 @@ const useMapTeacherSchedule = ({ data }: { data: TeacherScheduleResponse }) => {
 
             return {
                 isAvailable: true,
+                studyGroupId: undefined,
                 name: 'Tersedia',
                 color: 'bg-gray-50 text-gray-600 border border-gray-500 hover:bg-gray-200',
             };

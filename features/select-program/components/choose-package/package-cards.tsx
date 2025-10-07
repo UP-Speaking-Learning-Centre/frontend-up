@@ -14,12 +14,8 @@ import { cn } from '@/lib/utils';
 import { CheckCircle2Icon } from 'lucide-react';
 import { Label } from '@/components/ui/label';
 
-const PackageCards = ({
-    steps = PROGRAM_SELECTION_STEPS,
-}: {
-    steps?: typeof PROGRAM_SELECTION_STEPS | typeof REGISTER_STEPS;
-}) => {
-    const { handleNextStepAction, formValue } = useProgramSelection(steps);
+const PackageCards = ({ isFromPlacement = false }: { isFromPlacement?: boolean }) => {
+    const { handleNextStepAction, formValue } = useProgramSelection(isFromPlacement);
     const { data: packages, isLoading } = useFetchPackagesQuery();
 
     const renderContent = () => {
@@ -37,7 +33,7 @@ const PackageCards = ({
                     className={cn(
                         'basis-[calc(30%-18px)]',
                         'flex flex-col w-full cursor-pointer overflow-hidden rounded-lg border-2 border-[#E2E8F0] hover:translate-y-[-5px] transition-all shadow-md hover:shadow-xl hover:border-[#CE6439]',
-                        isPackageSelected && 'border-[#CE6439] border-[3px]'
+                        isPackageSelected && 'border-[#CE6439] border-[3px] bg-primary/20'
                     )}
                     onClick={() =>
                         handleNextStepAction({

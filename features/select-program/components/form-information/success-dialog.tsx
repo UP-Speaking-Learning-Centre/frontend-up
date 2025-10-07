@@ -27,7 +27,7 @@ const SuccessDialog = ({
 
     const getSubTitle = () => {
         if (isFromPlacement) {
-            return 'Tim UP SLC akan menghubungi anda untuk melakukan interview.';
+            return 'Tim UP SLC akan menghubungi anda secepatnya!';
         }
         return 'Tim UP SLC akan menghubungi anda secepatnya jika terdapat perubahan.';
     };

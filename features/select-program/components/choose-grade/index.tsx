@@ -6,9 +6,9 @@ import GradeCards from './grade-cards';
 const ChooseGrade = () => {
     const { isStepDisplayed } = useProgramSelection();
 
-    if (!isStepDisplayed(CHOOSE_GRADE_STEP)) {
-        return null;
-    }
+    // if (!isStepDisplayed(CHOOSE_GRADE_STEP)) {
+    //     return null;
+    // }
 
     return (
         <div

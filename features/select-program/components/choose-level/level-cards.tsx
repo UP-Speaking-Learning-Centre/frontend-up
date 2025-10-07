@@ -52,7 +52,7 @@ const LevelCards = () => {
                     const isLevelSelected = formValue.levelId === item.id;
                     return (
                         <Card
-                            className="sm:basis-[calc(50%-18px)] xl:basis-[calc(25%-18px)]"
+                            className="sm:basis-[calc(50%-18px)] md:basis-[calc(33%-18px)] lg:basis-[calc(25%-18px)]"
                             title={item.name}
                             description={item.description}
                             key={item.id}

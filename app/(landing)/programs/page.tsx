@@ -20,13 +20,6 @@ const programs = [
         imageUrl: '/placeholder.svg?height=400&width=600',
         duration: '48 Meetings (6 months)',
         format: '90 Minutes/Session , Offline',
-        features: [
-            'Hands-on project-based learning',
-            'Industry-experienced instructors',
-            'Career services and job placement assistance',
-            'Networking opportunities with tech companies',
-            'Post-graduation support and resources',
-        ],
     },
     {
         id: 'regular-program',
@@ -36,13 +29,6 @@ const programs = [
         imageUrl: '/placeholder.svg?height=400&width=600',
         duration: '16 weeks',
         format: '90 Minutes/Session , Offline',
-        features: [
-            'Business plan development',
-            'Financial analysis and reporting',
-            'Marketing strategy creation',
-            'Leadership and team management',
-            'Entrepreneurship fundamentals',
-        ],
     },
 ];
 
@@ -83,6 +69,7 @@ export default function ProgramsPage() {
         data: groupsSchool,
         refetch: refetchGroupsSchool,
     } = useFetchGroupsQuery('1');
+
     const {
         isLoading: isLoadingGroupsRegular,
         data: groupsRegular,
@@ -99,11 +86,11 @@ export default function ProgramsPage() {
             {/* Hero Section */}
             <div className="relative isolate overflow-hidden bg-[#254116] py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="mx-auto max-w-2xl lg:mx-0">
-                        <h1 className="text-5xl font-bebasNeue font-bold tracking-wider text-white sm:text-6xl">
+                    <div className="mx-auto max-w-5xl lg:mx-0">
+                        <h1 className="text-5xl font-oswald uppercase font-semibold tracking-wide text-white sm:text-6xl">
                             Our Programs
                         </h1>
-                        <p className="mt-6 text-lg leading-8 text-gray-300">
+                        <p className="mt-6 text-lg leading-8 w-2/3 text-gray-300">
                             Choose your path, grow your confidence. Dari anak SD sampai dewasa,
                             program UP! bantu upgrade English & percaya diri—step by step, fun, and
                             effective.

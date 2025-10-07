@@ -2,12 +2,14 @@ export interface ScheduleItem {
     scheduleId: number;
     teacherMemberName: string;
     teacherAlias: string;
+    ke: string;
     day: string;
     startTime: string;
     endTime: string;
     isPriority?: boolean;
     location: string;
     package: string | null;
+    studyGroupId: number | null;
     studyGroup: string | null;
     totalStudent: number;
     notes: any[];

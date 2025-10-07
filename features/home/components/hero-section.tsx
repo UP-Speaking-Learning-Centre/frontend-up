@@ -7,7 +7,7 @@ export default function HeroSection() {
         <div className="relative isolate overflow-hidden">
             <div className="absolute inset-0">
                 <div
-                    className="absolute inset-0 bg-gradient-to-r from-[#254116]/90 to-[#254116]/70"
+                    className="absolute inset-0 bg-gradient-to-r filter blur-sm from-[#254116]/80 to-[#254116]/70"
                     style={{
                         backgroundImage: `url(/bg-image/hero.svg)`,
                         backgroundSize: 'cover',
@@ -20,16 +20,21 @@ export default function HeroSection() {
                 <div className="mx-auto">
                     <div className="text-center">
                         <div className="max-w-4xl mx-auto">
-                            <h1 className="text-[4rem] font-bold font-bebasNeue tracking-wider text-white sm:text-6xl">
-                                Up Your <span className="text-[#CE6439]">Words</span>, Up Your{' '}
-                                <span className="text-[#CE6439]">World!</span>
+                            <h1 className="text-[5rem] font-oswald uppercase font-semibold text-white sm:text-6xl space-y-2">
+                                <p>
+                                    Up Your <span className="text-[#CE6439]">Words</span>,
+                                </p>
+                                <p>
+                                    Up Your <span className="text-[#CE6439]">World!</span>
+                                </p>
                             </h1>
-                            <div className="text-2xl mt-2 font-semibold font-bebasNeue tracking-wide text-white">
-                                Mulai langkah kecil, buka peluang besar lewat{' '}
+                            {/* <div className="text-2xl mt-4 font-semibold font-outfit uppercase tracking-normal text-white">
+                                Mulai langkah kecil, <br />
+                                buka peluang besar lewat{' '}
                                 <span className="text-[#CE6439]">bahasa Inggris</span>
-                            </div>
+                            </div> */}
                         </div>
-                        <p className="mt-12 text-lg max-w-2xl mx-auto leading-8 text-gray-300">
+                        <p className="mt-12 font-medium text-lg max-w-2xl mx-auto leading-8 text-gray-300">
                             Di UP! anak gak cuma belajar bahasa, tapi juga naik level percaya diri.
                             Dengan metode seru dan lingkungan supportive, English jadi bagian dari
                             keseharian mereka.

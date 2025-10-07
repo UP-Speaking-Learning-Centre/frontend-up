@@ -16,25 +16,32 @@ interface BookingInfo {
     isPriority?: boolean;
     students?: number;
     color: string;
+    studyGroupId?: number;
 }
 
 interface ScheduleCellProps {
     bookingInfo: BookingInfo | null;
     teacher: string;
     loading: boolean;
-    isTeacherManagement?:boolean
+    isTeacherManagement?: boolean;
 }
 
 const ScheduleCell = (props: ScheduleCellProps) => {
-    const { bookingInfo, teacher, loading } = props;
+    const { bookingInfo, teacher, loading, isTeacherManagement } = props;
     const { isAvailable, name, color, isPriority, students } = bookingInfo || {};
     const [openDetail, setOpenDetail] = useState(false);
     const setStudyGroupId = useScheduleManagementStore(s => s.setStudyGroupId);
 
+    const studyGroupId = bookingInfo?.studyGroupId || 0;
+    const onCloseDialog = () => {
+        setOpenDetail(false);
+        setStudyGroupId(0);
+    };
+
     const onClickCell = () => {
         setOpenDetail(true);
         if (!isAvailable) {
-            setStudyGroupId(1);
+            setStudyGroupId(studyGroupId);
         } else {
             setStudyGroupId(0);
         }
@@ -71,8 +78,11 @@ const ScheduleCell = (props: ScheduleCellProps) => {
             </td>
 
             {openDetail && (
-                <Dialog open={openDetail} onOpenChange={setOpenDetail}>
-                    <StudyGroupDetail isTeacherManagement={props.isTeacherManagement}/>
+                <Dialog open={openDetail} onOpenChange={onCloseDialog}>
+                    <StudyGroupDetail
+                        isTeacherManagement={isTeacherManagement}
+                        closeDetailPopup={onCloseDialog}
+                    />
                 </Dialog>
             )}
         </>

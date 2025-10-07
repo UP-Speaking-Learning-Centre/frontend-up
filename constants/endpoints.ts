@@ -5,7 +5,7 @@ const ENDPOINTS = {
     fetchGroups: parseTemplate('/programs/{programId}/groups'),
     fetchLevels: parseTemplate('/programs/{programId}/groups/{groupId}/levels'),
     fetchGrades: parseTemplate('/programs/{programId}/groups/{groupId}/levels/{levelId}/grades'),
-    fetchPackages: parseTemplate('/packages'),
+    fetchPackages: '/packages',
     fetchLocations: '/locations',
     fetchAvailableSchedule: parseTemplate('/locations/{locationId}/available-schedules'),
     fetchStudyGroups: parseTemplate('/locations/{locationId}/study-groups'),
@@ -16,9 +16,18 @@ const ENDPOINTS = {
     submitRegistrationFromPlacement: '/auth/register',
     fetchPlacementTest: '/placement-tests/start-guest',
     submitPlacementTest: '/placement-tests/submit-guest',
-    fetchTeacherSchedule: parseTemplate('/admin/teacher-schedules/{locationId}'),
+    fetchTeacherSchedule: parseTemplate('/admin/teacher-schedules/location/{locationId}'),
     fetchStudyGroupDetail: parseTemplate('/admin/study-groups/{studyGroupId}'),
-    fetchStudentOfStudyGroup: parseTemplate('/admin/study-groups/{studyGroupId}/students'),
+    fetchStudentOfStudyGroup: parseTemplate('/admin/study-groups/{studyGroupId}/assigned-students'),
+    fetchAvailableStudent: parseTemplate('/admin/study-groups/{studyGroupId}/available-students'),
+    assignStudentToStudyGroup: '/admin/study-groups/assign-students',
+    unassignStudentFromStudyGroup: parseTemplate(
+        '/admin/study-groups/{studyGroupId}/unassign-students'
+    ),
+    updatePriority: parseTemplate('/admin/study-groups/{studyGroupId}/priority'),
+    fetchAvailableStudyGroup: parseTemplate(
+        '/locations/{locationId}/study-groups?programId={programId}&groupId={groupId}&levelId={levelId}&packageId={packageId}'
+    ),
     fetchTeachers: '/admin/teacher-team-members',
     fetchTeachersById: parseTemplate('/admin/teacher-team-members/{id}'),
     fetchTeachersScheduleById: parseTemplate('/admin/teacher-team-members/{id}/schedules'),
@@ -28,6 +37,7 @@ const ENDPOINTS = {
     fetchAlias: '/admin/teachers',
     fetchAdminLocations: '/admin/locations',
     fetchAdminLocationsById: parseTemplate('/admin/locations/{id}'),
+    createNewStudyGroup: '/admin/study-groups',
     fetchAdminStudentById: parseTemplate('/admin/students/{id}'),
     fetchUnassignStudent: parseTemplate('/admin/study-groups/{studyGroupId}/unassign-students'),
     fetchAssignStudent: parseTemplate('/admin/study-groups/{studyGroupId}/assign-students'),

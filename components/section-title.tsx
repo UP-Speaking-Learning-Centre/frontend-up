@@ -26,7 +26,7 @@ const SectionTitle = ({
             {subtitle && (
                 <p
                     className={cn(
-                        'mt-2 text-3xl font-bold tracking-tight sm:text-4xl',
+                        'mt-2 text-3xl font-bold tracking-tight font-outfit sm:text-4xl',
                         variant === 'black' ? 'text-gray-900' : 'text-white'
                     )}
                 >

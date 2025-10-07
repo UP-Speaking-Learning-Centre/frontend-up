@@ -1,9 +1,10 @@
-'use client'
+'use client';
 import AxiosPersistLogin from '@/components/layout/axios-persist-login';
 import { inter } from '@/constants/fonts';
 import useAuth from '@/features/auth/hooks/useAuth';
 import DashboardLayout from '@/features/dashboard/components/dashboard-layout';
 import type React from 'react';
+import { Toaster } from 'sonner';
 
 // export const metadata: Metadata = {
 //     title: 'UP Speaking Learning Centre',
@@ -11,11 +12,12 @@ import type React from 'react';
 // };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-    useAuth()
-    
+    useAuth();
+
     return (
         <AxiosPersistLogin>
             <DashboardLayout>
+                <Toaster />
                 <div className={inter.className}>{children}</div>
             </DashboardLayout>
         </AxiosPersistLogin>

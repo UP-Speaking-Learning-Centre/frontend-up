@@ -32,13 +32,17 @@ const ProgramCards = () => {
                     title={item.name}
                     description={item.description}
                     key={item.id}
-                    className="md:basis-1/2 lg:basis-1/3"
+                    className="md:basis-1/2 lg:basis-1/4"
                     imageUrl={imageUrl(idx)}
                     buttonLabel={isProgramSelected ? 'Kamu pilih program ini!' : 'Pilih program'}
                     buttonAction={() =>
                         handleNextStepAction({
                             stepId: CHOOSE_PROGRAM_STEP,
-                            formValue: { programId: item.id, programName: item.name },
+                            formValue: {
+                                programId: item.id,
+                                programName: item.name,
+                                programPrices: item.prices,
+                            },
                         })
                     }
                     selected={isProgramSelected}
@@ -48,7 +52,7 @@ const ProgramCards = () => {
     };
 
     return (
-        <div className="flex items-center flex-col md:flex-row justify-center gap-4 mt-8">
+        <div className="flex items-start flex-col md:flex-row justify-center gap-4 mt-8">
             {renderContent()}
         </div>
     );

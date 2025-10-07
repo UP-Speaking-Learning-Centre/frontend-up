@@ -8,26 +8,33 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import studyGroup from '@/data/study-group-detail.json';
 import { useEffect } from 'react';
 import { useScheduleManagementStore } from '../stores/schedule-management-store';
-import { StudyGroup } from '@/types/study-group';
+import { StudyGroupDetailAdmin } from '@/types/study-group';
+import { sleep } from '@/lib/mock';
 
-function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-const fetchStudyGroupDetail = async (studyGroupId: number): Promise<StudyGroup> => {
-    // const response = await api.get<TeacherScheduleResponse>(ENDPOINTS.fetchTeacherSchedule);
-    // return response.data;
-    await sleep(4000);
-    return studyGroup;
+const fetchStudyGroupDetail = async (studyGroupId: number) => {
+    const response = await api.get<StudyGroupDetailAdmin>(
+        ENDPOINTS.fetchStudyGroupDetail.expand({
+            studyGroupId,
+        })
+    );
+    return response.data;
 };
 
-export const useGetStudyGroupDetailQuery = (): UseQueryResult<StudyGroup> => {
+export const useGetStudyGroupDetailQuery = (): UseQueryResult => {
     const studyGroupId = useScheduleManagementStore(s => s.studyGroupId);
+    const setSelectedStudyGroup = useScheduleManagementStore(s => s.setSelectedStudyGroup);
+
     const query = useQuery({
         queryKey: ['study-group-detail', studyGroupId],
         queryFn: () => fetchStudyGroupDetail(studyGroupId as number),
         enabled: !!studyGroupId && studyGroupId > 0,
     });
+
+    useEffect(() => {
+        if (query.status === 'success') {
+            setSelectedStudyGroup(query.data as StudyGroupDetailAdmin);
+        }
+    }, [query.status, query.data]);
 
     return query;
 };

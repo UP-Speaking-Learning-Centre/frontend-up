@@ -1,10 +1,16 @@
 import TanstackProvider from '@/components/layout/tanstack-provider';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
-import { Bebas_Neue, Outfit, Roboto } from 'next/font/google';
+import { Bebas_Neue, Merriweather_Sans, Oswald, Outfit, Raleway, Roboto } from 'next/font/google';
 import type React from 'react';
 import './globals.css';
 
+const merriweather = Merriweather_Sans({
+    subsets: ['latin'],
+    weight: ['400', '500', '600', '700'],
+});
+const oswald = Oswald({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
+const raleway = Raleway({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
 const roboto = Roboto({
     subsets: ['latin'],

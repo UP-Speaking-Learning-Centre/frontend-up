@@ -32,11 +32,11 @@ const RegisterPage = () => {
                     description="Sebelum isi data diri, pilih paket yang paling sesuai dengan kebutuhan Anda. "
                 />
 
-                <PackageCards steps={REGISTER_STEPS} />
+                <PackageCards isFromPlacement={true} />
             </div>
 
-            <Price steps={REGISTER_STEPS} />
-            <FormInformation steps={REGISTER_STEPS} />
+            <Price isFromPlacement={true} />
+            <FormInformation isFromPlacement={true} />
         </>
     );
 };
