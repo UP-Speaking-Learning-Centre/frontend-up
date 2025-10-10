@@ -1,8 +1,19 @@
+import { ScheduleItem } from './schedule';
+
 export type StudentType = {
     group: string;
     parentPhoneNumber: string;
     program: string;
-    schedule: string;
+    schedules: {
+        aliasTeacher: string;
+        dayOfWeek: string;
+        endTime: string;
+        location: string;
+        startTime: string;
+        studyGroupName: string;
+        teacherMemberName: string;
+        teacherTeamMemberId: number;
+    }[];
     studentId: number;
     studentName: string;
     teacherName: string;

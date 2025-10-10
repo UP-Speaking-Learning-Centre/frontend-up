@@ -11,13 +11,16 @@ import { inter } from '@/constants/fonts';
 import AdminSelect from '@/features/admin/components/admin-select';
 import useChangeStudyGroup from '@/features/admin/hooks/useChangeStudyGroup';
 import useEditNote from '@/features/admin/hooks/useEditNote';
+import useGetLocation from '@/features/admin/queries/useGetLocation';
 import useGetStudyGroupDetail from '@/features/admin/queries/useGetStudyGroupDetail';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import useGetProfileById from '@/features/home/queries/useGetProfileById';
 import { cn } from '@/lib/utils';
 import { Calendar, Clock } from 'lucide-react';
+import { useState } from 'react';
 
 export default function DashboardPage() {
+    const [locationId, setLocationId] = useState('');
     const { data, isLoading } = useGetProfileById();
     const { isEdit, setIsEdit, notes, setNotes, handleSave } = useEditNote(data?.notes);
     const { data: studyGroupDetail, isLoading: isLoadingStudyGroupDetail } = useGetStudyGroupDetail(
@@ -31,10 +34,8 @@ export default function DashboardPage() {
         selectedStudyGroup,
         setSelectedStudyGroup,
         handleChangeStudyGroup,
-    } = useChangeStudyGroup(
-        studyGroupDetail?.schedules[0].locationId || 0,
-        data?.primaryStudyGroupId || 0
-    );
+    } = useChangeStudyGroup(+locationId, data?.primaryStudyGroupId || 0);
+    const { data: location, isLoading: isLoadingLocation } = useGetLocation();
 
     return (
         <DashboardContentLayout pageTitle="Detail Student">
@@ -231,10 +232,22 @@ export default function DashboardPage() {
                                         <DialogContent className={cn(inter.className)}>
                                             <DialogTitle>Ganti Kelompok</DialogTitle>
                                             <AdminSelect
+                                                label="Lokasi"
+                                                options={
+                                                    location?.map(loc => ({
+                                                        id: loc.id,
+                                                        name: loc.name,
+                                                    })) || []
+                                                }
+                                                value={locationId}
+                                                onValueChange={setLocationId}
+                                            />
+                                            <AdminSelect
                                                 label="Kelompok Belajar"
                                                 options={studyGroups || []}
                                                 value={selectedStudyGroup}
                                                 onValueChange={setSelectedStudyGroup}
+                                                disabled={!locationId}
                                             />
                                             <div>
                                                 <Label className="mb-2 block">

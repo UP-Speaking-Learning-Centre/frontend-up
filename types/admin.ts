@@ -162,7 +162,9 @@ export interface ReqUnassign {
     hard: boolean;
 }
 export interface ReqAssign {
-    studentIds: number[];
+    studyGroupId: number;
+    studentIds: number;
+    markFullScheduleId: number;
 }
 export interface ResUnassign {
     mode: string;

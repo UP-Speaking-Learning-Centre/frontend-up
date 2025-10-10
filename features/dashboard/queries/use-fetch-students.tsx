@@ -1,5 +1,5 @@
 import useAuthStore from '@/features/auth/stores/authStore';
-import api, { baseService } from '@/lib/api';
+import api, { BaseService } from '@/lib/api';
 import { BaseResponse } from '@/types/general';
 import { StudentType } from '@/types/students';
 import { useQuery } from '@tanstack/react-query';
@@ -39,7 +39,7 @@ const allUsers = {
 
 const fetchStudents = async (params: any, accessToken: string) => {
     // return allUsers as BaseResponse<StudentType[]>;
-    return baseService(async () => {
+    return BaseService(async () => {
         const res = await api.get<BaseResponse<StudentType[]>>(API_ADMIN_LIST_STUDENTS, {
             params,
             headers: {

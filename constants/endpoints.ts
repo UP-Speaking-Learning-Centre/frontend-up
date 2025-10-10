@@ -40,7 +40,7 @@ const ENDPOINTS = {
     createNewStudyGroup: '/admin/study-groups',
     fetchAdminStudentById: parseTemplate('/admin/students/{id}'),
     fetchUnassignStudent: parseTemplate('/admin/study-groups/{studyGroupId}/unassign-students'),
-    fetchAssignStudent: parseTemplate('/admin/study-groups/{studyGroupId}/assign-students'),
+    // fetchAssignStudent: parseTemplate('/admin/study-groups/{studyGroupId}/assign-students'),
 } as const;
 
 export default ENDPOINTS;

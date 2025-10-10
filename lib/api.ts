@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { Axios, AxiosError } from 'axios';
 
 const api = axios.create({
     baseURL: 'https://dev-api.uplearningcentre.com/',
@@ -8,10 +8,11 @@ const api = axios.create({
     },
 });
 
-export const baseService = async <T>(service: () => Promise<T>) => {
+export const BaseService = async <T>(service: () => Promise<T>) => {
     try {
-        return await service();
+       return await service();
     } catch (error) {
+        console.log()
         throw new Error((error as Error).message);
     }
 };

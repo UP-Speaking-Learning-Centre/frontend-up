@@ -26,6 +26,7 @@ const useFetchDetailPlacementTestQuery = ({
     const query = useQuery({
         queryKey: [ENDPOINTS.fetchAdminDetailPlacementTest.expand({ id })],
         queryFn: () => fetchDetailPlacementTest({ id }),
+        staleTime: 0,
     });
 
     useEffect(() => {

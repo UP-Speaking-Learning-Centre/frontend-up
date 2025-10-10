@@ -21,7 +21,9 @@ const useAuth = () => {
                         prevReq.headers.Authorization = `Bearer ` + token;
                         return api(prevReq);
                     }
+                    return await logout().then(() => window.location.replace(ROUTES.login));
                 }
+                throw err
             }
         );
 

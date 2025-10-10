@@ -2,6 +2,8 @@ import ENDPOINTS from '@/constants/endpoints';
 import api from '@/lib/api';
 import { ReqAssign, ReqUnassign, ResAssign, ResUnassign } from '@/types/admin';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { AxiosError, AxiosResponse } from 'axios';
+import { toast } from 'sonner';
 
 const usePostReassignStudyGroup = (studyGroupId: number) => {
     const queryClient = useQueryClient();
@@ -18,19 +20,21 @@ const usePostReassignStudyGroup = (studyGroupId: number) => {
         return res.data;
     };
     const postAssign_ = async (data: ReqAssign): Promise<ResAssign> => {
-        const res = await api.post<ResAssign>(
-            ENDPOINTS.fetchAssignStudent.expand({ studyGroupId }),
-            data
-        );
+        const res = await api.post<ResAssign>(ENDPOINTS.assignStudentToStudyGroup, data);
         // queryClient.invalidateQueries({ queryKey: ['GET' + API_LOCATION] });
-        return res.data;
+        return res?.data;
     };
 
     const { mutateAsync: postUnassign } = useMutation({
         mutationFn: postUnassign_,
     });
-    const { mutateAsync: postAssign } = useMutation({
+    const { mutateAsync: postAssign, error } = useMutation({
         mutationFn: postAssign_,
+        onError: (err: AxiosError<{ message: string }>) =>
+            toast.error(err.response?.data?.message, {
+                className: 'bg-red-100',
+                position: 'top-center',
+            }),
     });
 
     return { postUnassign, postAssign };

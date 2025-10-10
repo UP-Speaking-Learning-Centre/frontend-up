@@ -9,7 +9,7 @@ const usePutTeacher = (id: number) => {
     const setTeacher = useLocationManagementStore(s => s.setTeacher);
     const teacher = useLocationManagementStore(s => s.teacher);
 
-    const putLocation = async (data: RequestTeacherAdmin): Promise<TeacherAdmin> => {
+    const putLocation = async (data: Partial<RequestTeacherAdmin>): Promise<TeacherAdmin> => {
         const res = await api.patch(ENDPOINTS.fetchTeachersById.expand({ id }),data);
         const index = teacher.findIndex(teach => teach.id === id);
         teacher[index] = res.data;
@@ -17,12 +17,12 @@ const usePutTeacher = (id: number) => {
         return res.data;
     };
 
-    const { mutateAsync } = useMutation({
+    const putTeacher = useMutation({
         mutationKey: ['PUT' + ENDPOINTS.fetchTeachersById.expand({ id })],
         mutationFn: putLocation,
     });
 
-    return { mutateAsync };
+    return putTeacher;
 };
 
 export default usePutTeacher;

@@ -1,7 +1,7 @@
 'use client';
 
 import useAuthStore from '@/features/auth/stores/authStore';
-import api, { baseService } from '@/lib/api';
+import api, { BaseService } from '@/lib/api';
 import { BaseResponse } from '@/types/general';
 import { StudentPlacementTest } from '@/types/students';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
@@ -10,7 +10,7 @@ import { API_ADMIN_LIST_PLACEMENT_TEST } from '../constants/config';
 import { useStudentsStore } from '../stores/students-store';
 
 const fetchStudents = (params?: any, accessToken?: string) => {
-    return baseService(async () => {
+    return BaseService(async () => {
         const res = await api.get<BaseResponse<StudentPlacementTest[]>>(
             API_ADMIN_LIST_PLACEMENT_TEST,
             {

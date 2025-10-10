@@ -59,7 +59,10 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                 <tbody>
                                     {!!values.length ? (
                                         values.map((row, rowIndex) => (
-                                            <tr key={rowIndex}>
+                                            <tr
+                                                key={rowIndex}
+                                                className={cn((rowIndex + 1) % 2 && 'bg-gray-200')}
+                                            >
                                                 {columns
                                                     .filter(col => col.id !== 'actions')
                                                     .map((col, idx) => {

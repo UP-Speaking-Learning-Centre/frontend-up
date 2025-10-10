@@ -12,9 +12,16 @@ const useChangeStudyGroup = (locationId: number, prevStudyGroupId: number) => {
     const { postUnassign, postAssign } = usePostReassignStudyGroup(Number(selectedStudyGroup));
 
     const handleChangeStudyGroup = () => {
+        const payload = {
+            markFullScheduleId: 1,
+            studentIds: +(id as string),
+            studyGroupId: +selectedStudyGroup,
+        };
+        
         if (!selectedStudyGroup) throw new Error('Please select new Study Group');
+        if (!prevStudyGroupId) return postAssign(payload);
         postUnassign({ hard: true, studentIds: [+(id || 0)], prevStudyGroupId }).then(() =>
-            postAssign({ studentIds: [+(id || 0)] })
+            postAssign(payload)
         );
     };
 
