@@ -23,6 +23,8 @@ const Page = () => {
     const pagination = useStudentsStore(s => s.pagination);
     const filter = useStudentsStore(s => s.filters);
     const onChangeFilter = useStudentsStore(s => s.onChangeFilter);
+    console.log(students);
+
     const {
         filters: { groups, mentors, programs },
         onChangePage,
@@ -107,12 +109,20 @@ const Page = () => {
                         { name: 'Program', id: 'program' },
                         { name: 'Group', id: 'group' },
                         { name: 'Mentor', id: 'teacherName' },
-                        { name: 'Schedule', id: 'schedule' },
+                        { name: 'Schedules', id: 'schedules' },
                         { name: 'Actions', id: 'actions' },
                     ]}
                     values={students?.map(user => {
                         return {
                             ...user,
+                            schedules: {
+                                renderCell: () => (
+                                    <p>
+                                        {user.schedules?.map(item => item.dayOfWeek).join(' - ') ||
+                                            'N/A'}
+                                    </p>
+                                ),
+                            },
                             actions: {
                                 renderCell: () => (
                                     <Link href={`/admin/students/${user.studentId}`}>

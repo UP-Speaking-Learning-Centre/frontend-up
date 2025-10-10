@@ -1,28 +1,29 @@
 import { LocationAdmin, RequestTeacherAdmin, TeacherAdmin } from '@/types/admin';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { API_LOCATION, API_TEACHERS } from '../constants/config';
-import api from '@/lib/api';
+import api, { BaseService } from '@/lib/api';
 import ENDPOINTS from '@/constants/endpoints';
 
 const usePostTeacher = () => {
     const queryClient = useQueryClient();
 
-    const postLocation = async (data: RequestTeacherAdmin): Promise<TeacherAdmin> => {
-        const res = await api.post<TeacherAdmin>(ENDPOINTS.fetchTeachers, data, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
+    const post = async (data: RequestTeacherAdmin): Promise<TeacherAdmin> => {
+        return BaseService(async () => {
+            const res = await api.post<TeacherAdmin>(ENDPOINTS.fetchTeachers, data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            queryClient.invalidateQueries({ queryKey: [ENDPOINTS.fetchTeachers] });
+            return res.data;
         });
-        queryClient.invalidateQueries({ queryKey: ['GET' + API_LOCATION] });
-        return res.data;
     };
 
-    const { mutateAsync } = useMutation({
-        mutationKey: ['POST' + API_TEACHERS],
-        mutationFn: postLocation,
+    const postTeacher = useMutation({
+        mutationFn: post,
     });
 
-    return { mutateAsync };
+    return postTeacher;
 };
 
 export default usePostTeacher;

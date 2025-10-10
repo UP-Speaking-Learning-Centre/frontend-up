@@ -28,7 +28,7 @@ const page = () => {
         handleUpload,
         handleResetModal,
         isEdit,
-        isLoading: isLoadingCreateTeacher,
+        isLoadingCreate: isLoadingCreateTeacher,
         handleEdit,
         data,
         setValue,
@@ -138,7 +138,8 @@ const page = () => {
                                                             key={`${day}-${index}`}
                                                             bookingInfo={getBookingInfo(
                                                                 day,
-                                                                timeSlot
+                                                                timeSlot,
+                                                                
                                                             )}
                                                             teacher={day}
                                                         />

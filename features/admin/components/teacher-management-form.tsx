@@ -81,6 +81,11 @@ const TeacherManagementForm: FC<Props> = ({
                             )}
                             onChange={onUpload}
                         />
+                        {isEdit && (
+                            <p className="text-xs font-semibold text-gray-500 mt-1">
+                                Catatan: Harap diabaikan apabila tidak terdapat perubahan.
+                            </p>
+                        )}
                         {errors.photo && (
                             <p className="text-red-500 text-sm mt-1">
                                 {errors.photo.message?.toString()}
@@ -117,18 +122,23 @@ const TeacherManagementForm: FC<Props> = ({
                             )}
                             {...register('teacherId')}
                         /> */}
-                        <AdminSelect
-                            label="Alias"
-                            loading={isLoadingAlias}
-                            options={
-                                aliasData?.map(alias => ({ id: alias.id, name: alias.alias })) || []
-                            }
-                            value={alias?.toString()}
-                            onValueChange={value => {
-                                setAlias(Number(value));
-                                setValue('teacherId', Number(value));
-                            }}
-                        />
+                        {!isEdit && (
+                            <AdminSelect
+                                label="Alias"
+                                loading={isLoadingAlias}
+                                options={
+                                    aliasData?.map(alias => ({
+                                        id: alias.id,
+                                        name: alias.alias,
+                                    })) || []
+                                }
+                                value={alias?.toString()}
+                                onValueChange={value => {
+                                    setAlias(Number(value));
+                                    setValue('teacherId', Number(value));
+                                }}
+                            />
+                        )}
                         {errors.teacherId && (
                             <p className="text-red-500 text-sm mt-1">
                                 {errors.teacherId.message?.toString()}
@@ -163,14 +173,17 @@ const TeacherManagementForm: FC<Props> = ({
 
                     {/* Edit Button */}
                     <div className="flex justify-end pt-4">
-                        <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-2 rounded-lg">
+                        <Button
+                            className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-2 rounded-lg"
+                            disabled={isLoading}
+                        >
                             {isEdit
                                 ? !isLoading
                                     ? 'Edit'
-                                    : 'Editing'
+                                    : 'Editing...'
                                 : !isLoading
                                 ? 'Add'
-                                : 'Adding'}
+                                : 'Adding...'}
                         </Button>
                     </div>
                 </form>

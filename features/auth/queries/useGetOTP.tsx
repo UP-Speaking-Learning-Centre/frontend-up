@@ -1,4 +1,4 @@
-import api, { baseService } from '@/lib/api';
+import api, { BaseService } from '@/lib/api';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { API_OTP, DEVELOPMENT } from '../constants/config';
@@ -9,7 +9,7 @@ const useGetOTP = () => {
     const { setOtpForTesting } = useAuthStore();
 
     const getOTP = async (phoneNumber: string) => {
-        return baseService<ResponseOTP>(async () => {
+        return BaseService<ResponseOTP>(async () => {
             // if (process.env.NODE_ENV === DEVELOPMENT)
             //     return {
             //         message: 'An OTP has been sent to your number.',

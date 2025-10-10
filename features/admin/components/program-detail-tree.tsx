@@ -16,10 +16,9 @@ const ProgramDetailTree = ({ items, id }: { items: ProgramDetailTreeInterface; i
                 {items.items.map((item, idx) => (
                     <ProgramDetailControl
                         id={`${id}-${idx}`}
-                        title={item.title}
-                        description={item.description}
-                        children={item.children}
                         isChild
+                        item={item}
+                        section={items.title}
                     />
                 ))}
             </div>

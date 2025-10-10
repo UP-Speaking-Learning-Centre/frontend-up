@@ -1,6 +1,14 @@
-import { DayOfWeekType } from './programs-selection';
-
 export type Schedule = {
+    id: number;
+    location: string;
+    locationId: number;
+    teacherMemberName: string;
+    teacherAlias: string;
+    isPriority: boolean;
+    program: string;
+    group: string;
+    level: string;
+    grade: string;
     scheduleId?: number;
     dayOfWeek: string; // bisa kamu ganti ke union type "MON" | "TUE" | ...
     startTime: string; // format "HH:mm:ss"
@@ -67,6 +75,24 @@ export type StudyGroupDetailAdmin = {
     grade: string;
     gradeNumber: number;
     schedules: ScheduleDetailAdmin[];
+};
+
+export type StudyGroupDetail = {
+    description: string;
+    grade: string;
+    gradeId: number;
+    gradeNumber: number;
+    group: string;
+    groupId: number;
+    id: number;
+    isPriority: boolean;
+    level: string;
+    levelId: number;
+    name: string;
+    package: { id: number; name: string };
+    program: string;
+    programId: number;
+    schedules: Schedule[];
 };
 
 export type CreateStudyGroupPayload = {

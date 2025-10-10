@@ -7,29 +7,50 @@ import useGetTeacherById from '../queries/useGetTeacherById';
 import usePostTeacher from '../queries/usePostTeacher';
 import usePutTeacher from '../queries/usePutTeacher';
 import useUploadFile from '../queries/useUploadFile';
+import { useTeacherManagementStore } from '../stores/teacher';
 
 const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
     const [id, setId] = useState(0);
 
     const { mutateAsync } = useUploadFile();
-    const { mutateAsync: postTeacher } = usePostTeacher();
-    const { mutateAsync: putTeacher } = usePutTeacher(id);
+    const { mutateAsync: postTeacher, isPending } = usePostTeacher();
+    const { mutateAsync: putTeacher, isPending: isPendingPut } = usePutTeacher(id);
     const { data, isLoading } = useGetTeacherById(id);
 
-    const Teacher = z.object({
-        memberName: z.string().min(1, 'This field is required'),
-        photo: z
-            .instanceof(File)
-            .refine(
-                file =>
-                    ['image/png', 'image/jpeg', 'image/jpg', 'image/svg+xml', 'image/gif'].includes(
-                        file.type
-                    ),
-                { message: 'Invalid image file type' }
-            ),
-        teacherId: z.number().min(1, 'This field is required'),
-        // isCoordinator: z.string().min(1, 'This field is required'),
-    });
+    const teacher = useTeacherManagementStore(s => s.teacher);
+    const setTeacher = useTeacherManagementStore(s => s.setTeacher);
+
+    const Teacher = z
+        .object({
+            memberName: z.string().min(1, 'This field is required'),
+            photo: z
+                .instanceof(File)
+                .refine(
+                    file =>
+                        [
+                            'image/png',
+                            'image/jpeg',
+                            'image/jpg',
+                            'image/svg+xml',
+                            'image/gif',
+                        ].includes(file.type),
+                    { message: 'Invalid image file type' }
+                )
+                .refine(file => file.size < 1000, { message: 'Ukuran file melebihi batas' })
+                .optional(),
+            teacherId: z.number().min(1, 'This field is required'),
+        })
+        .superRefine((data, ctx) => {
+            if (!id && !data.photo) {
+                return ctx.addIssue({
+                    message: 'This field is required when creating new item',
+                    path: ['photo'],
+                    code: 'custom',
+                });
+            }
+            return true;
+        });
+
     const { register, handleSubmit, formState, setValue, reset } = useForm<RequestTeacherAdmin>({
         resolver: zodResolver(Teacher),
     });
@@ -67,6 +88,7 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
             return;
         }
         postTeacher({ ...value, isCoordinator: false }).then(res => {
+            setTeacher([res, ...teacher]);
             handleResetModal();
         });
     };
@@ -84,6 +106,7 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
         handleResetModal,
         isEdit: !!id,
         isLoading,
+        isLoadingCreate: isPending || isPendingPut,
         handleEdit,
         data,
         setValue,

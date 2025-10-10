@@ -3,13 +3,13 @@
 import { API_GET_PROFILE } from '@/features/auth/constants/config';
 import { ResponseProfile } from '@/features/auth/constants/interface';
 import { getCookiesToken } from '@/features/auth/utils/cookies.helper';
-import api, { baseService } from '@/lib/api';
+import api, { BaseService } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
 
 const useGetProfile = () => {
     const getProfile = async () => {
         const accessToken = await getCookiesToken();
-        return baseService(async () => {
+        return BaseService(async () => {
             const res = await api.get<ResponseProfile>(API_GET_PROFILE, {
                 headers: { Authorization: 'Bearer ' + accessToken },
             });

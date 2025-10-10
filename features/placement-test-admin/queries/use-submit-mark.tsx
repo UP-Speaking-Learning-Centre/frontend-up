@@ -1,11 +1,11 @@
-import api, { baseService } from '@/lib/api';
+import api, { BaseService } from '@/lib/api';
 import { ResponseCheckAnswer } from '@/types/placement-test-admin';
 import { useMutation } from '@tanstack/react-query';
 import { API_CHECK_ANSWER } from '../constants/config';
 
 const useSubmitMark = () => {
     const patchCheckAnswer = async (data: { questionId: string; check: string }) => {
-        return baseService(async () => {
+        return BaseService(async () => {
             const res = await api.patch<ResponseCheckAnswer>(
                 API_CHECK_ANSWER(data.questionId?.toString()),
                 { check: data.check }

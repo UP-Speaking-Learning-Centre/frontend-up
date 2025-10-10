@@ -24,8 +24,9 @@ const useFetchDetailPlacementTestQuery = ({
 }): UseQueryResult<ResponsePlacementTest, Error> => {
     const setState = useDisplayedPlacementTestStore(state => state.setState);
     const query = useQuery({
-        queryKey: [ENDPOINTS.fetchAdminDetailPlacementTest],
+        queryKey: [ENDPOINTS.fetchAdminDetailPlacementTest.expand({ id })],
         queryFn: () => fetchDetailPlacementTest({ id }),
+        staleTime: 0,
     });
 
     useEffect(() => {

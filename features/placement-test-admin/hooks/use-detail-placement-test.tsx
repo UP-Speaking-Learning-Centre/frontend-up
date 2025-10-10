@@ -1,8 +1,7 @@
 import {
     FormStatusManagement,
     ResponseSaveNote,
-    ResponseSavePlacementTest,
-    ResponseUpdateStatus,
+    ResponseUpdateStatus
 } from '@/types/placement-test-admin';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
@@ -41,7 +40,6 @@ const useDetailPlacementTest = () => {
     });
 
     const handleContinue: SubmitHandler<FormStatusManagement> = fields => {
-        console.info(fields);
         return handleSave(fields);
     };
     const handleError: SubmitErrorHandler<FormStatusManagement> = fields => {
@@ -69,22 +67,17 @@ const useDetailPlacementTest = () => {
 
         if (noteForStudent) requests = [...requests, patchNotes({ notes: noteForStudent })];
 
-        try {
-            const res = await Promise.all(requests).then(async res => {
-                const placementTest = await patchPlacementTest({
-                    gradeId: +fields?.grade,
-                    levelId: +fields?.level,
-                    locationId: +fields?.location,
-                    scheduleIds: [+fields?.studyGroup],
-                });
-
-                return [...res, placementTest];
+        const res = await Promise.all(requests).then(async res => {
+            const placementTest = await patchPlacementTest({
+                gradeId: +fields?.grade,
+                levelId: +fields?.level,
+                locationId: +fields?.location,
+                scheduleIds: [+fields?.studyGroup],
             });
-            res.forEach(() => toast.info('Success'));
-        } catch (error) {
-            toast.error((error as AxiosError).message);
-            throw new Error((error as AxiosError).message);
-        }
+
+            return [...res, placementTest];
+        });
+        res.forEach(() => toast.info('Success'));
     };
 
     const handleSave = async (fields?: FormStatusManagement) => {

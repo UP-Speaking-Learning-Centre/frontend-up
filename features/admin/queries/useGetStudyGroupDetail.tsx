@@ -1,11 +1,11 @@
 import ENDPOINTS from '@/constants/endpoints';
 import api from '@/lib/api';
-import { StudyGroup } from '@/types/study-group';
+import { StudyGroup, StudyGroupDetail } from '@/types/study-group';
 import { useQuery } from '@tanstack/react-query';
 
 const useGetStudyGroupDetail = (id: number) => {
     const get = async () => {
-        const res = await api.get<StudyGroup>(
+        const res = await api.get<StudyGroupDetail>(
             ENDPOINTS.fetchStudyGroupDetail.expand({
                 studyGroupId: id,
             })

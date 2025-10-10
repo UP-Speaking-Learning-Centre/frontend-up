@@ -1,11 +1,11 @@
-import api, { baseService } from '@/lib/api';
+import api, { BaseService } from '@/lib/api';
 import { useMutation } from '@tanstack/react-query';
 import { API_FIRST_LOGIN } from '../constants/config';
 import { RequestFirstLogin, ResponseFirstLogin } from '../constants/interface';
 
 const usePostFirstLogin = () => {
     const postFirstLogin = (data: RequestFirstLogin) => {
-        return baseService<string>(async () => {
+        return BaseService<string>(async () => {
             // if(process.env.NODE_ENV === DEVELOPMENT) return "Your account has been activated successfully!"
             const res = await api.post<ResponseFirstLogin>(API_FIRST_LOGIN, data);
             return res.data.message;

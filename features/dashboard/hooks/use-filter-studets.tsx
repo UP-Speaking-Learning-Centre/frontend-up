@@ -17,22 +17,27 @@ const useFilterStudents = (setSearch: (key: string, value: any) => void, program
     const onChangeSearch = (string: string) => {
         if (!string) return setSearch('searchQuery', undefined);
         setSearch('searchQuery', string);
+        setPagination({ currentPage: 1 });
     };
     const onChangeGroup = (group?: string) => {
         if (!group || group === ALL_GROUP) return setSearch('group', undefined);
         setSearch('group', Number(group));
+        setPagination({ currentPage: 1 });
     };
     const onChangeProgram = (program: string) => {
         onChangeGroup(undefined);
         if (!program || program === ALL_PROGRAM) return setSearch('program', undefined);
         setSearch('program', Number(program));
+        setPagination({ currentPage: 1 });
     };
     const onChangeMentor = (mentor: string) => {
         setSearch('mentors', mentor);
+        setPagination({ currentPage: 1 });
     };
     const onChangeStatus = (status: string) => {
         if (status === ALL_STATUS) return setSearch('status', undefined);
         setSearch('status', status);
+        setPagination({ currentPage: 1 });
     };
 
     const groupsData = programsData?.find(program_ => program_.id === program)?.groups;

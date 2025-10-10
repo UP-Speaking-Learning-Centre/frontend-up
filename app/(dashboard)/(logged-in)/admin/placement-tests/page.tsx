@@ -130,7 +130,7 @@ const Index = () => {
                                         <Badge className="flex items-center justify-center gap-2">
                                             {
                                                 PLACEMENT_TEST_FILTER_OPTIONS.find(
-                                                    option => option.id === user.resultId
+                                                    option => option.value === user.status
                                                 )?.name
                                             }
                                         </Badge>

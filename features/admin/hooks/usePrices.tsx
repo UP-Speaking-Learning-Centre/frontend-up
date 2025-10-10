@@ -6,8 +6,11 @@ import z from 'zod';
 import useGetPrices from '../queries/useGetPrices';
 import usePatchPrice from '../queries/usePatchPrice';
 import { useProgramDetailStore } from '../stores/program-detail';
+import { useQueryClient } from '@tanstack/react-query';
+import ENDPOINTS from '@/constants/endpoints';
 
 const usePrices = () => {
+    const queryClient = useQueryClient();
     const packages = useProgramDetailStore(s => s.packages);
     const setState = useProgramDetailStore(s => s.setState);
     const packageId = useProgramDetailStore(s => s.packageId);
@@ -22,28 +25,28 @@ const usePrices = () => {
             .min(1, 'Minimum 1 price for adding new item')
             .superRefine((arr, ctx) => {
                 const seen = new Map<number, number[]>(); // duration -> index[]
-              
+
                 arr.forEach((item, index) => {
-                  if (!seen.has(+item.timeframe)) {
-                    seen.set(+item.timeframe, [index]);
-                  } else {
-                    seen.get(+item.timeframe)!.push(index);
-                  }
+                    if (!seen.has(+item.timeframe)) {
+                        seen.set(+item.timeframe, [index]);
+                    } else {
+                        seen.get(+item.timeframe)!.push(index);
+                    }
                 });
-              
+
                 // cek kalau ada lebih dari satu index utk durasi yg sama
                 for (const [_, indices] of seen) {
-                  if (indices.length > 1) {
-                    indices.forEach((i) => {
-                      ctx.addIssue({
-                        code: z.ZodIssueCode.custom,
-                        message: "Duplicate duration is not allowed",
-                        path: [i, "timeframe"], // kasih error langsung ke field duration
-                      });
-                    });
-                  }
+                    if (indices.length > 1) {
+                        indices.forEach(i => {
+                            ctx.addIssue({
+                                code: z.ZodIssueCode.custom,
+                                message: 'Duplicate duration is not allowed',
+                                path: [i, 'timeframe'], // kasih error langsung ke field duration
+                            });
+                        });
+                    }
                 }
-              }),
+            }),
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -96,20 +99,6 @@ const usePrices = () => {
         }
         return parsed.success;
     };
-    const validateDuplicateDuration = () => {
-        const durations: string[] = [];
-        let flag = false;
-
-        packages.forEach(package_ => {
-            if (!durations.length) {
-                durations.push(package_.duration);
-                return;
-            }
-            if (durations.includes(package_.duration)) return (flag = true);
-        });
-
-        return flag;
-    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -131,6 +120,7 @@ const usePrices = () => {
                 })),
             }).then(() => {
                 toast.info('Prices Added Successfully', { position: 'top-center' });
+                queryClient.invalidateQueries({ queryKey: [ENDPOINTS.fetchPrices] });
                 setState({
                     packages: [
                         {

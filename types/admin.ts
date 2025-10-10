@@ -3,10 +3,9 @@ export interface ProgramDetailTreeInterface {
     items: ProgramDetailTreeInterfaceItems[];
 }
 
-export interface ProgramDetailTreeInterfaceItems {
+export interface ProgramDetailTreeInterfaceItems extends ProgramDetail {
     id: number;
     title: string;
-    description: string;
     children?: ProgramDetailTreeInterface;
 }
 
@@ -21,23 +20,28 @@ export interface ProgramDetailPackage {
 export interface ProgramDetailGrade {
     gradeId: number;
     gradeNumber: number;
+    prerequisites: string;
     packages: ProgramDetailPackage[];
 }
 export interface ProgramDetailLevel {
     levelId: number;
     levelName: string;
+    description: string;
     grades: ProgramDetailGrade[];
 }
 
 export interface ProgramDetailGroup {
     groupId: number;
     groupName: string;
+    materi: string;
+    capaian: string;
     levels: ProgramDetailLevel[];
 }
 
 export interface ProgramDetail {
     programId: number;
     programName: string;
+    description: string;
     groups: ProgramDetailGroup[];
 }
 
@@ -151,4 +155,30 @@ export interface RequestPrice {
     packageId: number;
     prices: { timeframe: string; amount: number }[];
     replaceAll: boolean;
+}
+
+export interface ReqUnassign {
+    studentIds: number[];
+    hard: boolean;
+}
+export interface ReqAssign {
+    studyGroupId: number;
+    studentIds: number;
+    markFullScheduleId: number;
+}
+export interface ResUnassign {
+    mode: string;
+    deletedIds: number[];
+    affected: number;
+    updated: number;
+}
+export interface ResAssign {
+    studyGroupId: number;
+    totalSchedules: number;
+    requestedStudents: number[];
+    createdAssignments: number;
+    invalidStudentIds: number[];
+    perStudentCreated: {
+        [x: string]: number;
+    };
 }

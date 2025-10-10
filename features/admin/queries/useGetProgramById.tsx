@@ -17,8 +17,7 @@ import { API_PROGRAMS } from '../constants/config';
 const useGetProgramById = () => {
     const { id } = useParams();
     const handleProgramMapping = (
-        program: ProgramRecurseArray,
-        isPackage?: boolean
+        program: ProgramRecurseArray
     ): ProgramDetailTreeInterfaceItems[] => {
         const getTitle = (item: ProgramRecurse) => {
             return (
@@ -43,7 +42,7 @@ const useGetProgramById = () => {
                 (item as ProgramDetail)?.programId ??
                 (item as ProgramDetailGroup)?.groupId ??
                 (item as ProgramDetailLevel)?.levelId ??
-                (item as ProgramDetailGrade)?.gradeId??
+                (item as ProgramDetailGrade)?.gradeId ??
                 (item as ProgramDetailPackage)?.gradePackageId
             );
         };
@@ -58,14 +57,14 @@ const useGetProgramById = () => {
         return program?.map(item => ({
             id: getId(item),
             title: getTitle(item),
-            description: 'Lorem Ipsum',
             children:
-                getChild(item)?.length > 0
-                    ? {
-                          title: getChildTitle(item),
-                          items: handleProgramMapping(getChild(item)),
-                      }
-                    : undefined,
+            getChild(item)?.length > 0
+            ? {
+                title: getChildTitle(item),
+                items: handleProgramMapping(getChild(item)),
+            }
+            : undefined,
+            ...(item as ProgramDetail),
         }));
     };
 
