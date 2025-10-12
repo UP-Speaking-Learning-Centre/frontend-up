@@ -62,11 +62,11 @@ export default function Navbar() {
                             </Link>
                         ))}
                     </div>
-                    <div className="flex flex-1 justify-end">
+                    {/* <div className="flex flex-1 justify-end">
                         <Link href={ROUTES.login}>
                             <Button className="bg-[#CE6439] hover:bg-[#CE6439]/90">Login</Button>
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </nav>
 
@@ -114,13 +114,13 @@ export default function Navbar() {
                                     </Link>
                                 ))}
                             </div>
-                            <div className="py-6">
+                            {/* <div className="py-6">
                                 <Link href={ROUTES.login}>
                                     <Button className="w-full bg-[#CE6439] hover:bg-[#CE6439]/90">
                                         Login
                                     </Button>
                                 </Link>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

@@ -248,7 +248,7 @@ export default function ForgotPasswordPage() {
                                 onClick={() => setStep('phone')}
                                 className="w-full"
                             >
-                                Use Different Phone Number
+                                Gunakan Nomor WhatsApp yang Berbeda
                             </Button>
                         </form>
                     )}

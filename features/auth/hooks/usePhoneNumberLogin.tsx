@@ -16,10 +16,10 @@ const usePhoneNumberLogin = () => {
     const Login = z.object({
         phone: z
             .string()
-            .min(1, 'Phone number is required')
+            .min(1, 'Nomor WhatsApp harus diisi')
             .regex(
                 /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/,
-                'Invalid phone number'
+                'Nomor WhatsApp tidak valid'
             ),
     });
     const { register, handleSubmit, formState, getValues } = useForm<LoginRequest>({
@@ -42,12 +42,20 @@ const usePhoneNumberLogin = () => {
                     return;
                 }
                 if (res === NOT_REGISTERED) {
-                    toast.error('This phone is not registered', { position: 'top-center' });
+                    toast.error('Nomor WhatsApp ini belum terdaftar', {
+                        className: 'bg-red-200 text-red-600',
+                        position: 'top-center',
+                    });
                     return;
                 }
                 setStep(PASSWORD);
             })
-            .catch(err => toast.error(err?.message, { position: 'top-center' }))
+            .catch(err =>
+                toast.error(err?.message, {
+                    className: 'bg-red-200 text-red-600',
+                    position: 'top-center',
+                })
+            )
             .finally(() => setIsLoading(false));
     };
 

@@ -98,7 +98,7 @@ const OTPComponent = () => {
                                     onClick={() => setStep(PHONE)}
                                     className="w-full"
                                 >
-                                    Use Different Phone Number
+                                    Gunakan Nomor WhatsApp yang Berbeda
                                 </Button>
                             </form>
                         </CardContent>

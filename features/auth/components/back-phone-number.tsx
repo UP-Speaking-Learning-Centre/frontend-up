@@ -15,7 +15,7 @@ const BackPhoneNumber = () => {
             }}
             className="w-full mt-6"
         >
-            Use Different Phone Number
+            Gunakan Nomor WhatsApp yang Berbeda
         </Button>
     );
 };

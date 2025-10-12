@@ -103,8 +103,24 @@ const StudyGroupSelection = () => {
                 <div className="mx-auto w-full lg:w-10/12">
                     <div className="flex flex-col md:flex-row items-center justify-center gap-2 mt-4">
                         {Array.from({ length: 2 }).map((_, idx) => (
-                            <div key={idx} className="basis-full md:basis-2/5">
-                                <Skeleton className="h-48 w-full" />
+                            <div
+                                key={idx}
+                                className="basis-full md:basis-2/5 p-2 border border-neutral-200 rounded-md"
+                            >
+                                <div className="flex items-center gap-2">
+                                    <Skeleton className="h-20 w-20" />
+                                    <div className="flex flex-col gap-2">
+                                        <div className="space-y-2">
+                                            <Skeleton className="h-2 w-16" />
+                                            <Skeleton className="h-4 w-32" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Skeleton className="h-2 w-16" />
+                                            <Skeleton className="h-4 w-32" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <Skeleton className="h-20 w-full mt-2" />
                             </div>
                         ))}
                     </div>

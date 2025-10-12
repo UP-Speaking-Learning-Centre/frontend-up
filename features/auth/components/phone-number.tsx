@@ -16,19 +16,18 @@ const PhoneNumber = () => {
         <div className="w-full max-w-md">
             <Toaster />
             <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-gray-900">Sign in to your account</h2>
-                <p className="mt-2 text-azure-34 font-normal">Access your learning dashboard</p>
+                <h2 className="text-3xl font-bold text-gray-900">Masuk ke Dashboard</h2>
             </div>
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-center text-lg">Enter Phone Number</CardTitle>
+                    <CardTitle className="text-center text-lg">Masukkan Nomor Handphone</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <Label htmlFor="phone" className="flex items-center mb-2">
                                 <Phone className="w-4 h-4 mr-2 text-[#CE6439]" />
-                                Phone Number
+                                Nomor Handphone
                             </Label>
                             <Input
                                 placeholder="e.g. 08123456789"
@@ -41,7 +40,7 @@ const PhoneNumber = () => {
                                 </p>
                             )}
                             <p className="text-xs text-gray-500 mt-1">
-                                Enter your registered phone number (WhatsApp number)
+                                Masukkan nomor handphone yang terdaftar (WhatsApp)
                             </p>
                         </div>
                         <Button
@@ -49,7 +48,7 @@ const PhoneNumber = () => {
                             disabled={isLoading || !isDirty}
                             className="w-full bg-[#CE6439] hover:bg-[#CE6439]/90"
                         >
-                            {isLoading ? 'Checking...' : 'Continue'}
+                            {isLoading ? 'Checking...' : 'Lanjutkan'}
                         </Button>
                     </form>
                 </CardContent>

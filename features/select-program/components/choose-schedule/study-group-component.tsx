@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { dayNames, days } from '@/constants/schedule';
 import { cn } from '@/lib/utils';
 import moment from 'moment';
+import ImageWithFallback from '@/components/ui/image-with-fallback';
 
 const StudyGroupComponent = ({
     availableStudyGroup,
@@ -69,13 +70,14 @@ const StudyGroupComponent = ({
                         >
                             {/* Header */}
                             <div className="flex gap-4 items-start">
-                                <Image
-                                    src={studyGroup.teacherTeamMemberPhoto || '/levels/3.svg'}
-                                    className="border-2 border-primary rounded-md"
-                                    alt={studyGroup.teacherTeamMemberName}
-                                    width={60}
-                                    height={60}
-                                />
+                                <div className="border-2 border-primary rounded-md overflow-hidden w-16 h-16 shrink-0 bg-neutral-50">
+                                    <ImageWithFallback
+                                        src={studyGroup.teacherTeamMemberPhoto || ''}
+                                        alt={studyGroup.teacherTeamMemberName}
+                                        width={60}
+                                        height={60}
+                                    />
+                                </div>
 
                                 <div className="flex items-start justify-between gap-2 w-full">
                                     <div className="space-y-2 text-left">

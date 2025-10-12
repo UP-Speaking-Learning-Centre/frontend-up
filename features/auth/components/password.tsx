@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -24,28 +24,25 @@ const Password = () => {
         <div className="w-full max-w-md">
             <Toaster />
             <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-gray-900">Sign in to your account</h2>
-                <p className="mt-2 text-azure-34 font-normal">Access your learning dashboard</p>
+                <h2 className="text-3xl font-bold text-gray-900">Masuk ke Dashboard</h2>
             </div>
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-center text-lg">Create Password</CardTitle>
+                    <CardTitle className="text-center text-lg">Masukkan Password</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <Shield className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                     <div className="text-center">
-                        <h3>Setup Your Password</h3>
+                        <h3>Atur Password</h3>
                         <p className="text-sm text-gray-600 mt-1">
-                            {isNewAccount
-                                ? 'Create a secure password for your account'
-                                : 'Enter Password'}
+                            {isNewAccount ? 'Buat password yang aman' : 'Masukkan Password'}
                         </p>
                     </div>
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="mt-2">
                             <Label htmlFor={PASSWORD} className="flex items-center mb-2">
                                 <Lock className="w-4 h-4 mr-2 text-[#CE6439]" />
-                                {isNewAccount ? 'New Password' : 'Password'}
+                                {isNewAccount ? 'Password Baru' : 'Password'}
                             </Label>
                             <div className="relative">
                                 <Input
@@ -54,7 +51,9 @@ const Password = () => {
                                     id={PASSWORD}
                                     className={cn(errors.password && 'border-red-500')}
                                     placeholder={
-                                        isNewAccount ? 'Create a strong password' : 'Enter Password'
+                                        isNewAccount
+                                            ? 'Buat password yang aman'
+                                            : 'Masukkan Password'
                                     }
                                 />
                                 <Eye
@@ -84,7 +83,7 @@ const Password = () => {
                                         className="flex items-center mb-2"
                                     >
                                         <Lock className="w-4 h-4 mr-2 text-[#CE6439]" />
-                                        Confirm Password
+                                        Konfirmasi Password
                                     </Label>
                                     <div className="relative">
                                         <Input
@@ -94,7 +93,7 @@ const Password = () => {
                                             className={cn(
                                                 errors.confirm_password && 'border-red-500'
                                             )}
-                                            placeholder="Confirm your password"
+                                            placeholder="Konfirmasi Password"
                                         />
                                         <Eye
                                             onClick={() => {
@@ -118,10 +117,10 @@ const Password = () => {
                                     )}
                                 </div>
                                 <div className="bg-blue-4 border border-blue-1 p-3 rounded">
-                                    <p className="text-blue-2">Password Requirements:</p>
+                                    <p className="text-blue-2">Persyaratan Password:</p>
                                     <ul className="text-blue-3 text-xs font-normal list-disc ml-4">
-                                        <li>At least 8 characters long</li>
-                                        <li>Passwords match</li>
+                                        <li>Minimal 8 karakter panjang</li>
+                                        <li>Password dan Konfirmasi Password harus sama</li>
                                     </ul>
                                 </div>
                             </>
@@ -135,12 +134,12 @@ const Password = () => {
                             {isLoading
                                 ? 'Checking...'
                                 : isNewAccount
-                                ? 'Set Password & Continue'
+                                ? 'Simpan Password & Lanjutkan'
                                 : 'Login'}
                         </Button>
                     </form>
                     <BackPhoneNumber />
-                    {!isNewAccount && (
+                    {/* {!isNewAccount && (
                         <div className="text-center mt-4">
                             <Link
                                 href="/forgot-password"
@@ -149,7 +148,7 @@ const Password = () => {
                                 Forgot your password?
                             </Link>
                         </div>
-                    )}
+                    )} */}
                 </CardContent>
             </Card>
         </div>

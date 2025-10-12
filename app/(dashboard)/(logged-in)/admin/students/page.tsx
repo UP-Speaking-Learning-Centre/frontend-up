@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 import { StudentType } from '@/types/students';
 import { debounce } from '@/utils/function.helper';
 import { ChevronDown, Eye, Filter } from 'lucide-react';
+import moment from 'moment';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -141,7 +142,13 @@ const Page = () => {
                                                 {user.schedules?.map((item, i) => (
                                                     <p key={i}>
                                                         {getDayOfWeek(item.dayOfWeek)},{' '}
-                                                        {item.startTime} - {item.endTime}
+                                                        {moment(item.startTime, 'HH:mm:ss').format(
+                                                            'HH:mm'
+                                                        )}{' '}
+                                                        -{' '}
+                                                        {moment(item.endTime, 'HH:mm:ss').format(
+                                                            'HH:mm'
+                                                        )}
                                                     </p>
                                                 ))}
                                             </div>
