@@ -14,6 +14,7 @@ const fetchTeacherSchedule = async (locationId: number): Promise<TeacherSchedule
     const response = await api.get<TeacherScheduleResponse>(
         ENDPOINTS.fetchTeacherSchedule.expand({ locationId })
     );
+
     return response.data;
 };
 

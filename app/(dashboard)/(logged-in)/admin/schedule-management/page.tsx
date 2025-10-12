@@ -92,35 +92,37 @@ const Page = () => {
                                         <thead>
                                             <tr className="border-b bg-muted/50">
                                                 <th className="sr-only p-3 text-left font-medium text-muted-foreground"></th>
-                                                {teachers.map(teacher => (
-                                                    <th
-                                                        key={teacher}
-                                                        className="min-w-[140px] p-3 text-center font-medium text-muted-foreground"
-                                                    >
-                                                        <div className="space-y-1 flex items-center flex-col">
-                                                            <Skeleton
-                                                                loading={isLoading}
-                                                                className="h-6 w-20"
-                                                            >
-                                                                <div className="font-semibold text-foreground">
-                                                                    {teacher}
-                                                                </div>
-                                                            </Skeleton>
-                                                            <Skeleton
-                                                                loading={isLoading}
-                                                                className="h-4 w-12"
-                                                            >
-                                                                <div className="text-xs">
-                                                                    {scheduleData?.find(
-                                                                        (item: ScheduleItem) =>
-                                                                            item.teacherMemberName ===
-                                                                            teacher
-                                                                    )?.teacherAlias || ''}
-                                                                </div>
-                                                            </Skeleton>
-                                                        </div>
-                                                    </th>
-                                                ))}
+                                                {teachers.map(teacher => {
+                                                    return (
+                                                        <th
+                                                            key={teacher[0]}
+                                                            className="min-w-[140px] p-3 text-center font-medium text-muted-foreground"
+                                                        >
+                                                            <div className="space-y-1 flex items-center flex-col">
+                                                                <Skeleton
+                                                                    loading={isLoading}
+                                                                    className="h-6 w-20"
+                                                                >
+                                                                    <div className="font-semibold text-foreground">
+                                                                        {teacher[1]}
+                                                                    </div>
+                                                                </Skeleton>
+                                                                <Skeleton
+                                                                    loading={isLoading}
+                                                                    className="h-4 w-12"
+                                                                >
+                                                                    <div className="text-xs">
+                                                                        {scheduleData?.find(
+                                                                            (item: ScheduleItem) =>
+                                                                                item.teacherMemberName ===
+                                                                                teacher[1]
+                                                                        )?.teacherAlias || ''}
+                                                                    </div>
+                                                                </Skeleton>
+                                                            </div>
+                                                        </th>
+                                                    );
+                                                })}
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -142,9 +144,9 @@ const Page = () => {
                                                                 bookingInfo={getBookingInfo(
                                                                     day,
                                                                     timeSlot,
-                                                                    teacher
+                                                                    teacher[1]
                                                                 )}
-                                                                teacher={teacher}
+                                                                teacher={teacher[1]}
                                                             />
                                                         );
                                                     })}

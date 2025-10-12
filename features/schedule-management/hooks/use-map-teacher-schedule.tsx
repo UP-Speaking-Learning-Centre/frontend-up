@@ -7,12 +7,12 @@ const useMapTeacherSchedule = ({ data }: { data: TeacherScheduleResponse }) => {
     const scheduleData = data || dummy;
 
     const teachers = useMemo(() => {
-        const teacherSet = new Set<string>();
+        const teacherMap = new Map<string, string>();
 
         scheduleData.forEach((item: ScheduleItem) => {
-            teacherSet.add(item.teacherMemberName);
+            teacherMap.set(item.ke, item.teacherMemberName);
         });
-        return Array.from(teacherSet).sort();
+        return Array.from(teacherMap).sort();
     }, [scheduleData]);
 
     const getBookingInfo = (day: string, timeSlot: TimeSlot, teacher: string) => {
