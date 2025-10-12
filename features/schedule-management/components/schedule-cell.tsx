@@ -28,6 +28,8 @@ interface ScheduleCellProps {
 
 const ScheduleCell = (props: ScheduleCellProps) => {
     const { bookingInfo, teacher, loading, isTeacherManagement } = props;
+    console.log(bookingInfo);
+    
     const { isAvailable, name, color, isPriority, students } = bookingInfo || {};
     const [openDetail, setOpenDetail] = useState(false);
     const setStudyGroupId = useScheduleManagementStore(s => s.setStudyGroupId);

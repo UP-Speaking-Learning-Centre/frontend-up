@@ -18,7 +18,7 @@ export interface RequestSavePlacementTest {
     levelId: number;
     gradeId: number;
     locationId: number;
-    scheduleIds: number[];
+    studyGroupId: number;
 }
 
 export interface ResponseSaveNote {

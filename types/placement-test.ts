@@ -11,6 +11,7 @@ export type Question = {
     questionType: string;
     options: string[];
     studentAnswer: string;
+    studentAnswerId: number;
     checkAnswer: 'correct' | 'incorrect';
     isGraded?:boolean
 };

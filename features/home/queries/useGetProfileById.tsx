@@ -1,10 +1,7 @@
 'use client';
 
 import ENDPOINTS from '@/constants/endpoints';
-import { API_GET_STUDENT_BY_ID } from '@/features/auth/constants/config';
 import { ResponseUserDetail } from '@/features/auth/constants/interface';
-import useAuthStore from '@/features/auth/stores/authStore';
-import { getCookiesToken } from '@/features/auth/utils/cookies.helper';
 import api, { BaseService } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';

@@ -149,22 +149,24 @@ const StudyGroupDetail = ({
                             <p className="text-base text-primary">
                                 {selectedStudyGroup?.isPriority ? 'Prioritas' : 'Tidak Prioritas'}
                             </p>
-                            <Button
-                                size="sm"
-                                className="mt-1 w-fit"
-                                onClick={() =>
-                                    mutateAsync({
-                                        isPriority: !selectedStudyGroup?.isPriority,
-                                        studyGroupId: (selectedStudyGroup?.id as number) || 0,
-                                    })
-                                }
-                            >
-                                {updatePriorityLoading
-                                    ? 'Loading...'
-                                    : selectedStudyGroup?.isPriority
-                                    ? 'Batalkan Prioritas'
-                                    : 'Prioritaskan'}
-                            </Button>
+                            {!isTeacherManagement && (
+                                <Button
+                                    size="sm"
+                                    className="mt-1 w-fit"
+                                    onClick={() =>
+                                        mutateAsync({
+                                            isPriority: !selectedStudyGroup?.isPriority,
+                                            studyGroupId: (selectedStudyGroup?.id as number) || 0,
+                                        })
+                                    }
+                                >
+                                    {updatePriorityLoading
+                                        ? 'Loading...'
+                                        : selectedStudyGroup?.isPriority
+                                        ? 'Batalkan Prioritas'
+                                        : 'Prioritaskan'}
+                                </Button>
+                            )}
                         </Skeleton>
                     </div>
                 </div>

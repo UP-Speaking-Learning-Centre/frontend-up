@@ -5,6 +5,7 @@ import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
 import { getCookiesToken } from '@/features/auth/utils/cookies.helper';
+import useGetLevel from './use-get-level';
 
 const fetchDetailPlacementTest = async ({ id }: { id: string }): Promise<ResponsePlacementTest> => {
     const response = await api.get(ENDPOINTS.fetchAdminDetailPlacementTest.expand({ id }), {
@@ -22,6 +23,7 @@ const useFetchDetailPlacementTestQuery = ({
 }: {
     id: string;
 }): UseQueryResult<ResponsePlacementTest, Error> => {
+    const { data: dataLevel, isLoading: isLoadingLevel } = useGetLevel();
     const setState = useDisplayedPlacementTestStore(state => state.setState);
     const query = useQuery({
         queryKey: [ENDPOINTS.fetchAdminDetailPlacementTest.expand({ id })],
@@ -39,9 +41,16 @@ const useFetchDetailPlacementTestQuery = ({
                 test: query.data.test,
                 testDate: query.data.submittedAt,
                 status: query.data?.status,
+                assignedLevel: dataLevel
+                    ?.find(
+                        level =>
+                            level.name.toLocaleLowerCase() ===
+                            query.data.determinedLevel?.toLocaleLowerCase()
+                    )
+                    ?.id.toString(),
             });
         }
-    }, [query.data, query.status]);
+    }, [query.data, query.status, dataLevel]);
 
     return query;
 };

@@ -11,12 +11,12 @@ const usePostLocation = () => {
 
     const postLocation = async (data: Omit<LocationAdmin, 'id'>): Promise<LocationAdmin> => {
         const res = await api.post<LocationAdmin>(ENDPOINTS.fetchAdminLocations, data, {
-            // headers: {
-            //     'Content-Type': 'multipart/form-data',
-            // },
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
         });
         if (res.status === 201) {
-            setLocation([res.data,...location]);
+            setLocation([res.data, ...location]);
         }
         return res.data;
     };

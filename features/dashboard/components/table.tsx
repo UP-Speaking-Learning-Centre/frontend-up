@@ -9,7 +9,7 @@ type RenderCellType = {
     renderCell: () => string | number | React.ReactNode;
 };
 
-type GenericData = Record<string, string | number | RenderCellType | undefined>;
+type GenericData = Record<string, string | number | RenderCellType | boolean | undefined>;
 
 interface ITable<T> {
     columns: { name: string; id: keyof T | string; width?: string }[];
@@ -24,6 +24,9 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
         return currentPage + itemsPerPage * (currentPage - 1);
     };
     const endIndex = (currentPage: number, itemsPerPage: number) => {
+        const end = currentPage - 1 + itemsPerPage * currentPage;
+        if (end > (pagination?.totalItems || 0)) return pagination?.totalItems;
+
         return currentPage - 1 + itemsPerPage * currentPage;
     };
 
@@ -122,7 +125,11 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                                             return (
                                                                 <td
                                                                     key={col.id.toString()}
-                                                                    className="h-[52.5px] relative"
+                                                                    className={cn(
+                                                                        row?.hasSchedule &&
+                                                                            '!h-[80.5px]',
+                                                                        'h-[52px] relative'
+                                                                    )}
                                                                 >
                                                                     {typeof value === 'object' &&
                                                                     'renderCell' in value

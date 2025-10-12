@@ -15,17 +15,26 @@ import useGetLocation from '@/features/admin/queries/useGetLocation';
 import useGetStudyGroupDetail from '@/features/admin/queries/useGetStudyGroupDetail';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import useGetProfileById from '@/features/home/queries/useGetProfileById';
+import { getDayOfWeek } from '@/lib/date';
+import { getNextSchedules } from '@/lib/trial-class';
 import { cn } from '@/lib/utils';
 import { Calendar, Clock } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function DashboardPage() {
     const [locationId, setLocationId] = useState('');
+    const [trialClass, setTrialClass] = useState('');
+
     const { data, isLoading } = useGetProfileById();
     const { isEdit, setIsEdit, notes, setNotes, handleSave } = useEditNote(data?.notes);
     const { data: studyGroupDetail, isLoading: isLoadingStudyGroupDetail } = useGetStudyGroupDetail(
         data?.primaryStudyGroupId || 0
     );
+
+    useEffect(() => {
+        setLocationId(studyGroupDetail?.schedules[0].locationId.toString() || '');
+    }, [studyGroupDetail]);
+
     const {
         isOpen,
         setIsOpen,
@@ -35,7 +44,15 @@ export default function DashboardPage() {
         setSelectedStudyGroup,
         handleChangeStudyGroup,
     } = useChangeStudyGroup(+locationId, data?.primaryStudyGroupId || 0);
+
     const { data: location, isLoading: isLoadingLocation } = useGetLocation();
+
+    const { data: studyGroupDetailBySelect, isLoading: isLoadingStudyGroupDetailBySelect } =
+        useGetStudyGroupDetail(+selectedStudyGroup || 0);
+
+    const trialClassDates = getNextSchedules(
+        data?.trialClassAt ? data?.schedules : studyGroupDetailBySelect?.schedules || []
+    );
 
     return (
         <DashboardContentLayout pageTitle="Detail Student">
@@ -59,13 +76,13 @@ export default function DashboardPage() {
                                         <div>
                                             <p className="text-sm text-gray-600 mb-1">No. HP</p>
                                             <p className="font-semibold text-gray-900">
-                                                082295102312
+                                                {data?.phoneNumber}
                                             </p>
                                         </div>
                                         <div>
                                             <p className="text-sm text-gray-600 mb-1">Instagram</p>
                                             <p className="font-semibold text-gray-900">
-                                                radityapppp
+                                                {data?.instagram}
                                             </p>
                                         </div>
                                     </div>
@@ -85,7 +102,7 @@ export default function DashboardPage() {
                                         <div>
                                             <p className="text-sm text-gray-600 mb-1">Level</p>
                                             <p className="font-semibold text-gray-900">
-                                                {data?.level}
+                                                {data?.level || 'Belum ditentukan'}
                                             </p>
                                         </div>
                                         <div>
@@ -188,9 +205,9 @@ export default function DashboardPage() {
                                         </p>
                                     </div>
                                 </div>
-                                {studyGroupDetail?.schedules.map(schedule => (
+                                {studyGroupDetail?.schedules.map((schedule,index) => (
                                     <div key={schedule.id} className="px-6 py-4 border-t">
-                                        <p className="text-sm text-gray-600 mb-2">Jadwal Kelas 1</p>
+                                        <p className="text-sm text-gray-600 mb-2">Jadwal Kelas {index+1}</p>
 
                                         <div className="space-y-3">
                                             <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
@@ -201,7 +218,7 @@ export default function DashboardPage() {
                                                     </span>
                                                 </div>
                                                 <span className="font-semibold text-gray-900">
-                                                    {schedule.dayOfWeek}
+                                                    {getDayOfWeek(schedule.dayOfWeek)}
                                                 </span>
                                             </div>
 
@@ -231,17 +248,19 @@ export default function DashboardPage() {
                                     <Dialog open={isOpen} onOpenChange={setIsOpen}>
                                         <DialogContent className={cn(inter.className)}>
                                             <DialogTitle>Ganti Kelompok</DialogTitle>
-                                            <AdminSelect
-                                                label="Lokasi"
-                                                options={
-                                                    location?.map(loc => ({
-                                                        id: loc.id,
-                                                        name: loc.name,
-                                                    })) || []
-                                                }
-                                                value={locationId}
-                                                onValueChange={setLocationId}
-                                            />
+                                            {!data?.primaryStudyGroupId && (
+                                                <AdminSelect
+                                                    label="Lokasi"
+                                                    options={
+                                                        location?.map(loc => ({
+                                                            id: loc.id,
+                                                            name: loc.name,
+                                                        })) || []
+                                                    }
+                                                    value={locationId}
+                                                    onValueChange={setLocationId}
+                                                />
+                                            )}
                                             <AdminSelect
                                                 label="Kelompok Belajar"
                                                 options={studyGroups || []}
@@ -249,27 +268,40 @@ export default function DashboardPage() {
                                                 onValueChange={setSelectedStudyGroup}
                                                 disabled={!locationId}
                                             />
-                                            <div>
-                                                <Label className="mb-2 block">
-                                                    Jadwal Trial Class
-                                                </Label>
-                                                <RadioGroup>
-                                                    <div className="flex gap-4 items-center">
-                                                        <RadioGroupItem value="1"></RadioGroupItem>
-                                                        <p className="text-[#020217] text-sm">
-                                                            Rabu, 18 Juni 2021
-                                                        </p>
-                                                    </div>
-                                                    <div className="flex gap-4 items-center">
-                                                        <RadioGroupItem value="1"></RadioGroupItem>
-                                                        <p className="text-[#020217] text-sm">
-                                                            Rabu, 18 Juni 2021
-                                                        </p>
-                                                    </div>
-                                                </RadioGroup>
-                                            </div>
+                                            {!data?.trialClassAt && (
+                                                <div>
+                                                    <Label className="mb-2 block">
+                                                        Jadwal Trial Class
+                                                    </Label>
+                                                    <RadioGroup onValueChange={setTrialClass}>
+                                                        {trialClassDates.length ? (
+                                                            trialClassDates.map(date => (
+                                                                <div className="flex gap-4 items-center">
+                                                                    <RadioGroupItem
+                                                                        value={date.actualDate}
+                                                                    ></RadioGroupItem>
+                                                                    <p className="text-[#020217] text-sm">
+                                                                        {date.display}
+                                                                    </p>
+                                                                </div>
+                                                            ))
+                                                        ) : (
+                                                            <span className="text-sm text-primary font-medium">
+                                                                Please select study group first
+                                                            </span>
+                                                        )}
+                                                    </RadioGroup>
+                                                </div>
+                                            )}
                                             <DialogFooter>
-                                                <Button onClick={handleChangeStudyGroup}>
+                                                <Button
+                                                    onClick={handleChangeStudyGroup}
+                                                    disabled={
+                                                        data?.trialClassAt
+                                                            ? !selectedStudyGroup
+                                                            : !selectedStudyGroup || !trialClass
+                                                    }
+                                                >
                                                     {!isLoadingChangeStudy
                                                         ? 'Ganti'
                                                         : 'Sedang mengganti...'}

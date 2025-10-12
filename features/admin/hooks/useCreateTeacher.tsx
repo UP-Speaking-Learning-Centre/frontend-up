@@ -2,17 +2,16 @@ import { LocationAdmin, RequestTeacherAdmin } from '@/types/admin';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import { SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import z from 'zod';
 import useGetTeacherById from '../queries/useGetTeacherById';
 import usePostTeacher from '../queries/usePostTeacher';
 import usePutTeacher from '../queries/usePutTeacher';
-import useUploadFile from '../queries/useUploadFile';
 import { useTeacherManagementStore } from '../stores/teacher';
 
 const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
     const [id, setId] = useState(0);
 
-    const { mutateAsync } = useUploadFile();
     const { mutateAsync: postTeacher, isPending } = usePostTeacher();
     const { mutateAsync: putTeacher, isPending: isPendingPut } = usePutTeacher(id);
     const { data, isLoading } = useGetTeacherById(id);
@@ -39,6 +38,7 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
                 .refine(file => file.size < 1000, { message: 'Ukuran file melebihi batas' })
                 .optional(),
             teacherId: z.number().min(1, 'This field is required'),
+            locationId: z.number().min(1, 'This field is required'),
         })
         .superRefine((data, ctx) => {
             if (!id && !data.photo) {
@@ -61,6 +61,7 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
             setValue('memberName', data?.memberName ?? '');
             // setValue('description', getOne?.description ?? '');
             setValue('teacherId', data?.teacher.id || 0);
+            setValue('locationId', data?.teacher.id || 0);
             // setValue('isCoordinator', data?.isCoordinator || false);
         }
     }, [id, data]);
@@ -84,13 +85,21 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
 
     const handleSuccess: SubmitHandler<RequestTeacherAdmin> = value => {
         if (id) {
-            putTeacher(value).then(res => handleResetModal());
+            putTeacher(value)
+                .then(res => handleResetModal())
+                .catch(err =>
+                    toast.error(err?.message, { position: 'top-center', className: 'bg-red-100' })
+                );
             return;
         }
-        postTeacher({ ...value, isCoordinator: false }).then(res => {
-            setTeacher([res, ...teacher]);
-            handleResetModal();
-        });
+        postTeacher({ ...value, isCoordinator: false })
+            .then(res => {
+                setTeacher([res, ...teacher]);
+                handleResetModal();
+            })
+            .catch(err =>
+                toast.error(err?.message, { position: 'top-center', className: 'bg-red-100' })
+            );
     };
     const handleError: SubmitErrorHandler<Omit<LocationAdmin, 'id'>> = error => {
         console.log(error);

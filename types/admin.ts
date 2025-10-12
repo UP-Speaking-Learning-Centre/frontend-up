@@ -64,7 +64,7 @@ export interface LocationAdmin {
     id: number;
     name: string;
     address: string | null;
-    img: string | null;
+    img: string | null | File;
     googleMapsLink: string | null;
 }
 
@@ -84,6 +84,7 @@ export type RequestTeacherAdmin = {
     memberName: string;
     photo: File;
     teacherId: number;
+    locationId: number;
     isCoordinator: boolean;
 };
 export interface TeacherAdminSchedule {
@@ -165,7 +166,7 @@ export interface ReqUnassign {
 export interface ReqAssign {
     studyGroupId: number;
     studentIds: number;
-    markFullScheduleId: number;
+    // markFullScheduleId: number;
 }
 export interface ResUnassign {
     mode: string;

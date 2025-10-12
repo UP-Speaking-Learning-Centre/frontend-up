@@ -4,13 +4,14 @@ import { Check, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import useDetailPlacementTest from '../hooks/use-detail-placement-test';
 import useSubmitMark from '../queries/use-submit-mark';
 import { toast, Toaster } from 'sonner';
+import { Question } from '@/types/placement-test';
 
 const QuestionDisplay = () => {
     const { questions, currentQuestionIndex, totalQuestions, setState } = useDetailPlacementTest();
     const currentQuestion = questions[currentQuestionIndex];
 
     const { mutateAsync } = useSubmitMark();
-    const handleGradeQuestion = (question: any, isCorrect: boolean, isGraded: boolean) => {
+    const handleGradeQuestion = (question: Question, isCorrect: boolean, isGraded: boolean) => {
         setState({
             questions: questions.map(q =>
                 q.questionId === question.questionId
@@ -20,7 +21,7 @@ const QuestionDisplay = () => {
         });
         mutateAsync({
             check: isCorrect ? 'correct' : 'incorrect',
-            questionId: question.questionId,
+            questionId: question.studentAnswerId.toString(),
         })
             .then(res => toast.info(res.message, { position: 'top-center' }))
             .catch(() => {

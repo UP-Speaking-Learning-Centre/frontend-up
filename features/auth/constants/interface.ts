@@ -1,3 +1,5 @@
+import { Schedule } from "@/types/study-group";
+
 export interface LoginRequest {
     phone: string;
 }
@@ -84,8 +86,10 @@ export interface ResponseUserDetail {
     gradeLabel: string;
     studyGroupIds: number[];
     primaryStudyGroupId: number;
-    schedules: ResponseUserDetailSchedule[];
+    schedules: Schedule[];
     testResults: ResponseUserDetailTestResults[];
+    instagram: string;
+    trialClassAt: string | null;
 }
 
 export interface ResponseProfile {
