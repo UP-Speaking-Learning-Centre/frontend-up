@@ -9,14 +9,10 @@ import {
     AssignStudentToStudyGroupResponse,
 } from '@/types/study-group';
 import { toast } from 'sonner';
-function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 const fetchStudentOfStudyGroup = async (
     data: AssignStudentToStudyGroupPayload
 ): Promise<AssignStudentToStudyGroupResponse> => {
-    console.log(data);
     const response = await api.post<AssignStudentToStudyGroupResponse>(
         ENDPOINTS.assignStudentToStudyGroup,
         data

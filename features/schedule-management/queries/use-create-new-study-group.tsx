@@ -16,14 +16,10 @@ import api from '@/lib/api';
 import { CreateStudyGroupPayload, CreateStudyGroupResponse } from '@/types/study-group';
 import { useNewStudyGroupStore } from '../stores/new-study-group-store';
 import { toast } from 'sonner';
-function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 const fetchStudentOfStudyGroup = async (
     data: CreateStudyGroupPayload
 ): Promise<CreateStudyGroupResponse> => {
-    console.log(data);
     const response = await api.post<CreateStudyGroupResponse>(ENDPOINTS.createNewStudyGroup, data);
     return response.data;
 };

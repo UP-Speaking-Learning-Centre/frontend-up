@@ -46,7 +46,7 @@ const page = () => {
 
     return (
         <DashboardContentLayout pageTitle="Teacher Management">
-            <div className="min-h-screen bg-gray-50 p-6">
+            <div className="min-h-screen bg-gray-50">
                 <div className="max-w-7xl mx-auto">
                     {/* Header */}
                     <div className="flex justify-end mb-8">
@@ -138,8 +138,7 @@ const page = () => {
                                                             key={`${day}-${index}`}
                                                             bookingInfo={getBookingInfo(
                                                                 day,
-                                                                timeSlot,
-                                                                
+                                                                timeSlot
                                                             )}
                                                             teacher={day}
                                                         />

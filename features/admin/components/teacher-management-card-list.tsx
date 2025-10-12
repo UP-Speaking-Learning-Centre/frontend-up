@@ -24,6 +24,7 @@ import AdminPagination from './admin-pagination';
 import { isValidHttpUrl } from '@/utils/api.helper';
 import useAdminPagination from '../hooks/useAdminPagination';
 import { Skeleton } from '@/components/ui/skeleton';
+import ImageWithFallback from '@/components/ui/image-with-fallback';
 
 interface Props {
     onOpenSchedule: (id: number) => void;
@@ -37,7 +38,7 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
 
     return (
         <div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {teachers.map((mentor, index) => (
                     <Skeleton key={mentor.id} className="h-96" loading={isLoading}>
                         <Card
@@ -51,24 +52,24 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
                                     <Button
                                         onClick={() => onOpenSchedule(mentor.id)}
                                         variant={'outline'}
-                                        className="p-2 hover:bg-gray-100 rounded"
+                                        className="p-2 size-10 rounded"
                                     >
-                                        <Calendar className="w-4 h-4 text-gray-600" />
+                                        <Calendar className="w-4 h-4" />
                                     </Button>
                                     <Button
                                         onClick={() => onEdit(mentor.id)}
                                         variant={'outline'}
-                                        className="p-2 hover:bg-gray-100 rounded"
+                                        className="p-2 size-10 rounded"
                                     >
-                                        <Edit className="w-4 h-4 text-gray-600" />
+                                        <Edit className="w-4 h-4" />
                                     </Button>
                                     <AlertDialog>
                                         <AlertDialogTrigger asChild>
                                             <Button
                                                 variant={'outline'}
-                                                className="p-3 hover:bg-gray-100 rounded"
+                                                className="p-2 size-10 rounded"
                                             >
-                                                <Trash2 className="w-4 h-4 text-gray-600" />
+                                                <Trash2 className="w-4 h-4" />
                                             </Button>
                                         </AlertDialogTrigger>
                                         <AlertDialogContent className={inter.className}>
@@ -97,13 +98,9 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
 
                             {/* Profile Image */}
                             <div className="px-4 pb-3">
-                                <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden">
-                                    <Image
-                                        src={
-                                            isValidHttpUrl(mentor.photoUrl ?? '')
-                                                ? mentor.photoUrl || '/placeholder.svg'
-                                                : '/placeholder.svg'
-                                        }
+                                <div className="relative w-full aspect-[4/3] bg-neutral-100 rounded-lg overflow-hidden border border-neutral-200">
+                                    <ImageWithFallback
+                                        src={mentor.photoUrl as string}
                                         alt={mentor.memberName}
                                         fill
                                         className="object-cover"
@@ -113,20 +110,20 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
 
                             {/* Badge */}
                             <div className="px-4 pb-3">
-                                <Badge className="bg-primary hover:bg-primary/80 text-white px-3 py-1 rounded-full text-sm">
+                                <Badge className="bg-primary hover:bg-primary/80 text-normal text-white px-3 py-1 rounded-full text-xs">
                                     {mentor.teacher.name}
                                 </Badge>
                             </div>
 
                             {/* Description */}
                             <div className="px-4 pb-4">
-                                <p className="text-gray-700 text-sm leading-relaxed mb-4">
+                                <p className="text-gray-700 text-xl font-semibold leading-relaxed mb-4">
                                     {mentor.memberName}
                                 </p>
 
                                 {/* Available Locations */}
                                 <div>
-                                    <p className="font-semibold text-gray-900 text-sm mb-2">
+                                    <p className="font-normal text-neutral-400 text-xs mb-2">
                                         Available Locations:
                                     </p>
                                     <p className="text-gray-700 text-sm font-medium border rounded-full w-fit px-3">

@@ -11,6 +11,7 @@ interface DashboardLayoutStore {
     title: string;
     id: string;
     packageId?: number;
+    rawPackages: PriceData[];
     packages: PriceData[];
     setState: (value: Partial<DashboardLayoutStore>) => void;
     handleInputChange: (id: string, field: keyof PriceData, value: string) => void;
@@ -27,6 +28,7 @@ const initialState = {
     packageId: undefined,
     packages: [],
     error: undefined,
+    rawPackages: [],
 };
 
 export const useProgramDetailStore = create<DashboardLayoutStore>((set, get) => ({

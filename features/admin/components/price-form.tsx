@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/select';
 import { PACKAGE_OPTIONS } from '../constants/config';
 import { cn } from '@/lib/utils';
+import { formatAmont } from '@/features/auth/utils/string.helper';
 
 const DURATION_TYPES = [{ value: 'months', label: 'Months' }];
 
@@ -37,9 +38,12 @@ const PriceForm = ({
     };
 
     return (
-        <div key={packageData.id} className="space-y-4 p-4 border rounded-lg relative">
+        <div
+            key={packageData.id}
+            className="space-y-4 p-4 border border-neutral-500 rounded-lg relative"
+        >
             <div className="flex items-center justify-between">
-                <h3 className="font-medium text-sm text-muted-foreground">Package {index + 1}</h3>
+                <h3 className="font-medium text-sm text-muted-foreground">Harga {index + 1}</h3>
                 {packages.length > 1 && (
                     <Button
                         type="button"
@@ -55,7 +59,7 @@ const PriceForm = ({
 
             {/* Price Input */}
             <div className="space-y-2">
-                <Label htmlFor={`${packageData.id}-price`}>Price</Label>
+                <Label htmlFor={`${packageData.id}-price`}>Harga</Label>
                 <div className="relative">
                     <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
                         Rp.
@@ -65,7 +69,7 @@ const PriceForm = ({
                         type="number"
                         step="1000"
                         min="0"
-                        placeholder="1000000"
+                        placeholder="xxxxxx"
                         value={packageData.price}
                         onChange={e => handleInputChange(packageData.id, 'price', e.target.value)}
                         className={cn(error?.[index]?.amount && 'border-red-500', 'pl-10')}
@@ -80,20 +84,20 @@ const PriceForm = ({
 
             {/* Duration Input */}
             <div className="space-y-2">
-                <Label htmlFor={`${packageData.id}-duration`}>Duration</Label>
+                <Label htmlFor={`${packageData.id}-duration`}>Durasi</Label>
                 <div className="flex gap-2">
                     <Input
                         id={`${packageData.id}-duration`}
                         type="number"
                         min="1"
-                        placeholder="1"
+                        placeholder="Durasi"
                         value={packageData.duration}
                         onChange={e =>
                             handleInputChange(packageData.id, 'duration', e.target.value)
                         }
-                        className={cn(error?.[index]?.timeframe && 'border-red-500',"flex-1")}
+                        className={cn(error?.[index]?.timeframe && 'border-red-500', 'flex-1')}
                     />
-                    
+
                     <Select
                         value={packageData.durationType}
                         onValueChange={(value: 'days' | 'weeks' | 'months' | 'years') =>
@@ -120,12 +124,16 @@ const PriceForm = ({
             </div>
 
             {/* Individual Preview */}
-            {packageData.price && packageData.duration && (
+            {packageData.price && (
                 <div className="p-3 bg-muted rounded-lg">
                     <p className="text-sm text-muted-foreground">Preview:</p>
                     <p className="font-medium">
-                        {PACKAGE_OPTIONS.find(p => p.value === packageId)?.label} - Rp.
-                        {packageData.price} for {packageData.duration} {packageData.durationType}
+                        {PACKAGE_OPTIONS.find(p => p.value === packageId)?.label} -{' '}
+                        <span className="text-primary">
+                            {formatAmont(Number(packageData.price))}
+                        </span>{' '}
+                        per <span className="text-primary">{packageData.duration || 'xx'}</span>{' '}
+                        bulan
                     </p>
                 </div>
             )}

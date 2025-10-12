@@ -6,6 +6,7 @@ export interface ProgramDetailTreeInterface {
 export interface ProgramDetailTreeInterfaceItems extends ProgramDetail {
     id: number;
     title: string;
+    detailTitle?: string;
     children?: ProgramDetailTreeInterface;
 }
 

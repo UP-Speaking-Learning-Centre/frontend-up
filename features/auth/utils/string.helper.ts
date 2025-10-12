@@ -23,3 +23,13 @@ export const formatPhoneNumber = (value: string) => {
 export function capitalizeFirstLetter(val: string) {
     return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }
+
+export const formatAmont = (amount: number) => {
+    if (amount === 0) return '-';
+    return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    }).format(amount);
+};

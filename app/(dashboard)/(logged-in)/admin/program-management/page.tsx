@@ -1,5 +1,6 @@
 'use client';
 import Overlay from '@/components/layout/overlay';
+import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ROUTES } from '@/constants/routes';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
@@ -14,24 +15,30 @@ const page = () => {
     if (isLoading) return <Overlay />;
 
     return (
-        <DashboardContentLayout pageTitle="Location Management">
-            <div className="min-h-screen bg-gray-50 p-6">
+        <DashboardContentLayout pageTitle="Program Management">
+            <div className="min-h-screen bg-gray-50">
                 <div className="max-w-7xl mx-auto">
                     {/* Program Cards Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {data?.map((program, index) => (
                             <Card
-                                onClick={() =>
-                                    router.replace(
-                                        ROUTES.adminProgramManagementId.expand({ id: 1 })
-                                    )
-                                }
                                 key={index}
-                                className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:scale-105 cursor-pointer transition-all"
+                                className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
                             >
                                 {/* Card Header */}
                                 <div className="flex items-center justify-between p-4">
                                     <h3 className="font-semibold text-gray-900">{program.name}</h3>
+                                    <Button
+                                        onClick={() =>
+                                            router.replace(
+                                                ROUTES.adminProgramManagementId.expand({
+                                                    id: program.id,
+                                                })
+                                            )
+                                        }
+                                    >
+                                        Lihat Detail
+                                    </Button>
                                 </div>
 
                                 {/* Profile Image */}

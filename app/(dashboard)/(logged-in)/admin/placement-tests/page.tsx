@@ -125,6 +125,11 @@ const Index = () => {
                         values={students.map(user => {
                             return {
                                 ...user,
+                                studentName: {
+                                    renderCell: () => (
+                                        <p className="font-semibold">{user.studentName}</p>
+                                    ),
+                                },
                                 status: {
                                     renderCell: () => (
                                         <Badge className="flex items-center justify-center gap-2">

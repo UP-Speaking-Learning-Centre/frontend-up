@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import ImageWithFallback from '@/components/ui/image-with-fallback';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { inter } from '@/constants/fonts';
@@ -44,7 +45,7 @@ const page = () => {
 
     return (
         <DashboardContentLayout pageTitle="Location Management">
-            <div className="min-h-screen bg-gray-50 p-6">
+            <div className="min-h-screen bg-gray-50">
                 <div className="max-w-7xl mx-auto">
                     {/* Header */}
                     <div className="flex justify-end mb-8">
@@ -77,17 +78,17 @@ const page = () => {
                                                     setIsModalOpen(true);
                                                 }}
                                                 variant={'outline'}
-                                                className="p-3 hover:bg-gray-100 rounded"
+                                                className="p-2 size-10 rounded"
                                             >
-                                                <Edit className="w-4 h-4 text-gray-600" />
+                                                <Edit className="w-4 h-4" />
                                             </Button>
                                             <AlertDialog>
                                                 <AlertDialogTrigger asChild>
                                                     <Button
                                                         variant={'outline'}
-                                                        className="p-3 hover:bg-gray-100 rounded"
+                                                        className="p-2 size-10 rounded"
                                                     >
-                                                        <Trash2 className="w-4 h-4 text-gray-600" />
+                                                        <Trash2 className="w-4 h-4" />
                                                     </Button>
                                                 </AlertDialogTrigger>
                                                 <AlertDialogContent className={inter.className}>
@@ -119,9 +120,10 @@ const page = () => {
 
                                     {/* Profile Image */}
                                     <div className="px-4 pb-3">
-                                        <div className="relative w-full aspect-[19/10] rounded-lg overflow-hidden">
-                                            <Image
-                                                src={location.img || '/placeholder.svg'}
+                                        <div className="relative w-full aspect-[19/10] bg-neutral-100 border border-neutral-200 rounded-lg overflow-hidden">
+                                            <ImageWithFallback
+                                                src={location.img as string}
+                                                fallbackSrc="/location.svg"
                                                 alt={location.name}
                                                 fill
                                                 className="object-cover"

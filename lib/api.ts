@@ -10,9 +10,8 @@ const api = axios.create({
 
 export const BaseService = async <T>(service: () => Promise<T>) => {
     try {
-       return await service();
+        return await service();
     } catch (error) {
-        console.log()
         throw new Error((error as Error).message);
     }
 };

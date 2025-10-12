@@ -47,7 +47,7 @@ const Page = () => {
                                 onValueChange={val => setLocationId(Number(val))}
                                 value={String(locationId)}
                             >
-                                <SelectTrigger className="w-40">
+                                <SelectTrigger className="w-64">
                                     <SelectValue placeholder="Pilih cabang" />
                                 </SelectTrigger>
                                 <SelectContent className="w-fit">

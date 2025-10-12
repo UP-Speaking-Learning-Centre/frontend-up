@@ -12,10 +12,12 @@ import clsx from 'clsx';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useProgramDetailStore } from '../stores/program-detail';
 import ProgramDetailDrawerDetail from './program-detail-drawer-detail';
+import { cn } from '@/lib/utils';
 
 const ProgramDetailCard = ({
     isActive,
     isOpen,
+    id,
     isChild,
     onOpenCollapse,
     item,
@@ -24,19 +26,20 @@ const ProgramDetailCard = ({
     title: string;
     isActive: boolean;
     isOpen: boolean;
+    id: string;
     isChild?: boolean;
     onOpenCollapse?: () => void;
     item: ProgramDetailTreeInterfaceItems;
     section: string;
 }) => {
-    const { id, title, children } = item;
+    const { title, children } = item;
     const { setState } = useProgramDetailStore();
 
     const handleOpenDetail = () => {
         setState({
             id: id.toString(),
             isDrawerOpen: true,
-            title: section + ' Detail',
+            title: item.detailTitle + ' Detail',
             content: <ProgramDetailDrawerDetail title={title} props={item} />,
         });
     };
@@ -49,6 +52,10 @@ const ProgramDetailCard = ({
         );
     };
 
+    const getNextTreeTitle = (item: ProgramDetailTreeInterfaceItems) => {
+        return item.children?.title;
+    };
+
     return (
         <div
             className={clsx(
@@ -57,39 +64,42 @@ const ProgramDetailCard = ({
                     'before:bg-primary before:block before:w-5 before:h-0.5 before:absolute before:top-1/2 before:-translate-y-1/2 before:right-full',
                 isActive && '!bg-primary/20 border-primary'
             )}
-            style={{ boxShadow: '0px 0px 20px 0px #00000014' }}
         >
-            <div className="flex items-start gap-4">
-                <div className="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0"></div>
-                <div className="flex-1 truncate">
-                    <h2 className="text-lg font-semibold text-[#020817] mb-2">{title}</h2>
-                    <p className="text-sm text-gray-600 leading-relaxed mb-4 truncate">
-                        {getDescription(item as ProgramRecurse)}
-                    </p>
-                    {!!children && (
-                        <div className="flex items-center justify-center">
-                            <button
-                                onClick={onOpenCollapse}
-                                className="flex items-center gap-2 text-sm text-gray-600"
-                            >
-                                <span>Lihat Groups</span>
-                                {isOpen ? (
-                                    <ChevronUp className="w-4 h-4" />
-                                ) : (
-                                    <ChevronDown className="w-4 h-4" />
-                                )}
-                            </button>
+            <div className="flex flex-col items-center gap-4">
+                <div className="flex items-start w-full justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                        <div
+                            className={cn(
+                                'w-24 h-24 bg-gray-200 rounded-lg flex-shrink-0',
+                                isActive && 'borde border-primary'
+                            )}
+                        ></div>
+                        <div className="flex-1">
+                            <h2 className="text-lg font-semibold text-[#020817]">{title}</h2>
+                            <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                                {getDescription(item as ProgramRecurse)}
+                            </p>
                         </div>
-                    )}
+                    </div>
+                    <Button onClick={handleOpenDetail} variant="secondary" size="sm">
+                        Lihat Detail
+                    </Button>
                 </div>
-                <Button
-                    onClick={handleOpenDetail}
-                    variant="outline"
-                    size="sm"
-                    className="border border-primary"
-                >
-                    Lihat Detail
-                </Button>
+                {!!children && (
+                    <div className="flex items-center justify-center">
+                        <button
+                            onClick={onOpenCollapse}
+                            className="flex items-center gap-2 text-sm text-gray-600"
+                        >
+                            <span>Lihat {getNextTreeTitle(item)}</span>
+                            {isOpen ? (
+                                <ChevronUp className="w-4 h-4" />
+                            ) : (
+                                <ChevronDown className="w-4 h-4" />
+                            )}
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

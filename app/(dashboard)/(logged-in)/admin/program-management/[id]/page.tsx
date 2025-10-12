@@ -24,24 +24,26 @@ const page = () => {
 
     return (
         <DashboardContentLayout pageTitle="Program Detail">
-            <div className="min-h-screen bg-gray-50 flex">
-                <div className={clsx(isDrawerOpen ? 'w-2/3' : 'w-full', 'transition-all')}>
+            <div className="min-h-screen grid grid-cols-12 gap-4 bg-gray-50">
+                <div className="col-span-12">
                     {/* Header */}
                     <Link
                         href={ROUTES.adminProgramManagement}
-                        className="flex items-center gap-3 mb-6 hover:underline"
+                        className="flex items-center w-fit gap-3 mb-6 hover:underline"
                     >
                         <ArrowLeft className="w-5 h-5 text-gray-600" />
                         <span className="text-[#020817]">Kembali</span>
                     </Link>
-                    <div className="flex items-center gap-4 justify-between">
-                        <h1 className="text-md font-semibold text-[#020817]">
-                            Program Detail - School Program
-                        </h1>
+                    <div className="flex items-center gap-4 mb-3 justify-between">
+                        <Skeleton loading={isLoading} className="h-8 w-64 mb-2">
+                            <h1 className="text-lg font-semibold text-[#020817]">
+                                Program Detail - {data?.items[0].title}
+                            </h1>
+                        </Skeleton>
                         <Button
                             onClick={handleOpenInformasiHarga}
                             variant={'ghost'}
-                            className="flex items-center gap-2 text-primary group mb-5 hover:bg-transparent"
+                            className="flex items-center gap-2 text-primary group hover:bg-transparent"
                         >
                             <div className="w-4 h-4 rounded-full border border-primary flex items-center justify-center">
                                 <span className="text-xs">i</span>
@@ -49,22 +51,21 @@ const page = () => {
                             <span className="text-sm group-hover:underline">Informasi Harga</span>
                         </Button>
                     </div>
-                    <div className="p-4 space-y-4">
+                    <div className="space-y-4">
                         {/* School Program Section */}
                         <Skeleton loading={isLoading} className="h-28">
                             {data?.items.map((item, idx) => (
                                 <ProgramDetailControl
                                     id={idx.toString()}
+                                    key={idx.toString()}
                                     item={item}
                                     isChild={false}
-                                    section='Program'
+                                    section="Program"
                                 />
                             ))}
                         </Skeleton>
                     </div>
-                    <h2 className="text-md font-medium text-[#020817] my-4">
-                        Program Detail - Harga
-                    </h2>
+
                     <ProgramDetailInformasiHarga />
                 </div>
                 <ProgramDetailDrawer />

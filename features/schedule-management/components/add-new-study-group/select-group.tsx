@@ -43,8 +43,6 @@ const SelectGroup = ({
         ));
     };
 
-    console.log(value);
-
     return (
         <div>
             <Label>Grup*</Label>

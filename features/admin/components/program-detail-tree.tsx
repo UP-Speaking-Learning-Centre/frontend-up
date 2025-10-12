@@ -13,14 +13,17 @@ const ProgramDetailTree = ({ items, id }: { items: ProgramDetailTreeInterface; i
 
             {/* First Kindergarten with expanded Levels */}
             <div className="relative">
-                {items.items.map((item, idx) => (
-                    <ProgramDetailControl
-                        id={`${id}-${idx}`}
-                        isChild
-                        item={item}
-                        section={items.title}
-                    />
-                ))}
+                {items.items.map((item, idx) => {
+                    return (
+                        <ProgramDetailControl
+                            id={`${id}-${idx}`}
+                            isChild
+                            key={`${id}-${idx}`}
+                            item={item}
+                            section={item.detailTitle ?? ''}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

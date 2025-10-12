@@ -6,7 +6,6 @@ export function useScheduleOptions(schedules: ScheduleItem[]) {
     const { teacherMemberName, day1, day2, time1, alias } = useNewStudyGroupStore(s => s.formValue);
     const setValue = useNewStudyGroupStore(s => s.setValue);
 
-    // 1. unique teachers
     const teachers = useMemo(() => {
         const map = new Map<string, { teacherMemberName: string; teacherAlias: string }>();
         schedules.forEach(s => {
@@ -21,10 +20,7 @@ export function useScheduleOptions(schedules: ScheduleItem[]) {
         return Array.from(map.values());
     }, [schedules, alias]);
 
-    // 2. available days for selected teacher
     const days = useMemo(() => {
-        console.log(schedules);
-        console.log(teacherMemberName);
         if (!teacherMemberName) return [];
         const days = Array.from(
             new Set(
@@ -39,7 +35,6 @@ export function useScheduleOptions(schedules: ScheduleItem[]) {
         return days;
     }, [schedules, teacherMemberName]);
 
-    // 3. available startTimes for selected teacher + day
     const getStartTimes = useCallback(
         (useDay1: boolean) => {
             if (!teacherMemberName || (useDay1 && !day1) || (!useDay1 && !day2)) return [];

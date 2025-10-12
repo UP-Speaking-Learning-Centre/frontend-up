@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import useProgramSelectionStore from '../stores/program-selection-store';
 
 const MAX_PROMO = 300000;
+const MIN_MONTH_TO_HAVE_PROMO = 6;
 const useRenderPrices = () => {
     const formValue = useProgramSelectionStore(s => s.formValue);
 
@@ -20,7 +21,7 @@ const useRenderPrices = () => {
                 if (index === sortedPrices.length - 1) {
                     return {
                         ...p,
-                        price: p.price - MAX_PROMO,
+                        price: p.price - (p.timeframe >= MIN_MONTH_TO_HAVE_PROMO ? MAX_PROMO : 0),
                     };
                 }
                 return p;

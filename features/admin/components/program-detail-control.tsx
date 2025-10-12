@@ -9,19 +9,21 @@ const ProgramDetailControl = ({
     id,
     isChild,
     item,
-    section
+    section,
 }: {
     id: string;
     isChild?: boolean;
     item: ProgramDetailTreeInterfaceItems;
-    section:string
+    section: string;
 }) => {
     const [open, setOpen] = useState(false);
     const id_ = useProgramDetailStore(s => s.id);
+
     return (
         <>
             <ProgramDetailCard
                 title={item.title}
+                id={id}
                 isActive={id === id_}
                 isOpen={open}
                 isChild={isChild}

@@ -46,7 +46,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                                 <th
                                                     key={column.id.toString()}
                                                     className={cn(
-                                                        'text-left p-4 font-medium',
+                                                        'text-left p-4  text-neutral-400 font-medium text-xs',
                                                         idx === columns.length - 2 && 'pr-24'
                                                     )}
                                                     style={{ width: column.width }}
@@ -72,7 +72,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                                             <td
                                                                 key={col.id.toString()}
                                                                 className={cn(
-                                                                    'p-4 truncate',
+                                                                    'p-4 truncate text-sm',
                                                                     idx === columns.length - 2 &&
                                                                         'pr-24'
                                                                 )}
@@ -102,7 +102,10 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                 <table className="w-full max-w-full relative">
                                     <thead className="bg-gray-50 border-b">
                                         <tr>
-                                            <th key="actions" className="text-left p-4 font-medium">
+                                            <th
+                                                key="actions"
+                                                className="text-left p-4 font-medium text-neutral-500 text-xs"
+                                            >
                                                 Action
                                             </th>
                                         </tr>

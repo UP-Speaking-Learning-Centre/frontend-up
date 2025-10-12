@@ -11,6 +11,7 @@ import Table from '@/features/dashboard/components/table';
 import useFilterStudents from '@/features/dashboard/hooks/use-filter-studets';
 import useFetchStudentsQuery from '@/features/dashboard/queries/use-fetch-students';
 import { useStudentsStore } from '@/features/dashboard/stores/students-store';
+import { getDayOfWeek } from '@/lib/date';
 import { cn } from '@/lib/utils';
 import { StudentType } from '@/types/students';
 import { debounce } from '@/utils/function.helper';
@@ -23,7 +24,6 @@ const Page = () => {
     const pagination = useStudentsStore(s => s.pagination);
     const filter = useStudentsStore(s => s.filters);
     const onChangeFilter = useStudentsStore(s => s.onChangeFilter);
-    console.log(students);
 
     const {
         filters: { groups, mentors, programs },
@@ -115,12 +115,40 @@ const Page = () => {
                     values={students?.map(user => {
                         return {
                             ...user,
+                            studentName: {
+                                renderCell: () => (
+                                    <p className="font-semibold">{user.studentName}</p>
+                                ),
+                            },
+                            program: {
+                                renderCell: () => (
+                                    <p>{user.program === 'N/A' ? '-' : user.program}</p>
+                                ),
+                            },
+                            group: {
+                                renderCell: () => <p>{user.group === 'N/A' ? '-' : user.group}</p>,
+                            },
+                            teacherName: {
+                                renderCell: () => (
+                                    <p>{user.teacherName === 'N/A' ? '-' : user.teacherName}</p>
+                                ),
+                            },
                             schedules: {
                                 renderCell: () => (
-                                    <p>
-                                        {user.schedules?.map(item => item.dayOfWeek).join(' - ') ||
-                                            'N/A'}
-                                    </p>
+                                    <>
+                                        {user.schedules?.length ? (
+                                            <div className="flex items-start justify-center flex-col gap-2">
+                                                {user.schedules?.map((item, i) => (
+                                                    <p key={i}>
+                                                        {getDayOfWeek(item.dayOfWeek)},{' '}
+                                                        {item.startTime} - {item.endTime}
+                                                    </p>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <p>-</p>
+                                        )}
+                                    </>
                                 ),
                             },
                             actions: {

@@ -16,8 +16,8 @@ const usePrices = () => {
     const packageId = useProgramDetailStore(s => s.packageId);
 
     const PriceItemSchema = z.object({
-        timeframe: z.string().min(1, 'This value is required'),
-        amount: z.number().min(1, 'This value is required'),
+        timeframe: z.string().min(1, 'Harus diisi'),
+        amount: z.number().min(1, 'Harus diisi'),
     });
     const PriceSchema = z.object({
         prices: z
@@ -40,7 +40,7 @@ const usePrices = () => {
                         indices.forEach(i => {
                             ctx.addIssue({
                                 code: z.ZodIssueCode.custom,
-                                message: 'Duplicate duration is not allowed',
+                                message: 'Durasi tidak boleh sama',
                                 path: [i, 'timeframe'], // kasih error langsung ke field duration
                             });
                         });
@@ -57,10 +57,9 @@ const usePrices = () => {
 
     useEffect(() => {
         if (id && packageId) {
-            setState({
-                packageId,
-                packages:
-                    data?.data.map(
+            const rawPackages =
+                data?.data
+                    .map(
                         price =>
                             ({
                                 durationType: 'months',
@@ -68,7 +67,14 @@ const usePrices = () => {
                                 id: price.id.toString(),
                                 price: price.amount.toString(),
                             } satisfies PriceData)
-                    ) || [],
+                    )
+                    .sort((a, b) => Number(a.duration) - Number(b.duration)) || [];
+
+            console.log(rawPackages);
+            setState({
+                packageId,
+                rawPackages,
+                packages: rawPackages,
             });
         }
     }, [id, packageId, data]);
@@ -91,7 +97,6 @@ const usePrices = () => {
             })),
         });
         if (!parsed.success) {
-            console.error(parsed.error.format());
             setState({ error: parsed.error.format().prices });
             return parsed.success;
         } else {
@@ -119,18 +124,11 @@ const usePrices = () => {
                     amount: Number(item.price),
                 })),
             }).then(() => {
-                toast.info('Prices Added Successfully', { position: 'top-center' });
-                queryClient.invalidateQueries({ queryKey: [ENDPOINTS.fetchPrices] });
-                setState({
-                    packages: [
-                        {
-                            id: '1',
-                            price: '',
-                            duration: '',
-                            durationType: 'months',
-                        },
-                    ],
+                toast.success('Pengaturan harga berhasil disimpan!', {
+                    className: 'bg-green-200 border-green-300',
+                    position: 'top-center',
                 });
+                queryClient.invalidateQueries({ queryKey: [ENDPOINTS.fetchPrices] });
             });
         } catch (error) {
             toast.error('Failed to add prices. Please try again.', { position: 'top-center' });

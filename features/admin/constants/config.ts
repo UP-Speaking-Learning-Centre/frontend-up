@@ -29,7 +29,7 @@ export const INITIAL_PRICE: PriceData[] = [
 export const PACKAGE_OPTIONS = [
     { value: 1, label: 'Semi Private' },
     { value: 2, label: 'Private' },
-    { value: 3, label: 'Ekslusif' },
+    { value: 3, label: 'Exclusive' },
 ];
 
 export const EXCLUDE_ITEMS = [
@@ -37,6 +37,7 @@ export const EXCLUDE_ITEMS = [
     'title',
     'children',
     'programId',
+    'detailTitle',
     'programName',
     'groups',
     'groupId',

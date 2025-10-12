@@ -1,5 +1,6 @@
 import ENDPOINTS from '@/constants/endpoints';
 import api from '@/lib/api';
+import { sleep } from '@/lib/mock';
 import { Price } from '@/types/admin';
 import { BaseResponse } from '@/types/general';
 import { useQuery } from '@tanstack/react-query';
@@ -9,16 +10,17 @@ import { useMemo } from 'react';
 const useGetPrices = (params?: any) => {
     const { id } = useParams();
     const get = async (): Promise<BaseResponse<Price[]>> => {
+        await sleep(1000);
         const price = await api.get<BaseResponse<Price[]>>(ENDPOINTS.fetchPrices, { params });
         return price.data;
     };
 
-    const handleEnabled = () =>{
-        if(!params) return true;
-        const params_ = Object.values(params)
-        if(!params_.length) return true
-        return params_.every(param => param)
-    }
+    const handleEnabled = () => {
+        if (!params) return true;
+        const params_ = Object.values(params);
+        if (!params_.length) return true;
+        return params_.every(param => param);
+    };
 
     const { data, isLoading } = useQuery({
         queryKey: [ENDPOINTS.fetchPrices, params],
@@ -27,7 +29,7 @@ const useGetPrices = (params?: any) => {
             ...data,
             data: data.data.filter(item => item.program.id === Number(id)),
         }),
-        enabled: handleEnabled()
+        enabled: handleEnabled(),
     });
 
     const columnDuration = useMemo(() => {
@@ -43,7 +45,7 @@ const useGetPrices = (params?: any) => {
                 return;
             }
         });
-        return columns;
+        return columns.sort((a, b) => Number(a) - Number(b));
     }, [data?.data]);
 
     const packages = useMemo(() => {

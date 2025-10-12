@@ -43,17 +43,12 @@ const AddNewStudyGroup = ({
         defaultValues: formValue,
     });
 
-    const { handleSubmit, control, watch } = form;
-    // useEffect(() => {
-    // }, [watch('teacherMemberName')]);
+    const { handleSubmit, control } = form;
 
     const { data: gradeData } = useFetchGradesQuery(true);
     const { data: scheduleData } = useGetTeacherScheduleQuery(true);
 
     const onChange = (key: keyof InitialValue, data: any) => {
-        if (key === 'teacherMemberName') {
-            console.log(scheduleData?.find(schedule => schedule.teacherMemberName === data)?.ke);
-        }
         resetFormValue(key);
         setValue({
             [key]: data,
@@ -184,7 +179,6 @@ const AddNewStudyGroup = ({
                             control={control}
                             name="groupId"
                             render={({ field }) => {
-                                console.log(field.value);
                                 return (
                                     <SelectGroup
                                         value={formValue.groupId}
