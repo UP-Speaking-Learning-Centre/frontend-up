@@ -1,7 +1,7 @@
 import {
     FormStatusManagement,
     ResponseSaveNote,
-    ResponseUpdateStatus
+    ResponseUpdateStatus,
 } from '@/types/placement-test-admin';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AxiosError } from 'axios';
@@ -72,12 +72,14 @@ const useDetailPlacementTest = () => {
                 gradeId: +fields?.grade,
                 levelId: +fields?.level,
                 locationId: +fields?.location,
-                scheduleIds: [+fields?.studyGroup],
+                studyGroupId: +fields?.studyGroup,
             });
 
             return [...res, placementTest];
         });
-        res.forEach(() => toast.info('Success'));
+        res.forEach(() =>
+            toast.info('Success', { position: 'top-center', className: 'bg-green-100' })
+        );
     };
 
     const handleSave = async (fields?: FormStatusManagement) => {

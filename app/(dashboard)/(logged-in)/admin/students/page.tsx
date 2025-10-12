@@ -116,6 +116,7 @@ const Page = () => {
                     values={students?.map(user => {
                         return {
                             ...user,
+                            hasSchedule: !!user.schedules.length,
                             studentName: {
                                 renderCell: () => (
                                     <p className="font-semibold">{user.studentName}</p>

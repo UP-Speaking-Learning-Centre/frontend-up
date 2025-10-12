@@ -3,7 +3,6 @@ import { TeacherAdminSchedule } from '@/types/admin';
 import { TimeSlot } from '@/types/schedule';
 
 const useMapTeacherManagement = (schedules: TeacherAdminSchedule['schedules']) => {
-
     const getBookingInfo = (day: string, timeSlot: TimeSlot) => {
         const scheduleItem = schedules.find(
             item => item.dayOfWeek === day && item.startTime === timeSlot.start
@@ -11,20 +10,22 @@ const useMapTeacherManagement = (schedules: TeacherAdminSchedule['schedules']) =
 
         if (scheduleItem) {
             if (scheduleItem.studyGroup) {
-                return {
-                    isAvailable: false,
-                    name: scheduleItem.studyGroup.name,
-                    isPriority: false,
-                    students: scheduleItem.totalActiveStudents,
-                    color: getPackageColor(scheduleItem.studyGroup.packageName),
-                };
-            }
-
-            return {
-                isAvailable: true,
-                name: 'Tersedia',
-                color: 'bg-gray-50 text-gray-600 border border-gray-500 hover:bg-gray-200',
-            };
+                            return {
+                                isAvailable: false,
+                                studyGroupId: scheduleItem.studyGroup.id || undefined,
+                                name: scheduleItem.studyGroup.name,
+                                // isPriority: scheduleItem,
+                                students: scheduleItem.totalActiveStudents,
+                                color: getPackageColor(scheduleItem.studyGroup.packageName),
+                            };
+                        }
+            
+                        return {
+                            isAvailable: true,
+                            studyGroupId: undefined,
+                            name: 'Tersedia',
+                            color: 'bg-gray-50 text-gray-600 border border-gray-500 hover:bg-gray-200',
+                        };
         }
 
         return null;

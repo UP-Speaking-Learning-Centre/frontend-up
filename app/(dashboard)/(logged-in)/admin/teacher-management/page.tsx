@@ -42,7 +42,7 @@ const page = () => {
         isScheduleModalOpen,
         setIsScheduleModalOpen,
     } = useGetTeacherSchedule();
-    const { getBookingInfo } = useMapTeacherManagement(scheduleData?.schedules || []);
+    const { getBookingInfo } = useMapTeacherManagement(scheduleData?.schedules||[]);
 
     return (
         <DashboardContentLayout pageTitle="Teacher Management">
@@ -138,7 +138,7 @@ const page = () => {
                                                             key={`${day}-${index}`}
                                                             bookingInfo={getBookingInfo(
                                                                 day,
-                                                                timeSlot
+                                                                timeSlot,
                                                             )}
                                                             teacher={day}
                                                         />

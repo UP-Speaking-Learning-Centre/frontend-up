@@ -28,7 +28,7 @@ const usePostReassignStudyGroup = (studyGroupId: number) => {
     const { mutateAsync: postUnassign } = useMutation({
         mutationFn: postUnassign_,
     });
-    const { mutateAsync: postAssign, error } = useMutation({
+    const { mutateAsync: postAssign } = useMutation({
         mutationFn: postAssign_,
         onError: (err: AxiosError<{ message: string }>) =>
             toast.error(err.response?.data?.message, {

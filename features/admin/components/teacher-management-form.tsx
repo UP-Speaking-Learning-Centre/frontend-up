@@ -3,9 +3,10 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { RequestTeacherAdmin } from '@/types/admin';
 import { X } from 'lucide-react';
-import React, { ChangeEventHandler, FC, FormEventHandler, useState } from 'react';
+import { ChangeEventHandler, FC, FormEventHandler, useState } from 'react';
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import useGetAlias from '../queries/useGetAlias';
+import useGetLocation from '../queries/useGetLocation';
 import AdminSelect from './admin-select';
 
 interface Props {
@@ -30,8 +31,10 @@ const TeacherManagementForm: FC<Props> = ({
     isLoading,
     setValue,
 }) => {
-    const { data: aliasData, isLoading: isLoadingAlias } = useGetAlias();
     const [alias, setAlias] = useState(teacherId);
+    
+    const { data: aliasData, isLoading: isLoadingAlias } = useGetAlias();
+    const { data, isLoading: isLoadingLocation } = useGetLocation();
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -147,29 +150,19 @@ const TeacherManagementForm: FC<Props> = ({
                     </div>
 
                     {/* Lokasi Mengajar Section */}
-                    {/* <div>
-                <label className="block text-sm font-medium text-gray-900 mb-3">
-                    Lokasi Mengajar
-                </label>
-                <RadioGroup className="space-y-1" {...register('location')}>
-                    {data?.map(item => (
-                        <div className="flex items-center space-x-2">
-                            <RadioGroupItem value={item.id.toString()} />
-                            <label
-                                htmlFor="location1"
-                                className="text-sm text-gray-900"
-                            >
-                                {item.name}
-                            </label>
-                        </div>
-                    ))}
-                </RadioGroup>
-                {errors.location && (
-                    <p className="text-red-500 text-sm mt-1">
-                        {errors.location.message?.toString()}
-                    </p>
-                )}
-            </div> */}
+                    {!isEdit && <div>
+                        <AdminSelect
+                            options={data?.map(item => ({ id: item.id, name: item.name })) || []}
+                            label="Lokasi Mengajar"
+                            onValueChange={val => setValue('locationId', +val)}
+                            loading={isLoadingLocation}
+                        />
+                        {errors.locationId && (
+                            <p className="text-red-500 text-sm mt-1">
+                                {errors.locationId.message?.toString()}
+                            </p>
+                        )}
+                    </div>}
 
                     {/* Edit Button */}
                     <div className="flex justify-end pt-4">

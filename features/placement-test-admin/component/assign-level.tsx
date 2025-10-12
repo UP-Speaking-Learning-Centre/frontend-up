@@ -34,7 +34,7 @@ const AssignLevel: FC<Props> = ({ errors, register, setValue }) => {
         assignedGrade,
         setState,
     } = useDisplayedPlacementTestStore();
-    
+
     const { data, isLoading } = useGetLocation();
     const { data: dataSchedule, isLoading: isLoadingSchedule } = useGetStudyGroup(
         Number(assignedLocation)
@@ -53,6 +53,7 @@ const AssignLevel: FC<Props> = ({ errors, register, setValue }) => {
                     <Select
                         value={assignedLevel}
                         onValueChange={assignedLevel => {
+                            if (!assignedLevel) return;
                             setState({ assignedLevel });
                             setValue('level', assignedLevel);
                         }}
@@ -91,7 +92,9 @@ const AssignLevel: FC<Props> = ({ errors, register, setValue }) => {
                         </SelectTrigger>
                         <SelectContent>
                             {dataGrade?.map(grade => (
-                                <SelectItem value={grade.id.toString()}>{grade.gradeNumber}</SelectItem>
+                                <SelectItem value={grade.id.toString()}>
+                                    {grade.gradeNumber}
+                                </SelectItem>
                             ))}
                         </SelectContent>
                     </Select>
@@ -180,7 +183,9 @@ const AssignLevel: FC<Props> = ({ errors, register, setValue }) => {
                         </SelectTrigger>
                         <SelectContent>
                             {dataSchedule
-                                ?.filter(sch => sch.teacherTeamMemberId.toString() === assignedMentor)
+                                ?.filter(
+                                    sch => sch.teacherTeamMemberId.toString() === assignedMentor
+                                )
                                 ?.map(sch => (
                                     <SelectItem value={sch.studyGroupId.toString()}>
                                         {sch.studyGroupName}
