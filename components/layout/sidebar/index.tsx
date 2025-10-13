@@ -7,10 +7,22 @@ import useAuthStore from '@/features/auth/stores/authStore';
 import { isAdmin } from '@/features/auth/utils/auth-client.helper';
 import { logout } from '@/features/auth/utils/auth-server.helper';
 import { useDashboardLayoutStore } from '@/stores/dashboard-layout-store';
-import { BookCheckIcon, Calendar, FileText, Home, LocateIcon, LogOut, Users } from 'lucide-react';
+import {
+    BookCheckIcon,
+    Calendar,
+    ChevronRight,
+    ChevronsLeftRight,
+    FileText,
+    Home,
+    LocateIcon,
+    LogOut,
+    Users,
+} from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SidebarItem from './item';
+import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 const sidebarItemsAdmin = [
     { href: ROUTES.adminStudents, label: 'List Students', icon: Users },
@@ -56,6 +68,8 @@ const Sidebar = () => {
     const role = useAuthStore(s => s.role);
     const open = useDashboardLayoutStore(s => s.openSidebar);
     const setOpen = useDashboardLayoutStore(s => s.setOpenSidebar);
+    const expandSidebar = useDashboardLayoutStore(s => s.expandSidebar);
+    const setExpandSidebar = useDashboardLayoutStore(s => s.setExpandSidebar);
 
     const [sidebarMenu, setSidebarMenu] = React.useState<
         { href: string; label: string; icon: React.ComponentType<{ className?: string }> }[]
@@ -80,9 +94,31 @@ const Sidebar = () => {
     const generateSidebarHeader = () => {
         if (role === 'admin') {
             return (
-                <div className="flex flex-col items-start">
-                    <span className="text-xl font-bold text-white">Admin Dashboard</span>
-                    <p className="text-sm text-white">UP SLC</p>
+                <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3">
+                        <div
+                            className={cn(
+                                'relative transition-all duration-300',
+                                expandSidebar ? 'size-12 mb-0' : 'size-9 mb-3'
+                            )}
+                        >
+                            <Image src={'/logo-black.png'} fill alt="Logo UP" />
+                        </div>
+                    </div>
+                    <div
+                        className={cn(
+                            'w-[1px] h-6 bg-white rounded-xl transition-all duration-300',
+                            expandSidebar ? 'opacity-100' : 'opacity-0'
+                        )}
+                    ></div>
+                    <span
+                        className={cn(
+                            'text-xl font-bold transition-all duration-300  text-white whitespace-nowrap',
+                            expandSidebar ? 'opacity-100' : 'opacity-0'
+                        )}
+                    >
+                        Admin
+                    </span>
                 </div>
             );
         }
@@ -98,7 +134,7 @@ const Sidebar = () => {
     return (
         <>
             <Sheet open={open} onOpenChange={setOpen}>
-                <SheetContent side="left" className="w-full sm:max-w-[280px] p-0 border-0">
+                <SheetContent side="left" className="w-full h-screen sm:max-w-[280px] p-0 border-0">
                     <SheetTitle />
                     <div className="py-4 flex flex-col h-full bg-secondary">
                         <div className="px-6 mb-8">{generateSidebarHeader()}</div>
@@ -122,10 +158,21 @@ const Sidebar = () => {
             </Sheet>
 
             {/* Desktop Sidebar */}
-            <div className="hidden left-0 inset-y-0 w-[260px] [grid-area:sidebar] md:flex h-full flex-col bg-secondary shadow-sm border-r">
+            <div
+                className={cn(
+                    'hidden fixed left-0 inset-y-0 [grid-area:sidebar] md:flex h-full flex-col transition-all duration-300 bg-secondary shadow-sm border-r',
+                    expandSidebar ? 'w-[260px]' : 'w-[80px]'
+                )}
+            >
                 <div className="py-6 flex flex-col h-full">
                     <div className="px-6 mb-8">{generateSidebarHeader()}</div>
-                    <div className="space-y-1 flex-1">
+                    <div className="space-y-1 flex-1 relative">
+                        <div
+                            className="absolute size-10 cursor-pointer rounded-full border-4 border-secondary bg-white -top-10  flex items-center justify-center  shadow-xl -right-4"
+                            onClick={() => setExpandSidebar(!expandSidebar)}
+                        >
+                            <ChevronsLeftRight className="size-6 text-primary" />
+                        </div>
                         {sidebarMenu.map(item => (
                             <SidebarItem item={item} key={item.href} />
                         ))}
@@ -136,8 +183,10 @@ const Sidebar = () => {
                             className="w-full justify-start font-normal text-white hover:text-white hover:bg-[#CE6439]/80"
                             onClick={handleLogout}
                         >
-                            <LogOut className="h-4 w-4 mr-3" />
-                            <span>Logout</span>
+                            <LogOut className="size-5 mr-3" />
+                            <span className={cn(expandSidebar ? 'opacity-100' : 'opacity-0')}>
+                                Logout
+                            </span>
                         </Button>
                     </div>
                 </div>

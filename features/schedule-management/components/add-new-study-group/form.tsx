@@ -122,7 +122,7 @@ const AddNewStudyGroup = ({
                     resetAll();
                 }}
             >
-                <DialogContent className="h-[calc(100vh-10rem)] overflow-y-auto">
+                <DialogContent className="max-h-[calc(100vh-10rem)] overflow-y-auto">
                     <DialogTitle>Tambah Kelompok Belajar</DialogTitle>
                     <form className="space-y-4" onSubmit={handleSubmit(data => onSubmit(data))}>
                         <Controller

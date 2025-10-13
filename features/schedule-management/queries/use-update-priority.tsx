@@ -31,14 +31,20 @@ export const useUpdatePriorityMutation = (): UseMutationResult<
         mutationKey: ['update-priority'],
         mutationFn: ({ isPriority, studyGroupId }: { isPriority: boolean; studyGroupId: number }) =>
             updatePriority(isPriority, studyGroupId),
-        onSuccess: (data, variables) => {
+        onSuccess: data => {
             const studyGroupData = {
                 ...selectedStudyGroup,
                 isPriority: data.isPriority,
             } as StudyGroupDetailAdmin;
-            queryClient.invalidateQueries({
-                queryKey: ['teacher-schedule'],
-            });
+
+            Promise.all([
+                queryClient.invalidateQueries({
+                    queryKey: ['teacher-schedule'],
+                }),
+                queryClient.invalidateQueries({
+                    queryKey: ['study-group-detail', selectedStudyGroup?.id],
+                }),
+            ]);
 
             setSelectedStudyGroup(studyGroupData);
 

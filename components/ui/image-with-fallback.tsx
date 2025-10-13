@@ -18,7 +18,7 @@ const ImageWithFallback = ({
     return (
         <Image
             {...props}
-            src={imgSrc}
+            src={imgSrc === '' ? fallbackSrc : imgSrc}
             alt={alt}
             onError={() => setImgSrc(fallbackSrc)}
             unoptimized

@@ -19,6 +19,7 @@ const SidebarItem = ({
     const pathname = usePathname();
     const isActive = pathname.startsWith(item.href);
     const setOpen = useDashboardLayoutStore(s => s.setOpenSidebar);
+    const expandSidebar = useDashboardLayoutStore(s => s.expandSidebar);
 
     return (
         <div
@@ -31,15 +32,27 @@ const SidebarItem = ({
         >
             <Link
                 href={item.href}
-                className={`w-full justify-start font-normal rounded-md text-sm flex items-center px-3 py-3 ${
+                className={`w-full justify-start font-normal rounded-md text-sm flex items-center px-5 py-3 ${
                     isActive
                         ? 'bg-[#CE6439] text-white border-r-2 border-[#CE6439]'
                         : 'text-white hover:bg-[#CE6439]/70'
                 }`}
                 onClick={() => setOpen(false)}
             >
-                <item.icon className="h-4 w-4 mr-3" />
-                <span>{item.label}</span>
+                <item.icon
+                    className={cn(
+                        'shrink-0 transition-all size-5 duration-300',
+                        expandSidebar ? 'mr-3 ' : 'mr-0'
+                    )}
+                />
+                <span
+                    className={cn(
+                        expandSidebar ? 'opacity-100' : 'opacity-0',
+                        'transition-all duration-300 whitespace-nowrap'
+                    )}
+                >
+                    {item.label}
+                </span>
             </Link>
         </div>
     );

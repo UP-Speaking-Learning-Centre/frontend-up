@@ -3,7 +3,9 @@ import { create } from 'zustand';
 
 interface DashboardLayoutStore {
     openSidebar: boolean;
+    expandSidebar: boolean;
     setOpenSidebar: (openSidebar: boolean) => void;
+    setExpandSidebar: (expandSidebar: boolean) => void;
     dashboardHeaderTitle: string;
     setDashboardHeaderTitle: (title: string) => void;
     isDashboardReady: boolean;
@@ -15,6 +17,8 @@ interface DashboardLayoutStore {
 export const useDashboardLayoutStore = create<DashboardLayoutStore>(set => ({
     openSidebar: false,
     setOpenSidebar: (openSidebar: boolean) => set({ openSidebar }),
+    expandSidebar: false,
+    setExpandSidebar: (expandSidebar: boolean) => set({ expandSidebar }),
     dashboardHeaderTitle: '',
     setDashboardHeaderTitle: (title: string) => set({ dashboardHeaderTitle: title }),
     isDashboardReady: false,
