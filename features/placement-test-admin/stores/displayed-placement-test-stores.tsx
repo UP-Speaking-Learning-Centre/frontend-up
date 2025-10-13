@@ -23,8 +23,9 @@ const initialState = {
     assignedSchedule: '',
     assignedGrade: '',
     noteForStudent: '',
-    programId:0,
-    groupId:0,
+    programId: 0,
+    groupId: 0,
+    isGraded: false,
 };
 
 interface DisplayedPlacementTestStore {
@@ -43,10 +44,11 @@ interface DisplayedPlacementTestStore {
     assignedSchedule: string;
     assignedGrade: string;
     noteForStudent: string;
+    isGraded: boolean;
     setState: (state: Partial<DisplayedPlacementTestStore>) => void;
 }
 
 export const useDisplayedPlacementTestStore = create<DisplayedPlacementTestStore>(set => ({
     ...initialState,
-    setState: (state: Partial<DisplayedPlacementTestStore>) => set({...state}),
+    setState: (state: Partial<DisplayedPlacementTestStore>) => set({ ...state }),
 }));

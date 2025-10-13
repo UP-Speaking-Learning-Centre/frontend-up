@@ -13,11 +13,17 @@ import { PlacementTestStatus } from '@/types/placement-test';
 import { FileText, Save } from 'lucide-react';
 import useDetailPlacementTest from '../hooks/use-detail-placement-test';
 import AssignLevel from './assign-level';
+import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
+import { useRouter } from 'next/navigation';
+import { ROUTES } from '@/constants/routes';
 
 const StatusManagement = () => {
     const { status, setState, handleSubmit, formState, register, setValue } =
         useDetailPlacementTest();
     const { errors } = formState;
+    const isGraded = useDisplayedPlacementTestStore(s => s.isGraded);
+    const student = useDisplayedPlacementTestStore(s => s.student);
+    const router = useRouter();
 
     const handleChangeStatus = (value: PlacementTestStatus) => {
         if (value) {
@@ -51,15 +57,28 @@ const StatusManagement = () => {
                         </Select>
                     </div>
 
-                    {(status === STATUS_OPTION.DONE_INTERVIEW ||
-                        status === STATUS_OPTION.GRADED) && (
-                        <AssignLevel errors={errors} register={register} setValue={setValue} />
-                    )}
+                    {(status === STATUS_OPTION.DONE_INTERVIEW || status === STATUS_OPTION.GRADED) &&
+                        !isGraded && (
+                            <AssignLevel errors={errors} register={register} setValue={setValue} />
+                        )}
 
-                    <Button className="w-full">
-                        <Save className="w-4 h-4 mr-2" />
-                        Save Changes
-                    </Button>
+                    {isGraded ? (
+                        <Button
+                            onClick={() =>
+                                router.replace(
+                                    ROUTES.adminStudentsId.expand({ id: student?.id || '' })
+                                )
+                            }
+                            className="w-full"
+                        >
+                            Lihat Detail Murid
+                        </Button>
+                    ) : (
+                        <Button className="w-full">
+                            <Save className="w-4 h-4 mr-2" />
+                            Save Changes
+                        </Button>
+                    )}
                 </form>
             </CardContent>
         </Card>
