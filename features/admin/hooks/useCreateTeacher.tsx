@@ -8,6 +8,8 @@ import useGetTeacherById from '../queries/useGetTeacherById';
 import usePostTeacher from '../queries/usePostTeacher';
 import usePutTeacher from '../queries/usePutTeacher';
 import { useTeacherManagementStore } from '../stores/teacher';
+import { queryClient } from '@/lib/tanstack';
+import ENDPOINTS from '@/constants/endpoints';
 
 const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
     const [id, setId] = useState(0);
@@ -35,7 +37,9 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
                         ].includes(file.type),
                     { message: 'Invalid image file type' }
                 )
-                .refine(file => file.size < 5 * 1000 * 1000, { message: 'Ukuran file melebihi batas' })
+                .refine(file => file.size < 5 * 1000 * 1000, {
+                    message: 'Ukuran file melebihi batas',
+                })
                 .optional(),
             teacherId: z.number().min(1, 'This field is required'),
             locationId: z.number().min(1, 'This field is required'),
@@ -103,7 +107,14 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
     const handleSuccess: SubmitHandler<RequestTeacherAdmin> = value => {
         if (id) {
             putTeacher({ ...value, isCoordinator: false })
-                .then(res => handleResetModal())
+                .then(res => {
+                    setTeacher([
+                        ...teacher.map(item =>
+                            item.id === id ? { ...res, id: teacher.length } : item
+                        ),
+                    ]);
+                    handleResetModal();
+                })
                 .catch(err =>
                     toast.error(err?.message, { position: 'top-center', className: 'bg-red-100' })
                 );

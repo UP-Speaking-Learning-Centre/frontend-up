@@ -43,14 +43,15 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
                         <Skeleton className="h-96 w-full" loading={isLoading} />
                     </>
                 )}
-                {teachers.map((mentor, index) => (
+                {teachers.map((mentor) => (
                     <Card
-                        key={index}
+                        key={mentor.id}
                         className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
                     >
                         {/* Card Header */}
                         <div className="flex items-center justify-between p-4 pb-2">
                             <h3 className="font-semibold text-gray-900">{mentor.memberName}</h3>
+                            {/* <p>{mentor.speciality}</p> */}
                             <div className="flex items-center gap-2">
                                 <Button
                                     onClick={() => onOpenSchedule(mentor.id)}
