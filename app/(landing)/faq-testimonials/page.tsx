@@ -9,6 +9,7 @@ import { Star } from 'lucide-react';
 import Link from 'next/link';
 import { ROUTES } from '@/constants/routes';
 import { Button } from '@/components/ui/button';
+import testimonials from '@/data/testimonials.json';
 
 const faqs = [
     {
@@ -66,63 +67,6 @@ const faqs = [
     {
         question: 'Apakah tutor UP SLC berpengalaman?',
         answer: 'Semua tutor adalah lulusan pendidikan bahasa Inggris / berpengalaman mengajar, serta dilatih dengan metode UP untuk memastikan suasana fun & efektif.',
-    },
-];
-
-const testimonials = [
-    {
-        id: 1,
-        content:
-            'The Coding Bootcamp completely changed my career path. I went from a non-technical background to landing a job as a frontend developer within two months of graduation. The instructors were knowledgeable and supportive, and the curriculum was challenging but rewarding.',
-        author: 'Sarah Johnson',
-        role: 'Frontend Developer at TechCorp',
-        imageUrl: '/placeholder.svg?height=150&width=150',
-        rating: 5,
-    },
-    {
-        id: 2,
-        content:
-            "The instructors at UP Education truly care about student success. They went above and beyond to ensure I understood the material and could apply it practically. The business management program gave me the confidence to start my own company, and I'm now applying the principles I learned on a daily basis.",
-        author: 'Michael Chen',
-        role: 'Entrepreneur & Business Owner',
-        imageUrl: '/placeholder.svg?height=150&width=150',
-        rating: 5,
-    },
-    {
-        id: 3,
-        content:
-            'Joining the Digital Marketing program was the best decision I made for my career. The hands-on projects gave me real-world experience that impressed my employers. I appreciated how the curriculum stayed current with the latest trends and tools in the industry.',
-        author: 'Aisha Patel',
-        role: 'Marketing Specialist at Global Brand',
-        imageUrl: '/placeholder.svg?height=150&width=150',
-        rating: 5,
-    },
-    {
-        id: 4,
-        content:
-            "As a working professional, I was concerned about balancing my job with studies. UP Education's flexible schedule and supportive environment made it possible. The investment in my education has already paid off with a promotion at work.",
-        author: 'Carlos Rodriguez',
-        role: 'Project Manager',
-        imageUrl: '/placeholder.svg?height=150&width=150',
-        rating: 4,
-    },
-    {
-        id: 5,
-        content:
-            'I was initially skeptical about intensive programs, but UP Education exceeded my expectations. The curriculum was rigorous but well-structured, and the career services team was instrumental in helping me secure interviews with top companies.',
-        author: 'Linda Kim',
-        role: 'Data Analyst',
-        imageUrl: '/placeholder.svg?height=150&width=150',
-        rating: 5,
-    },
-    {
-        id: 6,
-        content:
-            "The network I built during my time at UP Education has been invaluable. I'm still in touch with many of my classmates, and we continue to support each other professionally. The community aspect of the program was an unexpected benefit.",
-        author: 'Ahmed Hassan',
-        role: 'UX Designer',
-        imageUrl: '/placeholder.svg?height=150&width=150',
-        rating: 5,
     },
 ];
 
@@ -191,42 +135,26 @@ export default function FAQTestimonialsPage() {
                         </p>
                     </div>
                     <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 md:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                        {testimonials.map(testimonial => (
+                        {testimonials.map((testimonial, idx) => (
                             <div
-                                key={testimonial.id}
+                                key={idx}
                                 className="flex flex-col justify-between rounded-2xl bg-white p-8 shadow-lg ring-1 ring-gray-200"
                             >
-                                <div>
-                                    <div className="flex items-center gap-x-1">
-                                        {[...Array(5)].map((_, i) => (
-                                            <Star
-                                                key={i}
-                                                className={`h-5 w-5 ${
-                                                    i < testimonial.rating
-                                                        ? 'text-yellow-400 fill-yellow-400'
-                                                        : 'text-gray-200'
-                                                }`}
-                                            />
-                                        ))}
-                                    </div>
-                                    <div className="mt-6 text-base leading-7 text-gray-700">
-                                        <p>"{testimonial.content}"</p>
-                                    </div>
-                                </div>
-                                <div className="mt-8 flex items-center gap-x-4">
-                                    <Image
-                                        className="h-12 w-12 rounded-full bg-gray-50"
-                                        src={testimonial.imageUrl || '/placeholder.svg'}
-                                        alt={testimonial.author}
-                                        width={48}
-                                        height={48}
+                                <div className="flex flex-col flex-1 gap-2">
+                                    <p className="text-left w-full text-5xl">&ldquo;</p>
+                                    <blockquote
+                                        className="text-gray-700 leading-relaxed italic"
+                                        dangerouslySetInnerHTML={{ __html: testimonial.review }}
                                     />
+                                    <p className="text-right w-full text-5xl">&rdquo;</p>
+                                </div>
+                                <div className="mt-6 flex items-center gap-x-4">
                                     <div>
-                                        <div className="font-semibold text-gray-900">
-                                            {testimonial.author}
+                                        <div className="font-medium text-xl text-gray-900">
+                                            {testimonial.name}
                                         </div>
-                                        <div className="text-sm text-gray-500">
-                                            {testimonial.role}
+                                        <div className="text-gray-400 text-sm">
+                                            {testimonial.program}
                                         </div>
                                     </div>
                                 </div>
