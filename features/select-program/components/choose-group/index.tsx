@@ -16,7 +16,7 @@ const ChooseGroup = () => {
             className="min-h-[calc(100vh-64px)] py-24 flex flex-col justify-center"
         >
             <Title
-                title="Pilih Grup Anda"
+                title="Pilih Kelas Anda"
                 description="Pilih grup yang sesuai dengan tingkat pendidikan Anda."
             />
             <GroupCards />

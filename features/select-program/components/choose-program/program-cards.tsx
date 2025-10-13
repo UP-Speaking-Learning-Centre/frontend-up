@@ -30,7 +30,7 @@ const ProgramCards = () => {
             return (
                 <Card
                     title={item.name}
-                    description={item.description}
+                    description={''}
                     key={item.id}
                     className="md:basis-1/2 lg:basis-1/4"
                     imageUrl={imageUrl(idx)}

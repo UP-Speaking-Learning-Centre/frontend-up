@@ -20,7 +20,7 @@ const LevelInformation = () => {
             className="h-[calc(100vh-64px)] flex flex-col justify-center"
         >
             <Title
-                title={`Informasi Grup ${groupName}`}
+                title={`Informasi Kelas - ${groupName}`}
                 description="Learn about the curriculum and expected outcomes for your selected program."
             />
             <GroupInformationTabs />

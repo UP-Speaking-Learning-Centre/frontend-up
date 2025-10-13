@@ -19,6 +19,7 @@ import { getDayOfWeek } from '@/lib/date';
 import { getNextSchedules } from '@/lib/trial-class';
 import { cn } from '@/lib/utils';
 import { Calendar, Clock } from 'lucide-react';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 
 export default function DashboardPage() {
@@ -56,7 +57,7 @@ export default function DashboardPage() {
 
     return (
         <DashboardContentLayout pageTitle="Detail Student">
-            <div className="min-h-screen bg-gray-50 p-6">
+            <div className="min-h-screen bg-gray-50">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Detail Student Section */}
                     <div className="lg:col-span-2 space-y-6">
@@ -81,8 +82,14 @@ export default function DashboardPage() {
                                         </div>
                                         <div>
                                             <p className="text-sm text-gray-600 mb-1">Instagram</p>
-                                            <p className="font-semibold text-gray-900">
-                                                {data?.instagram}
+                                            <p
+                                                className={cn(
+                                                    'font-semibold text-gray-900',
+                                                    !data?.instagram &&
+                                                        'text-neutral-400 font-normal'
+                                                )}
+                                            >
+                                                {data?.instagram || 'Tidak ada informasi instagram'}
                                             </p>
                                         </div>
                                     </div>
@@ -101,13 +108,25 @@ export default function DashboardPage() {
                                         </div>
                                         <div>
                                             <p className="text-sm text-gray-600 mb-1">Level</p>
-                                            <p className="font-semibold text-gray-900">
+                                            <p
+                                                className={cn(
+                                                    'font-semibold text-gray-900',
+                                                    data?.level ? 'text-gray-900' : 'text-primary'
+                                                )}
+                                            >
                                                 {data?.level || 'Belum ditentukan'}
                                             </p>
                                         </div>
                                         <div>
                                             <p className="text-sm text-gray-600 mb-1">Grade</p>
-                                            <p className="font-semibold text-gray-900">
+                                            <p
+                                                className={cn(
+                                                    'font-semibold text-gray-900',
+                                                    data?.gradeLabel
+                                                        ? 'text-gray-900'
+                                                        : 'text-primary'
+                                                )}
+                                            >
                                                 {data?.gradeLabel || 'Belum ditentukan'}
                                             </p>
                                         </div>
@@ -134,7 +153,7 @@ export default function DashboardPage() {
                                                     className="px-6 w-fit ml-auto"
                                                     size="sm"
                                                 >
-                                                    Edit
+                                                    {notes ? 'Edit Catatan' : 'Tambah Catatan'}
                                                 </Button>
                                             </>
                                         ) : (
@@ -179,35 +198,72 @@ export default function DashboardPage() {
                                 <div className="p-6 space-y-3">
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">Cabang</p>
-                                        <p className="font-semibold text-gray-900">
-                                            {studyGroupDetail?.schedules[0]?.location || '-'}
+                                        <p
+                                            className={cn(
+                                                'font-semibold text-gray-900',
+                                                studyGroupDetail?.schedules[0]?.location
+                                                    ? 'text-gray-900'
+                                                    : 'text-primary'
+                                            )}
+                                        >
+                                            {studyGroupDetail?.schedules[0]?.location ||
+                                                'Belum ditentukan'}
                                         </p>
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">Nama Kelompok</p>
-                                        <p className="font-semibold text-gray-900">
-                                            {studyGroupDetail?.name}
+                                        <p
+                                            className={cn(
+                                                'font-semibold text-gray-900',
+                                                studyGroupDetail?.name
+                                                    ? 'text-gray-900'
+                                                    : 'text-primary'
+                                            )}
+                                        >
+                                            {studyGroupDetail?.name || 'Belum ditentukan'}
                                         </p>
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">Teacher</p>
-                                        <p className="font-semibold text-gray-900">
+                                        <p
+                                            className={cn(
+                                                'font-semibold text-gray-900',
+                                                studyGroupDetail?.schedules[0].teacherMemberName
+                                                    ? 'text-gray-900'
+                                                    : 'text-primary'
+                                            )}
+                                        >
                                             {studyGroupDetail?.schedules[0].teacherMemberName ||
-                                                '-'}
+                                                'Belum ditentukan'}
                                         </p>
                                     </div>
                                     <div>
                                         <p className="text-sm text-gray-600 mb-1">
-                                            Jadwal Trial Class
+                                            Jadwal Trial Class{' '}
+                                            {!!studyGroupDetail?.schedules.length &&
+                                                '(Pilihan Sendiri)'}
                                         </p>
-                                        <p className="font-semibold text-gray-900">
-                                            {/* {data?.schedules} */} -
+                                        <p
+                                            className={cn(
+                                                'font-semibold text-gray-900',
+                                                data?.trialClassAt
+                                                    ? 'text-gray-900'
+                                                    : 'text-primary'
+                                            )}
+                                        >
+                                            {data?.trialClassAt
+                                                ? moment(data.trialClassAt).format(
+                                                      'dddd, DD MMMM YYYY, HH:mm '
+                                                  )
+                                                : 'Belum ditentukan'}
                                         </p>
                                     </div>
                                 </div>
-                                {studyGroupDetail?.schedules.map((schedule,index) => (
+                                {studyGroupDetail?.schedules.map((schedule, index) => (
                                     <div key={schedule.id} className="px-6 py-4 border-t">
-                                        <p className="text-sm text-gray-600 mb-2">Jadwal Kelas {index+1}</p>
+                                        <p className="text-sm text-gray-600 mb-2">
+                                            Jadwal Kelas {index + 1}
+                                        </p>
 
                                         <div className="space-y-3">
                                             <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
@@ -243,7 +299,9 @@ export default function DashboardPage() {
                                         className="w-full"
                                         size="lg"
                                     >
-                                        Ganti Kelompok
+                                        {!!studyGroupDetail?.schedules
+                                            ? 'Ganti Kelompok'
+                                            : 'Assign ke Kelompok'}
                                     </Button>
                                     <Dialog open={isOpen} onOpenChange={setIsOpen}>
                                         <DialogContent className={cn(inter.className)}>

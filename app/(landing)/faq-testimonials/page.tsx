@@ -4,8 +4,6 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from '@/components/ui/accordion';
-import Image from 'next/image';
-import { Star } from 'lucide-react';
 import Link from 'next/link';
 import { ROUTES } from '@/constants/routes';
 import { Button } from '@/components/ui/button';

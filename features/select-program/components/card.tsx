@@ -62,13 +62,18 @@ const Card = ({
             <div className="bg-white relative z-10 rounded-lg w-full">
                 <div
                     className={cn(
-                        'flex flex-1 w-full flex-col justify-between rounded-lg bg-white p-4 group-hover:shadow-xl border-2 group-hover:border-[#CE6439]',
+                        'flex flex-1 w-full flex-col justify-between rounded-lg bg-white p-4 border-2 group-hover:border-[#CE6439]',
                         selected && 'border-[#CE6439] border-[3px] bg-primary/20',
                         contentClassName
                     )}
                 >
                     <div className="flex-1">
-                        <h3 className={cn('text-lg font-bold text-[#111827]', textClassName)}>
+                        <h3
+                            className={cn(
+                                'text-lg font-bold text-center text-[#111827]',
+                                textClassName
+                            )}
+                        >
                             {title}
                         </h3>
                         <p className={cn('mt-2 text-sm text-[#4B5563]', textClassName)}>

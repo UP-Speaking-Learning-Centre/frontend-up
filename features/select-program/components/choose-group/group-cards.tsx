@@ -52,7 +52,7 @@ const GroupCards = () => {
                 <Card
                     className="sm:basis-[calc(50%-18px)] md:basis-[calc(33%-18px)] lg:basis-[calc(25%-18px)]"
                     title={item.name}
-                    description={`Group tersedia`}
+                    description={''}
                     key={item.name}
                     imageUrl={imageUrl(idx)}
                     buttonLabel={isGroupSelected ? 'Group terpilih!' : 'Pilih group'}
