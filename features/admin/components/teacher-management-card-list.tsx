@@ -22,6 +22,7 @@ import ImageWithFallback from '@/components/ui/image-with-fallback';
 import { Skeleton } from '@/components/ui/skeleton';
 import useAdminPagination from '../hooks/useAdminPagination';
 import AdminPagination from './admin-pagination';
+import { cn } from '@/lib/utils';
 
 interface Props {
     onOpenSchedule: (id: number) => void;
@@ -43,7 +44,7 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
                         <Skeleton className="h-96 w-full" loading={isLoading} />
                     </>
                 )}
-                {teachers.map((mentor) => (
+                {teachers.map(mentor => (
                     <Card
                         key={mentor.id}
                         className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
@@ -99,7 +100,7 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
                         <div className="px-4 pb-3">
                             <div className="relative w-full aspect-[4/3] bg-neutral-100 rounded-lg overflow-hidden border border-neutral-200">
                                 <ImageWithFallback
-                                    src={mentor.photoUrl as string}
+                                    src={mentor.photoUrl || ''}
                                     alt={mentor.memberName}
                                     fill
                                     className="object-cover"
@@ -125,9 +126,13 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
                                 <p className="font-normal text-neutral-400 text-xs mb-2">
                                     Available Locations:
                                 </p>
-                                <p className="text-gray-700 text-sm font-medium border rounded-full w-fit px-3">
-                                    {/* {mentor.location} */}
-                                    Lokasi Belum
+                                <p
+                                    className={cn(
+                                        'text-gray-700 text-sm font-medium border rounded-full w-fit px-3',
+                                        !mentor.location && 'text-red-500 border-red-500',
+                                    )}
+                                >
+                                    {mentor.location?.name || 'Tidak ada lokasi'}
                                 </p>
                             </div>
                         </div>

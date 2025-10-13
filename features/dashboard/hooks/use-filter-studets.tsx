@@ -1,13 +1,11 @@
-import { PLACEMENT_TEST_FILTER_OPTIONS } from '@/constants/placement-test';
 import { ALL_GROUP, ALL_PROGRAM, ALL_STATUS } from '@/features/admin/constants/config';
+import useGetTeacherAll from '@/features/admin/queries/useGetTeacherAll';
 import useGetProgram from '@/features/placement-test-admin/queries/use-get-program';
 import { useStudentsStore } from '../stores/students-store';
-import useGetTeacher from '@/features/placement-test-admin/queries/use-get-teacher';
-import useGetTeachers from '@/features/admin/queries/useGetTeachers';
 
 const useFilterStudents = (setSearch: (key: string, value: any) => void, program: number) => {
     const { data: programsData, isLoading } = useGetProgram();
-    const { data, isLoading: isLoadingTeacher } = useGetTeachers();
+    const { data, isLoading: isLoadingTeacher } = useGetTeacherAll();    
 
     const setPagination = useStudentsStore(s => s.setPagination);
 
@@ -46,7 +44,7 @@ const useFilterStudents = (setSearch: (key: string, value: any) => void, program
         isLoadingFilter: isLoadingTeacher || isLoading,
         filters: {
             groups: groupsData || [],
-            mentors: data?.data || [],
+            mentors: data || [],
             programs: programsData || [],
         },
         onChangePage,

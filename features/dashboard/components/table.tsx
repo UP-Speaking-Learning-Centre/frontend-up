@@ -21,6 +21,7 @@ interface ITable<T> {
 
 const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITable<T>) => {
     const startIndex = (currentPage: number, itemsPerPage: number) => {
+        if(pagination?.totalItems === 0) return 0
         return currentPage + itemsPerPage * (currentPage - 1);
     };
     const endIndex = (currentPage: number, itemsPerPage: number) => {

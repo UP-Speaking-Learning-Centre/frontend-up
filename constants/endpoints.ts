@@ -29,6 +29,7 @@ const ENDPOINTS = {
         '/locations/{locationId}/study-groups?programId={programId}&groupId={groupId}&levelId={levelId}&packageId={packageId}'
     ),
     fetchTeachers: '/admin/teacher-team-members',
+    fetchTeachersNoPage: '/admin/teacher-team-members/all',
     fetchTeachersById: parseTemplate('/admin/teacher-team-members/{id}'),
     fetchTeachersScheduleById: parseTemplate('/admin/teacher-team-members/{id}/schedules'),
     fetchPrices: '/prices',

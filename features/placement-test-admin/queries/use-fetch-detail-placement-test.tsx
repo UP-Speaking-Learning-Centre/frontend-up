@@ -48,6 +48,7 @@ const useFetchDetailPlacementTestQuery = ({
                             query.data.determinedLevel?.toLocaleLowerCase()
                     )
                     ?.id.toString(),
+                isGraded: query.data.status === 'Graded',
             });
         }
     }, [query.data, query.status, dataLevel]);

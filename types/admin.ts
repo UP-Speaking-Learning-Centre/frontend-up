@@ -78,6 +78,7 @@ export interface TeacherAdmin {
         name: string;
         coordinator?: string | null;
     };
+    location?: LocationAdmin;
 }
 
 export type RequestTeacherAdmin = {
@@ -106,6 +107,7 @@ export interface TeacherAdminSchedule {
             name: string;
             packageId: number;
             packageName: string;
+            isPriority: boolean;
         } | null;
         totalActiveStudents: number;
     }[];
