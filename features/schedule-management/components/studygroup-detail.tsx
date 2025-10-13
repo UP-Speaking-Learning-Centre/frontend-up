@@ -284,13 +284,13 @@ const StudyGroupDetail = ({
                                       <p className="font-normal">
                                           {index + 1}. {student.studentName}
                                       </p>
-                                      <MinusCircle
+                                      {!isTeacherManagement && <MinusCircle
                                           className="text-primary cursor-pointer"
                                           onClick={() => {
                                               setOpenDeleteConfirmation(true);
                                               setSelectedStudent(student);
                                           }}
-                                      />
+                                      />}
                                   </div>
                               ))}
                     </div>

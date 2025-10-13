@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image, { ImageProps } from 'next/image';
 import type { StaticImageData } from 'next/image';
 

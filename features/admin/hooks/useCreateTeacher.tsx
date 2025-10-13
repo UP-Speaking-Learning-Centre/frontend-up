@@ -8,6 +8,8 @@ import useGetTeacherById from '../queries/useGetTeacherById';
 import usePostTeacher from '../queries/usePostTeacher';
 import usePutTeacher from '../queries/usePutTeacher';
 import { useTeacherManagementStore } from '../stores/teacher';
+import { queryClient } from '@/lib/tanstack';
+import ENDPOINTS from '@/constants/endpoints';
 
 const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
     const [id, setId] = useState(0);
@@ -35,7 +37,9 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
                         ].includes(file.type),
                     { message: 'Invalid image file type' }
                 )
-                .refine(file => file.size < 1000, { message: 'Ukuran file melebihi batas' })
+                .refine(file => file.size < 5 * 1000 * 1000, {
+                    message: 'Ukuran file melebihi batas',
+                })
                 .optional(),
             teacherId: z.number().min(1, 'This field is required'),
             locationId: z.number().min(1, 'This field is required'),
@@ -55,16 +59,33 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
         resolver: zodResolver(Teacher),
     });
 
+    async function getFileFromUrl(url: string, defaultType = 'application/octet-stream') {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const urlSplit = url.split('/');
+            const filename = urlSplit[urlSplit.length - 1];
+
+            const blob = await response.blob();
+            return new File([blob], filename, { type: blob.type || defaultType });
+        } catch (error) {
+            console.error('Error converting URL to File:', error);
+            return null;
+        }
+    }
+
     useEffect(() => {
-        if (id) {
-            // setValue('photoUrl', data?.photoUrl ?? '');
+        if (data) {
+            getFileFromUrl(data.photoUrl || '').then(res => res && setValue('photo', res));
             setValue('memberName', data?.memberName ?? '');
             // setValue('description', getOne?.description ?? '');
             setValue('teacherId', data?.teacher.id || 0);
             setValue('locationId', data?.teacher.id || 0);
-            // setValue('isCoordinator', data?.isCoordinator || false);
+            setValue('isCoordinator', data?.isCoordinator || false);
         }
-    }, [id, data]);
+    }, [data]);
 
     const handleUpload: ChangeEventHandler<HTMLInputElement> = e => {
         if (!e.target.files?.length) throw new Error('No file to upload');
@@ -85,8 +106,15 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
 
     const handleSuccess: SubmitHandler<RequestTeacherAdmin> = value => {
         if (id) {
-            putTeacher(value)
-                .then(res => handleResetModal())
+            putTeacher({ ...value, isCoordinator: false })
+                .then(res => {
+                    setTeacher([
+                        ...teacher.map(item =>
+                            item.id === id ? { ...res, id: teacher.length } : item
+                        ),
+                    ]);
+                    handleResetModal();
+                })
                 .catch(err =>
                     toast.error(err?.message, { position: 'top-center', className: 'bg-red-100' })
                 );

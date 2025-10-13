@@ -13,7 +13,9 @@ import useMapTeacherManagement from '@/features/admin/hooks/useMapTeacherManagem
 import useDeleteTeacher from '@/features/admin/queries/useDeleteTeacher';
 import useGetTeacherSchedule from '@/features/admin/queries/useGetTeacherSchedule';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
+import Legend from '@/features/schedule-management/components/legend';
 import ScheduleCell from '@/features/schedule-management/components/schedule-cell';
+import { getDayOfWeek } from '@/lib/date';
 import { cn } from '@/lib/utils';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
@@ -42,7 +44,7 @@ const page = () => {
         isScheduleModalOpen,
         setIsScheduleModalOpen,
     } = useGetTeacherSchedule();
-    const { getBookingInfo } = useMapTeacherManagement(scheduleData?.schedules||[]);
+    const { getBookingInfo } = useMapTeacherManagement(scheduleData?.schedules || []);
 
     return (
         <DashboardContentLayout pageTitle="Teacher Management">
@@ -82,6 +84,7 @@ const page = () => {
                 <Dialog open={isScheduleModalOpen} onOpenChange={setIsScheduleModalOpen}>
                     <DialogTitle />
                     <DialogContent className={cn(inter.className, 'max-w-screen-xl')}>
+                        <Legend />
                         <Card className="overflow-hidden w-full">
                             <div className="overflow-x-auto">
                                 <table className="w-full">
@@ -99,7 +102,7 @@ const page = () => {
                                                             className="h-6 w-20"
                                                         >
                                                             <div className="font-semibold text-foreground">
-                                                                {day}
+                                                                {getDayOfWeek(day)}
                                                             </div>
                                                         </Skeleton>
                                                         {/* <Skeleton
@@ -138,7 +141,7 @@ const page = () => {
                                                             key={`${day}-${index}`}
                                                             bookingInfo={getBookingInfo(
                                                                 day,
-                                                                timeSlot,
+                                                                timeSlot
                                                             )}
                                                             teacher={day}
                                                         />
