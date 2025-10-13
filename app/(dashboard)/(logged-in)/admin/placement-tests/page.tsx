@@ -132,7 +132,14 @@ const Index = () => {
                                 },
                                 status: {
                                     renderCell: () => (
-                                        <Badge className="flex items-center justify-center gap-2">
+                                        <Badge
+                                            className={cn(
+                                                'flex items-center justify-center gap-2',
+                                                PLACEMENT_TEST_FILTER_OPTIONS.find(
+                                                    option => option.value === user.status
+                                                )?.color
+                                            )}
+                                        >
                                             {
                                                 PLACEMENT_TEST_FILTER_OPTIONS.find(
                                                     option => option.value === user.status

@@ -10,7 +10,9 @@ const usePutTeacher = (id: number) => {
     const teacher = useLocationManagementStore(s => s.teacher);
 
     const putLocation = async (data: Partial<RequestTeacherAdmin>): Promise<TeacherAdmin> => {
-        const res = await api.patch(ENDPOINTS.fetchTeachersById.expand({ id }),data);
+        const res = await api.patch(ENDPOINTS.fetchTeachersById.expand({ id }), data, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+        });
         const index = teacher.findIndex(teach => teach.id === id);
         teacher[index] = res.data;
         setTeacher([...teacher]);

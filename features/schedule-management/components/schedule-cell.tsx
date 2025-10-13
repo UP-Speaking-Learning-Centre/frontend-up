@@ -9,6 +9,7 @@ import { Plus, Star, StarIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useScheduleManagementStore } from '../stores/schedule-management-store';
 import StudyGroupDetail from './studygroup-detail';
+import Legend from './legend';
 
 interface BookingInfo {
     isAvailable: boolean;
@@ -28,8 +29,6 @@ interface ScheduleCellProps {
 
 const ScheduleCell = (props: ScheduleCellProps) => {
     const { bookingInfo, teacher, loading, isTeacherManagement } = props;
-    console.log(bookingInfo);
-    
     const { isAvailable, name, color, isPriority, students } = bookingInfo || {};
     const [openDetail, setOpenDetail] = useState(false);
     const setStudyGroupId = useScheduleManagementStore(s => s.setStudyGroupId);

@@ -32,7 +32,7 @@ const TeacherManagementForm: FC<Props> = ({
     setValue,
 }) => {
     const [alias, setAlias] = useState(teacherId);
-    
+
     const { data: aliasData, isLoading: isLoadingAlias } = useGetAlias();
     const { data, isLoading: isLoadingLocation } = useGetLocation();
 
@@ -125,7 +125,7 @@ const TeacherManagementForm: FC<Props> = ({
                             )}
                             {...register('teacherId')}
                         /> */}
-                        {!isEdit && (
+                        {
                             <AdminSelect
                                 label="Alias"
                                 loading={isLoadingAlias}
@@ -141,7 +141,7 @@ const TeacherManagementForm: FC<Props> = ({
                                     setValue('teacherId', Number(value));
                                 }}
                             />
-                        )}
+                        }
                         {errors.teacherId && (
                             <p className="text-red-500 text-sm mt-1">
                                 {errors.teacherId.message?.toString()}
@@ -150,19 +150,23 @@ const TeacherManagementForm: FC<Props> = ({
                     </div>
 
                     {/* Lokasi Mengajar Section */}
-                    {!isEdit && <div>
-                        <AdminSelect
-                            options={data?.map(item => ({ id: item.id, name: item.name })) || []}
-                            label="Lokasi Mengajar"
-                            onValueChange={val => setValue('locationId', +val)}
-                            loading={isLoadingLocation}
-                        />
-                        {errors.locationId && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.locationId.message?.toString()}
-                            </p>
-                        )}
-                    </div>}
+                    {
+                        <div>
+                            <AdminSelect
+                                options={
+                                    data?.map(item => ({ id: item.id, name: item.name })) || []
+                                }
+                                label="Lokasi Mengajar"
+                                onValueChange={val => setValue('locationId', +val)}
+                                loading={isLoadingLocation}
+                            />
+                            {errors.locationId && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.locationId.message?.toString()}
+                                </p>
+                            )}
+                        </div>
+                    }
 
                     {/* Edit Button */}
                     <div className="flex justify-end pt-4">
