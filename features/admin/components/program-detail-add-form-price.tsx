@@ -46,7 +46,6 @@ const ProgramDetailAddFormPrice = ({ ...props }: DialogProps) => {
         }
     };
 
-    console.log(PACKAGE_OPTIONS);
     return (
         <Dialog {...props} onOpenChange={handleOpenChange}>
             <DialogTrigger asChild>

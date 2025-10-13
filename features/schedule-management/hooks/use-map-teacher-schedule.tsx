@@ -10,8 +10,9 @@ const useMapTeacherSchedule = ({ data }: { data: TeacherScheduleResponse }) => {
         const teacherMap = new Map<string, string>();
 
         scheduleData.forEach((item: ScheduleItem) => {
-            teacherMap.set(item.ke, item.teacherMemberName);
+            teacherMap.set(item.teacherMemberId, item.teacherMemberName);
         });
+
         return Array.from(teacherMap).sort();
     }, [scheduleData]);
 

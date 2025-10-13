@@ -98,7 +98,7 @@ const Page = () => {
                                                             key={teacher[0]}
                                                             className="min-w-[140px] p-3 text-center font-medium text-muted-foreground"
                                                         >
-                                                            <div className="space-y-1 flex items-center flex-col">
+                                                            <div className="space-y-1 flex  max-w-[200px] items-center flex-col">
                                                                 <Skeleton
                                                                     loading={isLoading}
                                                                     className="h-6 w-20"
@@ -128,7 +128,7 @@ const Page = () => {
                                         <tbody>
                                             {timeSlots.map(timeSlot => (
                                                 <tr key={timeSlot.display} className="border-b">
-                                                    <td className="p-3 font-medium text-sm text-muted-foreground whitespace-nowrap">
+                                                    <td className="p-3 font-medium text-sm max-w-[200px] text-muted-foreground whitespace-nowrap">
                                                         <Skeleton
                                                             loading={isLoading}
                                                             className="h-14 w-20"

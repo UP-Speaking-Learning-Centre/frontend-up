@@ -70,7 +70,6 @@ const usePrices = () => {
                     )
                     .sort((a, b) => Number(a.duration) - Number(b.duration)) || [];
 
-            console.log(rawPackages);
             setState({
                 packageId,
                 rawPackages,

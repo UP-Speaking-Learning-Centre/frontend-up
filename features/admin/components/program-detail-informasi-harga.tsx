@@ -24,7 +24,6 @@ const ProgramDetailInformasiHarga = () => {
     const { packages, isLoading, columnDuration } = useGetPrices();
     const { handleEdit } = useEditPrice();
 
-    console.log(packages);
     return (
         <section id="harga">
             <div className="flex items-center justify-between">

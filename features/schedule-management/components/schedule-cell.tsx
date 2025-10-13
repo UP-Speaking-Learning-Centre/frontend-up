@@ -28,8 +28,7 @@ interface ScheduleCellProps {
 
 const ScheduleCell = (props: ScheduleCellProps) => {
     const { bookingInfo, teacher, loading, isTeacherManagement } = props;
-    console.log(bookingInfo);
-    
+
     const { isAvailable, name, color, isPriority, students } = bookingInfo || {};
     const [openDetail, setOpenDetail] = useState(false);
     const setStudyGroupId = useScheduleManagementStore(s => s.setStudyGroupId);
@@ -52,12 +51,12 @@ const ScheduleCell = (props: ScheduleCellProps) => {
     return (
         <>
             <td key={teacher} className="p-2">
-                <Skeleton className="h-14 w-full" loading={loading}>
+                <Skeleton className="h-14 w-full max-w-[200px]" loading={loading}>
                     {bookingInfo ? (
                         <div
                             onClick={onClickCell}
                             className={cn(
-                                'rounded-md p-2 min-h-14 relative cursor-pointer text-center flex flex-col justify-center items-center text-xs font-no',
+                                'rounded-md p-2 max-w-[200px] min-h-14 relative cursor-pointer text-center flex flex-col justify-center items-center text-xs font-no',
                                 color
                             )}
                         >

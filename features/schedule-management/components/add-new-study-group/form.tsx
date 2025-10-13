@@ -63,7 +63,7 @@ const AddNewStudyGroup = ({
                 ? {
                       teacherTeamMemberId: scheduleData?.find(
                           schedule => schedule.teacherMemberName === data
-                      )?.ke,
+                      )?.teacherMemberId,
                   }
                 : {}),
         });
@@ -75,7 +75,7 @@ const AddNewStudyGroup = ({
                 schedule =>
                     schedule.day === formValue.day1 &&
                     schedule.startTime === formValue.time1 &&
-                    Number(schedule.ke) === Number(formValue.teacherTeamMemberId)
+                    Number(schedule.teacherMemberId) === Number(formValue.teacherTeamMemberId)
             );
 
             if (getScheduleid) {
@@ -90,7 +90,7 @@ const AddNewStudyGroup = ({
                 schedule =>
                     schedule.day === formValue.day2 &&
                     schedule.startTime === formValue.time2 &&
-                    Number(schedule.ke) === Number(formValue.teacherTeamMemberId)
+                    Number(schedule.teacherMemberId) === Number(formValue.teacherTeamMemberId)
             );
 
             if (getScheduleid) {
