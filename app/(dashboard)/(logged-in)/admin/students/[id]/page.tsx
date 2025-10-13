@@ -55,6 +55,14 @@ export default function DashboardPage() {
         data?.trialClassAt ? data?.schedules : studyGroupDetailBySelect?.schedules || []
     );
 
+    const filteredStudyGroup =
+        studyGroups?.filter(
+            sg =>
+                sg.programId === data?.programId &&
+                sg.groupId === data.groupId &&
+                sg.levelId === data.levelId
+        ) || [];
+
     return (
         <DashboardContentLayout pageTitle="Detail Student">
             <div className="min-h-screen bg-gray-50">
@@ -319,13 +327,22 @@ export default function DashboardPage() {
                                                     onValueChange={setLocationId}
                                                 />
                                             )}
-                                            <AdminSelect
-                                                label="Kelompok Belajar"
-                                                options={studyGroups || []}
-                                                value={selectedStudyGroup}
-                                                onValueChange={setSelectedStudyGroup}
-                                                disabled={!locationId}
-                                            />
+                                            {filteredStudyGroup.length ? (
+                                                <AdminSelect
+                                                    label="Kelompok Belajar"
+                                                    options={filteredStudyGroup || []}
+                                                    value={selectedStudyGroup}
+                                                    onValueChange={setSelectedStudyGroup}
+                                                    disabled={!locationId}
+                                                />
+                                            ) : (
+                                                <>
+                                                    <Label>Kelompok Belajar</Label>
+                                                    <span className="text-sm text-primary font-medium">
+                                                        Belum ada kelompok belajar lain
+                                                    </span>
+                                                </>
+                                            )}
                                             {!data?.trialClassAt && (
                                                 <div>
                                                     <Label className="mb-2 block">
@@ -345,7 +362,7 @@ export default function DashboardPage() {
                                                             ))
                                                         ) : (
                                                             <span className="text-sm text-primary font-medium">
-                                                                Please select study group first
+                                                                Pilih kelompok belajar terlebih dahulu
                                                             </span>
                                                         )}
                                                     </RadioGroup>
