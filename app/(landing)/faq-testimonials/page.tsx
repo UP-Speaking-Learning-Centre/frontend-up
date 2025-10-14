@@ -86,37 +86,6 @@ export default function FAQTestimonialsPage() {
                 </div>
             </div>
 
-            {/* FAQ Section */}
-            <div className="bg-white py-24 sm:py-32">
-                <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="mx-auto max-w-2xl text-center">
-                        <h2 className="text-base font-semibold leading-7 text-[#CE6439]">
-                            “No worries, we’ve got the answers.”
-                        </h2>
-                        <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-                            Frequently Asked Questions
-                        </p>
-                        <p className="mt-6 text-lg leading-8 text-gray-600">
-                            Beberapa pertanyaan yang sering ditanyakan orang tua & siswa sebelum
-                            bergabung di UP SLC. Kalau masih ada yang bikin penasaran, feel free to
-                            contact us.
-                        </p>
-                    </div>
-                    <div className="mx-auto mt-16 max-w-3xl">
-                        <Accordion type="single" collapsible className="w-full">
-                            {faqs.map((faq, idx) => (
-                                <AccordionItem key={idx} value={`item-${idx}`}>
-                                    <AccordionTrigger className="text-left">
-                                        {faq.question}
-                                    </AccordionTrigger>
-                                    <AccordionContent>{faq.answer}</AccordionContent>
-                                </AccordionItem>
-                            ))}
-                        </Accordion>
-                    </div>
-                </div>
-            </div>
-
             {/* Testimonials Section */}
             <div className="bg-gray-50 py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -158,6 +127,37 @@ export default function FAQTestimonialsPage() {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* FAQ Section */}
+            <div className="bg-white py-24 sm:py-32">
+                <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                    <div className="mx-auto max-w-2xl text-center">
+                        <h2 className="text-base font-semibold leading-7 text-[#CE6439]">
+                            “No worries, we’ve got the answers.”
+                        </h2>
+                        <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+                            Frequently Asked Questions
+                        </p>
+                        <p className="mt-6 text-lg leading-8 text-gray-600">
+                            Beberapa pertanyaan yang sering ditanyakan orang tua & siswa sebelum
+                            bergabung di UP SLC. Kalau masih ada yang bikin penasaran, feel free to
+                            contact us.
+                        </p>
+                    </div>
+                    <div className="mx-auto mt-16 max-w-3xl">
+                        <Accordion type="single" collapsible className="w-full">
+                            {faqs.map((faq, idx) => (
+                                <AccordionItem key={idx} value={`item-${idx}`}>
+                                    <AccordionTrigger className="text-left">
+                                        {faq.question}
+                                    </AccordionTrigger>
+                                    <AccordionContent>{faq.answer}</AccordionContent>
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
                     </div>
                 </div>
             </div>
