@@ -77,18 +77,20 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
                                     <AlertDialogContent className={inter.className}>
                                         <AlertDialogHeader>
                                             <AlertDialogTitle>
-                                                Are you sure want to delete this teacher?
+                                                Anda akan menghapus mentor{' '}
+                                                <span className="text-primary">
+                                                    {mentor.memberName}
+                                                </span>
+                                                .
                                             </AlertDialogTitle>
                                             <AlertDialogDescription>
-                                                This action cannot be undone. This will permanently
-                                                delete the teacher and remove your data from our
-                                                servers.
+                                                Data yang dihapus tidak dapat dikembalikan.
                                             </AlertDialogDescription>
                                         </AlertDialogHeader>
                                         <AlertDialogFooter>
-                                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                            <AlertDialogCancel>Batal</AlertDialogCancel>
                                             <AlertDialogAction onClick={() => onDelete(mentor.id)}>
-                                                Continue
+                                                Hapus
                                             </AlertDialogAction>
                                         </AlertDialogFooter>
                                     </AlertDialogContent>
@@ -98,7 +100,7 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
 
                         {/* Profile Image */}
                         <div className="px-4 pb-3">
-                            <div className="relative w-full aspect-[4/3] bg-neutral-100 rounded-lg overflow-hidden border border-neutral-200">
+                            <div className="relative w-full aspect-[8/9] bg-neutral-100 rounded-lg overflow-hidden border border-neutral-200">
                                 <ImageWithFallback
                                     src={mentor.photoUrl || ''}
                                     alt={mentor.memberName}
@@ -129,7 +131,7 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
                                 <p
                                     className={cn(
                                         'text-gray-700 text-sm font-medium border rounded-full w-fit px-3',
-                                        !mentor.location && 'text-red-500 border-red-500',
+                                        !mentor.location && 'text-red-500 border-red-500'
                                     )}
                                 >
                                     {mentor.location?.name || 'Tidak ada lokasi'}

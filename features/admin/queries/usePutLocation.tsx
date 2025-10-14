@@ -10,20 +10,24 @@ const usePutLocation = () => {
     const location = useLocationManagementStore(s => s.location);
 
     const putLocation = async (data: LocationAdmin): Promise<LocationAdmin> => {
-        const { id, ...rest } = data;
-        const res = await api.patch(ENDPOINTS.fetchAdminLocationsById.expand({ id }), rest);
+        const { id, imgLink, ...rest } = data;
+        const res = await api.patch(ENDPOINTS.fetchAdminLocationsById.expand({ id }), rest, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         const index = location.findIndex(locate => locate.id === id);
         location[index] = res.data;
         setLocation([...location]);
         return res.data;
     };
 
-    const { mutateAsync } = useMutation({
+    const res = useMutation({
         mutationKey: [ENDPOINTS.fetchAdminLocationsById],
         mutationFn: putLocation,
     });
 
-    return { mutateAsync };
+    return res;
 };
 
 export default usePutLocation;

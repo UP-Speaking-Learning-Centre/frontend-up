@@ -93,7 +93,7 @@ const useGetProgramById = () => {
     };
 
     const { data, isLoading } = useQuery({
-        queryKey: [API_PROGRAMS],
+        queryKey: [API_PROGRAMS, id],
         queryFn: getProgramById,
         enabled: !!token,
     });

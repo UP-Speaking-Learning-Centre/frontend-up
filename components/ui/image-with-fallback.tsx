@@ -15,6 +15,12 @@ const ImageWithFallback = ({
 }: ImageWithFallbackProps) => {
     const [imgSrc, setImgSrc] = useState<string | StaticImageData>(src);
 
+    useEffect(() => {
+        if (src) {
+            setImgSrc(src);
+        }
+    }, [src]);
+
     return (
         <Image
             {...props}

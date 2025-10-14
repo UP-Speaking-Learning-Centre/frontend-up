@@ -3,11 +3,13 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { RequestTeacherAdmin } from '@/types/admin';
 import { X } from 'lucide-react';
-import { ChangeEventHandler, FC, FormEventHandler, useState } from 'react';
+import { ChangeEventHandler, FC, FormEventHandler, useEffect, useState } from 'react';
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import useGetAlias from '../queries/useGetAlias';
 import useGetLocation from '../queries/useGetLocation';
 import AdminSelect from './admin-select';
+import UploadImage from '@/components/upload-image';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Props {
     teacherId?: number;
@@ -16,8 +18,10 @@ interface Props {
     onSubmit: FormEventHandler<HTMLFormElement>;
     errors: FieldErrors<RequestTeacherAdmin>;
     register: UseFormRegister<RequestTeacherAdmin>;
-    onUpload: ChangeEventHandler<HTMLInputElement>;
+    onUpload: (file: File) => void;
     isLoading?: boolean;
+    isLoadingGet?: boolean;
+    value: Partial<RequestTeacherAdmin & { photoLink?: string }>;
     setValue: UseFormSetValue<RequestTeacherAdmin>;
 }
 const TeacherManagementForm: FC<Props> = ({
@@ -26,15 +30,25 @@ const TeacherManagementForm: FC<Props> = ({
     onClose,
     onSubmit,
     errors,
+    value,
     register,
     onUpload,
+    isLoadingGet,
     isLoading,
     setValue,
 }) => {
-    const [alias, setAlias] = useState(teacherId);
+    const [alias, setAlias] = useState(0);
+
+    useEffect(() => {
+        if (teacherId) {
+            setAlias(teacherId);
+        }
+    }, [teacherId]);
 
     const { data: aliasData, isLoading: isLoadingAlias } = useGetAlias();
     const { data, isLoading: isLoadingLocation } = useGetLocation();
+
+    const showSkeleton = isLoadingGet || isLoadingAlias || isLoadingLocation;
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -42,7 +56,7 @@ const TeacherManagementForm: FC<Props> = ({
                 {/* Modal Header */}
                 <div className="flex items-center justify-between p-6 pb-4">
                     <h2 className="text-xl font-semibold text-gray-900">
-                        {isEdit && 'Edit '}Detail Ms. Feby
+                        {isEdit ? 'Edit' : 'Tambah'} Teacher
                     </h2>
                     <Button
                         variant={'ghost'}
@@ -57,43 +71,49 @@ const TeacherManagementForm: FC<Props> = ({
                 <form onSubmit={onSubmit} className="px-6 pb-6 space-y-6">
                     {/* Nama Field */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">Nama</label>
-                        <Input
-                            type="text"
-                            className={cn(
-                                'w-full border border-gray-300 rounded-md px-3 py-2',
-                                errors.memberName && 'border-red-500'
+                        <Skeleton className="h-6 w-32" loading={showSkeleton}>
+                            <label className="block text-sm font-medium text-gray-900 mb-2">
+                                Nama
+                            </label>
+                        </Skeleton>
+                        <Skeleton loading={showSkeleton} className="h-12 mt-2 w-full">
+                            <Input
+                                type="text"
+                                className={cn(
+                                    'w-full border border-gray-300 rounded-md px-3 py-2',
+                                    errors.memberName && 'border-red-500'
+                                )}
+                                {...register('memberName')}
+                            />
+                            {errors.memberName && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.memberName.message?.toString()}
+                                </p>
                             )}
-                            {...register('memberName')}
-                        />
-                        {errors.memberName && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.memberName.message?.toString()}
-                            </p>
-                        )}
+                        </Skeleton>
                     </div>
 
                     {/* Foto Field */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">Foto</label>
-                        <Input
-                            type="file"
-                            className={cn(
-                                'w-full border border-gray-300 rounded-md px-3 py-2',
-                                errors.photo && 'border-red-500'
+                        <Skeleton loading={showSkeleton} className="h-6 w-32">
+                            <label className="block text-sm font-medium text-gray-900 mb-2">
+                                Foto
+                            </label>
+                        </Skeleton>
+                        <Skeleton loading={showSkeleton} className="h-12 mt-2 w-full">
+                            <UploadImage
+                                handleUpload={onUpload}
+                                value={value.photoLink}
+                                label="Upload Foto"
+                                width={374}
+                                height={421}
+                            />
+                            {errors.photo && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.photo.message?.toString()}
+                                </p>
                             )}
-                            onChange={onUpload}
-                        />
-                        {isEdit && (
-                            <p className="text-xs font-semibold text-gray-500 mt-1">
-                                Catatan: Harap diabaikan apabila tidak terdapat perubahan.
-                            </p>
-                        )}
-                        {errors.photo && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.photo.message?.toString()}
-                            </p>
-                        )}
+                        </Skeleton>
                     </div>
 
                     {/* Deskripsi Field */}
@@ -125,7 +145,7 @@ const TeacherManagementForm: FC<Props> = ({
                             )}
                             {...register('teacherId')}
                         /> */}
-                        {
+                        <Skeleton loading={showSkeleton} className="h-12 w-full">
                             <AdminSelect
                                 label="Alias"
                                 loading={isLoadingAlias}
@@ -135,27 +155,31 @@ const TeacherManagementForm: FC<Props> = ({
                                         name: alias.alias,
                                     })) || []
                                 }
+                                defaultValue={alias?.toString()}
                                 value={alias?.toString()}
                                 onValueChange={value => {
                                     setAlias(Number(value));
                                     setValue('teacherId', Number(value));
                                 }}
                             />
-                        }
-                        {errors.teacherId && (
-                            <p className="text-red-500 text-sm mt-1">
-                                {errors.teacherId.message?.toString()}
-                            </p>
-                        )}
+
+                            {errors.teacherId && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.teacherId.message?.toString()}
+                                </p>
+                            )}
+                        </Skeleton>
                     </div>
 
                     {/* Lokasi Mengajar Section */}
-                    {
+                    <Skeleton loading={showSkeleton} className="h-12 w-full">
                         <div>
                             <AdminSelect
                                 options={
                                     data?.map(item => ({ id: item.id, name: item.name })) || []
                                 }
+                                defaultValue={value.locationId?.toString()}
+                                value={value.locationId?.toString()}
                                 label="Lokasi Mengajar"
                                 onValueChange={val => setValue('locationId', +val)}
                                 loading={isLoadingLocation}
@@ -166,22 +190,24 @@ const TeacherManagementForm: FC<Props> = ({
                                 </p>
                             )}
                         </div>
-                    }
+                    </Skeleton>
 
                     {/* Edit Button */}
                     <div className="flex justify-end pt-4">
-                        <Button
-                            className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-2 rounded-lg"
-                            disabled={isLoading}
-                        >
-                            {isEdit
-                                ? !isLoading
-                                    ? 'Edit'
-                                    : 'Editing...'
-                                : !isLoading
-                                ? 'Add'
-                                : 'Adding...'}
-                        </Button>
+                        <Skeleton loading={showSkeleton} className="h-11 w-16">
+                            <Button
+                                className="text-white px-8 py-2 rounded-lg"
+                                disabled={isLoading}
+                            >
+                                {isEdit
+                                    ? !isLoading
+                                        ? 'Edit'
+                                        : 'Editing...'
+                                    : !isLoading
+                                    ? 'Add'
+                                    : 'Adding...'}
+                            </Button>
+                        </Skeleton>
                     </div>
                 </form>
             </div>

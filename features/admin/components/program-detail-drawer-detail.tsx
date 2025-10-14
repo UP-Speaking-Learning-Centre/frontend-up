@@ -28,14 +28,6 @@ const ProgramDetailDrawerDetail = ({
 
     return (
         <div className="p-4 space-y-6">
-            <div className="w-full h-64 bg-blue-100 rounded-lg overflow-hidden">
-                <img
-                    src="/placeholder.svg"
-                    alt="Happy school children in uniforms raising hands"
-                    className="w-full h-full object-cover"
-                />
-            </div>
-
             <div>
                 <h3 className="text-xs font-medium text-gray-500 mb-1">Nama {props.detailTitle}</h3>
                 <h4 className="text-gray-900 font-bold">{capitalizeFirstLetter(title)}</h4>

@@ -10,7 +10,8 @@ const usePostLocation = () => {
     const setLocation = useLocationManagementStore(s => s.setLocation);
 
     const postLocation = async (data: Omit<LocationAdmin, 'id'>): Promise<LocationAdmin> => {
-        const res = await api.post<LocationAdmin>(ENDPOINTS.fetchAdminLocations, data, {
+        const { imgLink, ...rest } = data;
+        const res = await api.post<LocationAdmin>(ENDPOINTS.fetchAdminLocations, rest, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -21,12 +22,12 @@ const usePostLocation = () => {
         return res.data;
     };
 
-    const { mutateAsync } = useMutation({
+    const { mutateAsync, isPending } = useMutation({
         mutationKey: [ENDPOINTS.fetchAdminLocations],
         mutationFn: postLocation,
     });
 
-    return { mutateAsync };
+    return { mutateAsync, isPending };
 };
 
 export default usePostLocation;
