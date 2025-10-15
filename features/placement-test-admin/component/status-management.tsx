@@ -18,7 +18,7 @@ import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
 
 const StatusManagement = () => {
-    const { status, setState, handleSubmit, formState, register, setValue } =
+    const { status, setState, handleSubmit, formState, register, setValue,reset } =
         useDetailPlacementTest();
     const { errors } = formState;
     const isGraded = useDisplayedPlacementTestStore(s => s.isGraded);
@@ -43,7 +43,7 @@ const StatusManagement = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <Label>Status</Label>
-                        <Select value={status} onValueChange={handleChangeStatus}>
+                        <Select disabled={isGraded} value={status} onValueChange={handleChangeStatus}>
                             <SelectTrigger>
                                 <SelectValue />
                             </SelectTrigger>
@@ -59,7 +59,7 @@ const StatusManagement = () => {
 
                     {(status === STATUS_OPTION.DONE_INTERVIEW || status === STATUS_OPTION.GRADED) &&
                         !isGraded && (
-                            <AssignLevel errors={errors} register={register} setValue={setValue} />
+                            <AssignLevel errors={errors} register={register} setValue={setValue} reset={reset} />
                         )}
 
                     {isGraded ? (

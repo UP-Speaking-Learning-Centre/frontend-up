@@ -8,6 +8,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { inter } from '@/constants/fonts';
+import { ROUTES } from '@/constants/routes';
 import AdminSelect from '@/features/admin/components/admin-select';
 import useChangeStudyGroup from '@/features/admin/hooks/useChangeStudyGroup';
 import useEditNote from '@/features/admin/hooks/useEditNote';
@@ -18,11 +19,16 @@ import useGetProfileById from '@/features/home/queries/useGetProfileById';
 import { getDayOfWeek } from '@/lib/date';
 import { getNextSchedules } from '@/lib/trial-class';
 import { cn } from '@/lib/utils';
-import { Calendar, Clock } from 'lucide-react';
+import { Calendar, Clock, Info } from 'lucide-react';
 import moment from 'moment';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 export default function DashboardPage() {
+    const routes = useRouter();
+
     const [locationId, setLocationId] = useState('');
     const [trialClass, setTrialClass] = useState('');
 
@@ -60,8 +66,25 @@ export default function DashboardPage() {
             sg =>
                 sg.programId === data?.programId &&
                 sg.groupId === data.groupId &&
+                data.packages.some(package_ => package_.packageId === sg.packageId) &&
                 sg.levelId === data.levelId
         ) || [];
+
+    useEffect(() => {
+        if (!!data?.id && !data?.levelId)
+            toast(
+                <p>
+                    Anda belum melakukan penilaian placement test untuk murid ini,
+                    <Link
+                        className="text-primary font-bold inline ml-1"
+                        href={ROUTES.adminPlacementTestsId.expand({ id: data?.id })}
+                    >
+                        Lanjut ke Placement Test
+                    </Link>{' '}
+                </p>,
+                { position: 'top-center', icon: <Info /> }
+            );
+    }, [data]);
 
     return (
         <DashboardContentLayout pageTitle="Detail Student">
@@ -302,7 +325,29 @@ export default function DashboardPage() {
                                     </div>
                                 ))}
                                 <div className="m-4">
+                                    {!data?.levelId && (
+                                        <>
+                                            <p className="text-xs py-2 mt-5">
+                                                <Info className="w-4 h-4 inline mr-1" />
+                                                Anda belum melakukan placement test untuk murid ini
+                                            </p>
+                                            <Button
+                                                onClick={() =>
+                                                    routes.replace(
+                                                        ROUTES.adminPlacementTestsId.expand({
+                                                            id: data?.id || 0,
+                                                        })
+                                                    )
+                                                }
+                                                className="w-full mb-4"
+                                                size={'lg'}
+                                            >
+                                                Lanjut ke Placement Test
+                                            </Button>
+                                        </>
+                                    )}
                                     <Button
+                                        disabled={!data?.levelId}
                                         onClick={() => setIsOpen(true)}
                                         className="w-full"
                                         size="lg"
@@ -311,6 +356,7 @@ export default function DashboardPage() {
                                             ? 'Ganti Kelompok'
                                             : 'Assign ke Kelompok'}
                                     </Button>
+
                                     <Dialog open={isOpen} onOpenChange={setIsOpen}>
                                         <DialogContent className={cn(inter.className)}>
                                             <DialogTitle>Ganti Kelompok</DialogTitle>
@@ -362,7 +408,8 @@ export default function DashboardPage() {
                                                             ))
                                                         ) : (
                                                             <span className="text-sm text-primary font-medium">
-                                                                Pilih kelompok belajar terlebih dahulu
+                                                                Pilih kelompok belajar terlebih
+                                                                dahulu
                                                             </span>
                                                         )}
                                                     </RadioGroup>

@@ -18,7 +18,6 @@ const useDetailPlacementTest = () => {
     const status = useDisplayedPlacementTestStore(s => s.status);
     const correctAnswers = useDisplayedPlacementTestStore(s => s.correctAnswers);
     const currentQuestionIndex = useDisplayedPlacementTestStore(s => s.currentQuestionIndex);
-    const gradedQuestions = useDisplayedPlacementTestStore(s => s.gradedQuestions);
     const totalQuestions = useDisplayedPlacementTestStore(s => s.totalQuestions);
     const noteForStudent = useDisplayedPlacementTestStore(s => s.noteForStudent);
     const setState = useDisplayedPlacementTestStore(s => s.setState);
@@ -35,7 +34,7 @@ const useDetailPlacementTest = () => {
         studyGroup: z.string({ required_error: 'This value is required' }),
     });
 
-    const { handleSubmit, formState, register, setValue } = useForm<FormStatusManagement>({
+    const { handleSubmit, formState, register, setValue,reset } = useForm<FormStatusManagement>({
         resolver: zodResolver(StatusManagement),
     });
 
@@ -96,7 +95,6 @@ const useDetailPlacementTest = () => {
         setState,
         correctAnswers,
         currentQuestionIndex,
-        gradedQuestions,
         totalQuestions,
         questions,
         status,
@@ -104,6 +102,7 @@ const useDetailPlacementTest = () => {
         formState,
         register,
         setValue,
+        reset
     };
 };
 

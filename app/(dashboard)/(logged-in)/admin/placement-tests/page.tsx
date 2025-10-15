@@ -156,6 +156,7 @@ const Index = () => {
                                     ),
                                 },
                                 actions: {
+                                    height:"!h-[54px]",
                                     renderCell: () => (
                                         <Button
                                             variant="outline"

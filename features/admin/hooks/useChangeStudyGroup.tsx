@@ -40,7 +40,7 @@ const useChangeStudyGroup = (locationId: number, prevStudyGroupId: number) => {
         isLoading: isLoadingStudyGroup,
         isOpen,
         setIsOpen,
-        studyGroups: studyGroups,
+        studyGroups,
         setSelectedStudyGroup,
         selectedStudyGroup,
         handleChangeStudyGroup,

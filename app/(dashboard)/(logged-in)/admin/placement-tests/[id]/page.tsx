@@ -1,7 +1,6 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import MarkingProgress from '@/features/placement-test-admin/component/progress';
 import QuestionDisplay from '@/features/placement-test-admin/component/question-display';
@@ -9,6 +8,7 @@ import QuestionNavigation from '@/features/placement-test-admin/component/questi
 import StatusManagement from '@/features/placement-test-admin/component/status-management';
 import useFetchDetailPlacementTestQuery from '@/features/placement-test-admin/queries/use-fetch-detail-placement-test';
 import { useDisplayedPlacementTestStore } from '@/features/placement-test-admin/stores/displayed-placement-test-stores';
+import { renderDateToIndonesian } from '@/lib/moment';
 import { User } from 'lucide-react';
 import { useParams } from 'next/navigation';
 
@@ -56,21 +56,23 @@ export default function PlacementTestDetailPage() {
                         <CardContent>
                             <div className="grid grid-cols-1 gap-4">
                                 <div>
-                                    <Label>Name</Label>
-                                    <p className="font-medium">{student?.name}</p>
+                                    <p className="text-sm text-gray-600 mb-1">Nama</p>
+                                    <p className="font-semibold text-gray-900">{student?.name}</p>
                                 </div>
                                 <div>
-                                    <Label>Phone</Label>
-                                    <p className="font-medium">{student?.parentPhoneNumber}</p>
+                                    <p className="text-sm text-gray-600 mb-1">No. HP</p>
+                                    <p className="font-semibold text-gray-900">
+                                        {student?.parentPhoneNumber}
+                                    </p>
                                 </div>
                                 <div>
-                                    <Label>Program</Label>
-                                    <p className="font-medium">{test?.program}</p>
+                                    <p className="text-sm text-gray-600 mb-1">Program</p>
+                                    <p className="font-semibold text-gray-900">{test?.program}</p>
                                 </div>
                                 <div>
-                                    <Label>Test Date</Label>
-                                    <p className="font-medium">
-                                        {new Date(testDate).toLocaleDateString()}
+                                    <p className="text-sm text-gray-600 mb-1">Tanggal Placement</p>
+                                    <p className="font-semibold text-gray-900">
+                                        {renderDateToIndonesian(testDate)}
                                     </p>
                                 </div>
                             </div>

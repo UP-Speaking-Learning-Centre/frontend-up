@@ -140,7 +140,7 @@ const QuestionDisplay = () => {
                                     className={`flex-1 ${
                                         currentQuestion.checkAnswer === 'correct'
                                             ? 'bg-green-600 hover:bg-green-700'
-                                            : 'border-green-300 text-green-600 hover:bg-green-50'
+                                            : 'border-green-300 text-green-600 hover:bg-green-50 hover:text-green-600'
                                     }`}
                                     onClick={() => handleGradeQuestion(currentQuestion, true, true)}
                                 >
@@ -156,7 +156,7 @@ const QuestionDisplay = () => {
                                     className={`flex-1 ${
                                         currentQuestion.checkAnswer === 'incorrect'
                                             ? 'bg-red-600 hover:bg-red-700'
-                                            : 'border-red-300 text-red-600 hover:bg-red-50'
+                                            : 'border-red-300 text-red-600 hover:bg-red-50 hover:text-red-600'
                                     }`}
                                     onClick={() =>
                                         handleGradeQuestion(currentQuestion, false, true)

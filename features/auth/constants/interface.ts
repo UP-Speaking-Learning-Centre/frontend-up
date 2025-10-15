@@ -1,4 +1,5 @@
-import { Schedule } from "@/types/study-group";
+import { PackageType } from '@/types/programs-selection';
+import { Schedule } from '@/types/study-group';
 
 export interface LoginRequest {
     phone: string;
@@ -90,6 +91,7 @@ export interface ResponseUserDetail {
     testResults: ResponseUserDetailTestResults[];
     instagram: string;
     trialClassAt: string | null;
+    packages: {packageId:number,packageName:string}[];
 }
 
 export interface ResponseProfile {

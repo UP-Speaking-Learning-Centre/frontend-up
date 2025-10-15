@@ -11,6 +11,7 @@ import AdminSelect from './admin-select';
 
 interface Props {
     teacherId?: number;
+    teacherName?: string;
     isEdit?: boolean;
     onClose: () => void;
     onSubmit: FormEventHandler<HTMLFormElement>;
@@ -30,6 +31,7 @@ const TeacherManagementForm: FC<Props> = ({
     onUpload,
     isLoading,
     setValue,
+    teacherName
 }) => {
     const [alias, setAlias] = useState(teacherId);
 
@@ -42,7 +44,7 @@ const TeacherManagementForm: FC<Props> = ({
                 {/* Modal Header */}
                 <div className="flex items-center justify-between p-6 pb-4">
                     <h2 className="text-xl font-semibold text-gray-900">
-                        {isEdit && 'Edit '}Detail Ms. Feby
+                        {isEdit ? 'Edit ' : 'Add '}Detail {isEdit ? teacherName : 'Mentor'}
                     </h2>
                     <Button
                         variant={'ghost'}

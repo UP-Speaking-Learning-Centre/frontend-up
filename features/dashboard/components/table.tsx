@@ -7,6 +7,7 @@ import React from 'react';
 
 type RenderCellType = {
     renderCell: () => string | number | React.ReactNode;
+    height?: string;
 };
 
 type GenericData = Record<string, string | number | RenderCellType | boolean | undefined>;
@@ -21,7 +22,7 @@ interface ITable<T> {
 
 const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITable<T>) => {
     const startIndex = (currentPage: number, itemsPerPage: number) => {
-        if(pagination?.totalItems === 0) return 0
+        if (pagination?.totalItems === 0) return 0;
         return currentPage + itemsPerPage * (currentPage - 1);
     };
     const endIndex = (currentPage: number, itemsPerPage: number) => {
@@ -127,8 +128,9 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                                                 <td
                                                                     key={col.id.toString()}
                                                                     className={cn(
-                                                                        row?.hasSchedule &&
-                                                                            '!h-[80.5px]',
+                                                                        typeof value === 'object' &&
+                                                                            'renderCell' in value &&
+                                                                            value.height,
                                                                         'h-[52px] relative'
                                                                     )}
                                                                 >

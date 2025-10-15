@@ -71,6 +71,7 @@ const page = () => {
                 {isModalOpen && (
                     <TeacherManagementForm
                         teacherId={data?.teacher.id}
+                        teacherName={data?.memberName}
                         errors={errors}
                         onClose={handleResetModal}
                         onSubmit={handleSubmit}
@@ -105,18 +106,6 @@ const page = () => {
                                                                 {getDayOfWeek(day)}
                                                             </div>
                                                         </Skeleton>
-                                                        {/* <Skeleton
-                                                            loading={isLoadingSchedule}
-                                                            className="h-4 w-12"
-                                                        >
-                                                            <div className="text-xs">
-                                                                {scheduleData?.schedules.find(
-                                                                (item) =>
-                                                                    item.scheduleId ===
-                                                                    teacher
-                                                            )?.teacherAlias || ''}
-                                                            </div>
-                                                        </Skeleton> */}
                                                     </div>
                                                 </th>
                                             ))}

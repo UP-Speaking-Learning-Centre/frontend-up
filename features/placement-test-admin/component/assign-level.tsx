@@ -8,23 +8,23 @@ import {
 } from '@/components/ui/select';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
-import useGetAvailableSchedule from '../queries/use-get-available-schedule';
+import useGetStudyGroup from '@/features/admin/queries/useGetStudyGroup';
+import { FormStatusManagement } from '@/types/placement-test-admin';
+import { FC, useEffect, useMemo } from 'react';
+import { FieldErrors, UseFormRegister, UseFormReset, UseFormSetValue } from 'react-hook-form';
 import useGetGrade from '../queries/use-get-grade';
 import useGetLevel from '../queries/use-get-level';
 import useGetLocation from '../queries/use-get-location';
 import useGetTeacher from '../queries/use-get-teacher';
 import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
-import useGetStudyGroup from '@/features/admin/queries/useGetStudyGroup';
-import { FC } from 'react';
-import { FormStatusManagement } from '@/types/placement-test-admin';
-import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 
 interface Props {
     errors: FieldErrors<FormStatusManagement>;
     register: UseFormRegister<FormStatusManagement>;
     setValue: UseFormSetValue<FormStatusManagement>;
+    reset: UseFormReset<FormStatusManagement>;
 }
-const AssignLevel: FC<Props> = ({ errors, register, setValue }) => {
+const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
     const {
         assignedLevel,
         assignedMentor,
@@ -32,6 +32,7 @@ const AssignLevel: FC<Props> = ({ errors, register, setValue }) => {
         noteForStudent,
         assignedLocation,
         assignedGrade,
+        test,
         setState,
     } = useDisplayedPlacementTestStore();
 
@@ -43,6 +44,29 @@ const AssignLevel: FC<Props> = ({ errors, register, setValue }) => {
     const { data: dataLevel, isLoading: isLoadingLevel } = useGetLevel();
     const { data: dataGrade, isLoading: isLoadingGrade } = useGetGrade();
 
+    const selectedGrade = useMemo(() => {
+        return dataGrade?.find(grade => grade.id === +assignedGrade);
+    }, [dataGrade, assignedGrade]);
+    const filteredSchedule = useMemo(() => {
+        return dataSchedule?.filter(
+            sch =>
+                sch.teacherTeamMemberId.toString() === assignedMentor &&
+                sch.packageId === test?.packageId
+        );
+    }, [dataSchedule, assignedMentor, test]);
+
+    useEffect(() => {
+        setState({
+            assignedLevel: '',
+            assignedGrade: '',
+            assignedSchedule: '',
+            noteForStudent: '',
+            assignedLocation: '',
+            assignedMentor: '',
+        });
+        reset();
+    }, []);
+
     return (
         <div className="space-y-4">
             <div>
@@ -53,7 +77,6 @@ const AssignLevel: FC<Props> = ({ errors, register, setValue }) => {
                     <Select
                         value={assignedLevel}
                         onValueChange={assignedLevel => {
-                            if (!assignedLevel) return;
                             setState({ assignedLevel });
                             setValue('level', assignedLevel);
                         }}
@@ -152,7 +175,13 @@ const AssignLevel: FC<Props> = ({ errors, register, setValue }) => {
                         </SelectTrigger>
                         <SelectContent>
                             {dataTeacher
-                                ?.filter(teach => teach.schedules.some(sch => !sch.isFull))
+                                ?.filter(
+                                    teach =>
+                                        teach.schedules.some(sch => !sch.isFull) &&
+                                        selectedGrade?.taughtBy.some(
+                                            alias => alias.name === teach.alias
+                                        )
+                                )
                                 ?.map(teach => (
                                     <SelectItem value={teach.memberId.toString()}>
                                         {teach.memberName}
@@ -170,29 +199,31 @@ const AssignLevel: FC<Props> = ({ errors, register, setValue }) => {
                     <Label>Assigned Study Group</Label>
                 </Skeleton>
                 <Skeleton loading={isLoadingSchedule} className="h-10">
-                    <Select
-                        value={assignedSchedule}
-                        onValueChange={assignedSchedule => {
-                            setState({ assignedSchedule });
-                            setValue('studyGroup', assignedSchedule);
-                        }}
-                        disabled={!dataSchedule?.length}
-                    >
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select Study Group" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {dataSchedule
-                                ?.filter(
-                                    sch => sch.teacherTeamMemberId.toString() === assignedMentor
-                                )
-                                ?.map(sch => (
+                    {assignedMentor && !filteredSchedule?.length ? (
+                        <p className="text-sm text-primary font-bold mt-2">
+                            Belum ada kelompok belajar yang sesuai
+                        </p>
+                    ) : (
+                        <Select
+                            value={assignedSchedule}
+                            onValueChange={assignedSchedule => {
+                                setState({ assignedSchedule });
+                                setValue('studyGroup', assignedSchedule);
+                            }}
+                            disabled={!dataSchedule?.length}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Study Group" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {filteredSchedule?.map(sch => (
                                     <SelectItem value={sch.studyGroupId.toString()}>
                                         {sch.studyGroupName}
                                     </SelectItem>
                                 ))}
-                        </SelectContent>
-                    </Select>
+                            </SelectContent>
+                        </Select>
+                    )}
                 </Skeleton>
                 {errors.studyGroup && (
                     <p className="text-red-500 text-sm mt-1">

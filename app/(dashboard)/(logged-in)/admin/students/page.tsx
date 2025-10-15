@@ -116,7 +116,6 @@ const Page = () => {
                     values={students?.map(user => {
                         return {
                             ...user,
-                            hasSchedule: !!user.schedules.length,
                             studentName: {
                                 renderCell: () => (
                                     <p className="font-semibold">{user.studentName}</p>
@@ -160,6 +159,7 @@ const Page = () => {
                                 ),
                             },
                             actions: {
+                                height: !!user.schedules.length ? '!h-[80.5px]' : '',
                                 renderCell: () => (
                                     <Link href={`/admin/students/${user.studentId}`}>
                                         <Button

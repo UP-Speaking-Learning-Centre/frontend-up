@@ -13,7 +13,7 @@ export type Question = {
     studentAnswer: string;
     studentAnswerId: number;
     checkAnswer: 'correct' | 'incorrect';
-    isGraded?:boolean
+    isGraded?: boolean;
 };
 
 export type QuestionForGuest = {
@@ -43,6 +43,7 @@ export interface ResponsePlacementTestTest {
     programId: number;
     group: string;
     groupId: number;
+    packageId: number;
 }
 
 export interface ResponsePlacementTest {
@@ -74,6 +75,7 @@ export interface ResponseGrade {
     id: number;
     gradeNumber: number;
     prerequisites: string;
+    taughtBy: { id: number; name: string }[];
 }
 export interface ResponseStudyGroup {
     teacherTeamMemberId: number;
@@ -88,6 +90,7 @@ export interface ResponseStudyGroup {
     groupId: number;
     levelId: number;
     gradeId: number;
+    packageId: number;
     schedule1: {
         scheduleId: number;
         dayOfWeek: string;
