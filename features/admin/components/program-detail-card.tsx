@@ -5,6 +5,7 @@ import {
     ProgramDetail,
     ProgramDetailGrade,
     ProgramDetailGroup,
+    ProgramDetailLevel,
     ProgramDetailTreeInterfaceItems,
     ProgramRecurse,
 } from '@/types/admin';
@@ -47,8 +48,8 @@ const ProgramDetailCard = ({
     const getDescription = (item: ProgramRecurse) => {
         return (
             (item as ProgramDetail).description ||
-            (item as ProgramDetailGroup).materi ||
-            (item as ProgramDetailGrade).prerequisites
+            (item as ProgramDetailGroup).description ||
+            (item as ProgramDetailLevel).description
         );
     };
 
@@ -68,17 +69,13 @@ const ProgramDetailCard = ({
             <div className="flex flex-col items-center gap-4">
                 <div className="flex items-start w-full justify-between gap-4">
                     <div className="flex items-center gap-4">
-                        <div
-                            className={cn(
-                                'w-24 h-24 bg-gray-200 rounded-lg flex-shrink-0',
-                                isActive && 'borde border-primary'
-                            )}
-                        ></div>
                         <div className="flex-1">
                             <h2 className="text-lg font-semibold text-[#020817]">{title}</h2>
-                            <p className="text-sm text-gray-600 leading-relaxed mb-4">
-                                {getDescription(item as ProgramRecurse)}
-                            </p>
+                            {getDescription(item as ProgramRecurse) && (
+                                <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                                    {getDescription(item as ProgramRecurse)}
+                                </p>
+                            )}
                         </div>
                     </div>
                     <Button onClick={handleOpenDetail} variant="secondary" size="sm">

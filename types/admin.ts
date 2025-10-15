@@ -34,6 +34,7 @@ export interface ProgramDetailLevel {
 export interface ProgramDetailGroup {
     groupId: number;
     groupName: string;
+    description: string;
     materi: string;
     capaian: string;
     levels: ProgramDetailLevel[];
@@ -65,6 +66,7 @@ export interface LocationAdmin {
     name: string;
     address: string | null;
     img: string | null | File;
+    imgLink: string | null;
     googleMapsLink: string | null;
 }
 

@@ -15,7 +15,6 @@ import Link from 'next/link';
 
 const page = () => {
     const { data, isLoading } = useGetProgramById();
-    const isDrawerOpen = useProgramDetailStore(s => s.isDrawerOpen);
 
     const handleOpenInformasiHarga = () => {
         const el = document.getElementById('harga');

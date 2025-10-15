@@ -16,6 +16,7 @@ import {
     Home,
     LocateIcon,
     LogOut,
+    PersonStanding,
     Users,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -34,7 +35,7 @@ const sidebarItemsAdmin = [
     {
         href: ROUTES.adminTeacherManagement,
         label: 'Teacher Management',
-        icon: Home,
+        icon: PersonStanding,
     },
     {
         href: ROUTES.adminLocationManagement,

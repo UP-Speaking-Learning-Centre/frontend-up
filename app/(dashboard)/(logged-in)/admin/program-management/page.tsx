@@ -23,12 +23,24 @@ const page = () => {
                         {data?.map((program, index) => (
                             <Card
                                 key={index}
-                                className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
+                                className="bg-white rounded-lg p-4 shadow-sm border border-gray-200 overflow-hidden"
                             >
                                 {/* Card Header */}
-                                <div className="flex items-center justify-between p-4">
+                                {/* Profile Image */}
+                                <div className="relative w-full aspect-[19/10] rounded-lg overflow-hidden">
+                                    <Image
+                                        src={'/placeholder.svg'}
+                                        alt={program.name}
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </div>
+
+                                <div className="mt-4">
                                     <h3 className="font-semibold text-gray-900">{program.name}</h3>
+
                                     <Button
+                                        className="w-full mt-6"
                                         onClick={() =>
                                             router.replace(
                                                 ROUTES.adminProgramManagementId.expand({
@@ -41,29 +53,10 @@ const page = () => {
                                     </Button>
                                 </div>
 
-                                {/* Profile Image */}
-                                <div className="px-4 pb-3">
-                                    <div className="relative w-full aspect-[19/10] rounded-lg overflow-hidden">
-                                        <Image
-                                            src={'/placeholder.svg'}
-                                            alt={program.name}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                </div>
-
                                 {/* Description */}
-                                <div className="px-4 pb-4">
-                                    {/* Available Locations */}
-                                    <div className="mb-3">
-                                        <p className="font-semibold text-gray-900 text-sm">
-                                            Description:
-                                        </p>
-                                        {/* <p className="text-gray-700 text-sm">{program.address}</p> */}
-                                    </div>
-                                    <p className="text-sm">{program.description}</p>
-                                </div>
+                                {/* <div className="px-4 pb-4">
+                                    <p className="text-sm leading-relaxed">{program.description}</p>
+                                </div> */}
                             </Card>
                         ))}
                     </div>

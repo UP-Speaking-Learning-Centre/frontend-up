@@ -30,9 +30,11 @@ const page = () => {
         handleUpload,
         handleResetModal,
         isEdit,
+        isLoading: isLoadingGetTeacher,
         isLoadingCreate: isLoadingCreateTeacher,
         handleEdit,
         data,
+        value,
         setValue,
     } = useCreateTeacher(setIsModalOpen);
     const { mutateAsync } = useDeleteTeacher();
@@ -51,13 +53,13 @@ const page = () => {
             <div className="min-h-screen bg-gray-50">
                 <div className="max-w-7xl mx-auto">
                     {/* Header */}
-                    <div className="flex justify-end mb-8">
+                    <div className="flex justify-end mb-4">
                         <Button
                             onClick={() => setIsModalOpen(true)}
                             className="bg-primary hover:bg-primary/80 text-white px-6 py-2 rounded-lg flex items-center gap-2"
                         >
                             <Plus className="w-4 h-4" />
-                            Add Mentor
+                            Tambah Teacher
                         </Button>
                     </div>
 
@@ -73,11 +75,13 @@ const page = () => {
                         teacherId={data?.teacher.id}
                         teacherName={data?.memberName}
                         errors={errors}
+                        value={value}
                         onClose={handleResetModal}
                         onSubmit={handleSubmit}
                         onUpload={handleUpload}
                         register={register}
                         isEdit={isEdit}
+                        isLoadingGet={isLoadingGetTeacher}
                         isLoading={isLoadingCreateTeacher}
                         setValue={setValue}
                     />

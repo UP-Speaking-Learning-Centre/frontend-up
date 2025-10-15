@@ -23,13 +23,19 @@ const AdminSelect: FC<IAdminSelect & SelectProps> = ({
     options,
     defaultValue,
     placeholder,
+    value,
     loading,
     ...props
 }) => {
     return (
         <div className="col-span-1 flex flex-col items-start gap-2">
             <Label>{label}</Label>
-            <Select {...props} disabled={loading || props.disabled}>
+            <Select
+                {...props}
+                disabled={loading || props.disabled}
+                defaultValue={defaultValue}
+                value={value}
+            >
                 <SelectTrigger>
                     <SelectValue placeholder={placeholder} />
                 </SelectTrigger>

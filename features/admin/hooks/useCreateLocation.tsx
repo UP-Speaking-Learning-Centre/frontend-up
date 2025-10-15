@@ -7,12 +7,13 @@ import z from 'zod';
 import usePostLocation from '../queries/usePostLocation';
 import usePutLocation from '../queries/usePutLocation';
 import { useLocationManagementStore } from '../stores/location';
+import { imageUrlToFile } from '@/lib/image';
 
 const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
     const [id, setId] = useState(0);
 
-    const { mutateAsync: postLocation } = usePostLocation();
-    const { mutateAsync: putLocation } = usePutLocation();
+    const { mutateAsync: postLocation, isPending: isPendingPost } = usePostLocation();
+    const { mutateAsync: putLocation, isPending: isPendingPut } = usePutLocation();
 
     const location = useLocationManagementStore(s => s.location);
 
@@ -20,10 +21,22 @@ const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
         .object({
             name: z.string().min(1, 'This field is required'),
             address: z.string().min(1, 'This field is required'),
+            imgLink: z.string().optional(),
             img: z
-                .instanceof(File)
+                .any()
+                .refine(
+                    file => {
+                        if (id) {
+                            return true;
+                        } else {
+                            return !file || file instanceof File;
+                        }
+                    },
+                    { message: 'Invalid file type' }
+                )
                 .refine(
                     file =>
+                        !file ||
                         [
                             'image/png',
                             'image/jpeg',
@@ -33,7 +46,7 @@ const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
                         ].includes(file.type),
                     { message: 'Invalid image file type' }
                 )
-                .refine(file => file.size < 1 * 1000 * 1000, {
+                .refine(file => !file || file.size < 10 * 1024 * 1024, {
                     message: 'Ukuran file melebihi batas',
                 })
                 .optional(),
@@ -46,33 +59,54 @@ const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
                 ),
         })
         .superRefine((data, ctx) => {
-            if (!id && !data.img) {
-                return ctx.addIssue({
-                    message: 'This field is required when creating new item',
-                    path: ['img'],
-                    code: 'custom',
-                });
+            const isEdit = Boolean(id);
+
+            if (!isEdit) {
+                if (!data.img || !(data.img instanceof File)) {
+                    ctx.addIssue({
+                        code: 'custom',
+                        path: ['img'],
+                        message: 'This field is required and must be a file when creating new item',
+                    });
+                }
             }
-            return true;
         });
 
-    const { register, handleSubmit, formState, setValue, reset } = useForm<
+    const { register, handleSubmit, watch, formState, clearErrors, setValue, reset } = useForm<
         Omit<LocationAdmin, 'id'>
     >({
+        defaultValues: {
+            name: '',
+            address: '',
+            img: '',
+            imgLink: '',
+            googleMapsLink: '',
+        },
         resolver: zodResolver(Location),
     });
 
     useEffect(() => {
-        const getOne = location.find(locate => locate.id === id);
-        setValue('address', getOne?.address ?? '');
-        setValue('googleMapsLink', getOne?.googleMapsLink ?? '');
-        setValue('img', getOne?.img ?? '');
-        setValue('name', getOne?.name ?? '');
-    }, [id]);
+        if (location && id) {
+            const getOne = location.find(locate => locate.id === id);
+            const getFiles = async () => {
+                const file = await imageUrlToFile(getOne?.img as string);
+                setValue('img', file);
+                return file;
+            };
 
-    const handleUpload: ChangeEventHandler<HTMLInputElement> = e => {
-        if (!e.target.files?.length) throw new Error('No file to upload');
-        setValue('img', e.target.files[0]);
+            getFiles();
+            setValue('address', getOne?.address ?? '');
+            setValue('googleMapsLink', getOne?.googleMapsLink ?? '');
+            setValue('imgLink', (getOne?.img as string) ?? '');
+            setValue('name', getOne?.name ?? '');
+        }
+    }, [location, id]);
+
+    const handleUpload: (file: File) => void = file => {
+        if (!file) throw new Error('No file to upload');
+        setValue('img', file);
+        clearErrors('img');
+        setValue('imgLink', URL.createObjectURL(file));
     };
 
     const handleResetModal = () => {
@@ -83,14 +117,31 @@ const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
 
     const handleSuccess: SubmitHandler<Omit<LocationAdmin, 'id'>> = value => {
         if (id) {
-            putLocation({ id, ...value })
-                .then(res => handleResetModal())
-                .catch(err =>
-                    toast.error(err?.message, { position: 'top-center', className: 'bg-red-100' })
-                );
+            putLocation(
+                { id, ...value },
+                {
+                    onSuccess: () => {
+                        toast.success('Detail lokasi berhasil diubah', {
+                            position: 'top-center',
+                            className: 'bg-green-200 border-green-300',
+                        });
+                        handleResetModal();
+                    },
+                }
+            ).catch(err =>
+                toast.error(err?.message, { position: 'top-center', className: 'bg-red-100' })
+            );
             return;
         }
-        postLocation(value)
+        postLocation(value, {
+            onSuccess: () => {
+                toast.success('Detail lokasi berhasil diubah', {
+                    position: 'top-center',
+                    className: 'bg-green-200 border-green-300',
+                });
+                handleResetModal();
+            },
+        })
             .then(res => {
                 handleResetModal();
             })
@@ -107,8 +158,10 @@ const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
         handleSubmit: handleSubmit(handleSuccess, handleError),
         formState,
         handleUpload,
+        value: { imgLink: watch('imgLink') },
         setId,
         handleResetModal,
+        isLoadingSubmit: isPendingPost || isPendingPut,
         isEdit: !!id,
     };
 };

@@ -10,6 +10,7 @@ import usePutTeacher from '../queries/usePutTeacher';
 import { useTeacherManagementStore } from '../stores/teacher';
 import { queryClient } from '@/lib/tanstack';
 import ENDPOINTS from '@/constants/endpoints';
+import { imageUrlToFile } from '@/lib/image';
 
 const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
     const [id, setId] = useState(0);
@@ -24,10 +25,22 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
     const Teacher = z
         .object({
             memberName: z.string().min(1, 'This field is required'),
+            photoLink: z.string().optional(),
             photo: z
-                .instanceof(File)
+                .any()
+                .refine(
+                    file => {
+                        if (id) {
+                            return true;
+                        } else {
+                            return !file || file instanceof File;
+                        }
+                    },
+                    { message: 'Invalid file type' }
+                )
                 .refine(
                     file =>
+                        !file ||
                         [
                             'image/png',
                             'image/jpeg',
@@ -37,7 +50,7 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
                         ].includes(file.type),
                     { message: 'Invalid image file type' }
                 )
-                .refine(file => file.size < 5 * 1000 * 1000, {
+                .refine(file => !file || file.size < 10 * 1024 * 1024, {
                     message: 'Ukuran file melebihi batas',
                 })
                 .optional(),
@@ -55,42 +68,38 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
             return true;
         });
 
-    const { register, handleSubmit, formState, setValue, reset } = useForm<RequestTeacherAdmin>({
+    const { register, handleSubmit, formState, setValue, watch, clearErrors, reset } = useForm<
+        RequestTeacherAdmin & {
+            photoLink?: string;
+        }
+    >({
+        defaultValues: {
+            memberName: '',
+            photoLink: '',
+            photo: undefined,
+            teacherId: 0,
+            locationId: 0,
+        },
         resolver: zodResolver(Teacher),
     });
 
-    async function getFileFromUrl(url: string, defaultType = 'application/octet-stream') {
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const urlSplit = url.split('/');
-            const filename = urlSplit[urlSplit.length - 1];
-
-            const blob = await response.blob();
-            return new File([blob], filename, { type: blob.type || defaultType });
-        } catch (error) {
-            console.error('Error converting URL to File:', error);
-            return null;
-        }
-    }
-
     useEffect(() => {
         if (data) {
-            getFileFromUrl(data.photoUrl || '').then(res => res && setValue('photo', res));
+            imageUrlToFile(data.photoUrl || '').then(res => res && setValue('photo', res));
             setValue('memberName', data?.memberName ?? '');
+            setValue('photoLink', data?.photoUrl ?? '');
             // setValue('description', getOne?.description ?? '');
             setValue('teacherId', data?.teacher.id || 0);
-            setValue('locationId', data?.teacher.id || 0);
+            setValue('locationId', data?.location?.id || 0);
             setValue('isCoordinator', data?.isCoordinator || false);
         }
     }, [data]);
 
-    const handleUpload: ChangeEventHandler<HTMLInputElement> = e => {
-        if (!e.target.files?.length) throw new Error('No file to upload');
-        setValue('photo', e.target.files[0]);
-        // mutateAsync().then(res => setValue('photoUrl', res));
+    const handleUpload: (file: File) => void = file => {
+        if (!file) throw new Error('No file to upload');
+        setValue('photo', file);
+        setValue('photoLink', URL.createObjectURL(file));
+        clearErrors('photo');
     };
 
     const handleEdit = (id: number) => {
@@ -106,7 +115,17 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
 
     const handleSuccess: SubmitHandler<RequestTeacherAdmin> = value => {
         if (id) {
-            putTeacher({ ...value, isCoordinator: false })
+            putTeacher(
+                { ...value, isCoordinator: false },
+                {
+                    onSuccess: () => {
+                        toast.success('Berhasil mengubah data guru', {
+                            position: 'top-center',
+                            className: 'bg-green-200 border-green-300',
+                        });
+                    },
+                }
+            )
                 .then(res => {
                     setTeacher([
                         ...teacher.map(item =>
@@ -120,7 +139,17 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
                 );
             return;
         }
-        postTeacher({ ...value, isCoordinator: false })
+        postTeacher(
+            { ...value, isCoordinator: false },
+            {
+                onSuccess: () => {
+                    toast.success('Berhasil menambahkan data guru', {
+                        position: 'top-center',
+                        className: 'bg-green-200 border-green-300',
+                    });
+                },
+            }
+        )
             .then(res => {
                 setTeacher([res, ...teacher]);
                 handleResetModal();
@@ -138,6 +167,7 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
         handleSubmit: handleSubmit(handleSuccess, handleError),
         formState,
         handleUpload,
+        value: { photoLink: watch('photoLink'), locationId: watch('locationId') },
         id,
         setId,
         handleResetModal,

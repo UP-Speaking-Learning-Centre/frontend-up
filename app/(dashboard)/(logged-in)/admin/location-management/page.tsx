@@ -17,6 +17,7 @@ import { Card } from '@/components/ui/card';
 import ImageWithFallback from '@/components/ui/image-with-fallback';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import UploadImage from '@/components/upload-image';
 import { inter } from '@/constants/fonts';
 import useCreateLocation from '@/features/admin/hooks/useCreateLocation';
 import useDeleteLocation from '@/features/admin/queries/useDeleteLocation';
@@ -34,8 +35,17 @@ const page = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const { isLoading } = useGetLocation();
-    const { handleSubmit, register, formState, handleUpload, setId, handleResetModal, isEdit } =
-        useCreateLocation(setIsModalOpen);
+    const {
+        handleSubmit,
+        register,
+        formState,
+        value,
+        handleUpload,
+        setId,
+        handleResetModal,
+        isEdit,
+        isLoadingSubmit,
+    } = useCreateLocation(setIsModalOpen);
     const { mutateAsync } = useDeleteLocation();
     const { errors } = formState;
 
@@ -54,7 +64,7 @@ const page = () => {
                             className="bg-primary hover:bg-primary/80 text-white px-6 py-2 rounded-lg flex items-center gap-2"
                         >
                             <Plus className="w-4 h-4" />
-                            Add Location
+                            Tambah Lokasi/Cabang
                         </Button>
                     </div>
 
@@ -64,10 +74,10 @@ const page = () => {
                             location.map(location => (
                                 <Card
                                     key={location.id}
-                                    className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
+                                    className="bg-white p-4 rounded-lg flex-col gap-4 flex shadow-sm border border-gray-200 overflow-hidden"
                                 >
                                     {/* Card Header */}
-                                    <div className="flex items-center justify-between p-4 pb-2">
+                                    <div className="flex items-center justify-between">
                                         <h3 className="font-semibold text-gray-900">
                                             {location.name}
                                         </h3>
@@ -94,23 +104,23 @@ const page = () => {
                                                 <AlertDialogContent className={inter.className}>
                                                     <AlertDialogHeader>
                                                         <AlertDialogTitle>
-                                                            Are you sure want to delete this
-                                                            location?
+                                                            Anda akan menghapus lokasi{' '}
+                                                            <span className="text-primary">
+                                                                {location.name}
+                                                            </span>
+                                                            .
                                                         </AlertDialogTitle>
                                                         <AlertDialogDescription>
-                                                            This action cannot be undone. This will
-                                                            permanently delete the location and
-                                                            remove your data from our servers.
+                                                            Data yang dihapus tidak dapat
+                                                            dikembalikan.
                                                         </AlertDialogDescription>
                                                     </AlertDialogHeader>
                                                     <AlertDialogFooter>
-                                                        <AlertDialogCancel>
-                                                            Cancel
-                                                        </AlertDialogCancel>
+                                                        <AlertDialogCancel>Batal</AlertDialogCancel>
                                                         <AlertDialogAction
                                                             onClick={() => mutateAsync(location.id)}
                                                         >
-                                                            Continue
+                                                            Hapus
                                                         </AlertDialogAction>
                                                     </AlertDialogFooter>
                                                 </AlertDialogContent>
@@ -119,24 +129,23 @@ const page = () => {
                                     </div>
 
                                     {/* Profile Image */}
-                                    <div className="px-4 pb-3">
-                                        <div className="relative w-full aspect-[19/10] bg-neutral-100 border border-neutral-200 rounded-lg overflow-hidden">
-                                            <ImageWithFallback
-                                                src={location.img as string}
-                                                fallbackSrc="/location.svg"
-                                                alt={location.name}
-                                                fill
-                                                className="object-cover"
-                                            />
-                                        </div>
+
+                                    <div className="relative w-full aspect-[320/240] bg-neutral-100 border border-neutral-200 rounded-lg overflow-hidden">
+                                        <ImageWithFallback
+                                            src={location.img as string}
+                                            fallbackSrc="/location.svg"
+                                            alt={location.name}
+                                            fill
+                                            className="object-cover"
+                                        />
                                     </div>
 
                                     {/* Description */}
-                                    <div className="px-4 pb-4">
+                                    <div className="flex flex-col gap-4 flex-1">
                                         {/* Available Locations */}
-                                        <div className="mb-3">
+                                        <div className="mb-3 flex-1">
                                             <p className="font-semibold text-gray-900 text-sm">
-                                                Address:
+                                                Alamat:
                                             </p>
                                             <p className="text-gray-700 text-sm">
                                                 {location.address || '-'}
@@ -144,13 +153,14 @@ const page = () => {
                                         </div>
                                         {location.googleMapsLink && (
                                             <Link
+                                                target="_blank"
                                                 href={location.googleMapsLink || '#'}
                                                 className={clsx(
                                                     'flex text-sm items-center space-x-2 text-[#2563EB]'
                                                 )}
                                             >
                                                 <LucideArrowUpRightFromSquare width={16} />
-                                                <p>View on Google Maps</p>
+                                                <p>Buka di Google Maps</p>
                                             </Link>
                                         )}
                                     </div>
@@ -169,7 +179,7 @@ const page = () => {
                             {/* Modal Header */}
                             <div className="flex items-center justify-between p-6 pb-4">
                                 <h2 className="text-xl font-semibold text-gray-900">
-                                    {isEdit && 'Edit '}Detail Ms. Feby
+                                    {isEdit ? 'Edit' : 'Tambah'} Lokasi
                                 </h2>
                                 <button
                                     onClick={handleResetModal}
@@ -184,7 +194,7 @@ const page = () => {
                                 {/* Nama Field */}
                                 <div>
                                     <label className="block text-sm font-medium text-gray-900 mb-2">
-                                        Nama
+                                        Nama Cabang
                                     </label>
                                     <Input
                                         type="text"
@@ -224,13 +234,12 @@ const page = () => {
                                     <label className="block text-sm font-medium text-gray-900 mb-2">
                                         Foto
                                     </label>
-                                    <Input
-                                        type="file"
-                                        className={cn(
-                                            'w-full border border-gray-300 rounded-md px-3 py-2',
-                                            errors.img && 'border-red-500'
-                                        )}
-                                        onChange={handleUpload}
+                                    <UploadImage
+                                        handleUpload={handleUpload}
+                                        value={value.imgLink}
+                                        label="Upload Foto"
+                                        width={374}
+                                        height={280}
                                     />
                                     {errors.img && (
                                         <p className="text-red-500 text-sm mt-1">
@@ -261,8 +270,11 @@ const page = () => {
 
                                 {/* Edit Button */}
                                 <div className="flex justify-end pt-4">
-                                    <Button className="bg-orange-600 hover:bg-orange-700 text-white px-8 py-2 rounded-lg">
-                                        {isEdit ? 'Edit' : 'Add'}
+                                    <Button
+                                        className="text-white px-8 py-2 rounded-lg"
+                                        disabled={isLoadingSubmit}
+                                    >
+                                        {isLoadingSubmit ? 'Loading...' : isEdit ? 'Edit' : 'Add'}
                                     </Button>
                                 </div>
                             </form>
