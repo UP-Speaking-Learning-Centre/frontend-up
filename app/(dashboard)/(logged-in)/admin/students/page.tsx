@@ -105,7 +105,7 @@ const Page = () => {
                 <Table<StudentType>
                     isLoading={isLoading}
                     columns={[
-                        { name: 'Name', id: 'studentName' },
+                        { name: 'Name', id: 'studentName', width: 'w-[300px]' },
                         { name: 'Phone', id: 'parentPhoneNumber' },
                         { name: 'Program', id: 'program' },
                         { name: 'Group', id: 'group' },
@@ -118,7 +118,9 @@ const Page = () => {
                             ...user,
                             studentName: {
                                 renderCell: () => (
-                                    <p className="font-semibold">{user.studentName}</p>
+                                    <p className="font-semibold truncate max-w-[300px]">
+                                        {user.studentName}
+                                    </p>
                                 ),
                             },
                             program: {

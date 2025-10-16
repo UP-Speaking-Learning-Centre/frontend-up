@@ -114,7 +114,7 @@ const Index = () => {
                 ) : (
                     <Table<StudentPlacementTest>
                         columns={[
-                            { name: 'Name', id: 'studentName', width: '20%' },
+                            { name: 'Name', id: 'studentName', width: 'w-[300px]' },
                             { name: 'Phone', id: 'parentPhoneNumber' },
                             { name: 'Program', id: 'program' },
                             { name: 'Group', id: 'group' },
@@ -127,7 +127,7 @@ const Index = () => {
                                 ...user,
                                 studentName: {
                                     renderCell: () => (
-                                        <p className="font-semibold">{user.studentName}</p>
+                                        <p className="font-semibold max-w-[300px]">{user.studentName}</p>
                                     ),
                                 },
                                 status: {

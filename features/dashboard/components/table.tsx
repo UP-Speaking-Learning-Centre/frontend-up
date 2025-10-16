@@ -52,9 +52,9 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                                     key={column.id.toString()}
                                                     className={cn(
                                                         'text-left p-4  text-neutral-400 font-medium text-xs',
-                                                        idx === columns.length - 2 && 'pr-24'
+                                                        idx === columns.length - 2 && 'pr-24',
+                                                        column.width
                                                     )}
-                                                    style={{ width: column.width }}
                                                 >
                                                     {column.name}
                                                 </th>
@@ -79,7 +79,8 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                                                 className={cn(
                                                                     'p-4 truncate text-sm',
                                                                     idx === columns.length - 2 &&
-                                                                        'pr-24'
+                                                                        'pr-24',
+                                                                    col.width
                                                                 )}
                                                             >
                                                                 {typeof value === 'object' &&
