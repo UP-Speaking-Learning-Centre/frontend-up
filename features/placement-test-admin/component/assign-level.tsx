@@ -17,6 +17,8 @@ import useGetLevel from '../queries/use-get-level';
 import useGetLocation from '../queries/use-get-location';
 import useGetTeacher from '../queries/use-get-teacher';
 import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
+import useGetProfileById from '@/features/home/queries/useGetProfileById';
+import { mentors } from '@/app/(landing)/about/page';
 
 interface Props {
     errors: FieldErrors<FormStatusManagement>;
@@ -26,6 +28,7 @@ interface Props {
 }
 const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
     const {
+        isGraded,
         assignedLevel,
         assignedMentor,
         assignedSchedule,
@@ -33,16 +36,30 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
         assignedLocation,
         assignedGrade,
         test,
+        student,
         setState,
     } = useDisplayedPlacementTestStore();
 
     const { data, isLoading } = useGetLocation();
+    const { data: dataStudent, isLoading: isLoadingStudent } = useGetProfileById(student?.id || 0);
     const { data: dataSchedule, isLoading: isLoadingSchedule } = useGetStudyGroup(
         Number(assignedLocation)
     );
     const { data: dataTeacher, isLoading: isLoadingTeacher } = useGetTeacher();
     const { data: dataLevel, isLoading: isLoadingLevel } = useGetLevel();
     const { data: dataGrade, isLoading: isLoadingGrade } = useGetGrade();
+
+    useEffect(() => {
+        if (!isLoadingStudent && dataStudent) {
+            const { gradeId, levelId, primaryStudyGroupId, notes } = dataStudent;
+            setState({
+                assignedGrade: gradeId?.toString(),
+                assignedLevel: levelId?.toString(),
+                assignedSchedule: primaryStudyGroupId?.toString(),
+                noteForStudent: notes || '',
+            });
+        }
+    }, [dataStudent, isLoadingStudent]);
 
     const selectedGrade = useMemo(() => {
         return dataGrade?.find(grade => grade.id === +assignedGrade);
@@ -54,6 +71,11 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                 sch.packageId === test?.packageId
         );
     }, [dataSchedule, assignedMentor, test]);
+    const filteredDataTeacher = dataTeacher?.filter(
+        teach =>
+            teach.schedules.some(sch => !sch.isFull) &&
+            selectedGrade?.taughtBy.some(alias => alias.name === teach.alias)
+    );
 
     useEffect(() => {
         setState({
@@ -74,23 +96,29 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                     <Label>Assigned Level</Label>
                 </Skeleton>
                 <Skeleton loading={isLoadingLevel} className="h-10">
-                    <Select
-                        value={assignedLevel}
-                        onValueChange={assignedLevel => {
-                            setState({ assignedLevel });
-                            setValue('level', assignedLevel);
-                        }}
-                        disabled={!dataLevel?.length}
-                    >
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select level" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {dataLevel?.map(level => (
-                                <SelectItem value={level.id.toString()}>{level.name}</SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+                    {isGraded ? (
+                        <p className="font-semibold text-gray-900">{dataStudent?.level}</p>
+                    ) : (
+                        <Select
+                            value={assignedLevel}
+                            onValueChange={assignedLevel => {
+                                setState({ assignedLevel });
+                                setValue('level', assignedLevel);
+                            }}
+                            disabled={!dataLevel?.length}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select level" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {dataLevel?.map(level => (
+                                    <SelectItem value={level.id.toString()}>
+                                        {level.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    )}
                 </Skeleton>
 
                 {errors.level && (
@@ -102,25 +130,29 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                     <Label>Assigned Grade</Label>
                 </Skeleton>
                 <Skeleton loading={isLoadingGrade} className="h-10">
-                    <Select
-                        value={assignedGrade}
-                        onValueChange={assignedGrade => {
-                            setState({ assignedGrade });
-                            setValue('grade', assignedGrade);
-                        }}
-                        disabled={!dataGrade?.length}
-                    >
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select grade" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {dataGrade?.map(grade => (
-                                <SelectItem value={grade.id.toString()}>
-                                    {grade.gradeNumber}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+                    {isGraded ? (
+                        <p className="font-semibold text-gray-900">{dataStudent?.gradeLabel}</p>
+                    ) : (
+                        <Select
+                            value={assignedGrade}
+                            onValueChange={assignedGrade => {
+                                setState({ assignedGrade });
+                                setValue('grade', assignedGrade);
+                            }}
+                            disabled={!dataGrade?.length}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select grade" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {dataGrade?.map(grade => (
+                                    <SelectItem value={grade.id.toString()}>
+                                        {grade.gradeNumber}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    )}
                 </Skeleton>
                 {errors.grade && (
                     <p className="text-red-500 text-sm mt-1">{errors.grade.message?.toString()}</p>
@@ -131,25 +163,31 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                     <Label>Assigned Location</Label>
                 </Skeleton>
                 <Skeleton loading={isLoading} className="h-10">
-                    <Select
-                        value={assignedLocation}
-                        onValueChange={assignedLocation => {
-                            setState({ assignedLocation });
-                            setValue('location', assignedLocation);
-                        }}
-                        disabled={!data?.length}
-                    >
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select mentor" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {data?.map(loc => (
-                                <SelectItem value={loc.locationId.toString()}>
-                                    {loc.locationName}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
+                    {isGraded ? (
+                        <p className="font-semibold text-gray-900">
+                            {dataStudent?.schedules[0]?.location}
+                        </p>
+                    ) : (
+                        <Select
+                            value={assignedLocation}
+                            onValueChange={assignedLocation => {
+                                setState({ assignedLocation });
+                                setValue('location', assignedLocation);
+                            }}
+                            disabled={!data?.length}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Location" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {data?.map(loc => (
+                                    <SelectItem value={loc.locationId.toString()}>
+                                        {loc.locationName}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    )}
                 </Skeleton>
                 {errors.location && (
                     <p className="text-red-500 text-sm mt-1">
@@ -162,33 +200,35 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                     <Label>Assigned Mentor</Label>
                 </Skeleton>
                 <Skeleton loading={isLoadingTeacher} className="h-10">
-                    <Select
-                        value={assignedMentor}
-                        onValueChange={assignedMentor => {
-                            setState({ assignedMentor });
-                            setValue('mentor', assignedMentor);
-                        }}
-                        disabled={!dataTeacher?.length}
-                    >
-                        <SelectTrigger>
-                            <SelectValue placeholder="Select mentor" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {dataTeacher
-                                ?.filter(
-                                    teach =>
-                                        teach.schedules.some(sch => !sch.isFull) &&
-                                        selectedGrade?.taughtBy.some(
-                                            alias => alias.name === teach.alias
-                                        )
-                                )
-                                ?.map(teach => (
+                    {assignedLocation && !filteredDataTeacher?.length ? (
+                        <p className="text-sm text-primary font-bold mt-2">
+                            Belum ada guru yang tersedia di lokasi tersebut
+                        </p>
+                    ) : isGraded ? (
+                        <p className="font-semibold text-gray-900">
+                            {dataStudent?.schedules[0]?.teacherMemberName}
+                        </p>
+                    ) : (
+                        <Select
+                            value={assignedMentor}
+                            onValueChange={assignedMentor => {
+                                setState({ assignedMentor });
+                                setValue('mentor', assignedMentor);
+                            }}
+                            disabled={!dataTeacher?.length}
+                        >
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select Mentor" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {filteredDataTeacher?.map(teach => (
                                     <SelectItem value={teach.memberId.toString()}>
                                         {teach.memberName}
                                     </SelectItem>
                                 ))}
-                        </SelectContent>
-                    </Select>
+                            </SelectContent>
+                        </Select>
+                    )}
                 </Skeleton>
                 {errors.mentor && (
                     <p className="text-red-500 text-sm mt-1">{errors.mentor.message?.toString()}</p>
@@ -202,6 +242,10 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                     {assignedMentor && !filteredSchedule?.length ? (
                         <p className="text-sm text-primary font-bold mt-2">
                             Belum ada kelompok belajar yang sesuai
+                        </p>
+                    ) : isGraded ? (
+                        <p className="font-semibold text-gray-900">
+                            {dataStudent?.schedules[0]?.studyGroupName}
                         </p>
                     ) : (
                         <Select
@@ -233,11 +277,15 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
             </div>
             <div>
                 <Label>Notes for student</Label>
-                <Textarea
-                    value={noteForStudent}
-                    onChange={e => setState({ noteForStudent: e.target.value })}
-                    placeholder="e.g., Sangat baik"
-                />
+                {!isGraded ? (
+                    <Textarea
+                        value={noteForStudent}
+                        onChange={e => setState({ noteForStudent: e.target.value })}
+                        placeholder="e.g., Sangat baik"
+                    />
+                ) : (
+                    <p className="font-semibold text-gray-900">{noteForStudent}</p>
+                )}
             </div>
         </div>
     );

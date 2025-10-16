@@ -7,11 +7,12 @@ import SelectStudent from '@/features/dashboard/components/select-student';
 import PlacementTestPending from '@/features/home/components/placement-test-pending';
 import PlacementTestSuccess from '@/features/home/components/placement-test-success';
 import useGetProfileById from '@/features/home/queries/useGetProfileById';
-import { isPlacementTest } from '@/utils/api.helper';
 import { BookOpen, Calendar, Home, User } from 'lucide-react';
+import { useParams } from 'next/navigation';
 
 export default function DashboardPage() {
-    const { data } = useGetProfileById();
+    const { id } = useParams<{ id: string }>();
+    const { data } = useGetProfileById(Number(id));
 
     return (
         <DashboardContentLayout pageTitle="Detail Student" extras={<SelectStudent />}>
@@ -23,13 +24,11 @@ export default function DashboardPage() {
                         <span className="text-gray-800 font-semibold">{data?.name}</span>
                     </h1>
                 </div>
-                {isPlacementTest(data?.testResults ?? []) ? (
+                {data?.latestResult?.status !== 'success' ? (
                     <PlacementTestPending />
                 ) : (
                     <>
-                        {isPlacementTest(data?.testResults ?? [], 'success') && (
-                            <PlacementTestSuccess />
-                        )}
+                        {data.latestResult.status === 'success' && <PlacementTestSuccess />}
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                             <Card className="col-span-2">
                                 <CardContent className="p-6">
@@ -42,7 +41,7 @@ export default function DashboardPage() {
                                                 Current Program
                                             </p>
                                             <p className="text-lg font-semibold text-gray-900">
-                                                {data?.programName}
+                                                {data?.preferredProgramName}
                                             </p>
                                         </div>
                                     </div>
@@ -60,7 +59,7 @@ export default function DashboardPage() {
                                                 Current Level
                                             </p>
                                             <p className="text-lg font-semibold text-gray-900">
-                                                {data?.levelName}
+                                                {data?.level}
                                             </p>
                                         </div>
                                     </div>
@@ -128,7 +127,7 @@ export default function DashboardPage() {
                                                         </span>
                                                     </div>
                                                     <span className="font-semibold">
-                                                        {schedule.locationName}
+                                                        {schedule.location}
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -139,7 +138,7 @@ export default function DashboardPage() {
                                                         </span>
                                                     </div>
                                                     <span className="font-semibold">
-                                                        {schedule.teacherName}
+                                                        {schedule.teacherMemberName}
                                                     </span>
                                                 </div>
                                             </div>

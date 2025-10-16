@@ -14,6 +14,7 @@ export type Schedule = {
     startTime: string; // format "HH:mm:ss"
     endTime: string; // format "HH:mm:ss"
     durationMinutes: number;
+    studyGroupName?: string;
 };
 
 export type StudyGroup = {

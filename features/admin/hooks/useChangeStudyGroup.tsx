@@ -4,15 +4,25 @@ import usePostReassignStudyGroup from '../queries/usePostReassignStudyGroup';
 import { useParams } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import ENDPOINTS from '@/constants/endpoints';
+import { ResponseUserDetail } from '@/features/auth/constants/interface';
+import useGetStudyGroupDetail from '../queries/useGetStudyGroupDetail';
+import { getNextSchedules } from '@/lib/trial-class';
 
-const useChangeStudyGroup = (locationId: number, prevStudyGroupId: number) => {
+const useChangeStudyGroup = (
+    locationId: number,
+    prevStudyGroupId: number,
+    data: ResponseUserDetail | undefined
+) => {
     const queryClient = useQueryClient();
+
     const [isOpen, setIsOpen] = useState(false);
     const [selectedStudyGroup, setSelectedStudyGroup] = useState('');
 
     const { id } = useParams();
     const { data: studyGroups, isLoading: isLoadingStudyGroup } = useGetStudyGroup(locationId);
     const { postUnassign, postAssign } = usePostReassignStudyGroup(Number(selectedStudyGroup));
+    const { data: studyGroupDetailBySelect, isLoading: isLoadingStudyGroupDetailBySelect } =
+        useGetStudyGroupDetail(+selectedStudyGroup || 0);
 
     const handleSuccess = () => {
         queryClient.invalidateQueries({
@@ -36,6 +46,19 @@ const useChangeStudyGroup = (locationId: number, prevStudyGroupId: number) => {
         );
     };
 
+    const filteredStudyGroup =
+        studyGroups?.filter(
+            sg =>
+                sg.programId === data?.programId &&
+                sg.groupId === data.groupId &&
+                data.packages.some(package_ => package_.packageId === sg.packageId) &&
+                sg.levelId === data.levelId
+        ) || [];
+
+    const trialClassDates = getNextSchedules(
+        data?.trialClassAt ? data?.schedules : studyGroupDetailBySelect?.schedules || []
+    );
+
     return {
         isLoading: isLoadingStudyGroup,
         isOpen,
@@ -44,7 +67,8 @@ const useChangeStudyGroup = (locationId: number, prevStudyGroupId: number) => {
         setSelectedStudyGroup,
         selectedStudyGroup,
         handleChangeStudyGroup,
-    };
+        filteredStudyGroup,
+    trialClassDates};
 };
 
 export default useChangeStudyGroup;

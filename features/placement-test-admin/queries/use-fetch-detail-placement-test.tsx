@@ -23,7 +23,6 @@ const useFetchDetailPlacementTestQuery = ({
 }: {
     id: string;
 }): UseQueryResult<ResponsePlacementTest, Error> => {
-    const { data: dataLevel, isLoading: isLoadingLevel } = useGetLevel();
     const setState = useDisplayedPlacementTestStore(state => state.setState);
     const query = useQuery({
         queryKey: [ENDPOINTS.fetchAdminDetailPlacementTest.expand({ id })],
@@ -41,17 +40,10 @@ const useFetchDetailPlacementTestQuery = ({
                 test: query.data.test,
                 testDate: query.data.submittedAt,
                 status: query.data?.status,
-                assignedLevel: dataLevel
-                    ?.find(
-                        level =>
-                            level.name.toLocaleLowerCase() ===
-                            query.data.determinedLevel?.toLocaleLowerCase()
-                    )
-                    ?.id.toString(),
-                isGraded: query.data.status === 'Graded',
+                isGraded: query.data.status === 'graded',
             });
         }
-    }, [query.data, query.status, dataLevel]);
+    }, [query.data, query.status]);
 
     return query;
 };

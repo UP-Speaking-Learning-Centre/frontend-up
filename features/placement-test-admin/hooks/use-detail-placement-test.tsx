@@ -1,6 +1,7 @@
 import {
     FormStatusManagement,
     ResponseSaveNote,
+    ResponseSavePlacementTest,
     ResponseUpdateStatus,
 } from '@/types/placement-test-admin';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -34,59 +35,74 @@ const useDetailPlacementTest = () => {
         studyGroup: z.string({ required_error: 'This value is required' }),
     });
 
-    const { handleSubmit, formState, register, setValue,reset } = useForm<FormStatusManagement>({
+    const { handleSubmit, formState, register, setValue, reset } = useForm<FormStatusManagement>({
         resolver: zodResolver(StatusManagement),
     });
 
     const handleContinue: SubmitHandler<FormStatusManagement> = fields => {
-        return handleSave(fields);
+        return handleSave(status, fields);
     };
     const handleError: SubmitErrorHandler<FormStatusManagement> = fields => {
-        if (status !== 'graded' && status !== 'done_interview') return handleSave();
+        if (status !== 'graded' && status !== 'done_interview') return handleSave(status);
     };
-    const handleSubmitStatus = async () => {
+    const handleSubmitStatus = async (status_: string) => {
+        setState({
+            status: status_,
+        });
+
         try {
-            const res = await mutateAsync({ status });
+            const res = await mutateAsync({ status: status_ });
             toast.info(res.status, { position: 'top-center' });
             return;
         } catch (error) {
             toast.error((error as AxiosError).message, { position: 'top-center' });
+            setState({ status });
         }
     };
 
     const handleSubmitAll = async (fields?: FormStatusManagement) => {
+        setState({ status: 'graded', isGraded: true });
+
         if (!fields || Object.values(fields).some(field => !field)) {
             console.error(fields);
             throw new Error('Terjadi kesalahan, tolong periksa kembali masukkan anda');
         }
 
-        let requests: (Promise<ResponseUpdateStatus> | Promise<ResponseSaveNote>)[] = [
-            mutateAsync({ status }),
-        ];
-
-        if (noteForStudent) requests = [...requests, patchNotes({ notes: noteForStudent })];
-
-        const res = await Promise.all(requests).then(async res => {
-            const placementTest = await patchPlacementTest({
+        let requests: (
+            | Promise<ResponseUpdateStatus>
+            | Promise<ResponseSaveNote>
+            | Promise<ResponseSavePlacementTest>
+        )[] = [
+            patchPlacementTest({
                 gradeId: +fields?.grade,
                 levelId: +fields?.level,
                 locationId: +fields?.location,
                 studyGroupId: +fields?.studyGroup,
-            });
+            }),
+        ];
 
-            return [...res, placementTest];
-        });
-        res.forEach(() =>
-            toast.info('Success', { position: 'top-center', className: 'bg-green-100' })
-        );
+        if (noteForStudent) requests = [...requests, patchNotes({ notes: noteForStudent })];
+
+        try {
+            await Promise.all(requests)
+                .then(async res => {
+                    const statusRes = await mutateAsync({ status: 'graded' });
+
+                    return [...res, statusRes];
+                })
+                .then(() =>
+                    toast.info('Success', { position: 'top-center', className: 'bg-green-100' })
+                );
+        } catch (error) {
+            toast.error('Error saat menyimpan data', {
+                position: 'top-center',
+                className: 'bg-red-100',
+            });
+            setState({ status, isGraded: false });
+        }
     };
 
-    const handleSave = async (fields?: FormStatusManagement) => {
-        // Submit status only
-        if (status !== 'graded' && status !== 'done_interview') {
-            return handleSubmitStatus();
-        }
-
+    const handleSave = async (status: string, fields?: FormStatusManagement) => {
         // Submit All
         return handleSubmitAll(fields);
     };
@@ -102,7 +118,8 @@ const useDetailPlacementTest = () => {
         formState,
         register,
         setValue,
-        reset
+        reset,
+        handleSave,
     };
 };
 

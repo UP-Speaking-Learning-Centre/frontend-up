@@ -88,10 +88,27 @@ export interface ResponseUserDetail {
     studyGroupIds: number[];
     primaryStudyGroupId: number;
     schedules: Schedule[];
-    testResults: ResponseUserDetailTestResults[];
+    latestResult?: {
+        determinedLevelId: string | null;
+        determinedLevelName: string | null;
+        group: string | null;
+        groupId: string | null;
+        placementTestId: number;
+        program: string | null;
+        programId: string | null;
+        score: number;
+        status: string;
+    };
     instagram: string;
     trialClassAt: string | null;
-    packages: {packageId:number,packageName:string}[];
+    packages: { packageId: number; packageName: string }[];
+    self_schedule_payload: {
+        mode: 'self';
+        items: Schedule[];
+        groupId: number;
+        levelId: number;
+        programId: number;
+    };
 }
 
 export interface ResponseProfile {

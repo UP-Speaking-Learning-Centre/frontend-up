@@ -9,11 +9,13 @@ import {
 import { ROUTES } from '@/constants/routes';
 import useGetProfile from '@/features/home/queries/useGetProfile';
 import useGetProfileById from '@/features/home/queries/useGetProfileById';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 const SelectStudent = () => {
     const { data: students } = useGetProfile();
-    const { data } = useGetProfileById();
+    const { id } = useParams<{ id: string }>();
+    const { data } = useGetProfileById(Number(id));
+
     const router = useRouter();
 
     return (

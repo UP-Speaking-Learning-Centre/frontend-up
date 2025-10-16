@@ -10,81 +10,44 @@ import { Textarea } from '@/components/ui/textarea';
 import { inter } from '@/constants/fonts';
 import { ROUTES } from '@/constants/routes';
 import AdminSelect from '@/features/admin/components/admin-select';
+import StudentSelfScheduleAlert from '@/features/admin/components/student-self-schedule-alert';
 import useChangeStudyGroup from '@/features/admin/hooks/useChangeStudyGroup';
 import useEditNote from '@/features/admin/hooks/useEditNote';
+import useStudentDetail from '@/features/admin/hooks/useStudentDetail';
 import useGetLocation from '@/features/admin/queries/useGetLocation';
-import useGetStudyGroupDetail from '@/features/admin/queries/useGetStudyGroupDetail';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
-import useGetProfileById from '@/features/home/queries/useGetProfileById';
 import { getDayOfWeek } from '@/lib/date';
-import { getNextSchedules } from '@/lib/trial-class';
 import { cn } from '@/lib/utils';
 import { Calendar, Clock, Info } from 'lucide-react';
 import moment from 'moment';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
+import { useState } from 'react';
 
 export default function DashboardPage() {
     const routes = useRouter();
 
-    const [locationId, setLocationId] = useState('');
     const [trialClass, setTrialClass] = useState('');
 
-    const { data, isLoading } = useGetProfileById();
+    const {
+        data,
+        locationId,
+        isLoading,
+        isLoadingStudyGroupDetail,
+        studyGroupDetail,
+        setLocationId,
+    } = useStudentDetail();
     const { isEdit, setIsEdit, notes, setNotes, handleSave } = useEditNote(data?.notes);
-    const { data: studyGroupDetail, isLoading: isLoadingStudyGroupDetail } = useGetStudyGroupDetail(
-        data?.primaryStudyGroupId || 0
-    );
-
-    useEffect(() => {
-        setLocationId(studyGroupDetail?.schedules[0].locationId.toString() || '');
-    }, [studyGroupDetail]);
-
     const {
         isOpen,
         setIsOpen,
         isLoading: isLoadingChangeStudy,
-        studyGroups,
         selectedStudyGroup,
         setSelectedStudyGroup,
         handleChangeStudyGroup,
-    } = useChangeStudyGroup(+locationId, data?.primaryStudyGroupId || 0);
-
+        filteredStudyGroup,
+        trialClassDates,
+    } = useChangeStudyGroup(+locationId, data?.primaryStudyGroupId || 0, data);
     const { data: location, isLoading: isLoadingLocation } = useGetLocation();
-
-    const { data: studyGroupDetailBySelect, isLoading: isLoadingStudyGroupDetailBySelect } =
-        useGetStudyGroupDetail(+selectedStudyGroup || 0);
-
-    const trialClassDates = getNextSchedules(
-        data?.trialClassAt ? data?.schedules : studyGroupDetailBySelect?.schedules || []
-    );
-
-    const filteredStudyGroup =
-        studyGroups?.filter(
-            sg =>
-                sg.programId === data?.programId &&
-                sg.groupId === data.groupId &&
-                data.packages.some(package_ => package_.packageId === sg.packageId) &&
-                sg.levelId === data.levelId
-        ) || [];
-
-    useEffect(() => {
-        if (!!data?.id && !data?.levelId)
-            toast(
-                <p>
-                    Anda belum melakukan penilaian placement test untuk murid ini,
-                    <Link
-                        className="text-primary font-bold inline ml-1"
-                        href={ROUTES.adminPlacementTestsId.expand({ id: data?.id })}
-                    >
-                        Lanjut ke Placement Test
-                    </Link>{' '}
-                </p>,
-                { position: 'top-center', icon: <Info /> }
-            );
-    }, [data]);
 
     return (
         <DashboardContentLayout pageTitle="Detail Student">
@@ -305,7 +268,7 @@ export default function DashboardPage() {
                                                     </span>
                                                 </div>
                                                 <span className="font-semibold text-gray-900">
-                                                    {getDayOfWeek(schedule.dayOfWeek)}
+                                                    {getDayOfWeek(schedule.dayOfWeek.slice(0, 3))}
                                                 </span>
                                             </div>
 
@@ -332,10 +295,13 @@ export default function DashboardPage() {
                                                 Anda belum melakukan placement test untuk murid ini
                                             </p>
                                             <Button
+                                                disabled={!data?.latestResult?.placementTestId}
                                                 onClick={() =>
                                                     routes.replace(
                                                         ROUTES.adminPlacementTestsId.expand({
-                                                            id: data?.id || 0,
+                                                            id:
+                                                                data?.latestResult
+                                                                    ?.placementTestId || 0,
                                                         })
                                                     )
                                                 }
@@ -346,16 +312,18 @@ export default function DashboardPage() {
                                             </Button>
                                         </>
                                     )}
-                                    <Button
-                                        disabled={!data?.levelId}
-                                        onClick={() => setIsOpen(true)}
-                                        className="w-full"
-                                        size="lg"
-                                    >
-                                        {!!studyGroupDetail?.schedules
-                                            ? 'Ganti Kelompok'
-                                            : 'Assign ke Kelompok'}
-                                    </Button>
+                                    {!!data?.schedules.length && (
+                                        <Button
+                                            disabled={!data?.levelId}
+                                            onClick={() => setIsOpen(true)}
+                                            className="w-full"
+                                            size="lg"
+                                        >
+                                            {!!studyGroupDetail?.schedules
+                                                ? 'Ganti Kelompok'
+                                                : 'Assign ke Kelompok'}
+                                        </Button>
+                                    )}
 
                                     <Dialog open={isOpen} onOpenChange={setIsOpen}>
                                         <DialogContent className={cn(inter.className)}>
@@ -371,6 +339,7 @@ export default function DashboardPage() {
                                                     }
                                                     value={locationId}
                                                     onValueChange={setLocationId}
+                                                    loading={isLoadingLocation}
                                                 />
                                             )}
                                             {filteredStudyGroup.length ? (
@@ -433,6 +402,12 @@ export default function DashboardPage() {
                                     </Dialog>
                                 </div>
                             </Card>
+                            {!data?.schedules.length && (
+                                <StudentSelfScheduleAlert
+                                    selfSchedule={data?.self_schedule_payload.items || []}
+                                    setIsOpen={setIsOpen}
+                                />
+                            )}
                         </div>
                     </Skeleton>
                 </div>

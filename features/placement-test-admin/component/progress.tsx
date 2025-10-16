@@ -4,8 +4,9 @@ import { Progress } from '@/components/ui/progress';
 import useDisplayQuestion from '../hooks/use-detail-placement-test';
 
 const MarkingProgress = () => {
-    const { questions, totalQuestions, correctAnswers } = useDisplayQuestion();
+    const { questions, totalQuestions } = useDisplayQuestion();
     const gradedQuestions = questions.filter(q => q.isGraded || q.checkAnswer).length;
+    const correctAnswers = questions.filter(q => q.checkAnswer === 'correct').length;
 
     return (
         <Card>
