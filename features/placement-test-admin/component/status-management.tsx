@@ -1,10 +1,9 @@
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent } from '@/components/ui/card';
 import { PLACEMENT_TEST_FILTER_OPTIONS } from '@/constants/placement-test';
 import { ROUTES } from '@/constants/routes';
 import { STATUS_OPTION } from '@/features/admin/constants/config';
-import { FileText, Save } from 'lucide-react';
+import { Save } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import useDetailPlacementTest from '../hooks/use-detail-placement-test';
 import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
@@ -80,7 +79,7 @@ const StatusManagement = () => {
                     ) : (
                         <div className="flex justify-end">
                             <Button onClick={() => handleSave(getNextOptionValue())} type="button">
-                                Tanda sebagai "{getNextOption()}"
+                                Tandai sebagai "{getNextOption()}"
                             </Button>
                         </div>
                     )}
