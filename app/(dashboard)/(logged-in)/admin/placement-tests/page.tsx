@@ -127,7 +127,9 @@ const Index = () => {
                                 ...user,
                                 studentName: {
                                     renderCell: () => (
-                                        <p className="font-semibold max-w-[300px]">{user.studentName}</p>
+                                        <p className="font-semibold truncate max-w-[300px]">
+                                            {user.studentName}
+                                        </p>
                                     ),
                                 },
                                 status: {
@@ -156,7 +158,7 @@ const Index = () => {
                                     ),
                                 },
                                 actions: {
-                                    height:"!h-[54px]",
+                                    height: '!h-[54px]',
                                     renderCell: () => (
                                         <Button
                                             variant="outline"

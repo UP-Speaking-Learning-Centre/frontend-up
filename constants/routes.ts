@@ -16,6 +16,7 @@ export const ROUTES = {
     dashboardStudents: '/dashboard/students',
     dashboardStudentsId: parseTemplate('/dashboard/students/{id}'),
     adminStudents: '/admin/students',
+    adminNewStudents: '/admin/new-students',
     adminStudentsId: parseTemplate('/admin/students/{id}'),
     adminPlacementTests: '/admin/placement-tests',
     adminPlacementTestsId: parseTemplate('/admin/placement-tests/{id}'),

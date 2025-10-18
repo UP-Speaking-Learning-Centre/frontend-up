@@ -31,7 +31,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             >
                 <Sidebar />
                 <Header />
-                <div className="[grid-area:main] px-6 py-4 w-full overflow-x-scroll overflow-y-visible max-w-[1724px] mx-auto">
+                <div className="[grid-area:main] px-6 py-4 w-full overflow-x-scroll overflow-y-visible max-w-[1440px] mx-auto">
                     {children}
                 </div>
             </div>

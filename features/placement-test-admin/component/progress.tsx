@@ -9,15 +9,12 @@ const MarkingProgress = () => {
     const correctAnswers = questions.filter(q => q.checkAnswer === 'correct').length;
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Grading Progress</CardTitle>
-            </CardHeader>
-            <CardContent>
+        <Card className="p-6">
+            <CardContent className="p-0">
                 <div className="space-y-4">
                     <div>
                         <div className="flex justify-between text-sm mb-2">
-                            <span>Questions Graded</span>
+                            <span>Progress Penilaian</span>
                             <span>
                                 {gradedQuestions} / {totalQuestions}
                             </span>
@@ -25,15 +22,15 @@ const MarkingProgress = () => {
                         <Progress value={(gradedQuestions / totalQuestions) * 100} />
                     </div>
                     <div className="grid grid-cols-2 gap-4 text-center">
-                        <div className="bg-green-50 p-3 rounded-lg">
+                        <div className="bg-green-50 p-3 flex items-center gap-2 justify-center rounded-lg">
                             <p className="text-2xl font-bold text-green-600">{correctAnswers}</p>
-                            <p className="text-sm text-green-600">Correct</p>
+                            <p className="text-sm text-green-600">Benar</p>
                         </div>
-                        <div className="bg-red-50 p-3 rounded-lg">
+                        <div className="bg-red-50 p-3 flex items-center gap-2 justify-center rounded-lg">
                             <p className="text-2xl font-bold text-red-600">
                                 {gradedQuestions - correctAnswers}
                             </p>
-                            <p className="text-sm text-red-600">Incorrect</p>
+                            <p className="text-sm text-red-600">Salah</p>
                         </div>
                     </div>
                 </div>

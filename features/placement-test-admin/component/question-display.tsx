@@ -5,9 +5,11 @@ import useDetailPlacementTest from '../hooks/use-detail-placement-test';
 import useSubmitMark from '../queries/use-submit-mark';
 import { toast, Toaster } from 'sonner';
 import { Question } from '@/types/placement-test';
+import { STATUS_OPTION } from '@/features/admin/constants/config';
 
 const QuestionDisplay = () => {
-    const { questions, currentQuestionIndex, totalQuestions, setState } = useDetailPlacementTest();
+    const { questions, currentQuestionIndex, totalQuestions, setState, status } =
+        useDetailPlacementTest();
     const currentQuestion = questions[currentQuestionIndex];
 
     const { mutateAsync } = useSubmitMark();
@@ -23,7 +25,12 @@ const QuestionDisplay = () => {
             check: isCorrect ? 'correct' : 'incorrect',
             questionId: question.studentAnswerId.toString(),
         })
-            .then(res => toast.info(res.message, { position: 'top-center' }))
+            .then(res =>
+                toast.success(res.message, {
+                    className: 'bg-green-100 border-green-200',
+                    position: 'top-center',
+                })
+            )
             .catch(() => {
                 toast.error('Failed to update, please try again later', { position: 'top-center' });
                 setState({
@@ -42,7 +49,8 @@ const QuestionDisplay = () => {
             <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                     <span>
-                        Question {currentQuestionIndex + 1} of {totalQuestions}
+                        Pertanyaan <span className="text-primary">{currentQuestionIndex + 1}</span>{' '}
+                        dari <span className="text-primary">{totalQuestions}</span>
                     </span>
                     <div className="flex items-center gap-2">
                         <Button
@@ -79,7 +87,10 @@ const QuestionDisplay = () => {
                 {currentQuestion && (
                     <div className="space-y-4">
                         <div>
-                            <h3 className="text-lg font-medium mb-4">
+                            <h3 className="text-base font-medium mb-1">
+                                {currentQuestion.instruction}
+                            </h3>
+                            <h3 className="text-base font-medium mb-4">
                                 {currentQuestion.questionText}
                             </h3>
                             <div className="grid grid-cols-1 gap-2">
@@ -98,7 +109,7 @@ const QuestionDisplay = () => {
                                                     isUserAnswer && 'bg-blue-50 border-blue-300'
                                                 }`}
                                             >
-                                                <div className="flex items-center justify-between">
+                                                <div className="flex items-center text-sm justify-between">
                                                     <span>
                                                         <strong>
                                                             {String.fromCharCode(65 + optIndex)}.
@@ -130,42 +141,46 @@ const QuestionDisplay = () => {
                                     )}
                                 </div>
                             </div> */}
-                            <div className="flex gap-3">
-                                <Button
-                                    variant={
-                                        currentQuestion.checkAnswer === 'correct'
-                                            ? 'default'
-                                            : 'outline'
-                                    }
-                                    className={`flex-1 ${
-                                        currentQuestion.checkAnswer === 'correct'
-                                            ? 'bg-green-600 hover:bg-green-700'
-                                            : 'border-green-300 text-green-600 hover:bg-green-50 hover:text-green-600'
-                                    }`}
-                                    onClick={() => handleGradeQuestion(currentQuestion, true, true)}
-                                >
-                                    <Check className="w-4 h-4 mr-2" />
-                                    Correct
-                                </Button>
-                                <Button
-                                    variant={
-                                        currentQuestion.checkAnswer === 'incorrect'
-                                            ? 'default'
-                                            : 'outline'
-                                    }
-                                    className={`flex-1 ${
-                                        currentQuestion.checkAnswer === 'incorrect'
-                                            ? 'bg-red-600 hover:bg-red-700'
-                                            : 'border-red-300 text-red-600 hover:bg-red-50 hover:text-red-600'
-                                    }`}
-                                    onClick={() =>
-                                        handleGradeQuestion(currentQuestion, false, true)
-                                    }
-                                >
-                                    <X className="w-4 h-4 mr-2" />
-                                    Incorrect
-                                </Button>
-                            </div>
+                            {status === STATUS_OPTION.NOT_GRADED && (
+                                <div className="flex gap-3">
+                                    <Button
+                                        variant={
+                                            currentQuestion.checkAnswer === 'correct'
+                                                ? 'default'
+                                                : 'outline'
+                                        }
+                                        className={`flex-1 ${
+                                            currentQuestion.checkAnswer === 'correct'
+                                                ? 'bg-green-600 hover:bg-green-700'
+                                                : 'border-green-300 text-green-600 hover:bg-green-50 hover:text-green-600'
+                                        }`}
+                                        onClick={() =>
+                                            handleGradeQuestion(currentQuestion, true, true)
+                                        }
+                                    >
+                                        <Check className="w-4 h-4 mr-2" />
+                                        Benar
+                                    </Button>
+                                    <Button
+                                        variant={
+                                            currentQuestion.checkAnswer === 'incorrect'
+                                                ? 'default'
+                                                : 'outline'
+                                        }
+                                        className={`flex-1 ${
+                                            currentQuestion.checkAnswer === 'incorrect'
+                                                ? 'bg-red-600 hover:bg-red-700'
+                                                : 'border-red-300 text-red-600 hover:bg-red-50 hover:text-red-600'
+                                        }`}
+                                        onClick={() =>
+                                            handleGradeQuestion(currentQuestion, false, true)
+                                        }
+                                    >
+                                        <X className="w-4 h-4 mr-2" />
+                                        Salah
+                                    </Button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 )}
