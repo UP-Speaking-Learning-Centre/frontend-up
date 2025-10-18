@@ -112,7 +112,7 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                             </SelectTrigger>
                             <SelectContent>
                                 {dataLevel?.map(level => (
-                                    <SelectItem value={level.id.toString()}>
+                                    <SelectItem value={level.id.toString()} key={level.id}>
                                         {level.name}
                                     </SelectItem>
                                 ))}
@@ -146,7 +146,7 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                             </SelectTrigger>
                             <SelectContent>
                                 {dataGrade?.map(grade => (
-                                    <SelectItem value={grade.id.toString()}>
+                                    <SelectItem value={grade.id.toString()} key={grade.id}>
                                         {grade.gradeNumber}
                                     </SelectItem>
                                 ))}
@@ -181,7 +181,10 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                             </SelectTrigger>
                             <SelectContent>
                                 {data?.map(loc => (
-                                    <SelectItem value={loc.locationId.toString()}>
+                                    <SelectItem
+                                        value={loc.locationId.toString()}
+                                        key={loc.locationId}
+                                    >
                                         {loc.locationName}
                                     </SelectItem>
                                 ))}
@@ -222,7 +225,10 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                             </SelectTrigger>
                             <SelectContent>
                                 {filteredDataTeacher?.map(teach => (
-                                    <SelectItem value={teach.memberId.toString()}>
+                                    <SelectItem
+                                        value={teach.memberId.toString()}
+                                        key={teach.memberId}
+                                    >
                                         {teach.memberName}
                                     </SelectItem>
                                 ))}
@@ -261,7 +267,10 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                             </SelectTrigger>
                             <SelectContent>
                                 {filteredSchedule?.map(sch => (
-                                    <SelectItem value={sch.studyGroupId.toString()}>
+                                    <SelectItem
+                                        value={sch.studyGroupId.toString()}
+                                        key={sch.studyGroupId}
+                                    >
                                         {sch.studyGroupName}
                                     </SelectItem>
                                 ))}

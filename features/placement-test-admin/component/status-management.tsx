@@ -28,17 +28,11 @@ const StatusManagement = () => {
     };
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <FileText className="w-5 h-5" />
-                    Status Management
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+        <Card className="p-6">
+            <CardContent className="space-y-4 p-0">
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <Label>Status</Label>
+                        <p className="mb-1 text-sm">Status saat ini</p>
                         <div className="flex gap-8 text-md items-center w-full justify-between relative">
                             <p className="text-primary font-bold z-10 bg-white pr-4">
                                 {
@@ -48,8 +42,8 @@ const StatusManagement = () => {
                             </p>
                             {!isGraded && (
                                 <>
-                                    <div className="border-t border-primary w-full absolute"></div>
-                                    <p className="text-gray-500 text-end z-10 bg-white pl-4">
+                                    <div className="border-t-2 border-primary w-full absolute"></div>
+                                    <p className="text-gray-300 font-semibold text-end z-10 bg-white pl-4">
                                         {getNextOption()}
                                     </p>
                                 </>
@@ -86,7 +80,7 @@ const StatusManagement = () => {
                     ) : (
                         <div className="flex justify-end">
                             <Button onClick={() => handleSave(getNextOptionValue())} type="button">
-                                Ganti Status
+                                Tanda sebagai "{getNextOption()}"
                             </Button>
                         </div>
                     )}

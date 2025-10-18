@@ -9,6 +9,7 @@ export type Question = {
     questionId: number;
     questionText: string;
     questionType: string;
+    instruction: string;
     options: string[];
     studentAnswer: string;
     studentAnswerId: number;
