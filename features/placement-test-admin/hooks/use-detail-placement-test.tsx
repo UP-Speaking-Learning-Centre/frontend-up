@@ -103,6 +103,10 @@ const useDetailPlacementTest = () => {
     };
 
     const handleSave = async (status: string, fields?: FormStatusManagement) => {
+        if (status !== 'graded') {
+            return handleSubmitStatus(status);
+        }
+
         // Submit All
         return handleSubmitAll(fields);
     };
