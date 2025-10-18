@@ -17,6 +17,7 @@ import {
     LocateIcon,
     LogOut,
     PersonStanding,
+    UserPlus2,
     Users,
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -26,6 +27,7 @@ import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 const sidebarItemsAdmin = [
+    { href: ROUTES.adminNewStudents, label: 'New Students', icon: UserPlus2 },
     { href: ROUTES.adminStudents, label: 'List Students', icon: Users },
     {
         href: ROUTES.adminPlacementTests,
