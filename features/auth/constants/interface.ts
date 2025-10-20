@@ -102,7 +102,7 @@ export interface ResponseUserDetail {
     instagram: string;
     trialClassAt: string | null;
     packages: { packageId: number; packageName: string }[];
-    self_schedule_payload: {
+    self_schedule_payload?: {
         mode: 'self';
         items: Schedule[];
         groupId: number;
