@@ -34,7 +34,7 @@ export default function DashboardPage() {
         isLoading,
         isLoadingStudyGroupDetail,
         studyGroupDetail,
-        setLocationId,
+        // setLocationId,
     } = useStudentDetail();
     const { isEdit, setIsEdit, notes, setNotes, handleSave } = useEditNote(data?.notes);
     const {
@@ -288,7 +288,7 @@ export default function DashboardPage() {
                                     </div>
                                 ))}
                                 <div className="m-4">
-                                    {!data?.levelId && (
+                                    {!data?.levelId && !data?.self_schedule_payload && (
                                         <>
                                             <p className="text-xs py-2 mt-5">
                                                 <Info className="w-4 h-4 inline mr-1" />
@@ -328,7 +328,7 @@ export default function DashboardPage() {
                                     <Dialog open={isOpen} onOpenChange={setIsOpen}>
                                         <DialogContent className={cn(inter.className)}>
                                             <DialogTitle>Ganti Kelompok</DialogTitle>
-                                            {!data?.primaryStudyGroupId && (
+                                            {/* {!data?.primaryStudyGroupId && (
                                                 <AdminSelect
                                                     label="Lokasi"
                                                     options={
@@ -341,7 +341,22 @@ export default function DashboardPage() {
                                                     onValueChange={setLocationId}
                                                     loading={isLoadingLocation}
                                                 />
-                                            )}
+                                            )} */}
+                                            <div>
+                                                <Label className="font-medium">Lokasi</Label>
+                                                <Skeleton
+                                                    className="h-10 my-1"
+                                                    loading={isLoadingLocation}
+                                                >
+                                                    <p className="text-sm my-1">
+                                                        {
+                                                            location?.find(
+                                                                loc => loc.id === +locationId
+                                                            )?.name
+                                                        }
+                                                    </p>
+                                                </Skeleton>
+                                            </div>
                                             {filteredStudyGroup.length ? (
                                                 <AdminSelect
                                                     label="Kelompok Belajar"
@@ -402,9 +417,9 @@ export default function DashboardPage() {
                                     </Dialog>
                                 </div>
                             </Card>
-                            {!data?.schedules.length && (
+                            {!data?.schedules.length && data?.self_schedule_payload && (
                                 <StudentSelfScheduleAlert
-                                    selfSchedule={data?.self_schedule_payload.items || []}
+                                    selfSchedule={data?.self_schedule_payload?.items || []}
                                     setIsOpen={setIsOpen}
                                 />
                             )}

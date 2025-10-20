@@ -52,7 +52,8 @@ const useChangeStudyGroup = (
                 sg.programId === data?.programId &&
                 sg.groupId === data.groupId &&
                 data.packages.some(package_ => package_.packageId === sg.packageId) &&
-                sg.levelId === data.levelId
+                sg.levelId === data.levelId &&
+                sg.locationId === locationId
         ) || [];
 
     const trialClassDates = getNextSchedules(
@@ -68,7 +69,8 @@ const useChangeStudyGroup = (
         selectedStudyGroup,
         handleChangeStudyGroup,
         filteredStudyGroup,
-    trialClassDates};
+        trialClassDates,
+    };
 };
 
 export default useChangeStudyGroup;

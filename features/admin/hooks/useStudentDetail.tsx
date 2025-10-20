@@ -17,27 +17,33 @@ const useStudentDetail = () => {
     );
 
     useEffect(() => {
-        setLocationId(studyGroupDetail?.schedules[0].locationId.toString() || '');
+        if (studyGroupDetail?.schedules) {
+            setLocationId(studyGroupDetail?.schedules[0].locationId.toString() || '');
+        }
     }, [studyGroupDetail]);
 
     useEffect(() => {
-        if (!!data?.id && !data?.levelId)
-            toast(
-                <p>
-                    Anda belum melakukan penilaian placement test untuk murid ini.
-                    {data.latestResult?.placementTestId && (
-                        <Link
-                            className="text-primary font-bold inline ml-1"
-                            href={ROUTES.adminPlacementTestsId.expand({
-                                id: data?.latestResult?.placementTestId || 0,
-                            })}
-                        >
-                            Lanjut ke Placement Test
-                        </Link>
-                    )}
-                </p>,
-                { position: 'top-center', icon: <Info /> }
-            );
+        if (!!data?.id) {
+            if (!data.levelId && !data.self_schedule_payload) {
+                toast(
+                    <p>
+                        Anda belum melakukan penilaian placement test untuk murid ini.
+                        {data.latestResult?.placementTestId && (
+                            <Link
+                                className="text-primary font-bold inline ml-1"
+                                href={ROUTES.adminPlacementTestsId.expand({
+                                    id: data?.latestResult?.placementTestId || 0,
+                                })}
+                            >
+                                Lanjut ke Placement Test
+                            </Link>
+                        )}
+                    </p>,
+                    { position: 'top-center', icon: <Info /> }
+                );
+            }
+            setLocationId(data.self_schedule_payload?.items[0].locationId.toString() || '');
+        }
     }, [data]);
 
     return {
