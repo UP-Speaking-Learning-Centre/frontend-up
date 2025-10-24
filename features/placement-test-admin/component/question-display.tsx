@@ -6,6 +6,7 @@ import useSubmitMark from '../queries/use-submit-mark';
 import { toast, Toaster } from 'sonner';
 import { Question } from '@/types/placement-test';
 import { STATUS_OPTION } from '@/features/admin/constants/config';
+import { errorToast } from '@/lib/toast';
 
 const QuestionDisplay = () => {
     const { questions, currentQuestionIndex, totalQuestions, setState, status } =
@@ -32,7 +33,8 @@ const QuestionDisplay = () => {
                 })
             )
             .catch(() => {
-                toast.error('Failed to update, please try again later', { position: 'top-center' });
+                errorToast('Gagal mengupdate, silahkan coba lagi nanti');
+                // toast.error('Failed to update, please try again later', { position: 'top-center' });
                 setState({
                     questions: questions.map(q =>
                         q.questionId === question.questionId

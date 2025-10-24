@@ -13,6 +13,7 @@ import useSaveNotes from '../queries/use-save-notes';
 import useSavePlacementTest from '../queries/use-save-placement-test';
 import useUpdateStatus from '../queries/use-update-status';
 import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
+import { errorToast } from '@/lib/toast';
 
 const useDetailPlacementTest = () => {
     const questions = useDisplayedPlacementTestStore(s => s.questions);
@@ -55,7 +56,8 @@ const useDetailPlacementTest = () => {
             toast.info(res.status, { position: 'top-center' });
             return;
         } catch (error) {
-            toast.error((error as AxiosError).message, { position: 'top-center' });
+            errorToast((error as AxiosError).message);
+            // toast.error((error as AxiosError).message, { position: 'top-center' });
             setState({ status });
         }
     };
@@ -94,10 +96,7 @@ const useDetailPlacementTest = () => {
                     toast.info('Success', { position: 'top-center', className: 'bg-green-100' })
                 );
         } catch (error) {
-            toast.error('Error saat menyimpan data', {
-                position: 'top-center',
-                className: 'bg-red-100',
-            });
+            errorToast('Error saat menyimpan data');
             setState({ status, isGraded: false });
         }
     };

@@ -10,6 +10,7 @@ import { LoginRequest } from '../constants/interface';
 import useGetOTP from '../queries/useGetOTP';
 import usePostPhoneNumberVerification from '../queries/usePostPhoneNumberVerification';
 import useAuthStore from '../stores/authStore';
+import { errorToast } from '@/lib/toast';
 
 const usePhoneNumberLogin = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -42,19 +43,21 @@ const usePhoneNumberLogin = () => {
                     return;
                 }
                 if (res === NOT_REGISTERED) {
-                    toast.error('Nomor WhatsApp ini belum terdaftar', {
-                        className: 'bg-red-200 text-red-600',
-                        position: 'top-center',
-                    });
+                    // toast.error('Nomor WhatsApp ini belum terdaftar', {
+                    //     className: 'bg-red-200 text-red-600',
+                    //     position: 'top-center',
+                    // });
+                    errorToast('Nomor WhatsApp ini belum terdaftar');
                     return;
                 }
                 setStep(PASSWORD);
             })
-            .catch(err =>
-                toast.error(err?.message, {
-                    className: 'bg-red-200 text-red-600',
-                    position: 'top-center',
-                })
+            .catch(
+                err => errorToast(err?.message)
+                // toast.error(err?.message, {
+                //     className: 'bg-red-200 text-red-600',
+                //     position: 'top-center',
+                // })
             )
             .finally(() => setIsLoading(false));
     };
