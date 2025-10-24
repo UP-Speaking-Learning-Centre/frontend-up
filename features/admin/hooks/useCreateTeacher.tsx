@@ -11,6 +11,7 @@ import { useTeacherManagementStore } from '../stores/teacher';
 import { queryClient } from '@/lib/tanstack';
 import ENDPOINTS from '@/constants/endpoints';
 import { imageUrlToFile } from '@/lib/image';
+import { errorToast } from '@/lib/toast';
 
 const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
     const [id, setId] = useState(0);
@@ -134,9 +135,7 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
                     ]);
                     handleResetModal();
                 })
-                .catch(err =>
-                    toast.error(err?.message, { position: 'top-center', className: 'bg-red-100' })
-                );
+                .catch(err => errorToast(err?.message));
             return;
         }
         postTeacher(
@@ -154,9 +153,7 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
                 setTeacher([res, ...teacher]);
                 handleResetModal();
             })
-            .catch(err =>
-                toast.error(err?.message, { position: 'top-center', className: 'bg-red-100' })
-            );
+            .catch(err => errorToast(err?.message));
     };
     const handleError: SubmitErrorHandler<Omit<LocationAdmin, 'id'>> = error => {
         console.log(error);

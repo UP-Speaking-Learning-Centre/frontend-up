@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { API_OTP, DEVELOPMENT } from '../constants/config';
 import { ResponseOTP } from '../constants/interface';
 import useAuthStore from '../stores/authStore';
+import { errorToast } from '@/lib/toast';
 
 const useGetOTP = () => {
     const { setOtpForTesting } = useAuthStore();
@@ -34,7 +35,7 @@ const useGetOTP = () => {
                 toast.info(res.message, { position: 'top-center' });
                 setOtpForTesting(res.otpForTesting);
             })
-            .catch(err => toast.error(err?.message, { position: 'top-center' }));
+            .catch(err => errorToast(err?.message));
     };
 
     return { mutateAsync, handlePostOTP };

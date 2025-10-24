@@ -8,6 +8,7 @@ import usePatchPrice from '../queries/usePatchPrice';
 import { useProgramDetailStore } from '../stores/program-detail';
 import { useQueryClient } from '@tanstack/react-query';
 import ENDPOINTS from '@/constants/endpoints';
+import { errorToast } from '@/lib/toast';
 
 const usePrices = () => {
     const queryClient = useQueryClient();
@@ -130,7 +131,7 @@ const usePrices = () => {
                 queryClient.invalidateQueries({ queryKey: [ENDPOINTS.fetchPrices] });
             });
         } catch (error) {
-            toast.error('Failed to add prices. Please try again.', { position: 'top-center' });
+            errorToast('Failed to add prices. Please try again.');
         } finally {
             setIsSubmitting(false);
             setState({ isPriceModalOpen: false });

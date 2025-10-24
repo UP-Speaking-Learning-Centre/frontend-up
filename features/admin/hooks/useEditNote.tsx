@@ -1,5 +1,5 @@
+import { errorToast } from '@/lib/toast';
 import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 import usePatchNoteByUserId from '../queries/usePatchNoteByUserId';
 
 const useEditNote = (notes_?: string | null) => {
@@ -14,7 +14,7 @@ const useEditNote = (notes_?: string | null) => {
 
     const handleSave = () => {
         setIsEdit(false);
-        mutateAsync({ notes }).catch(err => toast.error(err?.message, { position: 'top-center' }));
+        mutateAsync({ notes }).catch(err => errorToast(err?.message));
     };
 
     return { isEdit, setIsEdit, notes, setNotes, handleSave };

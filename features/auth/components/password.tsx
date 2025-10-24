@@ -6,12 +6,11 @@ import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { Label } from '@radix-ui/react-label';
 import { Eye, Lock, Shield } from 'lucide-react';
-import Link from 'next/link';
 import { HTMLInputTypeAttribute, useState } from 'react';
+import { Toaster } from 'sonner';
 import { CONFIRM_PASSWORD, PASSWORD } from '../constants/config';
 import usePassword from '../hooks/usePassword';
 import BackPhoneNumber from './back-phone-number';
-import { Toaster } from 'sonner';
 
 const Password = () => {
     const [visiblePass, setVisiblePass] = useState<HTMLInputTypeAttribute>('password');
@@ -33,7 +32,7 @@ const Password = () => {
                 <CardContent>
                     <Shield className="w-8 h-8 text-blue-600 mx-auto mb-2" />
                     <div className="text-center">
-                        <h3>Atur Password</h3>
+                        <h3>{isNewAccount && 'Atur '}Password</h3>
                         <p className="text-sm text-gray-600 mt-1">
                             {isNewAccount ? 'Buat password yang aman' : 'Masukkan Password'}
                         </p>

@@ -1,4 +1,5 @@
 import { ROUTES } from '@/constants/routes';
+import { errorToast } from '@/lib/toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -48,7 +49,9 @@ const usePassword = () => {
                 );
                 setRole(res.role);
             })
-            .catch(err => toast.error(err?.message, { position: 'top-center' }))
+            .catch(err => {
+                errorToast('Username atau password salah');
+            })
             .finally(() => setIsloading(false));
     };
 
@@ -64,7 +67,7 @@ const usePassword = () => {
                     toast.info(res, { position: 'top-center' });
                     await login(data);
                 })
-                .catch(err => toast.info(err?.message, { position: 'top-center' }))
+                .catch(err => errorToast(err?.message))
                 .finally(() => setIsloading(false));
         } else await login(data);
     };

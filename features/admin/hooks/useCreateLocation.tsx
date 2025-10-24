@@ -8,6 +8,7 @@ import usePostLocation from '../queries/usePostLocation';
 import usePutLocation from '../queries/usePutLocation';
 import { useLocationManagementStore } from '../stores/location';
 import { imageUrlToFile } from '@/lib/image';
+import { errorToast } from '@/lib/toast';
 
 const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
     const [id, setId] = useState(0);
@@ -128,9 +129,7 @@ const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
                         handleResetModal();
                     },
                 }
-            ).catch(err =>
-                toast.error(err?.message, { position: 'top-center', className: 'bg-red-100' })
-            );
+            ).catch(err => errorToast(err?.message));
             return;
         }
         postLocation(value, {
@@ -146,7 +145,7 @@ const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
                 handleResetModal();
             })
             .catch(err =>
-                toast.error(err?.message, { position: 'top-center', className: 'bg-red-100' })
+                errorToast(err?.message)
             );
     };
     const handleError: SubmitErrorHandler<Omit<LocationAdmin, 'id'>> = error => {
