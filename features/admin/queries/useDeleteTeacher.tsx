@@ -11,7 +11,10 @@ const useDeleteTeacher = () => {
     const deleteTeacher = async (id: number): Promise<{ success: string }> => {
         const res = await api.delete(ENDPOINTS.fetchTeachersById.expand({ id }));
         if (res.data.success) {
-            queryClient.invalidateQueries({ queryKey: [ENDPOINTS.fetchTeachers] });
+            Promise.all([
+                queryClient.invalidateQueries({ queryKey: [ENDPOINTS.fetchTeachers] }),
+                queryClient.invalidateQueries({ queryKey: ['teacher-schedule'] }),
+            ]);
         }
         return res.data;
     };
