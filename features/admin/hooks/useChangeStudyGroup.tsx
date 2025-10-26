@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import useGetStudyGroup from '../queries/useGetStudyGroup';
-import usePostReassignStudyGroup from '../queries/usePostReassignStudyGroup';
-import { useParams } from 'next/navigation';
-import { useQueryClient } from '@tanstack/react-query';
 import ENDPOINTS from '@/constants/endpoints';
+import { MAX_STUDENT } from '@/constants/programs';
 import { ResponseUserDetail } from '@/features/auth/constants/interface';
-import useGetStudyGroupDetail from '../queries/useGetStudyGroupDetail';
 import { getNextSchedules } from '@/lib/trial-class';
+import { useQueryClient } from '@tanstack/react-query';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useGetAssignedStudyGroup } from '../queries/useGetAssignedStudyGroup';
+import useGetStudyGroup from '../queries/useGetStudyGroup';
+import useGetStudyGroupDetail from '../queries/useGetStudyGroupDetail';
+import usePostReassignStudyGroup from '../queries/usePostReassignStudyGroup';
 
 const useChangeStudyGroup = (
     locationId: number,
@@ -17,12 +19,14 @@ const useChangeStudyGroup = (
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedStudyGroup, setSelectedStudyGroup] = useState('');
+    const [isFull, setIsFull] = useState(false);
 
     const { id } = useParams();
     const { data: studyGroups, isLoading: isLoadingStudyGroup } = useGetStudyGroup(locationId);
     const { postUnassign, postAssign } = usePostReassignStudyGroup(Number(selectedStudyGroup));
     const { data: studyGroupDetailBySelect, isLoading: isLoadingStudyGroupDetailBySelect } =
         useGetStudyGroupDetail(+selectedStudyGroup || 0);
+    const { data: studyGroupAssigned, isLoading } = useGetAssignedStudyGroup(+selectedStudyGroup);
 
     const handleSuccess = () => {
         queryClient.invalidateQueries({
@@ -56,6 +60,15 @@ const useChangeStudyGroup = (
                 sg.locationId === locationId
         ) || [];
 
+    useEffect(() => {
+        setIsFull(false);
+        const studyGroupPackage = studyGroupDetailBySelect?.package;
+        const maxStudent = MAX_STUDENT[studyGroupPackage?.name as keyof typeof MAX_STUDENT];
+        if ((studyGroupAssigned?.students?.length || 0) >= maxStudent) {
+            setIsFull(true);
+        }
+    }, [studyGroupDetailBySelect, studyGroupAssigned]);
+
     const trialClassDates = getNextSchedules(
         data?.trialClassAt ? data?.schedules : studyGroupDetailBySelect?.schedules || []
     );
@@ -70,6 +83,7 @@ const useChangeStudyGroup = (
         handleChangeStudyGroup,
         filteredStudyGroup,
         trialClassDates,
+        isFull,
     };
 };
 
