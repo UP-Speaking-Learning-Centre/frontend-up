@@ -1,5 +1,6 @@
 'use client';
 
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogFooter, DialogTitle } from '@/components/ui/dialog';
@@ -18,7 +19,7 @@ import useGetLocation from '@/features/admin/queries/useGetLocation';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import { getDayOfWeek } from '@/lib/date';
 import { cn } from '@/lib/utils';
-import { Calendar, Clock, Info } from 'lucide-react';
+import { AlertCircleIcon, Calendar, Clock, Info } from 'lucide-react';
 import moment from 'moment';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -46,6 +47,7 @@ export default function DashboardPage() {
         handleChangeStudyGroup,
         filteredStudyGroup,
         trialClassDates,
+        isFull,
     } = useChangeStudyGroup(+locationId, data?.primaryStudyGroupId || 0, data);
     const { data: location, isLoading: isLoadingLocation } = useGetLocation();
 
@@ -358,13 +360,29 @@ export default function DashboardPage() {
                                                 </Skeleton>
                                             </div>
                                             {filteredStudyGroup.length ? (
-                                                <AdminSelect
-                                                    label="Kelompok Belajar"
-                                                    options={filteredStudyGroup || []}
-                                                    value={selectedStudyGroup}
-                                                    onValueChange={setSelectedStudyGroup}
-                                                    disabled={!locationId}
-                                                />
+                                                <>
+                                                    <AdminSelect
+                                                        label="Kelompok Belajar"
+                                                        options={filteredStudyGroup || []}
+                                                        value={selectedStudyGroup}
+                                                        onValueChange={setSelectedStudyGroup}
+                                                        disabled={!locationId}
+                                                    />
+                                                    {isFull && (
+                                                        <Alert variant="destructive">
+                                                            <AlertCircleIcon />
+                                                            <AlertTitle>
+                                                                Kelompok belajar penuh
+                                                            </AlertTitle>
+                                                            <AlertDescription>
+                                                                <p>
+                                                                    Silahkan pilih kelompok belajar
+                                                                    yang lain.
+                                                                </p>
+                                                            </AlertDescription>
+                                                        </Alert>
+                                                    )}
+                                                </>
                                             ) : (
                                                 <>
                                                     <Label>Kelompok Belajar</Label>
@@ -403,9 +421,9 @@ export default function DashboardPage() {
                                                 <Button
                                                     onClick={handleChangeStudyGroup}
                                                     disabled={
-                                                        data?.trialClassAt
-                                                            ? !selectedStudyGroup
-                                                            : !selectedStudyGroup || !trialClass
+                                                        !selectedStudyGroup ||
+                                                        isFull ||
+                                                        (!data?.trialClassAt && !trialClass)
                                                     }
                                                 >
                                                     {!isLoadingChangeStudy
