@@ -151,7 +151,7 @@ const Page = () => {
     };
 
     return (
-        <DashboardContentLayout pageTitle="New Student">{renderContent()}</DashboardContentLayout>
+        <DashboardContentLayout pageTitle="New Students">{renderContent()}</DashboardContentLayout>
     );
 };
 

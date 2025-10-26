@@ -99,7 +99,9 @@ const Index = () => {
                                 label="Status"
                                 options={Object.entries(STATUS_OPTION).map(([name, id]) => ({
                                     id,
-                                    name: name.split('_').join(' '),
+                                    name: PLACEMENT_TEST_FILTER_OPTIONS.find(
+                                        option => option.value === id
+                                    )?.name as string,
                                 }))}
                                 onSelect={val => onChangeStatus(val)}
                                 value={filter.status?.toString() || ''}
