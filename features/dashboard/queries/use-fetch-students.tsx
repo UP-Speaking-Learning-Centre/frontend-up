@@ -7,38 +7,7 @@ import { useEffect } from 'react';
 import { API_ADMIN_LIST_STUDENTS } from '../constants/config';
 import { useStudentsStore } from '../stores/students-store';
 
-const allUsers = {
-    data: [
-        {
-            studentId: 2,
-            studentName: 'radit 21.22',
-            parentPhoneNumber: '+6281211112210122',
-            program: 'School Program',
-            group: 'Junior High School',
-            teacherName: 'N/A',
-            schedule: 'No schedule',
-        },
-        {
-            studentId: 1,
-            studentName: 'Siswa Dengan Jadwal 2',
-            parentPhoneNumber: '+6281288889999',
-            program: 'School Program',
-            group: 'Senior High School',
-            teacherName: 'Ms. Nuraeni',
-            schedule: 'MON 08:00:00, MON 11:00:00',
-        },
-    ],
-    meta: {
-        totalItems: 2,
-        itemCount: 2,
-        itemsPerPage: 10,
-        totalPages: 1,
-        currentPage: 1,
-    },
-};
-
-const fetchStudents = async (params: any, accessToken: string) => {
-    // return allUsers as BaseResponse<StudentType[]>;
+export const fetchStudents = async (params: any, accessToken: string) => {
     return BaseService(async () => {
         const res = await api.get<BaseResponse<StudentType[]>>(API_ADMIN_LIST_STUDENTS, {
             params,
@@ -50,35 +19,57 @@ const fetchStudents = async (params: any, accessToken: string) => {
     });
 };
 
-const useFetchStudentsQuery = () => {
-    const filter = useStudentsStore(s => s.filters);
-    const pagination = useStudentsStore(s => s.pagination);
+const useFetchStudentsQuery = (newStudent: boolean = false) => {
+    const filterNewStudent = useStudentsStore(s => s.filterNewStudent);
+    const filterAllStudent = useStudentsStore(s => s.filters);
+
+    const paginationNewStudent = useStudentsStore(s => s.paginationNewStudent);
+    const paginationAllStudent = useStudentsStore(s => s.pagination);
+
     const setStudents = useStudentsStore(s => s.setStudents);
     const setPagination = useStudentsStore(s => s.setPagination);
+
+    const setNewStudents = useStudentsStore(s => s.setNewStudents);
+    const setPaginationNewStudent = useStudentsStore(s => s.setPaginationNewStudent);
+
     const accessToken = useAuthStore(s => s.token);
+
+    const filter = newStudent ? filterNewStudent : filterAllStudent;
+    const pagination = newStudent ? paginationNewStudent : paginationAllStudent;
+
+    const params = newStudent
+        ? {
+              studentName: filter.searchQuery,
+              programId: filter.program,
+              currentPage: pagination.currentPage,
+              isContacted: false,
+          }
+        : {
+              studentName: filterAllStudent.searchQuery,
+              teacherTeamMemberId: filterAllStudent.mentors,
+              programId: filterAllStudent.program,
+              groupId: filterAllStudent.group,
+              currentPage: paginationAllStudent.currentPage,
+          };
 
     const res = useQuery({
         queryKey: [API_ADMIN_LIST_STUDENTS, Object.values(filter), Object.values(pagination)],
-        queryFn: async () =>
-            await fetchStudents(
-                {
-                    studentName: filter.searchQuery,
-                    teacherTeamMemberId: filter.mentors,
-                    programId: filter.program,
-                    groupId: filter.group,
-                    currentPage: pagination.currentPage,
-                },
-                accessToken
-            ),
+        queryFn: async () => await fetchStudents(params, accessToken),
         staleTime: 0,
+        enabled: !!accessToken,
     });
 
     useEffect(() => {
         if (res.status === 'success') {
-            setStudents(res.data.data);
-            setPagination(res.data.meta);
+            if (newStudent) {
+                setNewStudents(res.data.data);
+                setPaginationNewStudent(res.data.meta);
+            } else {
+                setStudents(res.data.data);
+                setPagination(res.data.meta);
+            }
         }
-    }, [res.data, res.status]);
+    }, [res.data?.data.length, res.status, newStudent]);
 
     return res;
 };

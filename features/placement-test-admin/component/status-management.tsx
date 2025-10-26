@@ -78,7 +78,11 @@ const StatusManagement = () => {
                         </Button>
                     ) : (
                         <div className="flex justify-end">
-                            <Button onClick={() => handleSave(getNextOptionValue())} type="button">
+                            <Button
+                                onClick={() => handleSave(getNextOptionValue())}
+                                className="w-fit whitespace-normal h-fit"
+                                type="button"
+                            >
                                 Tandai sebagai "{getNextOption()}"
                             </Button>
                         </div>

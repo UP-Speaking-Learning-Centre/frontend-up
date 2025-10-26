@@ -70,9 +70,9 @@ const StudyGroupSelection = () => {
         }
 
         return (
-            <div className="mx-auto max-w-4xl" id={CHOOSE_LOCATION_STEP}>
+            <div className="mx-auto w-full" id={CHOOSE_LOCATION_STEP}>
                 <p className="text-center text-[#020817] font-medium">Pilih Cabang</p>
-                <div className="grid grid-cols-1 md:grid-cols-4 mx-auto gap-4 mt-4">
+                <div className="flex w-full mx-auto gap-4 mt-4">
                     {locations?.map(item => (
                         <LocationComponent
                             key={item.locationId}

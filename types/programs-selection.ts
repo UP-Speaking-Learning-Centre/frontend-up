@@ -51,6 +51,9 @@ export type PackageType = {
 export type LocationType = {
     locationId: number;
     locationName: string;
+    locationAddress: string;
+    locationGoogle: string;
+    locationPhoto: string;
 };
 
 export type AvailableScheduleType = {

@@ -126,7 +126,7 @@ const TeacherManagementCardList: FC<Props> = ({ onOpenSchedule, onEdit, onDelete
                             {/* Available Locations */}
                             <div>
                                 <p className="font-normal text-neutral-400 text-xs mb-2">
-                                    Available Locations:
+                                    Lokasi Mengajar
                                 </p>
                                 <p
                                     className={cn(

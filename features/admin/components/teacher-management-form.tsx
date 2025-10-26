@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { RequestTeacherAdmin } from '@/types/admin';
+import { RequestTeacherAdmin, TeacherAdmin } from '@/types/admin';
 import { X } from 'lucide-react';
 import { ChangeEventHandler, FC, FormEventHandler, useEffect, useState } from 'react';
 import { FieldErrors, UseFormRegister, UseFormSetValue } from 'react-hook-form';
@@ -10,6 +10,7 @@ import useGetLocation from '../queries/useGetLocation';
 import AdminSelect from './admin-select';
 import UploadImage from '@/components/upload-image';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Label } from '@/components/ui/label';
 
 interface Props {
     teacherId?: number;
@@ -22,6 +23,7 @@ interface Props {
     onUpload: (file: File) => void;
     isLoading?: boolean;
     isLoadingGet?: boolean;
+    details?: TeacherAdmin;
     value: Partial<RequestTeacherAdmin & { photoLink?: string }>;
     setValue: UseFormSetValue<RequestTeacherAdmin>;
 }
@@ -29,6 +31,7 @@ const TeacherManagementForm: FC<Props> = ({
     teacherId,
     isEdit,
     onClose,
+    details,
     onSubmit,
     errors,
     value,
@@ -37,7 +40,7 @@ const TeacherManagementForm: FC<Props> = ({
     isLoadingGet,
     isLoading,
     setValue,
-    teacherName
+    teacherName,
 }) => {
     const [alias, setAlias] = useState(0);
 
@@ -137,6 +140,28 @@ const TeacherManagementForm: FC<Props> = ({
                 )}
             </div> */}
 
+                    <div>
+                        <Skeleton className="h-6 w-32" loading={showSkeleton}>
+                            <label className="block text-sm font-medium text-gray-900 mb-2">
+                                Speciality/Description
+                            </label>
+                        </Skeleton>
+                        <Skeleton loading={showSkeleton} className="h-12 mt-2 w-full">
+                            <Input
+                                type="text"
+                                className={cn(
+                                    'w-full border border-gray-300 rounded-md px-3 py-2',
+                                    errors.speciality && 'border-red-500'
+                                )}
+                                {...register('speciality')}
+                            />
+                            {errors.speciality && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.speciality.message?.toString()}
+                                </p>
+                            )}
+                        </Skeleton>
+                    </div>
                     {/* Alias Field */}
                     <div>
                         {/* <Input
@@ -147,51 +172,70 @@ const TeacherManagementForm: FC<Props> = ({
                             )}
                             {...register('teacherId')}
                         /> */}
-                        <Skeleton loading={showSkeleton} className="h-12 w-full">
-                            <AdminSelect
-                                label="Alias"
-                                loading={isLoadingAlias}
-                                options={
-                                    aliasData?.map(alias => ({
-                                        id: alias.id,
-                                        name: alias.alias,
-                                    })) || []
-                                }
-                                defaultValue={alias?.toString()}
-                                value={alias?.toString()}
-                                onValueChange={value => {
-                                    setAlias(Number(value));
-                                    setValue('teacherId', Number(value));
-                                }}
-                            />
 
-                            {errors.teacherId && (
-                                <p className="text-red-500 text-sm mt-1">
-                                    {errors.teacherId.message?.toString()}
-                                </p>
+                        <Skeleton loading={showSkeleton} className="h-12 w-full">
+                            {isEdit ? (
+                                <div className="col-span-1 flex flex-col items-start gap-2">
+                                    <Label>Alias</Label>
+                                    <p className="font-semibold">
+                                        {aliasData?.find(data => data.id === alias)?.alias}
+                                    </p>
+                                </div>
+                            ) : (
+                                <>
+                                    <AdminSelect
+                                        label="Alias"
+                                        loading={isLoadingAlias}
+                                        options={
+                                            aliasData?.map(alias => ({
+                                                id: alias.id,
+                                                name: alias.alias,
+                                            })) || []
+                                        }
+                                        defaultValue={alias?.toString()}
+                                        value={alias?.toString()}
+                                        onValueChange={value => {
+                                            setAlias(Number(value));
+                                            setValue('teacherId', Number(value));
+                                        }}
+                                    />
+
+                                    {errors.teacherId && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.teacherId.message?.toString()}
+                                        </p>
+                                    )}
+                                </>
                             )}
                         </Skeleton>
                     </div>
 
                     {/* Lokasi Mengajar Section */}
                     <Skeleton loading={showSkeleton} className="h-12 w-full">
-                        <div>
-                            <AdminSelect
-                                options={
-                                    data?.map(item => ({ id: item.id, name: item.name })) || []
-                                }
-                                defaultValue={value.locationId?.toString()}
-                                value={value.locationId?.toString()}
-                                label="Lokasi Mengajar"
-                                onValueChange={val => setValue('locationId', +val)}
-                                loading={isLoadingLocation}
-                            />
-                            {errors.locationId && (
-                                <p className="text-red-500 text-sm mt-1">
-                                    {errors.locationId.message?.toString()}
-                                </p>
-                            )}
-                        </div>
+                        {isEdit ? (
+                            <div className="col-span-1 flex flex-col items-start gap-2">
+                                <Label>Lokasi Mengajar</Label>
+                                <p className="font-semibold">{details?.location?.name}</p>
+                            </div>
+                        ) : (
+                            <div>
+                                <AdminSelect
+                                    options={
+                                        data?.map(item => ({ id: item.id, name: item.name })) || []
+                                    }
+                                    defaultValue={value.locationId?.toString()}
+                                    value={value.locationId?.toString()}
+                                    label="Lokasi Mengajar"
+                                    onValueChange={val => setValue('locationId', +val)}
+                                    loading={isLoadingLocation}
+                                />
+                                {errors.locationId && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.locationId.message?.toString()}
+                                    </p>
+                                )}
+                            </div>
+                        )}
                     </Skeleton>
 
                     {/* Edit Button */}

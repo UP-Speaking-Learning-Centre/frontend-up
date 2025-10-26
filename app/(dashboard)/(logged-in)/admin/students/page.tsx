@@ -161,7 +161,6 @@ const Page = () => {
                                 ),
                             },
                             actions: {
-                                height: !!user.schedules.length ? '!h-[80.5px]' : '',
                                 renderCell: () => (
                                     <Link href={`/admin/students/${user.studentId}`}>
                                         <Button

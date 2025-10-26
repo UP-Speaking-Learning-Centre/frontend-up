@@ -45,7 +45,7 @@ const usePassword = () => {
         await postLogin({ phoneNumber: phone, password: data.password })
             .then(res => {
                 router.replace(
-                    isAdmin(res.role) ? ROUTES.adminStudents : ROUTES.dashboardListStudents
+                    isAdmin(res.role) ? ROUTES.adminNewStudents : ROUTES.dashboardListStudents
                 );
                 setRole(res.role);
             })

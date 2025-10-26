@@ -42,8 +42,8 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                         </div>
                     ) : (
                         <div className="overflow-x-auto">
-                            <table className="w-full max-w-full relative">
-                                <thead className="bg-gray-50 border-b">
+                            <table className="w-full max-w-full relative overflow-hidden">
+                                <thead className="bg-white border-b">
                                     <tr>
                                         {columns
                                             .filter(col => col.id !== 'actions')
@@ -51,7 +51,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                                 <th
                                                     key={column.id.toString()}
                                                     className={cn(
-                                                        'text-left p-4  text-neutral-400 font-medium text-xs',
+                                                        'text-left px-6 py-4 rounded-lg text-neutral-500 font-medium text-xs',
                                                         idx === columns.length - 2 && 'pr-24',
                                                         column.width
                                                     )}
@@ -66,7 +66,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                         values.map((row, rowIndex) => (
                                             <tr
                                                 key={rowIndex}
-                                                className={cn((rowIndex + 1) % 2 && 'bg-gray-200')}
+                                                className={cn((rowIndex + 1) % 2 && 'bg-gray-100')}
                                             >
                                                 {columns
                                                     .filter(col => col.id !== 'actions')
@@ -77,7 +77,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                                             <td
                                                                 key={col.id.toString()}
                                                                 className={cn(
-                                                                    'p-4 truncate text-sm',
+                                                                    'h-16 px-6 py-2 truncate text-sm',
                                                                     idx === columns.length - 2 &&
                                                                         'pr-24',
                                                                     col.width
@@ -110,7 +110,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                         <tr>
                                             <th
                                                 key="actions"
-                                                className="text-left p-4 font-medium text-neutral-500 text-xs"
+                                                className="text-left px-6 py-4 rounded-lg font-medium bg-white text-neutral-500 text-xs"
                                             >
                                                 Action
                                             </th>
@@ -129,10 +129,12 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                                                 <td
                                                                     key={col.id.toString()}
                                                                     className={cn(
+                                                                        (rowIndex + 1) % 2 &&
+                                                                            'bg-gray-100',
                                                                         typeof value === 'object' &&
                                                                             'renderCell' in value &&
                                                                             value.height,
-                                                                        'h-[52px] relative'
+                                                                        'h-16 relative'
                                                                     )}
                                                                 >
                                                                     {typeof value === 'object' &&
@@ -164,8 +166,8 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
             </Card>
 
             {!!pagination && (
-                <div className="flex items-center justify-between">
-                    <p className="text-sm text-gray-600">
+                <div className="flex items-center mt-2 justify-between">
+                    <p className="text-xs text-gray-600">
                         {`Showing ${startIndex(pagination.currentPage, pagination.itemsPerPage)} to
                         ${endIndex(pagination.currentPage, pagination.itemsPerPage)} of ${
                             pagination.totalItems
@@ -181,7 +183,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                         >
                             <ChevronLeft className="h-4 w-4" />
                         </Button>
-                        <span className="text-sm">
+                        <span className="text-xs">
                             Page {pagination.currentPage} of {pagination.totalPages || 1}
                         </span>
                         <Button

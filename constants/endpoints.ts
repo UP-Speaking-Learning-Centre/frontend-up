@@ -42,6 +42,8 @@ const ENDPOINTS = {
     fetchAdminStudentById: parseTemplate('/admin/students/{id}'),
     fetchUnassignStudent: parseTemplate('/admin/study-groups/{studyGroupId}/unassign-students'),
     // fetchAssignStudent: parseTemplate('/admin/study-groups/{studyGroupId}/assign-students'),
+
+    updateContactedStatus: parseTemplate('/admin/students/{id}/contacted'),
 } as const;
 
 export default ENDPOINTS;

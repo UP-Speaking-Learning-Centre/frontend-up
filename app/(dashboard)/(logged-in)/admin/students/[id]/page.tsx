@@ -12,21 +12,24 @@ import { inter } from '@/constants/fonts';
 import { ROUTES } from '@/constants/routes';
 import AdminSelect from '@/features/admin/components/admin-select';
 import StudentSelfScheduleAlert from '@/features/admin/components/student-self-schedule-alert';
+import { useUpdateContactedStatusMutation } from '@/features/admin/hooks/use-update-contacted-status';
 import useChangeStudyGroup from '@/features/admin/hooks/useChangeStudyGroup';
 import useEditNote from '@/features/admin/hooks/useEditNote';
 import useStudentDetail from '@/features/admin/hooks/useStudentDetail';
 import useGetLocation from '@/features/admin/queries/useGetLocation';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
+import DialogShowContacted from '@/features/dashboard/components/dialog-show-contacted';
 import { getDayOfWeek } from '@/lib/date';
 import { cn } from '@/lib/utils';
-import { AlertCircleIcon, Calendar, Clock, Info } from 'lucide-react';
+import { AlertCircleIcon, ArrowLeft, Calendar, Clock, Info, InfoIcon } from 'lucide-react';
 import moment from 'moment';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
 export default function DashboardPage() {
     const routes = useRouter();
-
+    const searchParams = useSearchParams();
     const [trialClass, setTrialClass] = useState('');
 
     const {
@@ -51,15 +54,54 @@ export default function DashboardPage() {
     } = useChangeStudyGroup(+locationId, data?.primaryStudyGroupId || 0, data);
     const { data: location, isLoading: isLoadingLocation } = useGetLocation();
 
+    const [showDialodContacted, setShowDialodContacted] = useState(false);
+
     return (
         <DashboardContentLayout pageTitle="Detail Student">
+            <div className="mb-6 flex items-center justify-between">
+                <Link
+                    href={
+                        searchParams.get('from') === 'new'
+                            ? ROUTES.adminNewStudents
+                            : ROUTES.adminStudents
+                    }
+                    className="flex items-center w-fit gap-3 hover:underline"
+                >
+                    <ArrowLeft className="w-5 h-5 text-gray-600" />
+                    <span className="text-[#020817]">Kembali</span>
+                </Link>
+
+                {!data?.isContacted && (
+                    <>
+                        <Skeleton loading={isLoading} className="h-4 w-24">
+                            <div
+                                className="flex items-center gap-2 cursor-pointer"
+                                onClick={() => setShowDialodContacted(true)}
+                            >
+                                <AlertCircleIcon className="size-4 text-primary" />
+                                <span className="text-sm text-primary">
+                                    Student belum pernah dihubungi
+                                </span>
+                            </div>
+                        </Skeleton>
+
+                        {showDialodContacted && (
+                            <DialogShowContacted
+                                id={data?.id || 0}
+                                open={showDialodContacted}
+                                onOpenChange={setShowDialodContacted}
+                            />
+                        )}
+                    </>
+                )}
+            </div>
             <div className="min-h-screen bg-gray-50">
                 <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Detail Student Section */}
                     <div className="lg:col-span-2 space-y-6">
                         <Skeleton className="h-72" loading={isLoading}>
                             <Card className="overflow-hidden">
-                                <div className="bg-secondary text-white p-4">
+                                <div className="bg-secondary text-white p-4 flex items-center justify-between">
                                     <h2 className="text-lg font-semibold">Detail Student</h2>
                                 </div>
                                 <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -294,7 +336,8 @@ export default function DashboardPage() {
                                         <>
                                             <p className="text-xs py-2 mt-5">
                                                 <Info className="w-4 h-4 inline mr-1" />
-                                                Anda belum melakukan placement test untuk murid ini
+                                                Anda belum melakukan penilaian placement test untuk
+                                                murid ini
                                             </p>
                                             <Button
                                                 disabled={!data?.latestResult?.placementTestId}
@@ -307,10 +350,10 @@ export default function DashboardPage() {
                                                         })
                                                     )
                                                 }
-                                                className="w-full mb-4"
+                                                className="w-full"
                                                 size={'lg'}
                                             >
-                                                Lanjut ke Placement Test
+                                                Nilai Placement Test
                                             </Button>
                                         </>
                                     )}
@@ -435,7 +478,7 @@ export default function DashboardPage() {
                                     </Dialog>
                                 </div>
                             </Card>
-                            {!data?.schedules.length && data?.self_schedule_payload && (
+                            {!!data?.self_schedule_payload?.items.length && (
                                 <StudentSelfScheduleAlert
                                     selfSchedule={data?.self_schedule_payload?.items || []}
                                     setIsOpen={setIsOpen}

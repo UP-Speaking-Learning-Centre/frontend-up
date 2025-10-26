@@ -3,11 +3,18 @@ import useGetTeacherAll from '@/features/admin/queries/useGetTeacherAll';
 import useGetProgram from '@/features/placement-test-admin/queries/use-get-program';
 import { useStudentsStore } from '../stores/students-store';
 
-const useFilterStudents = (setSearch: (key: string, value: any) => void, program: number) => {
+const useFilterStudents = (
+    setSearch: (key: string, value: any) => void,
+    program: number,
+    isNewStudent: boolean = false
+) => {
     const { data: programsData, isLoading } = useGetProgram();
-    const { data, isLoading: isLoadingTeacher } = useGetTeacherAll();    
+    const { data, isLoading: isLoadingTeacher } = useGetTeacherAll();
 
-    const setPagination = useStudentsStore(s => s.setPagination);
+    const setPaginationNewStudent = useStudentsStore(s => s.setPaginationNewStudent);
+    const setPaginationAll = useStudentsStore(s => s.setPagination);
+
+    const setPagination = isNewStudent ? setPaginationNewStudent : setPaginationAll;
 
     const onChangePage = (page: number) => {
         setPagination({ currentPage: page });

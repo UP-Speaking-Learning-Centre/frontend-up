@@ -50,13 +50,13 @@ const ScheduleCell = (props: ScheduleCellProps) => {
 
     return (
         <>
-            <td key={teacher} className="p-2">
-                <Skeleton className="h-14 w-full max-w-[200px]" loading={loading}>
+            <td key={teacher} className="p-2 w-[150px] max-w-[150px]">
+                <Skeleton className="h-14 w-full max-w-[150px]" loading={loading}>
                     {bookingInfo ? (
                         <div
                             onClick={onClickCell}
                             className={cn(
-                                'rounded-md p-2 max-w-[200px] min-h-14 relative cursor-pointer text-center flex flex-col justify-center items-center text-xs font-no',
+                                'rounded-md p-2 w-[150px] max-w-[150px] min-h-14 relative cursor-pointer text-center flex flex-col justify-center items-center text-xs font-no',
                                 color
                             )}
                         >

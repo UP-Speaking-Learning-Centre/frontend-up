@@ -74,6 +74,7 @@ const page = () => {
                     <TeacherManagementForm
                         teacherId={data?.teacher.id}
                         teacherName={data?.memberName}
+                        details={data}
                         errors={errors}
                         value={value}
                         onClose={handleResetModal}

@@ -88,6 +88,7 @@ export type RequestTeacherAdmin = {
     photo: File;
     teacherId: number;
     locationId: number;
+    speciality: string;
     isCoordinator: boolean;
 };
 export interface TeacherAdminSchedule {

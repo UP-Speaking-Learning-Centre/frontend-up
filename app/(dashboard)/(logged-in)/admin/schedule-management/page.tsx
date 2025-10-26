@@ -88,7 +88,10 @@ const Page = () => {
                             {/* Schedule Table for Current Day */}
                             <Card className="overflow-hidden">
                                 <div className="overflow-x-auto">
-                                    <table className="w-full">
+                                    <table
+                                        className="border-collapse"
+                                        style={{ tableLayout: 'fixed' }}
+                                    >
                                         <thead>
                                             <tr className="border-b bg-muted/50">
                                                 <th className="sr-only p-3 text-left font-medium text-muted-foreground"></th>
@@ -98,7 +101,7 @@ const Page = () => {
                                                             key={teacher[0]}
                                                             className="min-w-[140px] p-3 text-center font-medium text-muted-foreground"
                                                         >
-                                                            <div className="space-y-1 flex  max-w-[200px] items-center flex-col">
+                                                            <div className="space-y-1 flex w-[150px] max-w-[150px] items-center flex-col">
                                                                 <Skeleton
                                                                     loading={isLoading}
                                                                     className="h-6 w-20"
@@ -128,7 +131,7 @@ const Page = () => {
                                         <tbody>
                                             {timeSlots.map(timeSlot => (
                                                 <tr key={timeSlot.display} className="border-b">
-                                                    <td className="p-3 font-medium text-sm max-w-[200px] text-muted-foreground whitespace-nowrap">
+                                                    <td className="p-3 font-medium text-sm w-[150px] max-w-[150px] text-muted-foreground whitespace-nowrap">
                                                         <Skeleton
                                                             loading={isLoading}
                                                             className="h-14 w-20"

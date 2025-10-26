@@ -14,7 +14,10 @@ const usePostTeacher = () => {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            queryClient.invalidateQueries({ queryKey: [ENDPOINTS.fetchTeachers] });
+            Promise.all([
+                queryClient.invalidateQueries({ queryKey: [ENDPOINTS.fetchTeachers] }),
+                queryClient.invalidateQueries({ queryKey: ['teacher-schedule', data.locationId] }),
+            ]);
             return res.data;
         });
     };

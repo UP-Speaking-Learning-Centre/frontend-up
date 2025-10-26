@@ -17,21 +17,18 @@ const Overlay = ({ opacity = 100, show = false }: { opacity?: number; show?: boo
                 `bg-opacity-${opacity}`
             )}
         >
-            <Image
-                src={'/logo-black.png'}
-                width="80"
-                height="80"
-                alt="Logo UP"
-                className="animate-pulse"
-            />
+            <div className="relative size-20 max-md:size-16">
+                <Image src={'/logo-black.png'} fill alt="Logo UP" className="animate-pulse" />
+            </div>
             <div className="w-1 h-24 bg-primary rounded-xl animate-pulse"></div>
-            <Image
-                src={'/logo-cambridge.png'}
-                width="300"
-                height="80"
-                alt="Logo Cambridge"
-                className="animate-pulse"
-            />
+            <div className="relative w-72 h-16 max-md:w-60 max-md:h-14">
+                <Image
+                    src={'/logo-cambridge.png'}
+                    fill
+                    alt="Logo Cambridge"
+                    className="animate-pulse"
+                />
+            </div>
         </div>
     );
 };

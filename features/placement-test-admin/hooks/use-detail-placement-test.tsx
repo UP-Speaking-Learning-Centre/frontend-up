@@ -14,6 +14,7 @@ import useSavePlacementTest from '../queries/use-save-placement-test';
 import useUpdateStatus from '../queries/use-update-status';
 import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
 import { errorToast } from '@/lib/toast';
+import { PLACEMENT_TEST_FILTER_OPTIONS } from '@/constants/placement-test';
 
 const useDetailPlacementTest = () => {
     const questions = useDisplayedPlacementTestStore(s => s.questions);
@@ -46,6 +47,7 @@ const useDetailPlacementTest = () => {
     const handleError: SubmitErrorHandler<FormStatusManagement> = fields => {
         if (status !== 'graded' && status !== 'done_interview') return handleSave(status);
     };
+
     const handleSubmitStatus = async (status_: string) => {
         setState({
             status: status_,
@@ -53,7 +55,12 @@ const useDetailPlacementTest = () => {
 
         try {
             const res = await mutateAsync({ status: status_ });
-            toast.info(res.status, { position: 'top-center' });
+            toast.info(
+                `Status student berhasil ditandai sebagai ${
+                    PLACEMENT_TEST_FILTER_OPTIONS.find(opt => opt.value === res.status)?.name
+                }`,
+                { position: 'top-center', className: 'bg-green-50 text-green-600' }
+            );
             return;
         } catch (error) {
             errorToast((error as AxiosError).message);

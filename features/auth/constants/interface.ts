@@ -72,6 +72,7 @@ export interface ResponseUserDetail {
     id: number;
     name: string;
     phoneNumber: string;
+    isContacted: boolean;
     preferredGroupId: string | null;
     preferredGroupName: string | null;
     preferredProgramId: string | null;

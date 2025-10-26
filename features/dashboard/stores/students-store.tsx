@@ -17,8 +17,13 @@ interface StudentsStore {
         program: number | undefined;
         status: number | undefined;
     };
+    filterNewStudent: {
+        searchQuery: string | undefined;
+        program: number | undefined;
+    };
     onChangeFilter: (filter: string, value: any) => void;
     onChangeFilterPlacementTest: (filter: string, value: any) => void;
+    onChangeFilterNewStudent: (filter: string, value: any) => void;
 
     students: StudentType[];
     setStudents: (students: StudentType[]) => void;
@@ -26,11 +31,17 @@ interface StudentsStore {
     studentsPlacementTest: Partial<StudentPlacementTest>[];
     setStudentsPlacementTest: (students: Partial<StudentPlacementTest>[]) => void;
 
+    newStudents: StudentType[];
+    setNewStudents: (students: StudentType[]) => void;
+
     pagination: Pagination;
     setPagination: (pagination: Partial<Pagination>) => void;
 
     paginationPlacementTest: Pagination;
     setPaginationPlacementTest: (pagination: Partial<Pagination>) => void;
+
+    paginationNewStudent: Pagination;
+    setPaginationNewStudent: (pagination: Partial<Pagination>) => void;
 }
 
 export const useStudentsStore = create<StudentsStore>((set, get) => ({
@@ -46,6 +57,10 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
         mentors: [],
         searchQuery: '',
         status: undefined,
+    },
+    filterNewStudent: {
+        searchQuery: undefined,
+        program: undefined,
     },
     onChangeFilter: (filter: string, value: any) => {
         const getFilters = get().filters;
@@ -65,6 +80,15 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
             },
         });
     },
+    onChangeFilterNewStudent: (filter: string, value: any) => {
+        const getFilters = get().filterNewStudent;
+        set({
+            filterNewStudent: {
+                ...getFilters,
+                [filter]: value,
+            },
+        });
+    },
     students: [],
     setStudents: (students: StudentType[]) => {
         set({
@@ -75,6 +99,12 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
     setStudentsPlacementTest: (students: Partial<StudentType>[]) => {
         set({
             studentsPlacementTest: students,
+        });
+    },
+    newStudents: [],
+    setNewStudents: (students: StudentType[]) => {
+        set({
+            newStudents: students,
         });
     },
     pagination: { totalPages: 0, currentPage: 1, itemsPerPage: 10, itemCount: 0, totalItems: 0 },
@@ -97,6 +127,21 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
         set({
             paginationPlacementTest: {
                 ...get().paginationPlacementTest,
+                ...pagination,
+            },
+        });
+    },
+    paginationNewStudent: {
+        totalPages: 0,
+        currentPage: 1,
+        itemsPerPage: 10,
+        itemCount: 0,
+        totalItems: 0,
+    },
+    setPaginationNewStudent: (pagination: Partial<Pagination>) => {
+        set({
+            paginationNewStudent: {
+                ...get().paginationNewStudent,
                 ...pagination,
             },
         });

@@ -20,6 +20,7 @@ const SidebarItem = ({
     const isActive = pathname.startsWith(item.href);
     const setOpen = useDashboardLayoutStore(s => s.setOpenSidebar);
     const expandSidebar = useDashboardLayoutStore(s => s.expandSidebar);
+    const openSidebar = useDashboardLayoutStore(s => s.openSidebar);
 
     return (
         <div
@@ -42,12 +43,12 @@ const SidebarItem = ({
                 <item.icon
                     className={cn(
                         'shrink-0 transition-all size-5 duration-300',
-                        expandSidebar ? 'mr-3 ' : 'mr-0'
+                        expandSidebar || openSidebar ? 'mr-3 ' : 'mr-0'
                     )}
                 />
                 <span
                     className={cn(
-                        expandSidebar ? 'opacity-100' : 'opacity-0',
+                        expandSidebar || openSidebar ? 'opacity-100' : 'opacity-0',
                         'transition-all duration-300 whitespace-nowrap'
                     )}
                 >

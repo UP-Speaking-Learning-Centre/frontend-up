@@ -28,9 +28,11 @@ const useStudentDetail = () => {
                 toast(
                     <p>
                         Anda belum melakukan penilaian placement test untuk murid ini.
+                        <br />
+                        <br />
                         {data.latestResult?.placementTestId && (
                             <Link
-                                className="text-primary font-bold inline ml-1"
+                                className="text-primary font-bold inline"
                                 href={ROUTES.adminPlacementTestsId.expand({
                                     id: data?.latestResult?.placementTestId || 0,
                                 })}
@@ -39,7 +41,12 @@ const useStudentDetail = () => {
                             </Link>
                         )}
                     </p>,
-                    { position: 'top-center', icon: <Info /> }
+                    {
+                        position: 'top-center',
+                        duration: 5000,
+                        className: 'bg-red-50',
+                        icon: <Info />,
+                    }
                 );
             }
             setLocationId(data.self_schedule_payload?.items[0].locationId.toString() || '');

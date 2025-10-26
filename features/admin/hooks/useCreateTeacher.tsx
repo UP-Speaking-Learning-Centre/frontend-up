@@ -55,8 +55,9 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
                     message: 'Ukuran file melebihi batas',
                 })
                 .optional(),
-            teacherId: z.number().min(1, 'This field is required'),
-            locationId: z.number().min(1, 'This field is required'),
+            speciality: z.string().min(1, 'Harus diisi'),
+            teacherId: z.number().min(1, 'Harus diisi'),
+            locationId: z.number().min(1, 'Harus diisi'),
         })
         .superRefine((data, ctx) => {
             if (!id && !data.photo) {
@@ -129,9 +130,13 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
             )
                 .then(res => {
                     setTeacher([
-                        ...teacher.map(item =>
-                            item.id === id ? { ...res, id: teacher.length } : item
-                        ),
+                        ...teacher.map(item => {
+                            if (item.id === id) {
+                                return { ...item, ...res };
+                            }
+
+                            return item;
+                        }),
                     ]);
                     handleResetModal();
                 })
