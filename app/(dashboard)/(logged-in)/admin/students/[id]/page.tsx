@@ -10,6 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
 import { inter } from '@/constants/fonts';
 import { ROUTES } from '@/constants/routes';
+import { REGISTRATION_TYPE } from '@/constants/student';
 import AdminSelect from '@/features/admin/components/admin-select';
 import StudentSelfScheduleAlert from '@/features/admin/components/student-self-schedule-alert';
 import useChangeStudyGroup from '@/features/admin/hooks/useChangeStudyGroup';
@@ -19,6 +20,7 @@ import useGetLocation from '@/features/admin/queries/useGetLocation';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import { getDayOfWeek } from '@/lib/date';
 import { cn } from '@/lib/utils';
+import { getRegistrationType } from '@/utils/student.helper';
 import { AlertCircleIcon, Calendar, Clock, Info } from 'lucide-react';
 import moment from 'moment';
 import { useRouter } from 'next/navigation';
@@ -29,14 +31,8 @@ export default function DashboardPage() {
 
     const [trialClass, setTrialClass] = useState('');
 
-    const {
-        data,
-        locationId,
-        isLoading,
-        isLoadingStudyGroupDetail,
-        studyGroupDetail,
-        // setLocationId,
-    } = useStudentDetail();
+    const { data, locationId, isLoading, isLoadingStudyGroupDetail, studyGroupDetail } =
+        useStudentDetail();
     const { isEdit, setIsEdit, notes, setNotes, handleSave } = useEditNote(data?.notes);
     const {
         isOpen,
@@ -290,7 +286,8 @@ export default function DashboardPage() {
                                     </div>
                                 ))}
                                 <div className="m-4">
-                                    {!data?.levelId && !data?.self_schedule_payload && (
+                                    {getRegistrationType(data) ===
+                                        REGISTRATION_TYPE.placementTest && (
                                         <>
                                             <p className="text-xs py-2 mt-5">
                                                 <Info className="w-4 h-4 inline mr-1" />
@@ -314,7 +311,7 @@ export default function DashboardPage() {
                                             </Button>
                                         </>
                                     )}
-                                    {!!data?.schedules.length && (
+                                    {getRegistrationType(data) === REGISTRATION_TYPE.normal && (
                                         <Button
                                             disabled={!data?.levelId}
                                             onClick={() => setIsOpen(true)}
@@ -330,20 +327,6 @@ export default function DashboardPage() {
                                     <Dialog open={isOpen} onOpenChange={setIsOpen}>
                                         <DialogContent className={cn(inter.className)}>
                                             <DialogTitle>Ganti Kelompok</DialogTitle>
-                                            {/* {!data?.primaryStudyGroupId && (
-                                                <AdminSelect
-                                                    label="Lokasi"
-                                                    options={
-                                                        location?.map(loc => ({
-                                                            id: loc.id,
-                                                            name: loc.name,
-                                                        })) || []
-                                                    }
-                                                    value={locationId}
-                                                    onValueChange={setLocationId}
-                                                    loading={isLoadingLocation}
-                                                />
-                                            )} */}
                                             <div>
                                                 <Label className="font-medium">Lokasi</Label>
                                                 <Skeleton
@@ -435,7 +418,7 @@ export default function DashboardPage() {
                                     </Dialog>
                                 </div>
                             </Card>
-                            {!data?.schedules.length && data?.self_schedule_payload && (
+                            {getRegistrationType(data) === REGISTRATION_TYPE.selfSchedule && (
                                 <StudentSelfScheduleAlert
                                     selfSchedule={data?.self_schedule_payload?.items || []}
                                     setIsOpen={setIsOpen}

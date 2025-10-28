@@ -1,5 +1,3 @@
-import { ScheduleItem } from './schedule';
-
 export type StudentType = {
     group: string;
     parentPhoneNumber: string;
@@ -50,3 +48,8 @@ export type StudendOfStudyGrouResponse = {
     count: number;
     students: Array<StudentOfStudyGroup>;
 };
+
+export type StudentRegistrationType =
+    | 'Placement Test Registration'
+    | 'Self-scheduling Registration'
+    | 'Normal Registration';
