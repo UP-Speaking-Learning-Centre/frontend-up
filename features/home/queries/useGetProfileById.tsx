@@ -4,9 +4,8 @@ import ENDPOINTS from '@/constants/endpoints';
 import { ResponseUserDetail } from '@/features/auth/constants/interface';
 import api, { BaseService } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
 
-const useGetProfileById = (id:number) => {
+const useGetProfileById = (id: number) => {
     const getProfileById = async () => {
         return BaseService(async () => {
             const res = await api.get<ResponseUserDetail>(

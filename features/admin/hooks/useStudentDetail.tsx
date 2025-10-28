@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import useGetStudyGroupDetail from '../queries/useGetStudyGroupDetail';
-import useGetProfileById from '@/features/home/queries/useGetProfileById';
-import { useParams } from 'next/navigation';
-import { toast } from 'sonner';
-import Link from 'next/link';
 import { ROUTES } from '@/constants/routes';
+import useGetProfileById from '@/features/home/queries/useGetProfileById';
+import { getRegistrationType } from '@/utils/student.helper';
 import { Info } from 'lucide-react';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
+import useGetStudyGroupDetail from '../queries/useGetStudyGroupDetail';
 
 const useStudentDetail = () => {
     const [locationId, setLocationId] = useState('');
@@ -23,34 +24,33 @@ const useStudentDetail = () => {
     }, [studyGroupDetail]);
 
     useEffect(() => {
-        if (!!data?.id) {
-            if (!data.levelId && !data.self_schedule_payload) {
-                toast(
-                    <p>
-                        Anda belum melakukan penilaian placement test untuk murid ini.
-                        <br />
-                        <br />
-                        {data.latestResult?.placementTestId && (
-                            <Link
-                                className="text-primary font-bold inline"
-                                href={ROUTES.adminPlacementTestsId.expand({
-                                    id: data?.latestResult?.placementTestId || 0,
-                                })}
-                            >
-                                Lanjut ke Placement Test
-                            </Link>
-                        )}
-                    </p>,
-                    {
-                        position: 'top-center',
-                        duration: 5000,
-                        className: 'bg-red-50',
-                        icon: <Info />,
-                    }
-                );
-            }
-            setLocationId(data.self_schedule_payload?.items[0].locationId.toString() || '');
+        if (!data?.id) return;
+        if (getRegistrationType(data) === 'Placement Test Registration') {
+            toast(
+                <p>
+                    Anda belum melakukan penilaian placement test untuk murid ini.
+                    <br />
+                    <br />
+                    {data.latestResult?.placementTestId && (
+                        <Link
+                            className="text-primary font-bold inline"
+                            href={ROUTES.adminPlacementTestsId.expand({
+                                id: data?.latestResult?.placementTestId || 0,
+                            })}
+                        >
+                            Lanjut ke Placement Test
+                        </Link>
+                    )}
+                </p>,
+                {
+                    position: 'top-center',
+                    duration: 5000,
+                    className: 'bg-red-50',
+                    icon: <Info />,
+                }
+            );
         }
+        setLocationId(data.self_schedule_payload?.items[0].locationId.toString() || '');
     }, [data]);
 
     return {
