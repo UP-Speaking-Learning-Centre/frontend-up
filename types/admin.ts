@@ -75,6 +75,7 @@ export interface TeacherAdmin {
     memberName: string;
     isCoordinator: boolean;
     photoUrl: string | null;
+    speciality: string;
     teacher: {
         id: number;
         name: string;

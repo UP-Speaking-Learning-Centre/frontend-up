@@ -90,6 +90,7 @@ const useCreateTeacher = (setIsModalOpen: (val: boolean) => void) => {
             imageUrlToFile(data.photoUrl || '').then(res => res && setValue('photo', res));
             setValue('memberName', data?.memberName ?? '');
             setValue('photoLink', data?.photoUrl ?? '');
+            setValue('speciality', data?.speciality ?? '');
             // setValue('description', getOne?.description ?? '');
             setValue('teacherId', data?.teacher.id || 0);
             setValue('locationId', data?.location?.id || 0);

@@ -24,6 +24,7 @@ import useGetLocation from '@/features/placement-test-admin/queries/use-get-loca
 import { useScheduleManagementStore } from '@/features/schedule-management/stores/schedule-management-store';
 import AddNewStudyGroup from '@/features/schedule-management/components/add-new-study-group/form';
 import AddNewStudyGroupTrigger from '@/features/schedule-management/components/add-new-study-group/trigger';
+import TeacherScheduleGrid from '@/features/schedule-management/components/schedule-table';
 
 const Page = () => {
     const { data, isLoading: isLoadingSchedule } = useGetTeacherScheduleQuery();
@@ -72,96 +73,7 @@ const Page = () => {
                     <Legend />
                 </Skeleton>
 
-                <div className="space-y-8">
-                    {days.map((day, dayIndex) => (
-                        <div key={day} className="space-y-4">
-                            {/* Day Header */}
-                            <div className="flex items-center gap-4">
-                                <Skeleton loading={isLoading} className="h-8 w-32">
-                                    <h2 className="text-xl font-semibold text-foreground">
-                                        {dayNames[dayIndex]}
-                                    </h2>
-                                </Skeleton>
-                                <div className="flex-1 border-t border-2 border-border"></div>
-                            </div>
-
-                            {/* Schedule Table for Current Day */}
-                            <Card className="overflow-hidden">
-                                <div className="overflow-x-auto">
-                                    <table
-                                        className="border-collapse"
-                                        style={{ tableLayout: 'fixed' }}
-                                    >
-                                        <thead>
-                                            <tr className="border-b bg-muted/50">
-                                                <th className="sr-only p-3 text-left font-medium text-muted-foreground"></th>
-                                                {teachers.map(teacher => {
-                                                    return (
-                                                        <th
-                                                            key={teacher[0]}
-                                                            className="min-w-[140px] p-3 text-center font-medium text-muted-foreground"
-                                                        >
-                                                            <div className="space-y-1 flex w-[150px] max-w-[150px] items-center flex-col">
-                                                                <Skeleton
-                                                                    loading={isLoading}
-                                                                    className="h-6 w-20"
-                                                                >
-                                                                    <div className="font-semibold text-foreground">
-                                                                        {teacher[1]}
-                                                                    </div>
-                                                                </Skeleton>
-                                                                <Skeleton
-                                                                    loading={isLoading}
-                                                                    className="h-4 w-12"
-                                                                >
-                                                                    <div className="text-xs">
-                                                                        {scheduleData?.find(
-                                                                            (item: ScheduleItem) =>
-                                                                                item.teacherMemberName ===
-                                                                                teacher[1]
-                                                                        )?.teacherAlias || ''}
-                                                                    </div>
-                                                                </Skeleton>
-                                                            </div>
-                                                        </th>
-                                                    );
-                                                })}
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {timeSlots.map(timeSlot => (
-                                                <tr key={timeSlot.display} className="border-b">
-                                                    <td className="p-3 font-medium text-sm w-[150px] max-w-[150px] text-muted-foreground whitespace-nowrap">
-                                                        <Skeleton
-                                                            loading={isLoading}
-                                                            className="h-14 w-20"
-                                                        >
-                                                            {timeSlot.display}
-                                                        </Skeleton>
-                                                    </td>
-                                                    {teachers.map((teacher, index) => {
-                                                        return (
-                                                            <ScheduleCell
-                                                                loading={isLoading}
-                                                                key={`${teacher}-${index}`}
-                                                                bookingInfo={getBookingInfo(
-                                                                    day,
-                                                                    timeSlot,
-                                                                    teacher[1]
-                                                                )}
-                                                                teacher={teacher[1]}
-                                                            />
-                                                        );
-                                                    })}
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </Card>
-                        </div>
-                    ))}
-                </div>
+                {data && <TeacherScheduleGrid />}
             </div>
         </DashboardContentLayout>
     );

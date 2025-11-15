@@ -19,6 +19,7 @@ module.exports = {
                 raleway: ['Raleway', 'sans'],
                 merriweather: ['Merriweather', 'sans'],
                 oswald: ['Oswald', 'sans'],
+                rubik: ['Rubik', 'sans'],
             },
             colors: {
                 border: 'hsl(var(--border))',

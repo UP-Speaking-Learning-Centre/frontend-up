@@ -75,7 +75,7 @@ export default function FAQTestimonialsPage() {
             <div className="relative isolate overflow-hidden bg-[#254116] py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-5xl lg:mx-0">
-                        <h1 className="text-4xl font-oswald uppercase font-semibold tracking-wide text-white sm:text-6xl">
+                        <h1 className="text-4xl font-rubik uppercase font-semibold tracking-wide text-white sm:text-5xl">
                             FAQ & Testimonials
                         </h1>
                         <p className="mt-6 text-lg leading-8 w-2/3 text-gray-300">
@@ -98,7 +98,7 @@ export default function FAQTestimonialsPage() {
                         </p>
                         <p className="mt-6 text-lg leading-8 text-gray-600">
                             Don't just take our word for it. See what our graduates have to say
-                            about their experience with UP Education.
+                            about their experience with UP SLC.
                         </p>
                     </div>
                     <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 md:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">

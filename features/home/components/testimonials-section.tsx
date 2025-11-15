@@ -35,7 +35,7 @@ export default function TestimonialsSection() {
                                     </div>
                                     <div className="mt-6 flex items-center gap-x-4">
                                         <div>
-                                            <div className="font-medium underline text-xl text-gray-900">
+                                            <div className="font-medium text-xl text-gray-900">
                                                 {testimonial.name}
                                             </div>
                                             <div className="text-gray-400 text-sm">

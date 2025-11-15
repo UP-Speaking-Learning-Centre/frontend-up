@@ -37,7 +37,11 @@ const LocationComponent = ({
                     }
                 )}
             >
-                <div className="relative w-full border-primary border-2 rounded-md overflow-hidden aspect-[320/240]">
+                <div
+                    className={cn(
+                        'relative w-full border-primary border-2 rounded-md overflow-hidden aspect-[320/240]'
+                    )}
+                >
                     <ImageWithFallback
                         src={location.locationPhoto}
                         fallbackSrc="/location.svg"
@@ -47,7 +51,7 @@ const LocationComponent = ({
                 </div>
                 <p
                     className={cn('text-sm mt-4 mb-4', {
-                        'text-[#CE6439] font-semibold text-base': isSelected,
+                        'text-secondary font-semibold text-base': isSelected,
                     })}
                 >
                     {locationName}

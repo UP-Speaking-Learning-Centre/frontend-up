@@ -196,73 +196,37 @@ const StudyGroupDetail = ({
                 </div>
                 <div className="bg-secondary rounded-md p-3">
                     <div className="rounded-md h-full flex flex-col justify-between bg-white p-2 space-y-3">
-                        <div className="flex flex-col">
-                            <p className="text-base font-semibold">Jadwal 1</p>
-                            <div className="text-base text-[#020817]">
-                                <Skeleton className="w-20 h-4" loading={isLoading}>
-                                    <div className="flex items-center justify-between gap-1">
-                                        <p className="text-xs text-neutral-500">Hari:</p>
-                                        <p className="text-sm">
-                                            {renderDayToIndonesian(
-                                                selectedStudyGroup?.schedules[0]
-                                                    ?.dayOfWeek as string
-                                            )}
-                                        </p>
+                        {selectedStudyGroup?.schedules.map((item, index) => {
+                            return (
+                                <div className="flex flex-col">
+                                    <p className="text-base font-semibold">Jadwal {index + 1}</p>
+                                    <div className="text-base text-[#020817]">
+                                        <Skeleton className="w-20 h-4" loading={isLoading}>
+                                            <div className="flex items-center justify-between gap-1">
+                                                <p className="text-xs text-neutral-500">Hari:</p>
+                                                <p className="text-sm">
+                                                    {renderDayToIndonesian(
+                                                        item?.dayOfWeek as string
+                                                    )}
+                                                </p>
+                                            </div>
+                                        </Skeleton>
+                                        <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
+                                            <div className="flex items-center justify-between gap-1">
+                                                <p className="text-xs text-neutral-500">Mulai:</p>
+                                                <p className="text-sm">{item?.startTime}</p>
+                                            </div>
+                                        </Skeleton>
+                                        <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
+                                            <div className="flex items-center justify-between gap-1">
+                                                <p className="text-xs text-neutral-500">Selesai:</p>
+                                                <p className="text-sm">{item?.endTime}</p>
+                                            </div>
+                                        </Skeleton>
                                     </div>
-                                </Skeleton>
-                                <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
-                                    <div className="flex items-center justify-between gap-1">
-                                        <p className="text-xs text-neutral-500">Mulai:</p>
-                                        <p className="text-sm">
-                                            {selectedStudyGroup?.schedules[0]?.startTime}
-                                        </p>
-                                    </div>
-                                </Skeleton>
-                                <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
-                                    <div className="flex items-center justify-between gap-1">
-                                        <p className="text-xs text-neutral-500">Selesai:</p>
-                                        <p className="text-sm">
-                                            {selectedStudyGroup?.schedules[0]?.endTime}
-                                        </p>
-                                    </div>
-                                </Skeleton>
-                            </div>
-                        </div>
-                        {selectedStudyGroup?.schedules.length === 2 && (
-                            <div className="flex flex-col">
-                                <p className="text-base font-semibold">Jadwal 2</p>
-                                <div className="text-base text-[#020817]">
-                                    <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
-                                        <div className="flex items-center justify-between gap-1">
-                                            <p className="text-xs text-neutral-500">Hari:</p>
-                                            <p className="text-sm">
-                                                {renderDayToIndonesian(
-                                                    selectedStudyGroup?.schedules[1]
-                                                        ?.dayOfWeek as string
-                                                )}
-                                            </p>
-                                        </div>
-                                    </Skeleton>
-                                    <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
-                                        <div className="flex items-center justify-between gap-1">
-                                            <p className="text-xs text-neutral-500">Mulai:</p>
-                                            <p className="text-sm">
-                                                {selectedStudyGroup?.schedules[1]?.startTime}
-                                            </p>
-                                        </div>
-                                    </Skeleton>
-
-                                    <Skeleton className="w-20 mt-2 h-4" loading={isLoading}>
-                                        <div className="flex items-center justify-between gap-1">
-                                            <p className="text-xs text-neutral-500">Selesai:</p>
-                                            <p className="text-sm">
-                                                {selectedStudyGroup?.schedules[1]?.endTime}
-                                            </p>
-                                        </div>
-                                    </Skeleton>
                                 </div>
-                            </div>
-                        )}
+                            );
+                        })}
                     </div>
                 </div>
             </div>
@@ -284,13 +248,15 @@ const StudyGroupDetail = ({
                                       <p className="font-normal">
                                           {index + 1}. {student.studentName}
                                       </p>
-                                      {!isTeacherManagement && <MinusCircle
-                                          className="text-primary cursor-pointer"
-                                          onClick={() => {
-                                              setOpenDeleteConfirmation(true);
-                                              setSelectedStudent(student);
-                                          }}
-                                      />}
+                                      {!isTeacherManagement && (
+                                          <MinusCircle
+                                              className="text-primary cursor-pointer"
+                                              onClick={() => {
+                                                  setOpenDeleteConfirmation(true);
+                                                  setSelectedStudent(student);
+                                              }}
+                                          />
+                                      )}
                                   </div>
                               ))}
                     </div>

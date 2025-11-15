@@ -38,7 +38,7 @@ export const useCreateNewStudyGroupMutation = (): UseMutationResult => {
         gradeId: Number(formValue.gradeId),
         packageId: Number(formValue.packageId),
         teacherTeamMemberId: Number(formValue.teacherTeamMemberId),
-        scheduleIds: [formValue.scheduleId1, formValue.scheduleId2],
+        scheduleIds: [formValue.scheduleId1, formValue.scheduleId2, formValue.scheduleId2],
     };
 
     return useMutation({

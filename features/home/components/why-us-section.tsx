@@ -22,12 +22,19 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
+import WhyUsComponent from './why-us-component';
+
+export type Feature = {
+    name: string;
+    description: string;
+    icon: React.ComponentType<{ className?: string }>;
+};
 
 const features = [
     {
         name: 'Fun Learning',
         description:
-            'Belajar dengan metode interaktif & seru, bikin anak betah dan gak merasa tertekan.',
+            'Belajar dengan metode <span class="text-primary">interaktif & seru</span>, bikin anak betah dan gak merasa tertekan.',
         icon: Sparkles,
     },
     // {
@@ -50,25 +57,25 @@ const features = [
     {
         name: 'Cambridge Curriculum',
         description:
-            'Materi belajar pakai kurikulum Cambridge sejak 2023, standar internasional yang terbukti efektif.',
+            'Materi belajar pakai <span class="text-primary">kurikulum Cambridge sejak 2023</span>, standar internasional yang terbukti efektif.',
         icon: GraduationCap,
     },
     {
         name: 'CEFR Leveling',
         description:
-            'Level pembelajaran dari Pre-A1 sampai C1 (advanced) biar sesuai dengan standar dunia.',
+            'Level pembelajaran dari <span class="text-primary">Pre-A1 sampai C1 (advanced)</span> biar sesuai dengan standar dunia.',
         icon: BookOpenText,
     },
     {
         name: 'HOTS Method',
         description:
-            'Higher Order Thinking Skills jadi standar, bikin siswa gak cuma hafal teori, tapi bisa mikir kritis & aplikatif.',
+            'Higher Order Thinking Skills jadi standar, bikin siswa gak cuma hafal teori, tapi bisa <span class="text-primary">mikir kritis & aplikatif</span>.',
         icon: Lightbulb,
     },
     {
         name: 'Shooting Examination',
         description:
-            'Ujian unik berbasis shooting video — boost confidence siswa & bukti nyata kemampuan speaking mereka.',
+            '<span class="text-primary">Ujian unik berbasis shooting video</span> — boost confidence siswa & bukti nyata kemampuan speaking mereka.',
         icon: Clapperboard,
     },
     // {
@@ -92,7 +99,7 @@ const features = [
     {
         name: 'UP Club',
         description:
-            'Komunitas seru: mulai dari UPWatchClub, ReadingUpClub, MakeUpClub, CookingUpClub, SocioUp, dll. Bikin belajar jadi lebih hidup & menyenangkan.',
+            'Komunitas seru: mulai dari <span class="text-primary">UPWatchClub, ReadingUpClub, MakeUpClub, CookingUpClub, SocioUp, dll.</span> Bikin belajar jadi lebih hidup & menyenangkan.',
         icon: UsersRound,
     },
 ];
@@ -118,7 +125,24 @@ export default function WhyUsSection() {
                     />
                 </div>
 
-                <div className="mx-auto max-lg:hidden mt-24 space-y-10">
+                <div className="flex flex-col gap-4 max-w-4xl justify-center mx-auto mt-24">
+                    <WhyUsComponent
+                        features={[features[0], features[1]]}
+                        maxWidthOpen="7"
+                        initialActiveFeature={0}
+                    />
+                    <WhyUsComponent
+                        features={[features[2], features[3]]}
+                        maxWidthOpen="8"
+                        initialActiveFeature={1}
+                    />
+                    <WhyUsComponent
+                        features={[features[4], features[5]]}
+                        maxWidthOpen="7"
+                        initialActiveFeature={0}
+                    />
+                </div>
+                {/* <div className="mx-auto max-lg:hidden mt-24 space-y-10">
                     <div className="max-lg:hidden mx-auto grid grid-cols-3 gap-4 max-w-4xl">
                         {features.slice(0, 3).map((feature, index) => (
                             <div
@@ -233,7 +257,7 @@ export default function WhyUsSection() {
                             </div>
                         ))}
                     </dl>
-                </div>
+                </div> */}
 
                 <div className="mt-16 flex justify-center">
                     <Link href={ROUTES.about}>

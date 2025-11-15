@@ -141,9 +141,8 @@ export default function AboutPage() {
             <div className="relative isolate overflow-hidden bg-[#254116] py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-5xl lg:mx-0">
-                        <h1 className="text-5xl font-oswald uppercase font-semibold tracking-wide text-white sm:text-6xl">
-                            Turning Fear into Fluency, <br />
-                            Building Confidence for the Future.
+                        <h1 className="text-4xl font-rubik uppercase font-semibold tracking-wide text-white sm:text-5xl">
+                            Building Confidence <br /> for the Future.
                         </h1>
                         <p className="mt-6 text-lg leading-8 w-2/3 text-gray-300">
                             Kami percaya bahwa setiap anak bisa naik level bukan cuma dalam grammar,

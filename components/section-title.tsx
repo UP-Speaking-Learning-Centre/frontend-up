@@ -12,7 +12,7 @@ const SectionTitle = ({
     description?: string;
 }) => {
     return (
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="mx-auto max-w-4xl text-center">
             {title && (
                 <h2
                     className={cn(
@@ -26,7 +26,7 @@ const SectionTitle = ({
             {subtitle && (
                 <p
                     className={cn(
-                        'mt-2 text-3xl font-bold tracking-tight font-outfit sm:text-4xl',
+                        'mt-2 text-2xl font-bold tracking-tight font-rubik sm:text-3xl',
                         variant === 'black' ? 'text-gray-900' : 'text-white'
                     )}
                 >
@@ -36,7 +36,7 @@ const SectionTitle = ({
             {description && (
                 <p
                     className={cn(
-                        'mt-1 text-lg leading-8',
+                        'mt-4 text-lg leading-8',
                         variant === 'black' ? 'text-gray-600' : 'text-white'
                     )}
                 >

@@ -2,7 +2,7 @@ export interface ScheduleItem {
     scheduleId: number;
     teacherMemberName: string;
     teacherAlias: string;
-    teacherMemberId: string;
+    teacherMemberId: string | number;
     day: string;
     startTime: string;
     endTime: string;

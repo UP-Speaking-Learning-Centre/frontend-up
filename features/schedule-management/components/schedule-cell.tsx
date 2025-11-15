@@ -92,7 +92,7 @@ const ScheduleCell = (props: ScheduleCellProps) => {
 
 export default ScheduleCell;
 
-const PriorityTag = () => {
+export const PriorityTag = () => {
     return (
         <div className="h-5 w-5 absolute -top-1 -right-1 rounded bg-yellow-100 border border-yellow-500 flex items-center justify-center text-yellow-600">
             <Star className="w-3 h-3" />

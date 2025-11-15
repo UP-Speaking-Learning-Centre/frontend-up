@@ -36,7 +36,7 @@ export default function LocationsSection() {
                         variant="white"
                         title="Our Locations"
                         subtitle="Find Us Everywhere"
-                        description="Gak perlu jauh-jauh! UP! sudah hadir di beberapa titik strategis biar lebih dekat sama Moms Dad & anak. Tinggal pilih lokasi terdekat dan mulai perjalanan upgrade bahasa Inggrissekarang."
+                        description="Gak perlu jauh-jauh! UP! sudah hadir di beberapa titik strategis biar lebih dekat sama Moms Dad & anak. Tinggal pilih lokasi terdekat dan mulai perjalanan upgrade bahasa Inggris sekarang."
                     />
                 </div>
                 <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
@@ -70,7 +70,7 @@ export default function LocationsSection() {
                                     href={location.mapUrl}
                                     target="_blank"
                                 >
-                                    Open in google map
+                                    Lihat di Google Maps
                                 </Link>
                             </div>
                         </div>

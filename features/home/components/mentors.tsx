@@ -17,7 +17,7 @@ const Mentor = ({
     return (
         <div
             key={mentor.name}
-            className="bg-white relative rounded-xl flex flex-col overflow-hidden border-primary border"
+            className="bg-white relative rounded-xl flex flex-col overflow-hidden border-primary border-2"
         >
             <div className="relative h-64 w-full overflow-hidden">
                 <Image
@@ -30,8 +30,8 @@ const Mentor = ({
             </div>
             <div className="p-3 grow flex flex-col">
                 <div className="grow z-20">
-                    <h3 className="text-lg font-bold  text-gray-900">{mentor.name}</h3>
-                    <p className="text-sm font-medium  text-[#CE6439]">{mentor.role}</p>
+                    <h3 className="text-lg font-bold text-gray-900">{mentor.name}</h3>
+                    <p className="text-sm font-medium text-secondary">{mentor.role}</p>
                 </div>
             </div>
         </div>
