@@ -10,6 +10,7 @@ import { useGetTeacherScheduleQuery } from '../../queries/use-get-teacher-schedu
 import { useScheduleOptions } from '../../hooks/use-map-teacher';
 import { dayNames, days } from '@/constants/schedule';
 import { useNewStudyGroupStore } from '../../stores/new-study-group-store';
+import moment from 'moment';
 
 export const SelectDayTwo = ({
     value,
@@ -82,12 +83,20 @@ export const SelectTimeTwo = ({
     return (
         <div className="flex-1 w-full">
             <Label className="font-normal">Waktu</Label>
-            <Select onValueChange={value => onChange(value)} value={value}>
-                <SelectTrigger className="mt-1">
-                    <SelectValue placeholder="Pilih Jadwal" />
-                </SelectTrigger>
-                <SelectContent>{renderOptions()}</SelectContent>
-            </Select>
+            <div className="flex gap-2 items-center">
+                <div className="flex-1">
+                    <Select onValueChange={value => onChange(value)} value={value}>
+                        <SelectTrigger className="mt-1">
+                            <SelectValue placeholder="Pilih Jadwal" />
+                        </SelectTrigger>
+                        <SelectContent>{renderOptions()}</SelectContent>
+                    </Select>
+                </div>
+                <p className="text-sm text-neutral-500">s/d</p>
+                <p className="w-fit font-medium text-base pr-2">
+                    {value ? moment(value, 'HH:mm:ss').add(90, 'minutes').format('HH:mm') : '__:__'}
+                </p>
+            </div>
         </div>
     );
 };

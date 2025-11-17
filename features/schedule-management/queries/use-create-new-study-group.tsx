@@ -16,6 +16,7 @@ import api from '@/lib/api';
 import { CreateStudyGroupPayload, CreateStudyGroupResponse } from '@/types/study-group';
 import { useNewStudyGroupStore } from '../stores/new-study-group-store';
 import { toast } from 'sonner';
+import moment from 'moment';
 
 const fetchStudentOfStudyGroup = async (
     data: CreateStudyGroupPayload
@@ -29,6 +30,24 @@ export const useCreateNewStudyGroupMutation = (): UseMutationResult => {
     const resetAll = useNewStudyGroupStore(s => s.resetAll);
     const queryClient = useQueryClient();
 
+    const customSchedule1 = formValue.isCustomTime1
+        ? {
+              dayOfWeek: formValue.day1,
+              startTime: moment(formValue.time1, 'HH:mm:ss').format('HH:mm:ss'),
+              endTime: moment(formValue.time1, 'HH:mm:ss').add(90, 'minutes').format('HH:mm:ss'),
+              locationId: Number(formValue.locationId),
+          }
+        : null;
+
+    const customSchedule2 = formValue.isCustomTime2
+        ? {
+              dayOfWeek: formValue.day2,
+              startTime: moment(formValue.time2, 'HH:mm:ss').format('HH:mm:ss'),
+              endTime: moment(formValue.time2, 'HH:mm:ss').add(90, 'minutes').format('HH:mm:ss'),
+              locationId: Number(formValue.locationId),
+          }
+        : null;
+
     const payload: CreateStudyGroupPayload = {
         name: formValue.title,
         description: formValue.description,
@@ -38,7 +57,8 @@ export const useCreateNewStudyGroupMutation = (): UseMutationResult => {
         gradeId: Number(formValue.gradeId),
         packageId: Number(formValue.packageId),
         teacherTeamMemberId: Number(formValue.teacherTeamMemberId),
-        scheduleIds: [formValue.scheduleId1, formValue.scheduleId2, formValue.scheduleId2],
+        scheduleIds: [formValue.scheduleId1, formValue.scheduleId2].filter(item => item > 0),
+        schedules: [customSchedule1, customSchedule2].filter(item => item !== null),
     };
 
     return useMutation({

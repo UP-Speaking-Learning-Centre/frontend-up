@@ -24,7 +24,7 @@ const LocationComponent = ({
         <div
             onClick={() => onClick()}
             className={cn(
-                'flex flex-col items-center basis-1/3 cursor-pointer text-center transition-all duration-300 gap-2 group',
+                'flex flex-col items-center basis-1/5 cursor-pointer text-center transition-all duration-300 gap-2 group',
                 'hover:border-[#CE6439]'
             )}
         >

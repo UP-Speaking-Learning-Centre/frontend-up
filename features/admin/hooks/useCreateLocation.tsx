@@ -134,7 +134,7 @@ const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
         }
         postLocation(value, {
             onSuccess: () => {
-                toast.success('Detail lokasi berhasil diubah', {
+                toast.success('Lokasi berhasil ditambahkan', {
                     position: 'top-center',
                     className: 'bg-green-200 border-green-300',
                 });
@@ -144,9 +144,7 @@ const useCreateLocation = (setIsModalOpen: (val: boolean) => void) => {
             .then(res => {
                 handleResetModal();
             })
-            .catch(err =>
-                errorToast(err?.message)
-            );
+            .catch(err => errorToast(err?.message));
     };
     const handleError: SubmitErrorHandler<Omit<LocationAdmin, 'id'>> = error => {
         console.log(error);

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useGetTeacherScheduleQuery } from '../queries/use-get-teacher-schedule';
 import {
     getUniqueTeachers,
@@ -20,6 +20,29 @@ function TeacherScheduleGrid() {
 
     const totalHours = 13; // 08:00 to 21:00 is 13 hours
     const gridHeight = totalHours * 80; // 80px per hour
+
+    const generateSchedule = useCallback(
+        ({ teacherId, day }: { teacherId: string; day: string }) => {
+            if (data) {
+                const schedules = getSchedulesByTeacherAndDay(data, teacherId, day);
+
+                return schedules.map(schedule => {
+                    const topOffset = timeToPixelOffsetFixed(schedule.startTime);
+                    const height = calculateBlockHeight(schedule.startTime, schedule.endTime);
+
+                    return (
+                        <ClassBlock
+                            key={schedule.scheduleId}
+                            classItem={schedule}
+                            topOffset={topOffset}
+                            height={height}
+                        />
+                    );
+                });
+            }
+        },
+        [data]
+    );
 
     return (
         <div className="space-y-8">
@@ -75,12 +98,12 @@ function TeacherScheduleGrid() {
                             {teachers.map(teacher => (
                                 <div
                                     key={teacher.id}
-                                    className="flex-1 min-w-48 border-r border-border [&:nth-child(2)]:border-l last:border-r-0 relative"
+                                    className="w-[200px] border-r border-border [&:nth-child(2)]:border-l relative"
                                 >
                                     {/* Column header */}
                                     <div
                                         key={teacher.id}
-                                        className="min-w-[140px] flex items-center justify-center p-3 text-center font-medium text-muted-foreground"
+                                        className="w-[200px] flex items-center justify-center p-3 text-center font-medium text-muted-foreground"
                                     >
                                         <div className="space-y-1 flex items-center flex-col">
                                             <Skeleton
@@ -106,7 +129,7 @@ function TeacherScheduleGrid() {
                                             height: `${gridHeight}px`,
                                             position: 'relative',
                                         }}
-                                        className="border-t border-border"
+                                        className="border-t border-border w-[200px]"
                                     >
                                         {/* Background grid lines */}
                                         {(() => {
@@ -115,9 +138,9 @@ function TeacherScheduleGrid() {
                                                 items.push(
                                                     <div
                                                         key={`bg-${hour}`}
-                                                        className={`h-20 border-b border-border ${
+                                                        className={`h-20 w-[200px] border-b border-border ${
                                                             hour % 2 === 0
-                                                                ? 'bg-background'
+                                                                ? 'bg-muted/10'
                                                                 : 'bg-muted/30'
                                                         }`}
                                                     />
@@ -127,29 +150,11 @@ function TeacherScheduleGrid() {
                                         })()}
 
                                         {/* Scheduled classes */}
-                                        <div className="absolute inset-0 top-0">
+                                        <div className="absolute w-[200px] inset-0 top-0">
                                             {data &&
-                                                getSchedulesByTeacherAndDay(
-                                                    data,
-                                                    teacher.id,
-                                                    day
-                                                ).map(schedule => {
-                                                    const topOffset = timeToPixelOffsetFixed(
-                                                        schedule.startTime
-                                                    );
-                                                    const height = calculateBlockHeight(
-                                                        schedule.startTime,
-                                                        schedule.endTime
-                                                    );
-
-                                                    return (
-                                                        <ClassBlock
-                                                            key={schedule.scheduleId}
-                                                            classItem={schedule}
-                                                            topOffset={topOffset}
-                                                            height={height}
-                                                        />
-                                                    );
+                                                generateSchedule({
+                                                    teacherId: teacher.id,
+                                                    day,
                                                 })}
                                         </div>
                                     </div>

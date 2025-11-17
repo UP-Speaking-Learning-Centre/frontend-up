@@ -1,6 +1,7 @@
 import ENDPOINTS from '@/constants/endpoints';
 import api from '@/lib/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 const useDeleteLocation = () => {
     const queryClient = useQueryClient();

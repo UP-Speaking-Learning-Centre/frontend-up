@@ -198,7 +198,7 @@ const StudyGroupDetail = ({
                     <div className="rounded-md h-full flex flex-col justify-between bg-white p-2 space-y-3">
                         {selectedStudyGroup?.schedules.map((item, index) => {
                             return (
-                                <div className="flex flex-col">
+                                <div className="flex flex-col" key={index}>
                                     <p className="text-base font-semibold">Jadwal {index + 1}</p>
                                     <div className="text-base text-[#020817]">
                                         <Skeleton className="w-20 h-4" loading={isLoading}>

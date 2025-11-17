@@ -66,9 +66,9 @@ const Page = () => {
                             )}
                         >
                             <div className="flex flex-col items-start gap-2">
-                                <Label>Search Name</Label>
+                                <Label>Nama</Label>
                                 <Input
-                                    placeholder="Search..."
+                                    placeholder="Cari Nama"
                                     onChange={debounce(e => onChangeSearch(e.target.value), 500)}
                                 />
                             </div>

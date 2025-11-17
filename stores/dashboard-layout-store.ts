@@ -17,7 +17,7 @@ interface DashboardLayoutStore {
 export const useDashboardLayoutStore = create<DashboardLayoutStore>(set => ({
     openSidebar: false,
     setOpenSidebar: (openSidebar: boolean) => set({ openSidebar }),
-    expandSidebar: true,
+    expandSidebar: false,
     setExpandSidebar: (expandSidebar: boolean) => set({ expandSidebar }),
     dashboardHeaderTitle: '',
     setDashboardHeaderTitle: (title: string) => set({ dashboardHeaderTitle: title }),

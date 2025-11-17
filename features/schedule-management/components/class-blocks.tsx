@@ -52,7 +52,7 @@ export function ClassBlock({ classItem, topOffset, height }: ClassBlockProps) {
                         <p className="font-semibold text-sm line-clamp-2">
                             {classItem.studyGroup || 'No Group'}
                         </p>
-                        <p className="text-xs opacity-90">Students: {classItem.totalStudent}</p>
+                        <p className="text-xs opacity-90">Student(s): {classItem.totalStudent}</p>
                     </div>
                     <div
                         className={`text-xs transition-opacity duration-200 ${

@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import ImageWithFallback from '@/components/ui/image-with-fallback';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -26,13 +27,16 @@ import { useLocationManagementStore } from '@/features/admin/stores/location';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import { cn } from '@/lib/utils';
 import clsx from 'clsx';
-import { Edit, LucideArrowUpRightFromSquare, Plus, Trash2, X } from 'lucide-react';
+import { AlertCircle, Edit, LucideArrowUpRightFromSquare, Plus, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 const page = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [errorModalDelete, setErrorModalDelete] = useState(false);
+    const [errorDeleteMessage, setErrorDeleteMessage] = useState('');
 
     const { isLoading } = useGetLocation();
     const {
@@ -48,6 +52,20 @@ const page = () => {
     } = useCreateLocation(setIsModalOpen);
     const { mutateAsync } = useDeleteLocation();
     const { errors } = formState;
+
+    const onDeleteLocation = (id: number) => {
+        mutateAsync(id, {
+            onError: () => {
+                setErrorModalDelete(true);
+            },
+            onSuccess: () => {
+                toast.success('Lokasi berhasil dihapus', {
+                    position: 'top-center',
+                    className: 'bg-green-200 border-green-300',
+                });
+            },
+        });
+    };
 
     const location = useLocationManagementStore(s => s.location);
 
@@ -118,7 +136,9 @@ const page = () => {
                                                     <AlertDialogFooter>
                                                         <AlertDialogCancel>Batal</AlertDialogCancel>
                                                         <AlertDialogAction
-                                                            onClick={() => mutateAsync(location.id)}
+                                                            onClick={() =>
+                                                                onDeleteLocation(location.id)
+                                                            }
                                                         >
                                                             Hapus
                                                         </AlertDialogAction>
@@ -173,6 +193,20 @@ const page = () => {
                         )}
                     </div>
                 </div>
+
+                {/* Alert */}
+                <Dialog open={errorModalDelete} onOpenChange={setErrorModalDelete}>
+                    <DialogContent hideCloseButton>
+                        <DialogTitle className="text-lg sr-only">Lokasi gagal dihapus</DialogTitle>
+                        <DialogDescription asChild className="text-base text-center mt-3">
+                            <div className="flex items-center flex-col justify-center gap-2">
+                                <AlertCircle className="size-12 text-red-500" />
+                                Terjadi kesalahan saat menghapus lokasi. Terdapat teacher yang
+                                terhubung dengan lokasi ini.
+                            </div>
+                        </DialogDescription>
+                    </DialogContent>
+                </Dialog>
                 {isModalOpen && (
                     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
                         <div className="bg-white rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">

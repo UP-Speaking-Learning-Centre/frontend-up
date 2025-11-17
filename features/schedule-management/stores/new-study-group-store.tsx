@@ -21,6 +21,8 @@ export interface InitialValue {
     listTimes: string[];
     scheduleId1: number;
     scheduleId2: number;
+    isCustomTime1: boolean;
+    isCustomTime2: boolean;
 }
 interface StudyGroupStore {
     formValue: InitialValue;
@@ -181,6 +183,8 @@ const initialValue: InitialValue = {
     listTimes: [],
     scheduleId1: 0,
     scheduleId2: 0,
+    isCustomTime1: false,
+    isCustomTime2: false,
 };
 
 export const useNewStudyGroupStore = create<StudyGroupStore>()(set => ({

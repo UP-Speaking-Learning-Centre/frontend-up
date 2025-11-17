@@ -106,6 +106,12 @@ export type CreateStudyGroupPayload = {
     packageId: number;
     teacherTeamMemberId: number;
     scheduleIds: number[];
+    schedules?: {
+        dayOfWeek: string;
+        startTime: string;
+        endTime: string;
+        locationId: number;
+    }[];
 };
 
 export type AssignStudentToStudyGroupPayload = {

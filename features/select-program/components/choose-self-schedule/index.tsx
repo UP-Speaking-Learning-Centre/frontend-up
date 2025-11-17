@@ -21,7 +21,7 @@ const ChooseSelfSchedule = () => {
     return (
         <div id={CHOOSE_SELF_SCHEDULE_STEP} className="py-32">
             <Title
-                title="Jadwal Belajar Sendiri"
+                title="Pilih Jadwal Belajar"
                 description="Pilih jadwal belajar sendiri sesuai dengan kebutuhan Anda."
             />
 

@@ -98,7 +98,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                                 colSpan={columns.length}
                                                 className="p-4 text-center"
                                             >
-                                                No data available
+                                                Data Kosong
                                             </td>
                                         </tr>
                                     )}
