@@ -1,8 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
+import { REGISTRATION_TYPE } from '@/constants/student';
 import { useUpdateContactedStatusMutation } from '@/features/admin/hooks/use-update-contacted-status';
+import { ResponseUserDetail } from '@/features/auth/constants/interface';
 import useGetProfileById from '@/features/home/queries/useGetProfileById';
+import { getDayOfWeek } from '@/lib/date';
+import { getRegistrationType, getWhatsappTemplate } from '@/utils/student.helper';
 import { CopyIcon } from 'lucide-react';
 import React from 'react';
 import { toast } from 'sonner';
@@ -10,6 +14,7 @@ import { toast } from 'sonner';
 const DialogShowContacted = ({
     open,
     onOpenChange,
+
     id,
 }: {
     open: boolean;
@@ -34,11 +39,9 @@ const DialogShowContacted = ({
         });
     };
 
-    const text = `Hello, Kak ${data?.name}\nThis is Admin from UP SLC.\n\nTerima kasih sudah tertarik belajar Bahasa Inggris dengan kami!\nKami mendapatkan informasi pendaftaran kelas kakak dari website, dengan detail:\n\nProgram: ${data?.program}\nKelas: ${data?.group}`;
-
     const handelCopyTemplate = async () => {
         try {
-            await navigator.clipboard.writeText(text);
+            await navigator.clipboard.writeText(getWhatsappTemplate(data as ResponseUserDetail));
             toast.success('Template berhasil disalin', {
                 className: 'bg-green-200 text-green-800 border-green-300',
                 position: 'top-center',
@@ -63,7 +66,10 @@ const DialogShowContacted = ({
                     <div
                         className="mt-2 w-full p-2 bg-neutral-200 rounded-lg"
                         dangerouslySetInnerHTML={{
-                            __html: text.replace(/\n/g, '<br />'),
+                            __html: getWhatsappTemplate(data as ResponseUserDetail).replace(
+                                /\n/g,
+                                '<br />'
+                            ),
                         }}
                     ></div>
                 </div>

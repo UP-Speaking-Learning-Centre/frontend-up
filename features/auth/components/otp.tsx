@@ -44,7 +44,7 @@ const OTPComponent = () => {
                             <form onSubmit={handleSubmit(verifyOTP)} className="space-y-6">
                                 <div>
                                     <Label htmlFor="otp-code" className="flex items-center mb-2">
-                                        <Shield className="w-4 h-4 mr-2 text-[#CE6439]" />
+                                        <Shield className="w-4 h-4 mr-2 text-primary" />
                                         Verification Code
                                     </Label>
                                     <Input
@@ -66,7 +66,7 @@ const OTPComponent = () => {
                                 <Button
                                     type="submit"
                                     // disabled={isLoading || otpCode.length !== 6}
-                                    className="w-full bg-[#CE6439] hover:bg-[#CE6439]/90"
+                                    className="w-full bg-primary hover:bg-primary/90"
                                 >
                                     {isLoading ? 'Verifying...' : 'Verify Code'}
                                 </Button>
@@ -84,7 +84,7 @@ const OTPComponent = () => {
                                                 type="button"
                                                 onClick={() => handlePostOTP(phone)}
                                                 disabled={isLoading}
-                                                className="text-[#CE6439] hover:underline font-medium"
+                                                className="text-primary hover:underline font-medium"
                                             >
                                                 Resend Code
                                             </button>

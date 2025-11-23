@@ -133,10 +133,10 @@ export default function ForgotPasswordPage() {
         <div className="w-full max-w-md">
             <div className="text-center mb-8">
                 <Link href="/" className="inline-flex items-center mb-6">
-                    <div className="h-10 w-10 rounded-full bg-[#CE6439] flex items-center justify-center text-white font-bold text-lg mr-3">
+                    <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg mr-3">
                         UP
                     </div>
-                    <span className="text-2xl font-bold text-[#254116]">UP Education</span>
+                    <span className="text-2xl font-bold text-secondary">UP Education</span>
                 </Link>
                 <h2 className="text-3xl font-bold text-gray-900">Reset Password</h2>
                 <p className="mt-2 text-gray-600">We'll help you get back into your account</p>
@@ -158,7 +158,7 @@ export default function ForgotPasswordPage() {
                         <form onSubmit={handlePhoneSubmit} className="space-y-6">
                             <div>
                                 <Label htmlFor="phone" className="flex items-center mb-2">
-                                    <Phone className="w-4 h-4 mr-2 text-[#CE6439]" />
+                                    <Phone className="w-4 h-4 mr-2 text-primary" />
                                     Phone Number
                                 </Label>
                                 <Input
@@ -178,7 +178,7 @@ export default function ForgotPasswordPage() {
                             <Button
                                 type="submit"
                                 disabled={isLoading || !phoneNumber}
-                                className="w-full bg-[#CE6439] hover:bg-[#CE6439]/90"
+                                className="w-full bg-primary hover:bg-primary/90"
                             >
                                 {isLoading ? 'Sending OTP...' : 'Send OTP'}
                             </Button>
@@ -195,7 +195,7 @@ export default function ForgotPasswordPage() {
 
                             <div>
                                 <Label htmlFor="otp-code" className="flex items-center mb-2">
-                                    <Shield className="w-4 h-4 mr-2 text-[#CE6439]" />
+                                    <Shield className="w-4 h-4 mr-2 text-primary" />
                                     Kode OTP
                                 </Label>
                                 <Input
@@ -216,7 +216,7 @@ export default function ForgotPasswordPage() {
                             <Button
                                 type="submit"
                                 disabled={isLoading || otpCode.length !== 6}
-                                className="w-full bg-[#CE6439] hover:bg-[#CE6439]/90"
+                                className="w-full bg-primary hover:bg-primary/90"
                             >
                                 {isLoading ? 'Verifying...' : 'Verifikasi OTP'}
                             </Button>
@@ -234,7 +234,7 @@ export default function ForgotPasswordPage() {
                                             type="button"
                                             onClick={sendOTP}
                                             disabled={isLoading}
-                                            className="text-[#CE6439] hover:underline font-medium"
+                                            className="text-primary hover:underline font-medium"
                                         >
                                             Kirim Ulang OTP
                                         </button>

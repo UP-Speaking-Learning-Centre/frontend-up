@@ -92,29 +92,32 @@ export type RequestTeacherAdmin = {
     speciality: string;
     isCoordinator: boolean;
 };
+
+export type SchduleAdmin = {
+    scheduleId: number;
+    dayOfWeek: string;
+    startTime: string;
+    endTime: string;
+    durationMinutes: number;
+    isFull: boolean;
+    hasStudyGroup: boolean;
+    location: {
+        id: number;
+        name: string;
+    };
+    studyGroup: {
+        id: number;
+        name: string;
+        packageId: number;
+        packageName: string;
+        isPriority: boolean;
+    } | null;
+    totalActiveStudents: number;
+};
+
 export interface TeacherAdminSchedule {
     teacherTeamMember: Partial<TeacherAdmin>;
-    schedules: {
-        scheduleId: number;
-        dayOfWeek: string;
-        startTime: string;
-        endTime: string;
-        durationMinutes: number;
-        isFull: boolean;
-        hasStudyGroup: boolean;
-        location: {
-            id: number;
-            name: string;
-        };
-        studyGroup: {
-            id: number;
-            name: string;
-            packageId: number;
-            packageName: string;
-            isPriority: boolean;
-        } | null;
-        totalActiveStudents: number;
-    }[];
+    schedules: SchduleAdmin[];
 }
 
 export interface PriceData {

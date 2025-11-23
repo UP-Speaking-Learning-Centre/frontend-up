@@ -32,8 +32,8 @@ const PackageCards = ({ isFromPlacement = false }: { isFromPlacement?: boolean }
                     key={item.id}
                     className={cn(
                         'basis-[calc(30%-18px)]',
-                        'flex flex-col w-full cursor-pointer overflow-hidden rounded-lg border-2 border-[#E2E8F0] hover:translate-y-[-5px] transition-all shadow-md hover:shadow-xl hover:border-[#CE6439]',
-                        isPackageSelected && 'border-[#CE6439] border-[3px] bg-primary/20'
+                        'flex flex-col w-full cursor-pointer overflow-hidden rounded-lg border-2 border-[#E2E8F0] hover:translate-y-[-5px] transition-all shadow-md hover:shadow-xl hover:border-primary',
+                        isPackageSelected && 'border-primary border-[3px] bg-primary/20'
                     )}
                     onClick={() =>
                         handleNextStepAction({
@@ -45,7 +45,7 @@ const PackageCards = ({ isFromPlacement = false }: { isFromPlacement?: boolean }
                     <div
                         className={cn(
                             'bg-secondary p-4 text-white font-medium text-lg',
-                            isPackageSelected && 'border-[#CE6439] border-b-[3px]'
+                            isPackageSelected && 'border-primary border-b-[3px]'
                         )}
                     >
                         {item.name}
@@ -62,7 +62,7 @@ const PackageCards = ({ isFromPlacement = false }: { isFromPlacement?: boolean }
                                     </div>
                                 ))}
                         </div>
-                        <div className="p-6 border bg-[#CE6439] rounded-md">
+                        <div className="p-6 border bg-primary rounded-md">
                             <Label className="text-xs text-white">Cocok untuk:</Label>
                             <div className="font-semibold leading-6 text-white mt-1">
                                 {item.description}

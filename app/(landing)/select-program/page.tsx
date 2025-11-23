@@ -31,7 +31,7 @@ export default function SelectProgramPage() {
 
     return (
         <>
-            <div className="relative isolate overflow-hidden bg-[#254116] py-24 sm:py-32">
+            <div className="relative isolate overflow-hidden bg-secondary py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-5xl lg:mx-0">
                         <h1 className="text-4xl font-rubik uppercase font-semibold tracking-wide text-white sm:text-5xl">

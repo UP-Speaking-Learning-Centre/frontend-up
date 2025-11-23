@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { days, timeSlots } from '@/constants/schedule';
 import { ScheduleItem } from '@/types/schedule';
+import { SchduleAdmin } from '@/types/admin';
 
 const GRID_HEIGHT = 80;
 export interface TimeSlot {
@@ -48,17 +49,17 @@ export function timeToPixelOffset(time: string, dayStartTime: string): number {
 }
 
 export function timeToPixelOffsetFixed(time: string): number {
-    const startSeconds = timeToSeconds('05:00:00');
+    const startSeconds = timeToSeconds('08:00:00');
     const currentSeconds = timeToSeconds(time);
     const diffSeconds = currentSeconds - startSeconds;
-    return (diffSeconds / 3600) * GRID_HEIGHT;
+    return (diffSeconds / 3600) * GRID_HEIGHT - 1;
 }
 
 export function calculateBlockHeight(startTime: string, endTime: string): number {
     const startSeconds = timeToSeconds(startTime);
     const endSeconds = timeToSeconds(endTime);
     const durationSeconds = endSeconds - startSeconds;
-    return (durationSeconds / 3600) * GRID_HEIGHT;
+    return (durationSeconds / 3600) * GRID_HEIGHT - 1;
 }
 
 export function getEarliestTimeForDay(schedules: ScheduleItem[], day: string): string {
@@ -80,7 +81,7 @@ export function getLatestTimeForDay(schedules: ScheduleItem[], day: string): str
 export function getFixedDayRange(): { start: string; end: string } {
     return {
         start: '08:00:00',
-        end: '21:00:00',
+        end: '22:00:00',
     };
 }
 

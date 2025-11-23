@@ -1,5 +1,9 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import Mentor from '@/features/home/components/mentors';
+import { useGetAllTeacher } from '@/features/home/queries/get-all-teacher';
+import { useGetTeacherScheduleQuery } from '@/features/schedule-management/queries/use-get-teacher-schedule';
 import { CheckCircle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -135,10 +139,13 @@ export const mentors = [
 ];
 
 export default function AboutPage() {
+    const { data } = useGetAllTeacher();
+
+    console.log(data);
     return (
         <>
             {/* Hero Section */}
-            <div className="relative isolate overflow-hidden bg-[#254116] py-24 sm:py-32">
+            <div className="relative isolate overflow-hidden bg-secondary py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-5xl lg:mx-0">
                         <h1 className="text-4xl font-rubik uppercase font-semibold tracking-wide text-white sm:text-5xl">
@@ -155,10 +162,10 @@ export default function AboutPage() {
             {/* About Section */}
             <div className="overflow-hidden bg-white py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                    <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
-                        <div className="lg:pr-8 lg:pt-4">
-                            <div className="lg:max-w-lg">
-                                <h2 className="text-base font-semibold leading-7 text-[#CE6439]">
+                    <div className="mx-auto grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-5">
+                        <div className="lg:pr-8 lg:pt-4 lg:col-span-3">
+                            <div>
+                                <h2 className="text-base font-semibold leading-7 text-primary">
                                     Our Story
                                 </h2>
                                 <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -187,7 +194,7 @@ export default function AboutPage() {
                                     {values.map(value => (
                                         <div key={value.name} className="relative pl-9">
                                             <dt className="inline font-semibold text-gray-900">
-                                                <CheckCircle className="absolute left-1 top-1 h-5 w-5 text-[#CE6439]" />
+                                                <CheckCircle className="absolute left-1 top-1 h-5 w-5 text-primary" />
                                                 {value.name}
                                             </dt>{' '}
                                             <dd className="inline">{value.description}</dd>
@@ -200,21 +207,13 @@ export default function AboutPage() {
                                 </p>
                             </div>
                         </div>
-                        <div className="relative">
-                            <Image
-                                src="/placeholder.svg?height=800&width=1200"
-                                alt="About UP Education"
-                                className="w-full rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-                                width={2432}
-                                height={1442}
-                            />
-                            <Image
-                                src="/placeholder.svg?height=800&width=1200"
-                                alt="About UP Education"
-                                className="w-full rounded-xl shadow-xl mt-12 ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-                                width={2432}
-                                height={1442}
-                            />
+                        <div className="relative lg:col-span-2">
+                            <div className="relative rounded-xl overflow-hidden shadow-xl ring-1 ring-gray-400/10 mt-12 w-full sm:mx-auto sm:w-8/12 lg:w-full aspect-[3/4]">
+                                <Image src="/pic-3.jpeg" alt="About UP Education" fill />
+                            </div>
+                            <div className="relative rounded-xl overflow-hidden shadow-xl ring-1 ring-gray-400/10 mt-12 w-full sm:mx-auto sm:w-8/12 lg:w-full aspect-[1442/2432]">
+                                <Image src="/pic-2.jpeg" alt="About UP Education" fill />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,9 +223,7 @@ export default function AboutPage() {
             <div className="bg-gray-50 py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-2xl lg:text-center">
-                        <h2 className="text-base font-semibold leading-7 text-[#CE6439]">
-                            Our Team
-                        </h2>
+                        <h2 className="text-base font-semibold leading-7 text-primary">Our Team</h2>
                         <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                             Meet Our Expert Mentors
                         </p>
@@ -237,14 +234,14 @@ export default function AboutPage() {
                             mentor perjalanan belajar.
                         </p>
                     </div>
-                    <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
-                        {mentors.map(mentor => (
-                            <Mentor mentor={mentor} key={mentor.name} />
+                    <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-4 md:grid-cols-2">
+                        {data?.map(mentor => (
+                            <Mentor mentor={mentor} key={mentor.id} />
                         ))}
                     </div>
                     <div className="mt-12 flex justify-center">
                         <Link href="/programs">
-                            <Button className="bg-[#CE6439] hover:bg-[#CE6439]/90">
+                            <Button className="bg-primary hover:bg-primary/90">
                                 Explore Our Programs
                             </Button>
                         </Link>

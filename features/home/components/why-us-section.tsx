@@ -159,14 +159,14 @@ export default function WhyUsSection() {
                             >
                                 <div
                                     className={cn(
-                                        'flex shrink-0 h-10 w-10 items-center justify-center rounded-lg bg-[#254116]',
+                                        'flex shrink-0 h-10 w-10 items-center justify-center rounded-lg bg-secondary',
                                         activeFeature === feature.name && 'bg-white'
                                     )}
                                 >
                                     <feature.icon
                                         className={cn(
                                             'h-6 w-6 text-white',
-                                            activeFeature === feature.name && 'text-[#254116]'
+                                            activeFeature === feature.name && 'text-secondary'
                                         )}
                                         aria-hidden="true"
                                     />
@@ -185,7 +185,7 @@ export default function WhyUsSection() {
 
                     <div
                         className={cn(
-                            'max-w-4xl border-[#254116] border-2 rounded-md mx-auto p-6 flex flex-col items-center justify-center text-center font-semibold'
+                            'max-w-4xl border-secondary border-2 rounded-md mx-auto p-6 flex flex-col items-center justify-center text-center font-semibold'
                         )}
                     >
                         <div className="text-2xl">
@@ -210,14 +210,14 @@ export default function WhyUsSection() {
                                 <div
                                     className={cn(
                                         'flex shrink-0 h-10 w-10 items-center justify-center rounded-lg ',
-                                        activeFeature === feature.name ? 'bg-white' : 'bg-[#254116]'
+                                        activeFeature === feature.name ? 'bg-white' : 'bg-secondary'
                                     )}
                                 >
                                     <feature.icon
                                         className={cn(
                                             'h-6 w-6 ',
                                             activeFeature === feature.name
-                                                ? 'text-[#254116]'
+                                                ? 'text-secondary'
                                                 : 'text-white'
                                         )}
                                         aria-hidden="true"
@@ -240,7 +240,7 @@ export default function WhyUsSection() {
                     <dl className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-16">
                         {features.map((feature, index) => (
                             <div key={index} className="relative flex items-start gap-4">
-                                <div className="flex shrink-0 h-10 w-10 items-center justify-center rounded-lg bg-[#254116]">
+                                <div className="flex shrink-0 h-10 w-10 items-center justify-center rounded-lg bg-secondary">
                                     <feature.icon
                                         className="h-6 w-6 text-white"
                                         aria-hidden="true"

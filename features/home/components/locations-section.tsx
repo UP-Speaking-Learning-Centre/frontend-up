@@ -8,21 +8,21 @@ const locations = [
         city: 'Kuningan 1',
         address:
             'Jl. Aruji Kartawinata Dalam No.19 , Kuningan, Kec. Kuningan, Kabupaten Kuningan, Jawa Barat',
-        image: '/placeholder.svg?height=300&width=400',
+        image: '/kuningan-1.jpg',
         mapUrl: 'https://maps.app.goo.gl/X1T1FTcSiazf5f1U9',
     },
     {
         city: 'Kuningan 2 (Soon)',
         address:
             'Jl. Aruji Kartawinata No.X, Kuningan, Kec. Kuningan, Kabupaten Kuningan, Jawa Barat 45511',
-        image: '/placeholder.svg?height=300&width=400',
+        image: '/loc.png',
         mapUrl: 'https://maps.app.goo.gl/fWfGkcu7tPYM4vLj6',
     },
     {
         city: 'Luragung',
         address:
             'Jl. Raya Luragung - Kuningan, Sindangsuka, Kec. Luragung, Kabupaten Kuningan, Jawa Barat 45581 (sebrang Kolam Renang Tirta Agung Mas)',
-        image: '/placeholder.svg?height=300&width=400',
+        image: '/luragung.jpg',
         mapUrl: 'https://maps.app.goo.gl/c9Av9zLYduEzu3P6A',
     },
 ];
@@ -43,20 +43,22 @@ export default function LocationsSection() {
                     {locations.map(location => (
                         <div
                             key={location.city}
-                            className="flex flex-col overflow-hidden rounded-lg shadow-lg"
+                            className="flex flex-col border-4 border-primary/80 overflow-hidden rounded-lg shadow-lg"
                         >
-                            <div className="relative h-48">
-                                <Image
-                                    src={location.image || '/placeholder.svg'}
-                                    alt={`${location.city} campus`}
-                                    fill
-                                    className="object-cover"
-                                />
+                            <div className="p-2">
+                                <div className="relative rounded-lg overflow-hidden aspect-[320/240]">
+                                    <Image
+                                        src={location.image || '/placeholder.svg'}
+                                        alt={`${location.city} campus`}
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </div>
                             </div>
                             <div className="flex flex-1 flex-col justify-between bg-white p-6">
                                 <div className="flex-1">
                                     <div className="flex items-center">
-                                        <MapPin className="h-5 w-5 text-[#CE6439]" />
+                                        <MapPin className="h-5 w-5 text-primary" />
                                         <h3 className="ml-2 text-xl font-semibold text-gray-900">
                                             {location.city}
                                         </h3>

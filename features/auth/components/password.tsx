@@ -40,7 +40,7 @@ const Password = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="mt-2">
                             <Label htmlFor={PASSWORD} className="flex items-center mb-2">
-                                <Lock className="w-4 h-4 mr-2 text-[#CE6439]" />
+                                <Lock className="w-4 h-4 mr-2 text-primary" />
                                 {isNewAccount ? 'Password Baru' : 'Password'}
                             </Label>
                             <div className="relative">
@@ -81,7 +81,7 @@ const Password = () => {
                                         htmlFor={CONFIRM_PASSWORD}
                                         className="flex items-center mb-2"
                                     >
-                                        <Lock className="w-4 h-4 mr-2 text-[#CE6439]" />
+                                        <Lock className="w-4 h-4 mr-2 text-primary" />
                                         Konfirmasi Password
                                     </Label>
                                     <div className="relative">
@@ -128,7 +128,7 @@ const Password = () => {
                         <Button
                             type="submit"
                             disabled={isLoading || !isDirty}
-                            className="w-full bg-[#CE6439] hover:bg-[#CE6439]/90"
+                            className="w-full bg-primary hover:bg-primary/90"
                         >
                             {isLoading
                                 ? 'Checking...'
@@ -142,7 +142,7 @@ const Password = () => {
                         <div className="text-center mt-4">
                             <Link
                                 href="/forgot-password"
-                                className="text-sm text-[#CE6439] hover:underline font-medium"
+                                className="text-sm text-primary hover:underline font-medium"
                             >
                                 Forgot your password?
                             </Link>

@@ -25,7 +25,7 @@ const ChooseSelfSchedule = () => {
                 description="Pilih jadwal belajar sendiri sesuai dengan kebutuhan Anda."
             />
 
-            <div className="grid mt-10 grid-cols-2 gap-4 max-w-2xl mx-auto">
+            <div className="grid mt-10 md:grid-cols-2 gap-4 max-w-2xl mx-auto">
                 <SelectScheduleWrapper />
             </div>
 

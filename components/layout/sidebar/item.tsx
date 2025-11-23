@@ -28,15 +28,15 @@ const SidebarItem = ({
                 inter.className,
                 'px-2 relative',
                 isActive &&
-                    'after:absolute after:bottom-0 after:top-0 after:left-0 after:w-1 after:bg-[#CE6439] after:rounded-r-md'
+                    'after:absolute after:bottom-0 after:top-0 after:left-0 after:w-1 after:bg-primary after:rounded-r-md'
             )}
         >
             <Link
                 href={item.href}
                 className={`w-full justify-start font-normal rounded-md text-sm flex items-center px-5 py-3 ${
                     isActive
-                        ? 'bg-[#CE6439] text-white border-r-2 border-[#CE6439]'
-                        : 'text-white hover:bg-[#CE6439]/70'
+                        ? 'bg-primary text-white border-r-2 border-primary'
+                        : 'text-white hover:bg-primary/70'
                 }`}
                 onClick={() => setOpen(false)}
             >

@@ -24,7 +24,7 @@ export default function PartnersSection() {
                             className="col-span-1 flex justify-center bg-[#F8FAFC] py-8 rounded-xl"
                         >
                             <div className="flex flex-col items-center">
-                                <p className="text-3xl font-semibold text-[#CE6439]">
+                                <p className="text-3xl font-semibold text-primary">
                                     {partner.value}
                                 </p>
                                 <p className="text-sm font-medium leading-7 text-[#4B5563]">

@@ -8,6 +8,7 @@ interface StudentsStore {
         mentors: { id: number; name: string }[];
         searchQuery: string | undefined;
         program: number | undefined;
+        localSearchQuery: string | undefined;
     };
 
     filterPlacementTest: {
@@ -16,6 +17,7 @@ interface StudentsStore {
         searchQuery: string | undefined;
         program: number | undefined;
         status: number | undefined;
+        localSearchQuery: string | undefined;
     };
     filterNewStudent: {
         searchQuery: string | undefined;
@@ -50,6 +52,7 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
         mentors: [],
         searchQuery: undefined,
         program: undefined,
+        localSearchQuery: '',
     },
     filterPlacementTest: {
         group: undefined,
@@ -57,18 +60,20 @@ export const useStudentsStore = create<StudentsStore>((set, get) => ({
         mentors: [],
         searchQuery: '',
         status: undefined,
+        localSearchQuery: '',
     },
     filterNewStudent: {
         searchQuery: undefined,
         program: undefined,
     },
     onChangeFilter: (filter: string, value: any) => {
-        const getFilters = get().filters;
-        set({
-            filters: {
-                ...getFilters,
-                [filter]: value,
-            },
+        set(prev => {
+            return {
+                filters: {
+                    ...prev.filters,
+                    [filter]: value,
+                },
+            };
         });
     },
     onChangeFilterPlacementTest: (filter: string, value: any) => {

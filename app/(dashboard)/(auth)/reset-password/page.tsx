@@ -73,10 +73,10 @@ export default function ResetPasswordPage() {
         <div className="w-full max-w-md">
             <div className="text-center mb-8">
                 <Link href="/" className="inline-flex items-center mb-6">
-                    <div className="h-10 w-10 rounded-full bg-[#CE6439] flex items-center justify-center text-white font-bold text-lg mr-3">
+                    <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-lg mr-3">
                         UP
                     </div>
-                    <span className="text-2xl font-bold text-[#254116]">UP Education</span>
+                    <span className="text-2xl font-bold text-secondary">UP Education</span>
                 </Link>
                 <h2 className="text-3xl font-bold text-gray-900">Create New Password</h2>
                 <p className="mt-2 text-gray-600">Set a new password for your account</p>
@@ -90,7 +90,7 @@ export default function ResetPasswordPage() {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <Label htmlFor="password" className="flex items-center mb-2">
-                                <Lock className="w-4 h-4 mr-2 text-[#CE6439]" />
+                                <Lock className="w-4 h-4 mr-2 text-primary" />
                                 New Password
                             </Label>
                             <div className="relative">
@@ -119,7 +119,7 @@ export default function ResetPasswordPage() {
 
                         <div>
                             <Label htmlFor="confirmPassword" className="flex items-center mb-2">
-                                <Lock className="w-4 h-4 mr-2 text-[#CE6439]" />
+                                <Lock className="w-4 h-4 mr-2 text-primary" />
                                 Confirm Password
                             </Label>
                             <div className="relative">
@@ -175,7 +175,7 @@ export default function ResetPasswordPage() {
                         <Button
                             type="submit"
                             disabled={isLoading}
-                            className="w-full bg-[#CE6439] hover:bg-[#CE6439]/90"
+                            className="w-full bg-primary hover:bg-primary/90"
                         >
                             {isLoading ? 'Resetting Password...' : 'Reset Password'}
                         </Button>

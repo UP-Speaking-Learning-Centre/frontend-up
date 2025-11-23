@@ -79,12 +79,12 @@ function TeacherScheduleGrid() {
                                             key="empty"
                                         ></div>,
                                     ];
-                                    for (let hour = 5; hour <= 22; hour++) {
+                                    for (let hour = 8; hour <= 22; hour++) {
                                         const timeStr = `${String(hour).padStart(2, '0')}:00`;
                                         labels.push(
                                             <div
                                                 key={timeStr}
-                                                className="h-20 px-2 py-2 border-t border-r border-border text-xs text-muted-foreground font-medium flex items-center justify-center"
+                                                className="h-20 px-2 py-2 border-t border-x-[1px] border-border text-xs text-muted-foreground font-medium flex items-center justify-center"
                                             >
                                                 {timeStr}
                                             </div>
@@ -98,7 +98,7 @@ function TeacherScheduleGrid() {
                             {teachers.map(teacher => (
                                 <div
                                     key={teacher.id}
-                                    className="w-[200px] border-r border-border [&:nth-child(2)]:border-l relative"
+                                    className="w-[200px] shrink-0 border-x-[1px] border-border relative"
                                 >
                                     {/* Column header */}
                                     <div
@@ -134,7 +134,7 @@ function TeacherScheduleGrid() {
                                         {/* Background grid lines */}
                                         {(() => {
                                             const items = [];
-                                            for (let hour = 5; hour < 22; hour++) {
+                                            for (let hour = 8; hour < 22; hour++) {
                                                 items.push(
                                                     <div
                                                         key={`bg-${hour}`}
@@ -150,7 +150,7 @@ function TeacherScheduleGrid() {
                                         })()}
 
                                         {/* Scheduled classes */}
-                                        <div className="absolute w-[200px] inset-0 top-0">
+                                        <div className="absolute w-[198px] inset-0 top-0">
                                             {data &&
                                                 generateSchedule({
                                                     teacherId: teacher.id,

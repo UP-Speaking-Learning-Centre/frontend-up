@@ -72,7 +72,7 @@ export default function FAQTestimonialsPage() {
     return (
         <>
             {/* Hero Section */}
-            <div className="relative isolate overflow-hidden bg-[#254116] py-24 sm:py-32">
+            <div className="relative isolate overflow-hidden bg-secondary py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-5xl lg:mx-0">
                         <h1 className="text-4xl font-rubik uppercase font-semibold tracking-wide text-white sm:text-5xl">
@@ -90,7 +90,7 @@ export default function FAQTestimonialsPage() {
             <div className="bg-gray-50 py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-2xl text-center">
-                        <h2 className="text-base font-semibold leading-7 text-[#CE6439]">
+                        <h2 className="text-base font-semibold leading-7 text-primary">
                             Testimonials
                         </h2>
                         <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -135,7 +135,7 @@ export default function FAQTestimonialsPage() {
             <div className="bg-white py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-2xl text-center">
-                        <h2 className="text-base font-semibold leading-7 text-[#CE6439]">
+                        <h2 className="text-base font-semibold leading-7 text-primary">
                             “No worries, we’ve got the answers.”
                         </h2>
                         <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -165,7 +165,7 @@ export default function FAQTestimonialsPage() {
             {/* CTA Section */}
             <div className="bg-white">
                 <div className="mx-auto max-w-7xl py-24 sm:px-6 sm:py-32 lg:px-8">
-                    <div className="relative isolate overflow-hidden bg-[#CE6439] px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
+                    <div className="relative isolate overflow-hidden bg-primary px-6 py-24 text-center shadow-2xl sm:rounded-3xl sm:px-16">
                         <h2 className="mx-auto max-w-2xl text-3xl font-bold tracking-tight text-white sm:text-4xl">
                             Ready to transform your future?
                         </h2>

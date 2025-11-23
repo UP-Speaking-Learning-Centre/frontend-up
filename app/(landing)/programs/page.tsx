@@ -17,7 +17,7 @@ const programs = [
         name: 'School Program',
         longDescription:
             'Dirancang khusus untuk anak usia TK hingga SMA dan diselenggarakan secara offline sepenuhnya. Program ini menggunakan kurikulum dari Cambridge University Press, dengan sistem leveling CEFR (Pre-A1 hingga C1). Menggunakan metode 90 Minutes of Happiness, setiap kelas dikemas seru dan aplikatif untuk membangun kepercayaan diri siswa.',
-        imageUrl: '/placeholder.svg?height=400&width=600',
+        imageUrl: '/school.jpg',
         duration: '48 Meetings (6 months)',
         format: '90 Minutes/Session , Offline',
     },
@@ -26,7 +26,7 @@ const programs = [
         name: 'Regular Program',
         longDescription:
             'Diarahkan untuk remaja dan dewasa yang ingin belajar bahasa Inggris secara efektif dan terstruktur. Dengan metode 90 Minutes of Happiness, program ini membantu siswa meningkatkan fluency dan rasa percaya diri berbicara dalam konteks akademik maupun profesional.',
-        imageUrl: '/placeholder.svg?height=400&width=600',
+        imageUrl: '/regluar.jpeg',
         duration: '16 weeks',
         format: '90 Minutes/Session , Offline',
     },
@@ -84,7 +84,7 @@ export default function ProgramsPage() {
     return (
         <>
             {/* Hero Section */}
-            <div className="relative isolate overflow-hidden bg-[#254116] py-24 sm:py-32">
+            <div className="relative isolate overflow-hidden bg-secondary py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-5xl lg:mx-0">
                         <h1 className="text-4xl font-rubik uppercase font-semibold tracking-wide text-white sm:text-5xl">
@@ -103,7 +103,7 @@ export default function ProgramsPage() {
             <div className="bg-white py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-2xl text-center">
-                        <h2 className="text-base font-semibold leading-7 text-[#CE6439]">
+                        <h2 className="text-base font-semibold leading-7 text-primary">
                             Explore Programs
                         </h2>
                         <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -120,18 +120,19 @@ export default function ProgramsPage() {
                             <div
                                 key={program.id}
                                 id={program.id}
-                                className={`flex flex-col overflow-hidden rounded-lg ${
+                                className={`flex flex-col overflow-hidden items-center rounded-lg ${
                                     idx % 2 === 1 ? 'lg:flex-row-reverse' : 'lg:flex-row'
-                                } shadow-lg`}
+                                } shadow-[0px_4px_20px_0px_rgba(0,_0,_0,_0.2)]`}
                             >
-                                <div className="relative w-full lg:w-1/2">
-                                    <Image
-                                        src={program.imageUrl || '/placeholder.svg'}
-                                        alt={program.name}
-                                        width={800}
-                                        height={600}
-                                        className="h-full w-full object-cover"
-                                    />
+                                <div className="p-4 md:p-6 w-full lg:w-1/2">
+                                    <div className="relative w-full aspect-square rounded-lg overflow-hidden shadow-[0px_4px_20px_0px_rgba(0,_0,_0,_0.2)]">
+                                        <Image
+                                            src={program.imageUrl || '/placeholder.svg'}
+                                            alt={program.name}
+                                            fill
+                                            className="object-cover"
+                                        />
+                                    </div>
                                 </div>
                                 <div className="flex flex-1 flex-col justify-between bg-white p-6 sm:p-10">
                                     <div className="flex-1">
@@ -144,13 +145,13 @@ export default function ProgramsPage() {
 
                                         <div className="mt-8 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
                                             <div className="flex items-center gap-x-3">
-                                                <Clock className="h-5 w-5 text-[#CE6439]" />
+                                                <Clock className="h-5 w-5 text-primary" />
                                                 <span className="text-sm font-medium text-gray-900">
                                                     {program.duration}
                                                 </span>
                                             </div>
                                             <div className="flex items-center gap-x-3">
-                                                <Users className="h-5 w-5 text-[#CE6439]" />
+                                                <Users className="h-5 w-5 text-primary" />
                                                 <span className="text-sm font-medium text-gray-900">
                                                     {program.format}
                                                 </span>
@@ -173,7 +174,7 @@ export default function ProgramsPage() {
                                                             key={groupIdx}
                                                             className="flex items-start"
                                                         >
-                                                            <BadgeCheck className="h-5 w-5 flex-shrink-0 text-[#CE6439]" />
+                                                            <BadgeCheck className="h-5 w-5 flex-shrink-0 text-primary" />
                                                             <span className="ml-2 text-sm text-gray-500">
                                                                 {group.name}
                                                             </span>
@@ -201,7 +202,7 @@ export default function ProgramsPage() {
             <div className="bg-gray-50 py-24 sm:py-32">
                 <div className="mx-auto max-w-7xl px-6 lg:px-8">
                     <div className="mx-auto max-w-2xl text-center">
-                        <h2 className="text-base font-semibold leading-7 text-[#CE6439]">
+                        <h2 className="text-base font-semibold leading-7 text-primary">
                             How to Apply
                         </h2>
                         <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -215,10 +216,10 @@ export default function ProgramsPage() {
                     </div>
 
                     <div className="mx-auto mt-16 max-w-5xl">
-                        <ol className="relative border-l border-gray-200 dark:border-gray-700">
+                        <ol className="relative border-l ml-4 border-gray-200 dark:border-gray-700">
                             {steps.map(step => (
                                 <li key={step.id} className="mb-10 ml-8">
-                                    <span className="absolute flex items-center justify-center w-10 h-10 bg-[#CE6439] rounded-full -left-5 ring-4 ring-white">
+                                    <span className="absolute flex items-center justify-center w-10 h-10 bg-primary rounded-full -left-5 ring-4 ring-white">
                                         <step.icon className="w-5 h-5 text-white" />
                                     </span>
                                     <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-900">

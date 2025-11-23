@@ -20,7 +20,7 @@ const ListStudent = () => {
                         <h2 className="text-2xl font-bold text-gray-900">Students List</h2>
                         <p className="text-gray-600">Manage and view all your students</p>
                     </div>
-                    {/* <Button className="bg-[#CE6439] hover:bg-[#CE6439]/90">Add New Student</Button> */}
+                    {/* <Button className="bg-primary hover:bg-primary/90">Add New Student</Button> */}
                 </div>
 
                 <div className="grid gap-6">

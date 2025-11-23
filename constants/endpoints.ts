@@ -44,6 +44,8 @@ const ENDPOINTS = {
     // fetchAssignStudent: parseTemplate('/admin/study-groups/{studyGroupId}/assign-students'),
 
     updateContactedStatus: parseTemplate('/admin/students/{id}/contacted'),
+
+    allTeacher: '/teacher-team-members/all',
 } as const;
 
 export default ENDPOINTS;

@@ -88,7 +88,7 @@ const WithPlacementTest = ({ display }: { display: boolean }) => {
                                     Close
                                 </Button>
                                 <Button
-                                    className="flex-1 bg-[#CE6439] text-white"
+                                    className="flex-1 bg-primary text-white"
                                     onClick={() => {
                                         setOpenDialogPlacement(false);
                                         sessionStorage.removeItem(STORAGE_KEY);

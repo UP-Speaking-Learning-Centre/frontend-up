@@ -43,7 +43,7 @@ const StudyGroupComponent = ({
     return (
         <div className="mx-auto w-full lg:w-10/12" id={CHOOSE_STUDY_GROUP}>
             <p className="text-center text-[#020817] font-medium">Pilih Kelompok Belajar</p>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-2 mt-4">
+            <div className="flex flex-wrap flex-col md:flex-row items-center justify-center gap-2 mt-4">
                 {availableStudyGroup.map(studyGroup => {
                     const isActive = studyGroupId === studyGroup.studyGroupId && !isUseSelfSchedule;
 

@@ -11,7 +11,7 @@ const SummaryItem = () => {
         <div className="mx-auto max-w-5xl mt-6">
             <div className="grid grid-cols-12  gap-6 w-full">
                 <div className="col-span-12 md:col-span-5 rounded-lg h-full border-2 bg-white border-[#E2E8F0] flex items-center p-6 gap-4">
-                    <div className="bg-[#DCFCE7] size-10 rounded-lg flex items-center justify-center">
+                    <div className="bg-[#DCFCE7] size-10 rounded-lg flex shrink-0 items-center justify-center">
                         <BookOpen className="text-[#16A34A] size-6" />
                     </div>
                     <div>
@@ -22,7 +22,7 @@ const SummaryItem = () => {
                     </div>
                 </div>
                 <div className="col-span-12 md:col-span-3 h-full rounded-lg border-2 bg-white border-[#E2E8F0] flex items-center p-6 gap-4">
-                    <div className="bg-[#F3E8FF] size-10 rounded-lg flex items-center justify-center">
+                    <div className="bg-[#F3E8FF] size-10 rounded-lg flex shrink-0 items-center justify-center">
                         <Calendar className="text-[#9333EA] size-6" />
                     </div>
                     <div>
@@ -33,7 +33,7 @@ const SummaryItem = () => {
                     </div>
                 </div>
                 <div className="col-span-12 md:col-span-4 h-full rounded-lg border-2 bg-white border-[#E2E8F0] flex items-center p-6 gap-4">
-                    <div className="bg-[#EFF6FF] size-10 rounded-lg flex items-center justify-center">
+                    <div className="bg-[#EFF6FF] size-10 rounded-lg flex shrink-0 items-center justify-center">
                         <Package className="text-[#2563EB] size-6" />
                     </div>
                     <div>
@@ -48,9 +48,9 @@ const SummaryItem = () => {
             <div className="grid grid-cols-12 max-w-2xl mx-auto space-y-6 mt-6 w-full">
                 <div className="col-span-12 w-full rounded-lg border-2 bg-white border-[#E2E8F0] flex flex-col items-start  mx-auto">
                     <div className="py-4 px-6 border-b w-full border-[#E2E8F0] gap-3">
-                        <div className="gap-2 mx-auto flex justify-between items-center w-full">
+                        <div className="gap-2 mx-auto flex max-md:flex-col justify-between md:items-center w-full">
                             <div className="flex items-center gap-2">
-                                <Calendar className="text-[#CE6439] size-6" />
+                                <Calendar className="text-primary size-6" />
                                 <p className="font-semibold text-[#111827] text-lg">Jadwal Kelas</p>
                             </div>
                             <div className="text-[#4B5563] text-lg">
@@ -81,7 +81,7 @@ const SummaryItem = () => {
                             <div className="col-span-1">
                                 <p className="font-semibold text-[#111827]">Jadwal Pertama</p>
                                 <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-4">
-                                    <Calendar className="text-[#CE6439] size-4" />
+                                    <Calendar className="text-primary size-4" />
                                     <p className="text-sm">Hari</p>
                                     <p className="grow text-right font-semibold">
                                         {formValue.isUseSelfSchedule
@@ -93,7 +93,7 @@ const SummaryItem = () => {
                                     </p>
                                 </div>
                                 <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-2">
-                                    <Calendar className="text-[#CE6439] size-4" />
+                                    <Calendar className="text-primary size-4" />
                                     <p className="text-sm">Jam</p>
                                     <p className="grow text-right font-semibold">
                                         {formValue.isUseSelfSchedule ? (
@@ -123,7 +123,7 @@ const SummaryItem = () => {
                                 </div>
                                 {!formValue.isUseSelfSchedule && (
                                     <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-2">
-                                        <User className="text-[#CE6439] size-4" />
+                                        <User className="text-primary size-4" />
                                         <p className="text-sm">Mentor</p>
                                         <p className="grow text-right font-semibold">
                                             {formValue.studyGroupDetail?.teacherTeamMemberName}
@@ -134,7 +134,7 @@ const SummaryItem = () => {
                             <div className="col-span-1">
                                 <p className="font-semibold text-[#111827]">Jadwal Kedua</p>
                                 <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-4">
-                                    <Calendar className="text-[#CE6439] size-4" />
+                                    <Calendar className="text-primary size-4" />
                                     <p className="text-sm">Hari</p>
                                     <p className="grow text-right font-semibold">
                                         {formValue.isUseSelfSchedule ? (
@@ -148,7 +148,7 @@ const SummaryItem = () => {
                                     </p>
                                 </div>
                                 <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-2">
-                                    <Calendar className="text-[#CE6439] size-4" />
+                                    <Calendar className="text-primary size-4" />
                                     <p className="text-sm">Jam</p>
                                     <p className="grow text-right font-semibold">
                                         {formValue.isUseSelfSchedule ? (
@@ -178,7 +178,7 @@ const SummaryItem = () => {
                                 </div>
                                 {!formValue.isUseSelfSchedule && (
                                     <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-2">
-                                        <User className="text-[#CE6439] size-4" />
+                                        <User className="text-primary size-4" />
                                         <p className="text-sm">Mentor</p>
                                         <p className="grow text-right font-semibold">
                                             {formValue.studyGroupDetail?.teacherTeamMemberName}

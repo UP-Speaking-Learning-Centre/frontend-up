@@ -6,7 +6,7 @@ import { AVAILABLE_PROGRAMS } from '@/constants/programs';
 
 export default function Footer() {
     return (
-        <footer className="bg-[#254116] text-white">
+        <footer className="bg-secondary text-white">
             <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
                 <div className="flex flex-col space-y-8 md:w-1/2">
                     <div>

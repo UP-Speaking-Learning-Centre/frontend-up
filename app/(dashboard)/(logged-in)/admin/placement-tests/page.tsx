@@ -19,7 +19,7 @@ import { StudentPlacementTest } from '@/types/students';
 import { debounce } from '@/utils/function.helper';
 import { ChevronDown, Eye, Filter } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useCallback } from 'react';
 
 const Index = () => {
     const filter = useStudentsStore(s => s.filterPlacementTest);
@@ -38,6 +38,13 @@ const Index = () => {
     } = useFilterStudents(onChangeFilterPlacementTest, filter.program!);
 
     const [isFilterOpen, setIsFilterOpen] = React.useState(true);
+
+    const debouncedSearch = useCallback(
+        debounce(value => {
+            onChangeSearch(value);
+        }, 500),
+        []
+    );
 
     return (
         <DashboardContentLayout pageTitle="Placement Tests">
@@ -70,8 +77,15 @@ const Index = () => {
                             <div className="flex flex-col items-start gap-2">
                                 <Label>Nama</Label>
                                 <Input
+                                    value={filter.localSearchQuery}
                                     placeholder="Cari Nama"
-                                    onChange={debounce(e => onChangeSearch(e.target.value), 500)}
+                                    onChange={e => {
+                                        onChangeFilterPlacementTest(
+                                            'localSearchQuery',
+                                            e.target.value
+                                        );
+                                        debouncedSearch(e.target.value);
+                                    }}
                                 />
                             </div>
                             <DashboardFilter

@@ -24,19 +24,26 @@ const LocationComponent = ({
         <div
             onClick={() => onClick()}
             className={cn(
-                'flex flex-col items-center basis-1/5 cursor-pointer text-center transition-all duration-300 gap-2 group',
-                'hover:border-[#CE6439]'
+                'flex flex-col items-center md:basis-2/5 xl:basis-1/5 cursor-pointer text-center transition-all duration-300 gap-2 group',
+                'hover:border-primary'
             )}
         >
             <div
                 className={cn(
-                    'p-3 border-2 h-full flex flex-col items-center justify-center rounded-lg w-full bg-secondary text-white group-hover:border-[#CE6439]',
+                    'p-3 border-2 h-full flex flex-col items-start justify-between gap-4 rounded-lg w-full bg-secondary text-white group-hover:border-primary',
                     {
-                        'border-[#CE6439] bg-primary/10': isSelected,
+                        'border-primary bg-primary/10': isSelected,
                         'border-[#E2E8F0]': !isSelected,
                     }
                 )}
             >
+                <p
+                    className={cn('text-lg font-semibold text-left', {
+                        'text-secondary': isSelected,
+                    })}
+                >
+                    {locationName}
+                </p>
                 <div
                     className={cn(
                         'relative w-full border-primary border-2 rounded-md overflow-hidden aspect-[320/240]'
@@ -49,13 +56,6 @@ const LocationComponent = ({
                         alt={location.locationName}
                     />
                 </div>
-                <p
-                    className={cn('text-sm mt-4 mb-4', {
-                        'text-secondary font-semibold text-base': isSelected,
-                    })}
-                >
-                    {locationName}
-                </p>
             </div>
         </div>
     );

@@ -25,11 +25,13 @@ const page = () => {
                                 key={index}
                                 className="bg-white rounded-lg p-4 shadow-sm border border-gray-200 overflow-hidden"
                             >
-                                {/* Card Header */}
-                                {/* Profile Image */}
                                 <div className="relative w-full aspect-[19/10] rounded-lg overflow-hidden">
                                     <Image
-                                        src={'/placeholder.svg'}
+                                        src={
+                                            program.name === 'School Program'
+                                                ? '/school.jpg'
+                                                : '/regluar.jpeg'
+                                        }
                                         alt={program.name}
                                         fill
                                         className="object-cover"

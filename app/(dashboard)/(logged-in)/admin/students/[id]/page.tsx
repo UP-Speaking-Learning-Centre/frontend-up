@@ -17,10 +17,12 @@ import useChangeStudyGroup from '@/features/admin/hooks/useChangeStudyGroup';
 import useEditNote from '@/features/admin/hooks/useEditNote';
 import useStudentDetail from '@/features/admin/hooks/useStudentDetail';
 import useGetLocation from '@/features/admin/queries/useGetLocation';
+import { ResponseUserDetail } from '@/features/auth/constants/interface';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
 import DialogShowContacted from '@/features/dashboard/components/dialog-show-contacted';
 import { getDayOfWeek } from '@/lib/date';
 import { cn } from '@/lib/utils';
+import { Schedule } from '@/types/study-group';
 import { getRegistrationType } from '@/utils/student.helper';
 import { AlertCircleIcon, ArrowLeft, Calendar, Clock, Info } from 'lucide-react';
 import moment from 'moment';
@@ -172,7 +174,7 @@ export default function DashboardPage() {
                         <Skeleton className="h-28" loading={isLoading}>
                             <Card className="overflow-hidden">
                                 <div className="bg-secondary text-white p-4">
-                                    <h2 className="text-lg font-semibold">Catatan</h2>
+                                    <h2 className="text-lg font-semibold">Catatan Siswa</h2>
                                 </div>
                                 <div className="p-6">
                                     <div className="grid items-start">
@@ -288,12 +290,19 @@ export default function DashboardPage() {
                                                 ? moment(data.trialClassAt).format(
                                                       'dddd, DD MMMM YYYY, HH:mm '
                                                   )
-                                                : 'Belum ditentukan'}
+                                                : '-'}
                                         </p>
                                     </div>
                                 </div>
-                                {studyGroupDetail?.schedules.map((schedule, index) => (
-                                    <div key={schedule.id} className="px-6 py-4 border-t">
+                                {[
+                                    ...(data?.schedules && data?.schedules?.length > 0
+                                        ? data?.schedules
+                                        : (studyGroupDetail?.schedules as Schedule[]) || []),
+                                ].map((schedule, index) => (
+                                    <div
+                                        key={`${schedule.id}-${index}`}
+                                        className="px-6 py-4 border-t"
+                                    >
                                         <p className="text-sm text-gray-600 mb-2">
                                             Jadwal Kelas {index + 1}
                                         </p>
@@ -423,8 +432,11 @@ export default function DashboardPage() {
                                                     </Label>
                                                     <RadioGroup onValueChange={setTrialClass}>
                                                         {trialClassDates.length ? (
-                                                            trialClassDates.map(date => (
-                                                                <div className="flex gap-4 items-center">
+                                                            trialClassDates.map((date, index) => (
+                                                                <div
+                                                                    className="flex gap-4 items-center"
+                                                                    key={index}
+                                                                >
                                                                     <RadioGroupItem
                                                                         value={date.actualDate}
                                                                     ></RadioGroupItem>

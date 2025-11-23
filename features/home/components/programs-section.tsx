@@ -53,10 +53,10 @@ export default function ProgramsSection() {
                                     key={program.id}
                                     className="relative flex flex-col lg:flex-row justify-between overflow-hidden rounded-lg w-full lg:w-1/3"
                                 >
-                                    <div className="absolute top-60 left-10 w-2.5 h-10 bg-white border-2 border-primary"></div>
-                                    <div className="absolute top-60 right-10 w-2.5 h-10 bg-white border-2 border-primary"></div>
+                                    <div className="absolute top-60 left-10 w-2.5 h-10 border-2 border-secondary bg-secondary"></div>
+                                    <div className="absolute top-60 right-10 w-2.5 h-10 border-2 border-secondary bg-secondary"></div>
                                     <div className="flex flex-1 gap-4 relative z-10 flex-col">
-                                        <div className="relative h-64 border-2 border-primary overflow-hidden rounded-lg">
+                                        <div className="relative h-64 border-2 border-secondary overflow-hidden rounded-lg">
                                             <Image
                                                 src={program.imageUrl || '/placeholder.svg'}
                                                 alt={program.name}
@@ -64,13 +64,13 @@ export default function ProgramsSection() {
                                                 className="object-cover"
                                             />
                                         </div>
-                                        <div className="flex flex-1 flex-col p-4 bg-white border-2 border-primary rounded-lg">
+                                        <div className="flex flex-1 flex-col p-4 bg-white border-2 border-secondary rounded-lg">
                                             <div className="flex flex-1 flex-col">
                                                 <div className="flex-1">
-                                                    <h3 className="text-xl font-semibold leading-8 tracking-tight text-gray-900">
+                                                    <h3 className="text-xl text-center font-semibold leading-8 tracking-tight text-gray-900">
                                                         {program.name}
                                                     </h3>
-                                                    <p className="text-sm leading-6 text-gray-600">
+                                                    <p className="text-sm text-center leading-6 text-gray-600">
                                                         {program.description}
                                                     </p>
                                                 </div>
@@ -90,9 +90,7 @@ export default function ProgramsSection() {
                 </div>
                 <div className="mt-12 text-center">
                     <Link href={ROUTES.programs}>
-                        <Button className="bg-[#CE6439] hover:bg-[#CE6439]/90">
-                            Explores More
-                        </Button>
+                        <Button className="bg-primary hover:bg-primary/90">Explores More</Button>
                     </Link>
                 </div>
             </div>

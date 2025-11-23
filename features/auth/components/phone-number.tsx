@@ -26,7 +26,7 @@ const PhoneNumber = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <Label htmlFor="phone" className="flex items-center mb-2">
-                                <Phone className="w-4 h-4 mr-2 text-[#CE6439]" />
+                                <Phone className="w-4 h-4 mr-2 text-primary" />
                                 Nomor Handphone
                             </Label>
                             <Input
@@ -46,7 +46,7 @@ const PhoneNumber = () => {
                         <Button
                             type="submit"
                             disabled={isLoading || !isDirty}
-                            className="w-full bg-[#CE6439] hover:bg-[#CE6439]/90"
+                            className="w-full bg-primary hover:bg-primary/90"
                         >
                             {isLoading ? 'Checking...' : 'Lanjutkan'}
                         </Button>

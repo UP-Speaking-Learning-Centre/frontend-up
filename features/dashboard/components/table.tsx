@@ -96,7 +96,7 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                         <tr>
                                             <td
                                                 colSpan={columns.length}
-                                                className="p-4 text-center"
+                                                className="p-4 text-sm text-center"
                                             >
                                                 Data Kosong
                                             </td>

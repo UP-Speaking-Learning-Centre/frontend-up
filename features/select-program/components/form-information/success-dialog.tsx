@@ -47,7 +47,7 @@ const SuccessDialog = ({
                     </div>
                     <div className="flex gap-2 justify-center w-full">
                         <Button
-                            className="flex-1 bg-[#CE6439] text-white w-fit"
+                            className="flex-1 bg-primary text-white w-fit"
                             onClick={() => {
                                 onOpenChange(false);
                                 router.push(ROUTES.home);

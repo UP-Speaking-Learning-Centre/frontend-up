@@ -18,7 +18,7 @@ import { debounce } from '@/utils/function.helper';
 import { ChevronDown, Eye, Filter } from 'lucide-react';
 import moment from 'moment';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const Page = () => {
     const students = useStudentsStore(s => s.students);
@@ -35,7 +35,14 @@ const Page = () => {
         onChangeMentor,
     } = useFilterStudents(onChangeFilter, filter.program!);
     const { isLoading } = useFetchStudentsQuery();
-    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [isFilterOpen, setIsFilterOpen] = useState(true);
+
+    const debouncedSearch = useCallback(
+        debounce(value => {
+            onChangeSearch(value);
+        }, 500),
+        []
+    );
 
     return (
         <DashboardContentLayout pageTitle="Students">
@@ -68,8 +75,12 @@ const Page = () => {
                             <div className="flex flex-col items-start gap-2">
                                 <Label>Nama</Label>
                                 <Input
+                                    value={filter.localSearchQuery}
                                     placeholder="Cari Nama"
-                                    onChange={debounce(e => onChangeSearch(e.target.value), 500)}
+                                    onChange={e => {
+                                        onChangeFilter('localSearchQuery', e.target.value);
+                                        debouncedSearch(e.target.value);
+                                    }}
                                 />
                             </div>
                             <DashboardFilter

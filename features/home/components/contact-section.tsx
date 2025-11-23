@@ -16,51 +16,59 @@ export default function ContactSection() {
                 />
 
                 <div className="mx-auto mt-16 grid max-w-xl grid-cols-1 gap-8 sm:mt-20">
-                    <div className="rounded-2xl bg-gray-50 p-8">
-                        <h3 className="text-xl font-semibold text-gray-900">Contact Information</h3>
-                        <p className="mt-4 text-base text-gray-500">
+                    <div className="rounded-2xl bg-gray-50 p-2 md:p-8">
+                        <h3 className="text-xl font-semibold max-md:text-center text-gray-900">
+                            Contact Information
+                        </h3>
+                        <p className="mt-4 text-base max-md:text-center text-gray-500">
                             Feel free to reach out via email, phone, atau langsung datang ke lokasi
                             kami.
                         </p>
 
                         <dl className="mt-8 max-w-xl space-y-6">
-                            <div className="flex items-center">
+                            <div className="flex max-md:flex-col items-center">
                                 <dt className="flex-shrink-0">
-                                    <Mail className="h-6 w-6 text-[#CE6439]" />
+                                    <Mail className="h-6 w-6 text-primary" />
                                 </dt>
                                 <dd className="ml-3 text-base text-gray-500">
-                                    <p className="font-semibold">
+                                    <p className="max-md:text-center font-semibold">
                                         upspeakinglearningcentre@gmail.com
                                     </p>
-                                    <p className="mt-1">Kami usahakan balas dalam waktu 24 jam.</p>
-                                </dd>
-                            </div>
-                            <div className="flex items-center">
-                                <dt className="flex-shrink-0">
-                                    <Phone className="h-6 w-6 text-[#CE6439]" />
-                                </dt>
-                                <dd className="ml-3 text-base text-gray-500">
-                                    <p className="font-semibold">+62 813-1670-1747</p>
-                                    <p className="mt-1">Senin - Sabtu, 08.00–18.30</p>
-                                </dd>
-                            </div>
-                            <div className="flex items-center">
-                                <dt className="flex-shrink-0">
-                                    <MapPin className="h-6 w-6 text-[#CE6439]" />
-                                </dt>
-                                <dd className="ml-3 text-base text-gray-500">
-                                    <p className="font-semibold">
-                                        Cabang Kuningan 1, Jl. Aruji Kartawinata Dalam No.19 ,
-                                        Kuningan, Kec. Kuningan, Kabupaten Kuningan, Jawa Barat
+                                    <p className="mt-1 max-md:text-center">
+                                        Kami usahakan balas dalam waktu 24 jam.
                                     </p>
-                                    <p>Kuningan, Jawa Barat</p>
+                                </dd>
+                            </div>
+                            <div className="flex max-md:flex-col items-center">
+                                <dt className="flex-shrink-0">
+                                    <Phone className="h-6 w-6 text-primary" />
+                                </dt>
+                                <dd className="ml-3 text-base text-gray-500">
+                                    <p className="max-md:text-center font-semibold">
+                                        +62 813-1670-1747
+                                    </p>
+                                    <p className="mt-1 max-md:text-center">
+                                        Senin - Sabtu, 08.00–18.30
+                                    </p>
+                                </dd>
+                            </div>
+                            <div className="flex max-md:flex-col items-center">
+                                <dt className="flex-shrink-0">
+                                    <MapPin className="h-6 w-6 text-primary" />
+                                </dt>
+                                <dd className="ml-3 text-base text-gray-500">
+                                    <p className="max-md:text-center font-semibold">
+                                        Cabang Kuningan 1, Jl. Aruji Kartawinata Dalam No.19 ,
+                                        Kuningan, Kec. Kuningan, Kab. Kuningan, Jawa Barat
+                                    </p>
+                                    <p className="max-md:text-center">Kuningan, Jawa Barat</p>
                                 </dd>
                             </div>
                         </dl>
 
-                        <div className="mt-8">
+                        <div className="mt-8 max-md:text-center">
                             <h3 className="text-base font-semibold text-gray-900">Follow Us</h3>
-                            <div className="mt-4 flex space-x-6">
+                            <div className="mt-4 flex max-md:items-center max-md:justify-center space-x-6">
                                 <Link
                                     href={
                                         'https://www.tiktok.com/@up.speakingcourse?_t=ZS-8zYTOCFOQlQ&_r=1'

@@ -2,6 +2,7 @@ import axios, { Axios, AxiosError } from 'axios';
 
 const api = axios.create({
     baseURL: 'https://dev-api.uplearningcentre.com/',
+    // baseURL: 'http://localhost:3001/',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',

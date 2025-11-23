@@ -17,7 +17,7 @@ const SectionTitle = ({
                 <h2
                     className={cn(
                         'text-base font-semibold leading-7',
-                        variant === 'black' ? 'text-[#CE6439]' : 'text-white'
+                        variant === 'black' ? 'text-primary' : 'text-white'
                     )}
                 >
                     {title}

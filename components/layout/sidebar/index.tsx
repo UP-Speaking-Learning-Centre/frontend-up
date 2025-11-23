@@ -149,7 +149,7 @@ const Sidebar = () => {
                         <div className="px-3 pt-4 border-t">
                             <Button
                                 variant="ghost"
-                                className="w-full justify-start font-normal text-white hover:text-white hover:bg-[#CE6439]/80"
+                                className="w-full justify-start font-normal text-white hover:text-white hover:bg-primary/80"
                                 onClick={handleLogout}
                             >
                                 <LogOut className="h-4 w-4 mr-3" />
@@ -183,7 +183,7 @@ const Sidebar = () => {
                     <div className="px-3 pt-4 border-t">
                         <Button
                             variant="ghost"
-                            className="w-full justify-start font-normal text-white hover:text-white hover:bg-[#CE6439]/80"
+                            className="w-full justify-start font-normal text-white hover:text-white hover:bg-primary/80"
                             onClick={handleLogout}
                         >
                             <LogOut className="size-5 mr-3" />

@@ -52,7 +52,7 @@ const ErrorDialog = ({
                             Kembali ke Beranda
                         </Button>
                         <Button
-                            className="flex-1 bg-[#CE6439] text-white w-fit"
+                            className="flex-1 bg-primary text-white w-fit"
                             onClick={() => {
                                 onOpenChange(false);
                             }}

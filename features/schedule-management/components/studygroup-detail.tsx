@@ -116,7 +116,7 @@ const StudyGroupDetail = ({
     }
 
     return (
-        <DialogContent className="md:w-[600px] overflow-auto max-w-7xl max-h-[calc(100vh-10rem)]">
+        <DialogContent className="w-[calc(100vw-2rem)] mx-auto md:w-[600px] overflow-auto max-w-7xl max-h-[calc(100vh-10rem)]">
             <DialogTitle>Detail Kelompok Belajar</DialogTitle>
 
             <Skeleton className="w-56 mx-auto my-4 h-5" loading={isLoading}>

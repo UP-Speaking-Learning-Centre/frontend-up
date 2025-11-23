@@ -47,8 +47,8 @@ const Card = ({
             ></div>
             <div
                 className={cn(
-                    'relative  h-56 w-full group-hover:h-60 rounded-lg overflow-hidden group-hover:shadow-xl border-2 group-hover:border-[#CE6439] transition-all duration-300',
-                    selected && 'border-[#CE6439] border-[3px] shadow-lg'
+                    'relative  h-56 w-full group-hover:h-60 rounded-lg overflow-hidden group-hover:shadow-xl border-2 group-hover:border-primary transition-all duration-300',
+                    selected && 'border-primary border-[3px] shadow-lg'
                 )}
             >
                 <Image
@@ -62,8 +62,8 @@ const Card = ({
             <div className="bg-white relative z-10 rounded-lg w-full">
                 <div
                     className={cn(
-                        'flex flex-1 w-full flex-col justify-between rounded-lg bg-white p-4 border-2 group-hover:border-[#CE6439]',
-                        selected && 'border-[#CE6439] border-[3px] bg-primary/20',
+                        'flex flex-1 w-full flex-col justify-between rounded-lg bg-white p-4 border-2 group-hover:border-primary',
+                        selected && 'border-primary border-[3px] bg-primary/20',
                         contentClassName
                     )}
                 >

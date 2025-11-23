@@ -24,10 +24,10 @@ const Legend = () => {
                     </div>
                     <span>Prioritas</span>
                 </div>
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                     <div className="h-5 w-5 shrink-0 rounded bg-gray-50 border border-gray-500"></div>
                     <span>Tersedia</span>
-                </div>
+                </div> */}
             </div>
         </Card>
     );

@@ -53,7 +53,7 @@ const useFetchStudentsQuery = (newStudent: boolean = false) => {
           };
 
     const res = useQuery({
-        queryKey: [API_ADMIN_LIST_STUDENTS, Object.values(filter), Object.values(pagination)],
+        queryKey: [API_ADMIN_LIST_STUDENTS, Object.values(params), Object.values(pagination)],
         queryFn: async () => await fetchStudents(params, accessToken),
         staleTime: 0,
         enabled: !!accessToken,

@@ -13,7 +13,7 @@ const TabContent = ({ title, items, id }: { title: string; items: string[]; id: 
                     <div className="flex flex-col gap-2 mt-4">
                         {items.map((item, index) => (
                             <p key={index} className="flex items-center gap-2">
-                                <Check className="text-[#CE6439]" />
+                                <Check className="text-primary" />
                                 {item}
                             </p>
                         ))}
