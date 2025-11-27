@@ -21,12 +21,12 @@ const TrialClassSelection = () => {
         startTime: schedule.startTime,
         endTime: moment(schedule.startTime, 'HH:mm:ss').add(90, 'minutes').format('HH:mm:ss'),
         durationMinutes: 90,
-    }));
+    })) as Schedule[];
 
     const schedules = [
         formValue.studyGroupDetail?.schedule1,
         formValue.studyGroupDetail?.schedule2,
-    ] as Schedule[];
+    ].filter(Boolean) as Schedule[];
 
     const trialClassDates = getNextSchedules(
         formValue.isUseSelfSchedule ? selfSchedules : schedules

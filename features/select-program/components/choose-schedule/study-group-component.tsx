@@ -109,8 +109,8 @@ const StudyGroupComponent = ({
                             >
                                 {days.map((day, idx) => {
                                     const isAvailable =
-                                        day === studyGroup.schedule1.dayOfWeek ||
-                                        day === studyGroup.schedule2.dayOfWeek;
+                                        day === studyGroup?.schedule1?.dayOfWeek ||
+                                        day === studyGroup?.schedule2?.dayOfWeek;
 
                                     return (
                                         <div
@@ -129,12 +129,12 @@ const StudyGroupComponent = ({
                                             </p>
 
                                             <div className="flex flex-col gap-3 items-center">
-                                                {day === studyGroup.schedule1.dayOfWeek &&
+                                                {day === studyGroup?.schedule1?.dayOfWeek &&
                                                     renderScheduleTime(
                                                         studyGroup.schedule1,
                                                         isActive
                                                     )}
-                                                {day === studyGroup.schedule2.dayOfWeek &&
+                                                {day === studyGroup?.schedule2?.dayOfWeek &&
                                                     renderScheduleTime(
                                                         studyGroup.schedule2,
                                                         isActive

@@ -40,18 +40,18 @@ export const getWhatsappTemplate = (data: ResponseUserDetail) => {
         case REGISTRATION_TYPE.selfSchedule:
             text = `Hallo, kak *${
                 data?.name
-            }* \nThis is Admin from UP SLC 🥰 \n\nTerima kasih sudah tertarik belajar bahasa inggris dengan kami! \nUntuk kak ${
+            }* \nThis is Admin from UP SLC 🥰 \nTerima kasih sudah tertarik belajar bahasa inggris dengan kami! \nUntuk kak ${
                 data?.name
-            } request jadwal pada ${
+            } request jadwal pada \n\n${
                 data?.self_schedule_payload &&
                 data?.self_schedule_payload?.items.length > 0 &&
                 data?.self_schedule_payload?.items
                     .map((item, index) => {
-                        return `Jadwal ${index + 1}: ${item.dayOfWeek} ${item.startTime} - ${
-                            item.endTime
-                        }`;
+                        return `Jadwal ${index + 1}: *${getDayOfWeek(
+                            item.dayOfWeek.slice(0, 3)
+                        )}, ${item.startTime} - ${item.endTime}*\n`;
                     })
-                    .join(', ')
+                    .join('')
             } \n\n`;
             break;
         case REGISTRATION_TYPE.placementTest:

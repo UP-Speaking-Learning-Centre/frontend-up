@@ -17,7 +17,7 @@ export type TrialClassSchedule = Schedule & {
     display: string;
 };
 
-export function getNextSchedules(schedules: Schedule[], count: number = 4): TrialClassSchedule[] {
+export function getNextSchedules(schedules: Schedule[], count?: number): TrialClassSchedule[] {
     const currentDate = new Date();
     const current = moment(currentDate);
 
@@ -38,7 +38,7 @@ export function getNextSchedules(schedules: Schedule[], count: number = 4): Tria
 
     const sorted = upcoming.sort((a, b) => a.actualDate.valueOf() - b.actualDate.valueOf());
 
-    return sorted.slice(0, count).map(({ schedule, actualDate }) => ({
+    return sorted.slice(0, count || 4).map(({ schedule, actualDate }) => ({
         ...schedule,
         actualDate: actualDate.toISOString(true),
         display: actualDate.format('dddd, D MMMM, HH:mm'),

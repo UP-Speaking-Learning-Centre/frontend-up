@@ -3,9 +3,16 @@ import useProgramSelectionStore from '../../stores/program-selection-store';
 import { Book, BookOpen, Calendar, Package, User } from 'lucide-react';
 import { renderDayToIndonesian } from '@/lib/moment';
 import moment from 'moment';
+import { Schedule } from '@/types/study-group';
 
 const SummaryItem = () => {
     const formValue = useProgramSelectionStore(s => s.formValue);
+
+    const schedules = formValue.isUseSelfSchedule
+        ? formValue.selfSchedule
+        : ([formValue.studyGroupDetail?.schedule1, formValue.studyGroupDetail?.schedule2].filter(
+              Boolean
+          ) as Schedule[]);
 
     return (
         <div className="mx-auto max-w-5xl mt-6">
@@ -78,114 +85,55 @@ const SummaryItem = () => {
                             )}
                         </p>
                         <div className=" grid grid-cols-1 mt-2 md:grid-cols-2 gap-6 w-full">
-                            <div className="col-span-1">
-                                <p className="font-semibold text-[#111827]">Jadwal Pertama</p>
-                                <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-4">
-                                    <Calendar className="text-primary size-4" />
-                                    <p className="text-sm">Hari</p>
-                                    <p className="grow text-right font-semibold">
-                                        {formValue.isUseSelfSchedule
-                                            ? formValue.selfSchedule[0].dayOfWeek
-                                            : renderDayToIndonesian(
-                                                  formValue.studyGroupDetail?.schedule1
-                                                      .dayOfWeek as string
-                                              )}
+                            {schedules.map((schedule, index) => (
+                                <div className="col-span-1" key={index}>
+                                    <p className="font-semibold text-[#111827]">
+                                        Jadwal {index + 1}
                                     </p>
-                                </div>
-                                <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-2">
-                                    <Calendar className="text-primary size-4" />
-                                    <p className="text-sm">Jam</p>
-                                    <p className="grow text-right font-semibold">
-                                        {formValue.isUseSelfSchedule ? (
-                                            <>
-                                                {formValue.selfSchedule[0].startTime} -{' '}
-                                                {moment(
-                                                    formValue.selfSchedule[0].startTime,
-                                                    'HH:mm'
-                                                )
-                                                    .add(90, 'minutes')
-                                                    .format('HH:mm')}
-                                            </>
-                                        ) : (
-                                            <>
-                                                {moment(
-                                                    formValue.studyGroupDetail?.schedule1.startTime,
-                                                    'HH:mm:ss'
-                                                ).format('HH:mm')}{' '}
-                                                -{' '}
-                                                {moment(
-                                                    formValue.studyGroupDetail?.schedule1.endTime,
-                                                    'HH:mm:ss'
-                                                ).format('HH:mm')}
-                                            </>
-                                        )}
-                                    </p>
-                                </div>
-                                {!formValue.isUseSelfSchedule && (
-                                    <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-2">
-                                        <User className="text-primary size-4" />
-                                        <p className="text-sm">Mentor</p>
+                                    <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-4">
+                                        <Calendar className="text-primary size-4" />
+                                        <p className="text-sm">Hari</p>
                                         <p className="grow text-right font-semibold">
-                                            {formValue.studyGroupDetail?.teacherTeamMemberName}
+                                            {formValue.isUseSelfSchedule
+                                                ? schedule.dayOfWeek
+                                                : renderDayToIndonesian(schedule.dayOfWeek)}
                                         </p>
                                     </div>
-                                )}
-                            </div>
-                            <div className="col-span-1">
-                                <p className="font-semibold text-[#111827]">Jadwal Kedua</p>
-                                <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-4">
-                                    <Calendar className="text-primary size-4" />
-                                    <p className="text-sm">Hari</p>
-                                    <p className="grow text-right font-semibold">
-                                        {formValue.isUseSelfSchedule ? (
-                                            <>{formValue.selfSchedule[1].dayOfWeek}</>
-                                        ) : (
-                                            renderDayToIndonesian(
-                                                formValue.studyGroupDetail?.schedule2
-                                                    .dayOfWeek as string
-                                            )
-                                        )}
-                                    </p>
-                                </div>
-                                <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-2">
-                                    <Calendar className="text-primary size-4" />
-                                    <p className="text-sm">Jam</p>
-                                    <p className="grow text-right font-semibold">
-                                        {formValue.isUseSelfSchedule ? (
-                                            <>
-                                                {formValue.selfSchedule[1].startTime} -{' '}
-                                                {moment(
-                                                    formValue.selfSchedule[1].startTime,
-                                                    'HH:mm'
-                                                )
-                                                    .add(90, 'minutes')
-                                                    .format('HH:mm')}
-                                            </>
-                                        ) : (
-                                            <>
-                                                {moment(
-                                                    formValue.studyGroupDetail?.schedule2.startTime,
-                                                    'HH:mm:ss'
-                                                ).format('HH:mm')}{' '}
-                                                -{' '}
-                                                {moment(
-                                                    formValue.studyGroupDetail?.schedule2.endTime,
-                                                    'HH:mm:ss'
-                                                ).format('HH:mm')}
-                                            </>
-                                        )}
-                                    </p>
-                                </div>
-                                {!formValue.isUseSelfSchedule && (
                                     <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-2">
-                                        <User className="text-primary size-4" />
-                                        <p className="text-sm">Mentor</p>
+                                        <Calendar className="text-primary size-4" />
+                                        <p className="text-sm">Jam</p>
                                         <p className="grow text-right font-semibold">
-                                            {formValue.studyGroupDetail?.teacherTeamMemberName}
+                                            {formValue.isUseSelfSchedule ? (
+                                                <>
+                                                    {schedule.startTime} -{' '}
+                                                    {moment(schedule.startTime, 'HH:mm')
+                                                        .add(90, 'minutes')
+                                                        .format('HH:mm')}
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {moment(schedule.startTime, 'HH:mm:ss').format(
+                                                        'HH:mm'
+                                                    )}{' '}
+                                                    -{' '}
+                                                    {moment(schedule.startTime, 'HH:mm:ss').format(
+                                                        'HH:mm'
+                                                    )}
+                                                </>
+                                            )}
                                         </p>
                                     </div>
-                                )}
-                            </div>
+                                    {!formValue.isUseSelfSchedule && (
+                                        <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-2">
+                                            <User className="text-primary size-4" />
+                                            <p className="text-sm">Mentor</p>
+                                            <p className="grow text-right font-semibold">
+                                                {formValue.studyGroupDetail?.teacherTeamMemberName}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>

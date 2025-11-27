@@ -55,433 +55,505 @@ export default function DashboardPage() {
 
     return (
         <DashboardContentLayout pageTitle="Detail Student">
-            <div className="mb-6 flex items-center justify-between">
-                <Link
-                    href={
-                        searchParams.get('from') === 'new'
-                            ? ROUTES.adminNewStudents
-                            : ROUTES.adminStudents
-                    }
-                    className="flex items-center w-fit gap-3 hover:underline"
-                >
-                    <ArrowLeft className="w-5 h-5 text-gray-600" />
-                    <span className="text-[#020817]">Kembali</span>
-                </Link>
+            {!isLoading && !data ? (
+                <>
+                    <Link
+                        href={
+                            searchParams.get('from') === 'new'
+                                ? ROUTES.adminNewStudents
+                                : ROUTES.adminStudents
+                        }
+                        className="flex items-center w-fit gap-3 hover:underline"
+                    >
+                        <ArrowLeft className="w-5 h-5 text-gray-600" />
+                        <span className="text-[#020817]">Kembali</span>
+                    </Link>
 
-                {!data?.isContacted && (
-                    <>
-                        <Skeleton loading={isLoading} className="h-4 w-24">
-                            <div
-                                className="flex items-center gap-2 cursor-pointer"
-                                onClick={() => setShowDialodContacted(true)}
-                            >
-                                <AlertCircleIcon className="size-4 text-primary" />
-                                <span className="text-sm text-primary">
-                                    Student belum pernah dihubungi
-                                </span>
-                            </div>
-                        </Skeleton>
+                    <div className="mt-10 mx-auto text-center">Data student tidak tersedia</div>
+                </>
+            ) : (
+                <>
+                    <div className="mb-6 flex items-center justify-between">
+                        <Link
+                            href={
+                                searchParams.get('from') === 'new'
+                                    ? ROUTES.adminNewStudents
+                                    : ROUTES.adminStudents
+                            }
+                            className="flex items-center w-fit gap-3 hover:underline"
+                        >
+                            <ArrowLeft className="w-5 h-5 text-gray-600" />
+                            <span className="text-[#020817]">Kembali</span>
+                        </Link>
 
-                        {showDialodContacted && (
-                            <DialogShowContacted
-                                id={data?.id || 0}
-                                open={showDialodContacted}
-                                onOpenChange={setShowDialodContacted}
-                            />
-                        )}
-                    </>
-                )}
-            </div>
-            <div className="min-h-screen bg-gray-50">
-                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    {/* Detail Student Section */}
-                    <div className="lg:col-span-2 space-y-6">
-                        <Skeleton className="h-72" loading={isLoading}>
-                            <Card className="overflow-hidden">
-                                <div className="bg-secondary text-white p-4 flex items-center justify-between">
-                                    <h2 className="text-lg font-semibold">Detail Student</h2>
-                                </div>
-                                <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="space-y-4">
-                                        <div>
-                                            <p className="text-sm text-gray-600 mb-1">Nama</p>
-                                            <p className="font-semibold text-gray-900">
-                                                {data?.name}
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-600 mb-1">No. HP</p>
-                                            <p className="font-semibold text-gray-900">
-                                                {data?.phoneNumber}
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-600 mb-1">Instagram</p>
-                                            <p
-                                                className={cn(
-                                                    'font-semibold text-gray-900',
-                                                    !data?.instagram &&
-                                                        'text-neutral-400 font-normal'
-                                                )}
-                                            >
-                                                {data?.instagram || 'Tidak ada informasi instagram'}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-4">
-                                        <div>
-                                            <p className="text-sm text-gray-600 mb-1">Program</p>
-                                            <p className="font-semibold text-gray-900">
-                                                {data?.program}
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-600 mb-1">Group</p>
-                                            <p className="font-semibold text-gray-900">
-                                                {data?.group}
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-600 mb-1">Level</p>
-                                            <p
-                                                className={cn(
-                                                    'font-semibold text-gray-900',
-                                                    data?.level ? 'text-gray-900' : 'text-primary'
-                                                )}
-                                            >
-                                                {data?.level || 'Belum ditentukan'}
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p className="text-sm text-gray-600 mb-1">Grade</p>
-                                            <p
-                                                className={cn(
-                                                    'font-semibold text-gray-900',
-                                                    data?.gradeLabel
-                                                        ? 'text-gray-900'
-                                                        : 'text-primary'
-                                                )}
-                                            >
-                                                {data?.gradeLabel || 'Belum ditentukan'}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Card>
-                        </Skeleton>
-
-                        {/* Catatan Section */}
-                        <Skeleton className="h-28" loading={isLoading}>
-                            <Card className="overflow-hidden">
-                                <div className="bg-secondary text-white p-4">
-                                    <h2 className="text-lg font-semibold">Catatan Siswa</h2>
-                                </div>
-                                <div className="p-6">
-                                    <div className="grid items-start">
-                                        {!isEdit ? (
-                                            <>
-                                                <p className="text-gray-900 font-medium mb-4">
-                                                    {notes}
-                                                </p>
-                                                <Button
-                                                    onClick={() => setIsEdit(true)}
-                                                    className="px-6 w-fit ml-auto"
-                                                    size="sm"
-                                                >
-                                                    {notes ? 'Edit Catatan' : 'Tambah Catatan'}
-                                                </Button>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <Textarea
-                                                    className="mb-4"
-                                                    value={notes}
-                                                    onChange={e => setNotes(e.target.value)}
-                                                />
-                                                <div className="space-x-3 ml-auto">
-                                                    <Button
-                                                        onClick={() => setIsEdit(false)}
-                                                        className="px-6 w-fit"
-                                                        size="sm"
-                                                        variant={'outline'}
-                                                    >
-                                                        Cancel
-                                                    </Button>
-                                                    <Button
-                                                        onClick={handleSave}
-                                                        className="px-6 w-fit"
-                                                        size="sm"
-                                                    >
-                                                        Save
-                                                    </Button>
-                                                </div>
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-                            </Card>
-                        </Skeleton>
-                    </div>
-
-                    {/* Kelompok Belajar Section */}
-                    <Skeleton loading={isLoadingStudyGroupDetail || isLoading} className="h-40">
-                        <div className="space-y-6">
-                            <Card className="overflow-hidden">
-                                <div className="bg-secondary text-white p-4">
-                                    <h2 className="text-lg font-semibold">Kelompok Belajar</h2>
-                                </div>
-                                <div className="p-6 space-y-3">
-                                    <div>
-                                        <p className="text-sm text-gray-600 mb-1">Cabang</p>
-                                        <p
-                                            className={cn(
-                                                'font-semibold text-gray-900',
-                                                studyGroupDetail?.schedules[0]?.location
-                                                    ? 'text-gray-900'
-                                                    : 'text-primary'
-                                            )}
-                                        >
-                                            {studyGroupDetail?.schedules[0]?.location ||
-                                                'Belum ditentukan'}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 mb-1">Nama Kelompok</p>
-                                        <p
-                                            className={cn(
-                                                'font-semibold text-gray-900',
-                                                studyGroupDetail?.name
-                                                    ? 'text-gray-900'
-                                                    : 'text-primary'
-                                            )}
-                                        >
-                                            {studyGroupDetail?.name || 'Belum ditentukan'}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 mb-1">Teacher</p>
-                                        <p
-                                            className={cn(
-                                                'font-semibold text-gray-900',
-                                                studyGroupDetail?.schedules[0].teacherMemberName
-                                                    ? 'text-gray-900'
-                                                    : 'text-primary'
-                                            )}
-                                        >
-                                            {studyGroupDetail?.schedules[0].teacherMemberName ||
-                                                'Belum ditentukan'}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm text-gray-600 mb-1">
-                                            Jadwal Trial Class{' '}
-                                            {!!studyGroupDetail?.schedules.length &&
-                                                '(Pilihan Sendiri)'}
-                                        </p>
-                                        <p
-                                            className={cn(
-                                                'font-semibold text-gray-900',
-                                                data?.trialClassAt
-                                                    ? 'text-gray-900'
-                                                    : 'text-primary'
-                                            )}
-                                        >
-                                            {data?.trialClassAt
-                                                ? moment(data.trialClassAt).format(
-                                                      'dddd, DD MMMM YYYY, HH:mm '
-                                                  )
-                                                : '-'}
-                                        </p>
-                                    </div>
-                                </div>
-                                {[
-                                    ...(data?.schedules && data?.schedules?.length > 0
-                                        ? data?.schedules
-                                        : (studyGroupDetail?.schedules as Schedule[]) || []),
-                                ].map((schedule, index) => (
+                        {!data?.isContacted && (
+                            <>
+                                <Skeleton loading={isLoading} className="h-4 w-24">
                                     <div
-                                        key={`${schedule.id}-${index}`}
-                                        className="px-6 py-4 border-t"
+                                        className="flex items-center gap-2 cursor-pointer"
+                                        onClick={() => setShowDialodContacted(true)}
                                     >
-                                        <p className="text-sm text-gray-600 mb-2">
-                                            Jadwal Kelas {index + 1}
-                                        </p>
+                                        <AlertCircleIcon className="size-4 text-primary" />
+                                        <span className="text-sm text-primary">
+                                            Student belum pernah dihubungi
+                                        </span>
+                                    </div>
+                                </Skeleton>
 
-                                        <div className="space-y-3">
-                                            <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
-                                                <div className="flex items-center gap-2">
-                                                    <Calendar className="w-4 h-4 text-orange-600" />
-                                                    <span className="text-sm text-gray-600">
-                                                        Hari
-                                                    </span>
+                                {showDialodContacted && (
+                                    <DialogShowContacted
+                                        id={data?.id || 0}
+                                        open={showDialodContacted}
+                                        onOpenChange={setShowDialodContacted}
+                                    />
+                                )}
+                            </>
+                        )}
+                    </div>
+                    <div className="min-h-screen bg-gray-50">
+                        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Detail Student Section */}
+                            <div className="lg:col-span-2 space-y-6">
+                                <Skeleton className="h-72" loading={isLoading}>
+                                    <Card className="overflow-hidden">
+                                        <div className="bg-secondary text-white p-4 flex items-center justify-between">
+                                            <h2 className="text-lg font-semibold">
+                                                Detail Student
+                                            </h2>
+                                        </div>
+                                        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <p className="text-sm text-gray-600 mb-1">
+                                                        Nama
+                                                    </p>
+                                                    <p className="font-semibold text-gray-900">
+                                                        {data?.name}
+                                                    </p>
                                                 </div>
-                                                <span className="font-semibold text-gray-900">
-                                                    {getDayOfWeek(schedule.dayOfWeek.slice(0, 3))}
-                                                </span>
+                                                <div>
+                                                    <p className="text-sm text-gray-600 mb-1">
+                                                        No. HP
+                                                    </p>
+                                                    <p className="font-semibold text-gray-900">
+                                                        {data?.phoneNumber}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm text-gray-600 mb-1">
+                                                        Instagram
+                                                    </p>
+                                                    <p
+                                                        className={cn(
+                                                            'font-semibold text-gray-900',
+                                                            !data?.instagram &&
+                                                                'text-neutral-400 font-normal'
+                                                        )}
+                                                    >
+                                                        {data?.instagram ||
+                                                            'Tidak ada informasi instagram'}
+                                                    </p>
+                                                </div>
                                             </div>
-
-                                            <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
-                                                <div className="flex items-center gap-2">
-                                                    <Clock className="w-4 h-4 text-orange-600" />
-                                                    <span className="text-sm text-gray-600">
-                                                        Waktu
-                                                    </span>
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <p className="text-sm text-gray-600 mb-1">
+                                                        Program
+                                                    </p>
+                                                    <p className="font-semibold text-gray-900">
+                                                        {data?.program}
+                                                    </p>
                                                 </div>
-                                                <span className="font-semibold text-gray-900">
-                                                    {schedule.startTime.substring(0, 5)} -{' '}
-                                                    {schedule.endTime.substring(0, 5)}
-                                                </span>
+                                                <div>
+                                                    <p className="text-sm text-gray-600 mb-1">
+                                                        Group
+                                                    </p>
+                                                    <p className="font-semibold text-gray-900">
+                                                        {data?.group}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm text-gray-600 mb-1">
+                                                        Level
+                                                    </p>
+                                                    <p
+                                                        className={cn(
+                                                            'font-semibold text-gray-900',
+                                                            data?.level
+                                                                ? 'text-gray-900'
+                                                                : 'text-primary'
+                                                        )}
+                                                    >
+                                                        {data?.level || 'Belum ditentukan'}
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <p className="text-sm text-gray-600 mb-1">
+                                                        Grade
+                                                    </p>
+                                                    <p
+                                                        className={cn(
+                                                            'font-semibold text-gray-900',
+                                                            data?.gradeLabel
+                                                                ? 'text-gray-900'
+                                                                : 'text-primary'
+                                                        )}
+                                                    >
+                                                        {data?.gradeLabel || 'Belum ditentukan'}
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
-                                <div className="m-4">
-                                    {getRegistrationType(data) ===
-                                        REGISTRATION_TYPE.placementTest && (
-                                        <>
-                                            <p className="text-xs py-2 mt-5">
-                                                <Info className="w-4 h-4 inline mr-1" />
-                                                Anda belum melakukan penilaian placement test untuk
-                                                murid ini
-                                            </p>
-                                            <Button
-                                                disabled={!data?.latestResult?.placementTestId}
-                                                onClick={() =>
-                                                    routes.replace(
-                                                        ROUTES.adminPlacementTestsId.expand({
-                                                            id:
-                                                                data?.latestResult
-                                                                    ?.placementTestId || 0,
-                                                        })
-                                                    )
-                                                }
-                                                className="w-full"
-                                                size={'lg'}
-                                            >
-                                                Nilai Placement Test
-                                            </Button>
-                                        </>
-                                    )}
-                                    {getRegistrationType(data) === REGISTRATION_TYPE.normal && (
-                                        <Button
-                                            disabled={!data?.levelId}
-                                            onClick={() => setIsOpen(true)}
-                                            className="w-full"
-                                            size="lg"
-                                        >
-                                            {!!studyGroupDetail?.schedules
-                                                ? 'Ganti Kelompok'
-                                                : 'Assign ke Kelompok'}
-                                        </Button>
-                                    )}
+                                    </Card>
+                                </Skeleton>
 
-                                    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                                        <DialogContent className={cn(inter.className)}>
-                                            <DialogTitle>Ganti Kelompok</DialogTitle>
-                                            <div>
-                                                <Label className="font-medium">Lokasi</Label>
-                                                <Skeleton
-                                                    className="h-10 my-1"
-                                                    loading={isLoadingLocation}
-                                                >
-                                                    <p className="text-sm my-1">
-                                                        {
-                                                            location?.find(
-                                                                loc => loc.id === +locationId
-                                                            )?.name
-                                                        }
-                                                    </p>
-                                                </Skeleton>
+                                {/* Catatan Section */}
+                                <Skeleton className="h-28" loading={isLoading}>
+                                    <Card className="overflow-hidden">
+                                        <div className="bg-secondary text-white p-4">
+                                            <h2 className="text-lg font-semibold">Catatan Siswa</h2>
+                                        </div>
+                                        <div className="p-6">
+                                            <div className="grid items-start">
+                                                {!isEdit ? (
+                                                    <>
+                                                        <p className="text-gray-900 font-medium mb-4">
+                                                            {notes}
+                                                        </p>
+                                                        <Button
+                                                            onClick={() => setIsEdit(true)}
+                                                            className="px-6 w-fit ml-auto"
+                                                            size="sm"
+                                                        >
+                                                            {notes
+                                                                ? 'Edit Catatan'
+                                                                : 'Tambah Catatan'}
+                                                        </Button>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Textarea
+                                                            className="mb-4"
+                                                            value={notes}
+                                                            onChange={e => setNotes(e.target.value)}
+                                                        />
+                                                        <div className="space-x-3 ml-auto">
+                                                            <Button
+                                                                onClick={() => setIsEdit(false)}
+                                                                className="px-6 w-fit"
+                                                                size="sm"
+                                                                variant={'outline'}
+                                                            >
+                                                                Cancel
+                                                            </Button>
+                                                            <Button
+                                                                onClick={handleSave}
+                                                                className="px-6 w-fit"
+                                                                size="sm"
+                                                            >
+                                                                Save
+                                                            </Button>
+                                                        </div>
+                                                    </>
+                                                )}
                                             </div>
-                                            {filteredStudyGroup.length ? (
-                                                <>
-                                                    <AdminSelect
-                                                        label="Kelompok Belajar"
-                                                        options={filteredStudyGroup || []}
-                                                        value={selectedStudyGroup}
-                                                        onValueChange={setSelectedStudyGroup}
-                                                        disabled={!locationId}
-                                                    />
-                                                    {isFull && (
-                                                        <Alert variant="destructive">
-                                                            <AlertCircleIcon />
-                                                            <AlertTitle>
-                                                                Kelompok belajar penuh
-                                                            </AlertTitle>
-                                                            <AlertDescription>
-                                                                <p>
-                                                                    Silahkan pilih kelompok belajar
-                                                                    yang lain.
-                                                                </p>
-                                                            </AlertDescription>
-                                                        </Alert>
+                                        </div>
+                                    </Card>
+                                </Skeleton>
+                            </div>
+
+                            {/* Kelompok Belajar Section */}
+                            <Skeleton
+                                loading={isLoadingStudyGroupDetail || isLoading}
+                                className="h-40"
+                            >
+                                <div className="space-y-6">
+                                    <Card className="overflow-hidden">
+                                        <div className="bg-secondary text-white p-4">
+                                            <h2 className="text-lg font-semibold">
+                                                Kelompok Belajar
+                                            </h2>
+                                        </div>
+                                        <div className="p-6 space-y-3">
+                                            <div>
+                                                <p className="text-sm text-gray-600 mb-1">Cabang</p>
+                                                <p
+                                                    className={cn(
+                                                        'font-semibold text-gray-900',
+                                                        studyGroupDetail?.schedules[0]?.location
+                                                            ? 'text-gray-900'
+                                                            : 'text-primary'
                                                     )}
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <Label>Kelompok Belajar</Label>
-                                                    <span className="text-sm text-primary font-medium">
-                                                        Belum ada kelompok belajar lain
-                                                    </span>
-                                                </>
-                                            )}
-                                            {!data?.trialClassAt && (
-                                                <div>
-                                                    <Label className="mb-2 block">
-                                                        Jadwal Trial Class
-                                                    </Label>
-                                                    <RadioGroup onValueChange={setTrialClass}>
-                                                        {trialClassDates.length ? (
-                                                            trialClassDates.map((date, index) => (
-                                                                <div
-                                                                    className="flex gap-4 items-center"
-                                                                    key={index}
-                                                                >
-                                                                    <RadioGroupItem
-                                                                        value={date.actualDate}
-                                                                    ></RadioGroupItem>
-                                                                    <p className="text-[#020217] text-sm">
-                                                                        {date.display}
-                                                                    </p>
-                                                                </div>
-                                                            ))
-                                                        ) : (
-                                                            <span className="text-sm text-primary font-medium">
-                                                                Pilih kelompok belajar terlebih
-                                                                dahulu
-                                                            </span>
-                                                        )}
-                                                    </RadioGroup>
-                                                </div>
-                                            )}
-                                            <DialogFooter>
-                                                <Button
-                                                    onClick={handleChangeStudyGroup}
-                                                    disabled={
-                                                        !selectedStudyGroup ||
-                                                        isFull ||
-                                                        (!data?.trialClassAt && !trialClass)
-                                                    }
                                                 >
-                                                    {!isLoadingChangeStudy
-                                                        ? 'Ganti'
-                                                        : 'Sedang mengganti...'}
+                                                    {studyGroupDetail?.schedules[0]?.location ||
+                                                        'Belum ditentukan'}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-600 mb-1">
+                                                    Nama Kelompok
+                                                </p>
+                                                <p
+                                                    className={cn(
+                                                        'font-semibold text-gray-900',
+                                                        studyGroupDetail?.name
+                                                            ? 'text-gray-900'
+                                                            : 'text-primary'
+                                                    )}
+                                                >
+                                                    {studyGroupDetail?.name || 'Belum ditentukan'}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-600 mb-1">
+                                                    Teacher
+                                                </p>
+                                                <p
+                                                    className={cn(
+                                                        'font-semibold text-gray-900',
+                                                        studyGroupDetail?.schedules[0]
+                                                            .teacherMemberName
+                                                            ? 'text-gray-900'
+                                                            : 'text-primary'
+                                                    )}
+                                                >
+                                                    {studyGroupDetail?.schedules[0]
+                                                        .teacherMemberName || 'Belum ditentukan'}
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <p className="text-sm text-gray-600 mb-1">
+                                                    Jadwal Trial Class{' '}
+                                                    {!!studyGroupDetail?.schedules.length &&
+                                                        '(Pilihan Sendiri)'}
+                                                </p>
+                                                <p
+                                                    className={cn(
+                                                        'font-semibold text-gray-900',
+                                                        data?.trialClassAt
+                                                            ? 'text-gray-900'
+                                                            : 'text-primary'
+                                                    )}
+                                                >
+                                                    {data?.trialClassAt
+                                                        ? moment(data.trialClassAt).format(
+                                                              'dddd, DD MMMM YYYY, HH:mm '
+                                                          )
+                                                        : '-'}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        {[
+                                            ...(data?.schedules && data?.schedules?.length > 0
+                                                ? data?.schedules
+                                                : (studyGroupDetail?.schedules as Schedule[]) ||
+                                                  []),
+                                        ].map((schedule, index) => (
+                                            <div
+                                                key={`${schedule.id}-${index}`}
+                                                className="px-6 py-4 border-t"
+                                            >
+                                                <p className="text-sm text-gray-600 mb-2">
+                                                    Jadwal Kelas {index + 1}
+                                                </p>
+
+                                                <div className="space-y-3">
+                                                    <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
+                                                        <div className="flex items-center gap-2">
+                                                            <Calendar className="w-4 h-4 text-orange-600" />
+                                                            <span className="text-sm text-gray-600">
+                                                                Hari
+                                                            </span>
+                                                        </div>
+                                                        <span className="font-semibold text-gray-900">
+                                                            {getDayOfWeek(
+                                                                schedule.dayOfWeek.slice(0, 3)
+                                                            )}
+                                                        </span>
+                                                    </div>
+
+                                                    <div className="flex items-center justify-between bg-[#F9FAFB] py-4 px-3 rounded-lg">
+                                                        <div className="flex items-center gap-2">
+                                                            <Clock className="w-4 h-4 text-orange-600" />
+                                                            <span className="text-sm text-gray-600">
+                                                                Waktu
+                                                            </span>
+                                                        </div>
+                                                        <span className="font-semibold text-gray-900">
+                                                            {schedule.startTime.substring(0, 5)} -{' '}
+                                                            {schedule.endTime.substring(0, 5)}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                        <div className="m-4">
+                                            {getRegistrationType(data) ===
+                                                REGISTRATION_TYPE.placementTest && (
+                                                <>
+                                                    <p className="text-xs py-2 mt-5">
+                                                        <Info className="w-4 h-4 inline mr-1" />
+                                                        Anda belum melakukan penilaian placement
+                                                        test untuk murid ini
+                                                    </p>
+                                                    <Button
+                                                        disabled={
+                                                            !data?.latestResult?.placementTestId
+                                                        }
+                                                        onClick={() =>
+                                                            routes.replace(
+                                                                ROUTES.adminPlacementTestsId.expand(
+                                                                    {
+                                                                        id:
+                                                                            data?.latestResult
+                                                                                ?.placementTestId ||
+                                                                            0,
+                                                                    }
+                                                                )
+                                                            )
+                                                        }
+                                                        className="w-full"
+                                                        size={'lg'}
+                                                    >
+                                                        Nilai Placement Test
+                                                    </Button>
+                                                </>
+                                            )}
+                                            {getRegistrationType(data) ===
+                                                REGISTRATION_TYPE.normal && (
+                                                <Button
+                                                    disabled={!data?.levelId}
+                                                    onClick={() => setIsOpen(true)}
+                                                    className="w-full"
+                                                    size="lg"
+                                                >
+                                                    {!!studyGroupDetail?.schedules
+                                                        ? 'Ganti Kelompok'
+                                                        : 'Assign ke Kelompok'}
                                                 </Button>
-                                            </DialogFooter>
-                                        </DialogContent>
-                                    </Dialog>
+                                            )}
+
+                                            <Dialog open={isOpen} onOpenChange={setIsOpen}>
+                                                <DialogContent className={cn(inter.className)}>
+                                                    <DialogTitle>Ganti Kelompok</DialogTitle>
+                                                    <div>
+                                                        <Label className="font-medium">
+                                                            Lokasi
+                                                        </Label>
+                                                        <Skeleton
+                                                            className="h-10 my-1"
+                                                            loading={isLoadingLocation}
+                                                        >
+                                                            <p className="text-sm my-1">
+                                                                {
+                                                                    location?.find(
+                                                                        loc =>
+                                                                            loc.id === +locationId
+                                                                    )?.name
+                                                                }
+                                                            </p>
+                                                        </Skeleton>
+                                                    </div>
+                                                    {filteredStudyGroup.length ? (
+                                                        <>
+                                                            <AdminSelect
+                                                                label="Kelompok Belajar"
+                                                                options={filteredStudyGroup || []}
+                                                                value={selectedStudyGroup}
+                                                                onValueChange={
+                                                                    setSelectedStudyGroup
+                                                                }
+                                                                disabled={!locationId}
+                                                            />
+                                                            {isFull && (
+                                                                <Alert variant="destructive">
+                                                                    <AlertCircleIcon />
+                                                                    <AlertTitle>
+                                                                        Kelompok belajar penuh
+                                                                    </AlertTitle>
+                                                                    <AlertDescription>
+                                                                        <p>
+                                                                            Silahkan pilih kelompok
+                                                                            belajar yang lain.
+                                                                        </p>
+                                                                    </AlertDescription>
+                                                                </Alert>
+                                                            )}
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Label>Kelompok Belajar</Label>
+                                                            <span className="text-sm text-primary font-medium">
+                                                                Belum ada kelompok belajar lain
+                                                            </span>
+                                                        </>
+                                                    )}
+                                                    {!data?.trialClassAt && (
+                                                        <div>
+                                                            <Label className="mb-2 block">
+                                                                Jadwal Trial Class
+                                                            </Label>
+                                                            <RadioGroup
+                                                                onValueChange={setTrialClass}
+                                                            >
+                                                                {trialClassDates.length ? (
+                                                                    trialClassDates.map(
+                                                                        (date, index) => (
+                                                                            <div
+                                                                                className="flex gap-4 items-center"
+                                                                                key={index}
+                                                                            >
+                                                                                <RadioGroupItem
+                                                                                    value={
+                                                                                        date.actualDate
+                                                                                    }
+                                                                                ></RadioGroupItem>
+                                                                                <p className="text-[#020217] text-sm">
+                                                                                    {date.display}
+                                                                                </p>
+                                                                            </div>
+                                                                        )
+                                                                    )
+                                                                ) : (
+                                                                    <span className="text-sm text-primary font-medium">
+                                                                        Pilih kelompok belajar
+                                                                        terlebih dahulu
+                                                                    </span>
+                                                                )}
+                                                            </RadioGroup>
+                                                        </div>
+                                                    )}
+                                                    <DialogFooter>
+                                                        <Button
+                                                            onClick={handleChangeStudyGroup}
+                                                            disabled={
+                                                                !selectedStudyGroup ||
+                                                                isFull ||
+                                                                (!data?.trialClassAt && !trialClass)
+                                                            }
+                                                        >
+                                                            {!isLoadingChangeStudy
+                                                                ? 'Ganti'
+                                                                : 'Sedang mengganti...'}
+                                                        </Button>
+                                                    </DialogFooter>
+                                                </DialogContent>
+                                            </Dialog>
+                                        </div>
+                                    </Card>
+                                    {getRegistrationType(data) ===
+                                        REGISTRATION_TYPE.selfSchedule && (
+                                        <StudentSelfScheduleAlert
+                                            selfSchedule={data?.self_schedule_payload?.items || []}
+                                            setIsOpen={setIsOpen}
+                                        />
+                                    )}
                                 </div>
-                            </Card>
-                            {getRegistrationType(data) === REGISTRATION_TYPE.selfSchedule && (
-                                <StudentSelfScheduleAlert
-                                    selfSchedule={data?.self_schedule_payload?.items || []}
-                                    setIsOpen={setIsOpen}
-                                />
-                            )}
+                            </Skeleton>
                         </div>
-                    </Skeleton>
-                </div>
-            </div>
+                    </div>
+                </>
+            )}
         </DashboardContentLayout>
     );
 }
