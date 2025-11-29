@@ -48,6 +48,18 @@ export const useCreateNewStudyGroupMutation = (): UseMutationResult => {
           }
         : null;
 
+    const customSchedule3 =
+        formValue.isCustomTime3 && formValue.day3
+            ? {
+                  dayOfWeek: formValue.day3,
+                  startTime: moment(formValue.time3, 'HH:mm:ss').format('HH:mm:ss'),
+                  endTime: moment(formValue.time3, 'HH:mm:ss')
+                      .add(90, 'minutes')
+                      .format('HH:mm:ss'),
+                  locationId: Number(formValue.locationId),
+              }
+            : null;
+
     const payload: CreateStudyGroupPayload = {
         name: formValue.title,
         description: formValue.description,
@@ -57,8 +69,10 @@ export const useCreateNewStudyGroupMutation = (): UseMutationResult => {
         gradeId: Number(formValue.gradeId),
         packageId: Number(formValue.packageId),
         teacherTeamMemberId: Number(formValue.teacherTeamMemberId),
-        scheduleIds: [formValue.scheduleId1, formValue.scheduleId2].filter(item => item > 0),
-        schedules: [customSchedule1, customSchedule2].filter(item => item !== null),
+        scheduleIds: [formValue.scheduleId1, formValue.scheduleId2, formValue.scheduleId3].filter(
+            item => item > 0
+        ),
+        schedules: [customSchedule1, customSchedule2, customSchedule3].filter(item => !!item),
     };
 
     return useMutation({

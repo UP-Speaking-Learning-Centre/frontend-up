@@ -15,11 +15,16 @@ import useFetchGradesQuery from '@/features/select-program/queries/use-fetch-gra
 import { useGetTeacherScheduleQuery } from '../../queries/use-get-teacher-schedule';
 import { SelectDayOne, SelectTimeOne } from './select-schedule-one';
 import { useEffect, useState } from 'react';
-import { SelectDayTwo, SelectTimeTwo } from './select-schedule-two';
+import {
+    SelectDayThree,
+    SelectDayTwo,
+    SelectTimeThree,
+    SelectTimeTwo,
+} from './select-schedule-two';
 import { useCreateNewStudyGroupMutation } from '../../queries/use-create-new-study-group';
 import { getSchedulesByTeacherAndDay, isTimeAvailable } from '@/utils/schedule';
 import { ScheduleItem } from '@/types/schedule';
-import { TimerIcon } from 'lucide-react';
+import { TimerIcon, X, XCircle } from 'lucide-react';
 import moment from 'moment';
 
 const AddNewStudyGroup = ({
@@ -39,10 +44,14 @@ const AddNewStudyGroup = ({
     const [errorTime, setErrorTime] = useState({
         time1: '',
         time2: '',
+        time3: '',
     });
 
     const [teachersScheduleDay1, setTeachersScheduleDay1] = useState<ScheduleItem[] | null>(null);
     const [teachersScheduleDay2, setTeachersScheduleDay2] = useState<ScheduleItem[] | null>(null);
+    const [teachersScheduleDay3, setTeachersScheduleDay3] = useState<ScheduleItem[] | null>(null);
+
+    const [showSchedule3, setShowSchedule3] = useState(false);
 
     useEffect(() => {
         if (formValue.teacherMemberName && formValue.day1 && !!scheduleData?.length) {
@@ -57,7 +66,7 @@ const AddNewStudyGroup = ({
     }, [formValue.teacherMemberName, formValue.day1, scheduleData]);
 
     useEffect(() => {
-        if (formValue.teacherMemberName && formValue.day1 && !!scheduleData?.length) {
+        if (formValue.teacherMemberName && formValue.day2 && !!scheduleData?.length) {
             const schedules = getSchedulesByTeacherAndDay(
                 scheduleData,
                 String(formValue.teacherTeamMemberId),
@@ -66,6 +75,17 @@ const AddNewStudyGroup = ({
             setTeachersScheduleDay2(schedules);
         }
     }, [formValue.teacherMemberName, formValue.day2, scheduleData]);
+
+    useEffect(() => {
+        if (formValue.teacherMemberName && formValue.day3 && !!scheduleData?.length) {
+            const schedules = getSchedulesByTeacherAndDay(
+                scheduleData,
+                String(formValue.teacherTeamMemberId),
+                formValue.day3
+            );
+            setTeachersScheduleDay3(schedules);
+        }
+    }, [formValue.teacherMemberName, formValue.day3, scheduleData]);
 
     const onSubmit = (data: InitialValue) => {
         mutate(data, {
@@ -134,6 +154,21 @@ const AddNewStudyGroup = ({
         }
     }, [formValue.day2, formValue.time2, formValue.teacherTeamMemberId]);
 
+    useEffect(() => {
+        if (formValue.day3 && formValue.time3 && formValue.teacherTeamMemberId) {
+            const getScheduleid = scheduleData?.find(
+                schedule =>
+                    schedule.day === formValue.day3 &&
+                    schedule.startTime === formValue.time3 &&
+                    Number(schedule.teacherMemberId) === Number(formValue.teacherTeamMemberId)
+            );
+
+            if (getScheduleid) {
+                onChange('scheduleId3', getScheduleid.scheduleId);
+            }
+        }
+    }, [formValue.day3, formValue.time3, formValue.teacherTeamMemberId]);
+
     const disabled =
         !formValue.title ||
         !formValue.description ||
@@ -147,8 +182,10 @@ const AddNewStudyGroup = ({
         !formValue.time2 ||
         (!formValue.isCustomTime1 ? !formValue.scheduleId1 : false) ||
         (!formValue.isCustomTime2 ? !formValue.scheduleId2 : false) ||
+        (showSchedule3 && (!formValue.isCustomTime3 ? !formValue.scheduleId3 : false)) ||
         !!errorTime.time1 ||
-        !!errorTime.time2;
+        !!errorTime.time2 ||
+        !!errorTime.time3;
 
     const onCheckTime = ({
         teachersSchedule,
@@ -157,7 +194,7 @@ const AddNewStudyGroup = ({
     }: {
         teachersSchedule: ScheduleItem[];
         startTime: string;
-        time: 'time1' | 'time2';
+        time: 'time1' | 'time2' | 'time3';
     }) => {
         const { isAvailable, overlapped } = isTimeAvailable(teachersSchedule, startTime);
 
@@ -222,6 +259,50 @@ const AddNewStudyGroup = ({
         }
     }, [formValue.time2, formValue.time1, teachersScheduleDay2]);
 
+    useEffect(() => {
+        if (formValue.time3) {
+            const day1 = {
+                scheduleId: 0,
+                teacherMemberName: '',
+                teacherAlias: '',
+                teacherMemberId: '',
+                day: '',
+                startTime: formValue.time1,
+                endTime: moment(formValue.time1, 'HH:mm:ss').add(90, 'minutes').format('HH:mm:ss'),
+                isPriority: false,
+                location: '',
+                package: null,
+                studyGroupId: null,
+                studyGroup: '',
+                totalStudent: 0,
+                notes: [],
+            };
+
+            const day2 = {
+                scheduleId: 0,
+                teacherMemberName: '',
+                teacherAlias: '',
+                teacherMemberId: '',
+                day: '',
+                startTime: formValue.time2,
+                endTime: moment(formValue.time2, 'HH:mm:ss').add(90, 'minutes').format('HH:mm:ss'),
+                isPriority: false,
+                location: '',
+                package: null,
+                studyGroupId: null,
+                studyGroup: '',
+                totalStudent: 0,
+                notes: [],
+            };
+
+            onCheckTime({
+                teachersSchedule: [...(teachersScheduleDay3 || []), day1, day2],
+                startTime: formValue.time3,
+                time: 'time3',
+            });
+        }
+    }, [formValue.time3, formValue.time2, formValue.time1, teachersScheduleDay3]);
+
     return (
         <>
             <Dialog
@@ -257,7 +338,7 @@ const AddNewStudyGroup = ({
                             name="description"
                             render={({ field }) => (
                                 <div>
-                                    <Label>Deskripsi</Label>
+                                    <Label>Deskripsi*</Label>
                                     <Input
                                         className="mt-1"
                                         value={formValue.description}
@@ -386,6 +467,7 @@ const AddNewStudyGroup = ({
                                         setErrorTime({
                                             time1: '',
                                             time2: '',
+                                            time3: '',
                                         });
                                     }}
                                 >
@@ -405,6 +487,7 @@ const AddNewStudyGroup = ({
                                                 setErrorTime({
                                                     time1: '',
                                                     time2: '',
+                                                    time3: '',
                                                 });
                                                 onChange('day1', value);
                                                 field.onChange(value);
@@ -489,6 +572,7 @@ const AddNewStudyGroup = ({
                                         setErrorTime(prev => ({
                                             ...prev,
                                             time2: '',
+                                            time3: '',
                                         }));
                                     }}
                                 >
@@ -508,6 +592,7 @@ const AddNewStudyGroup = ({
                                                 setErrorTime(prev => ({
                                                     ...prev,
                                                     time2: '',
+                                                    time3: '',
                                                 }));
                                                 onChange('day2', value);
                                                 field.onChange(value);
@@ -576,6 +661,142 @@ const AddNewStudyGroup = ({
                             </div>
                             <p className="text-red-500 mt-2 text-sm">{errorTime.time2}</p>
                         </div>
+
+                        {!showSchedule3 && formValue.programId === '2' && (
+                            <div className="mt-2">
+                                <Button
+                                    variant="link"
+                                    className="px-0"
+                                    type="button"
+                                    onClick={() => {
+                                        setShowSchedule3(true);
+                                    }}
+                                >
+                                    + Tambahkan jadwal 3
+                                </Button>
+                            </div>
+                        )}
+
+                        {showSchedule3 && (
+                            <div>
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center">
+                                        <Label>Jadwal 3*</Label>
+                                        <XCircle
+                                            onClick={() => {
+                                                setShowSchedule3(false);
+                                                resetFormValue('day3');
+                                                setValue({
+                                                    isCustomTime3: !formValue.isCustomTime3,
+                                                });
+                                                setErrorTime(prev => ({
+                                                    ...prev,
+                                                    time3: '',
+                                                }));
+                                            }}
+                                            className="ml-2 text-primary size-4 cursor-pointer"
+                                        />
+                                    </div>
+                                    <Button
+                                        variant="link"
+                                        type="button"
+                                        onClick={() => {
+                                            setValue({
+                                                time3: '',
+                                                isCustomTime3: !formValue.isCustomTime3,
+                                            });
+                                            resetFormValue('time3');
+                                            setErrorTime(prev => ({
+                                                ...prev,
+                                                time3: '',
+                                            }));
+                                        }}
+                                    >
+                                        {formValue.isCustomTime3
+                                            ? 'Gunakan Jadwal Biasa'
+                                            : 'Pilih Jadwal Custom'}
+                                    </Button>
+                                </div>
+                                <div className="flex gap-4 w-full">
+                                    <Controller
+                                        control={control}
+                                        name="day3"
+                                        render={({ field }) => (
+                                            <SelectDayThree
+                                                value={formValue.day3}
+                                                onChange={value => {
+                                                    setErrorTime(prev => ({
+                                                        ...prev,
+                                                        time3: '',
+                                                    }));
+                                                    onChange('day3', value);
+                                                    field.onChange(value);
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                    <Controller
+                                        control={control}
+                                        name="time3"
+                                        render={({ field }) =>
+                                            formValue.isCustomTime3 ? (
+                                                <div className="relative flex-1 w-full">
+                                                    <Label className="font-normal">Waktu</Label>
+                                                    <div className="relative flex-1 mt-1">
+                                                        {!formValue.day3 ? (
+                                                            <p className="mt-4 text-xs">
+                                                                Pilih hari terlebih dahulu
+                                                            </p>
+                                                        ) : (
+                                                            <div className="flex items-center gap-2">
+                                                                <div className="flex-1 w-full">
+                                                                    <TimerIcon className="size-4 absolute top-1/2 left-2 -translate-y-1/2 text-neutral-500" />
+                                                                    <Input
+                                                                        onChange={e =>
+                                                                            onChange(
+                                                                                'time3',
+                                                                                e.target.value
+                                                                            )
+                                                                        }
+                                                                        type="time"
+                                                                        value={formValue.time3}
+                                                                        id="time-picker"
+                                                                        step="60"
+                                                                        className="bg-background ps-8 appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
+                                                                    />
+                                                                </div>
+                                                                <p className="text-sm text-neutral-500">
+                                                                    s/d
+                                                                </p>
+                                                                <p className="w-fit font-medium text-base pr-2">
+                                                                    {formValue.time3
+                                                                        ? moment(
+                                                                              formValue.time3,
+                                                                              'HH:mm:ss'
+                                                                          )
+                                                                              .add(90, 'minutes')
+                                                                              .format('HH:mm')
+                                                                        : '__:__'}
+                                                                </p>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <SelectTimeThree
+                                                    value={formValue.time3}
+                                                    onChange={value => {
+                                                        onChange('time3', value);
+                                                        field.onChange(value);
+                                                    }}
+                                                />
+                                            )
+                                        }
+                                    />
+                                </div>
+                                <p className="text-red-500 mt-2 text-sm">{errorTime.time3}</p>
+                            </div>
+                        )}
 
                         <div className="flex justify-end">
                             <Button type="submit" disabled={isPending || disabled}>

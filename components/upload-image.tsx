@@ -11,6 +11,7 @@ interface UploadImageProps {
     value?: string | null;
     width?: number;
     height?: number;
+    size?: number;
 }
 
 const UploadImage = ({
@@ -19,12 +20,20 @@ const UploadImage = ({
     value,
     width = 320,
     height = 170,
+    size = 4,
 }: UploadImageProps) => {
     const [open, setOpen] = useState(false);
     const [tempImage, setTempImage] = useState<string | null>(null);
     const [fileUrl, setFileUrl] = useState<string | null>('');
 
+    const [isLimitSize, setIsLimitSize] = useState(false);
+
     const onSave = (file: File) => {
+        if (file.size > 1024 * 1024 * size) {
+            setIsLimitSize(true);
+            return;
+        }
+        setIsLimitSize(false);
         handleUpload(file);
         setTempImage('');
         setFileUrl(URL.createObjectURL(file));
@@ -82,6 +91,11 @@ const UploadImage = ({
                     <UploadIcon className="size-4" /> {label} {fileUrl ? 'Lainnya' : ''}
                 </label>
             </div>
+            {isLimitSize && (
+                <p className="text-red-500 text-sm mt-1">
+                    File size tidak boleh lebih dari {size}MB
+                </p>
+            )}
         </>
     );
 };

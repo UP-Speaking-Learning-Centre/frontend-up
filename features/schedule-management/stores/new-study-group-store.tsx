@@ -14,6 +14,8 @@ export interface InitialValue {
     time1: string;
     day2: string;
     time2: string;
+    day3: string;
+    time3: string;
     teacherTeamMemberId: number;
     teacherMemberName: string;
     listTeachers: { teacherMemberName: string; teacherMemberId: number }[];
@@ -21,8 +23,10 @@ export interface InitialValue {
     listTimes: string[];
     scheduleId1: number;
     scheduleId2: number;
+    scheduleId3: number;
     isCustomTime1: boolean;
     isCustomTime2: boolean;
+    isCustomTime3: boolean;
 }
 interface StudyGroupStore {
     formValue: InitialValue;
@@ -46,11 +50,14 @@ const resetFormValue = (key: keyof InitialValue) => {
                 time1: '',
                 day2: '',
                 time2: '',
+                day3: '',
+                time3: '',
                 teacherTeamMemberId: 0,
                 teacherMemberName: '',
                 listTeachers: [],
                 scheduleId1: 0,
                 scheduleId2: 0,
+                scheduleId3: 0,
             };
         case 'groupId':
             return {
@@ -64,11 +71,14 @@ const resetFormValue = (key: keyof InitialValue) => {
                 time1: '',
                 day2: '',
                 time2: '',
+                day3: '',
+                time3: '',
                 teacherTeamMemberId: 0,
                 teacherMemberName: '',
                 listTeachers: [],
                 scheduleId1: 0,
                 scheduleId2: 0,
+                scheduleId3: 0,
             };
         case 'levelId':
             return {
@@ -81,11 +91,14 @@ const resetFormValue = (key: keyof InitialValue) => {
                 time1: '',
                 day2: '',
                 time2: '',
+                day3: '',
+                time3: '',
                 teacherTeamMemberId: 0,
                 listTeachers: [],
                 teacherMemberName: '',
                 scheduleId1: 0,
                 scheduleId2: 0,
+                scheduleId3: 0,
             };
         case 'gradeId':
             return {
@@ -96,11 +109,14 @@ const resetFormValue = (key: keyof InitialValue) => {
                 time1: '',
                 day2: '',
                 time2: '',
+                day3: '',
+                time3: '',
                 teacherTeamMemberId: 0,
                 listTeachers: [],
                 teacherMemberName: '',
                 scheduleId1: 0,
                 scheduleId2: 0,
+                scheduleId3: 0,
             };
         case 'packageId':
             return {
@@ -110,10 +126,13 @@ const resetFormValue = (key: keyof InitialValue) => {
                 time1: '',
                 day2: '',
                 time2: '',
+                day3: '',
+                time3: '',
                 teacherTeamMemberId: 0,
                 listTeachers: [],
                 scheduleId1: 0,
                 scheduleId2: 0,
+                scheduleId3: 0,
                 teacherMemberName: '',
             };
         case 'locationId':
@@ -123,10 +142,13 @@ const resetFormValue = (key: keyof InitialValue) => {
                 time1: '',
                 day2: '',
                 time2: '',
+                day3: '',
+                time3: '',
                 teacherTeamMemberId: 0,
                 listTeachers: [],
                 scheduleId1: 0,
                 scheduleId2: 0,
+                scheduleId3: 0,
                 teacherMemberName: '',
             };
         case 'teacherMemberName':
@@ -135,27 +157,56 @@ const resetFormValue = (key: keyof InitialValue) => {
                 time1: '',
                 day2: '',
                 time2: '',
+                day3: '',
+                time3: '',
                 scheduleId1: 0,
                 scheduleId2: 0,
+                scheduleId3: 0,
             };
         case 'day1':
             return {
                 time1: '',
                 day2: '',
                 time2: '',
+                day3: '',
+                time3: '',
                 scheduleId1: 0,
                 scheduleId2: 0,
+                scheduleId3: 0,
             };
         case 'time1':
             return {
                 day2: '',
                 time2: '',
+                day3: '',
+                time3: '',
+                scheduleId1: 0,
                 scheduleId2: 0,
+                scheduleId3: 0,
             };
         case 'day2':
             return {
                 time2: '',
+                day3: '',
+                time3: '',
                 scheduleId2: 0,
+                scheduleId3: 0,
+            };
+        case 'time2':
+            return {
+                day3: '',
+                time3: '',
+                scheduleId2: 0,
+                scheduleId3: 0,
+            };
+        case 'day3':
+            return {
+                time3: '',
+                scheduleId3: 0,
+            };
+        case 'time3':
+            return {
+                scheduleId3: 0,
             };
         default:
             return {};
@@ -181,10 +232,14 @@ const initialValue: InitialValue = {
     teacherTeamMemberId: 0,
     listDays: [],
     listTimes: [],
+    day3: '',
+    time3: '',
     scheduleId1: 0,
     scheduleId2: 0,
+    scheduleId3: 0,
     isCustomTime1: false,
     isCustomTime2: false,
+    isCustomTime3: false,
 };
 
 export const useNewStudyGroupStore = create<StudyGroupStore>()(set => ({

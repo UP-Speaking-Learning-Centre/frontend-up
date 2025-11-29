@@ -3,7 +3,8 @@ import { ScheduleItem } from '@/types/schedule';
 import { useNewStudyGroupStore } from '../stores/new-study-group-store';
 
 export function useScheduleOptions(schedules: ScheduleItem[]) {
-    const { teacherMemberName, day1, day2, time1, alias } = useNewStudyGroupStore(s => s.formValue);
+    const { teacherMemberName, day1, day2, time1, time2, day3, time3, alias } =
+        useNewStudyGroupStore(s => s.formValue);
     const setValue = useNewStudyGroupStore(s => s.setValue);
 
     const teachers = useMemo(() => {
@@ -36,24 +37,46 @@ export function useScheduleOptions(schedules: ScheduleItem[]) {
     }, [schedules, teacherMemberName]);
 
     const getStartTimes = useCallback(
-        (useDay1: boolean) => {
-            if (!teacherMemberName || (useDay1 && !day1) || (!useDay1 && !day2)) return [];
+        ({ startTimeFor }: { startTimeFor: 'day1' | 'day2' | 'day3' }) => {
+            if (
+                !teacherMemberName ||
+                (startTimeFor === 'day1' && !day1) ||
+                (startTimeFor === 'day2' && !day2) ||
+                (startTimeFor === 'day3' && !day3)
+            )
+                return [];
 
-            return Array.from(
+            let filt = (s: ScheduleItem) => {};
+
+            if (startTimeFor === 'day1') {
+                filt = (s: ScheduleItem) => s.day === day1;
+            }
+
+            if (startTimeFor === 'day2') {
+                filt = (s: ScheduleItem) => s.day === day2 && s.startTime !== time1;
+            }
+
+            if (startTimeFor === 'day3') {
+                filt = (s: ScheduleItem) =>
+                    s.day === day3 && s.startTime !== time1 && s.startTime !== time2;
+            }
+
+            const test = Array.from(
                 new Set(
                     schedules
                         .filter(
                             s =>
                                 s.teacherMemberName === teacherMemberName &&
                                 s.studyGroupId === null &&
-                                s.day === (useDay1 ? day1 : day2) &&
-                                s.startTime !== (useDay1 ? '' : time1)
+                                filt(s)
                         )
                         .map(s => s.startTime)
                 )
             );
+
+            return test;
         },
-        [schedules, teacherMemberName, day1, day2, time1]
+        [schedules, teacherMemberName, day1, day2, day3, time1, time2]
     );
 
     return {

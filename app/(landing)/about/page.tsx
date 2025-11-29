@@ -141,7 +141,6 @@ export const mentors = [
 export default function AboutPage() {
     const { data } = useGetAllTeacher();
 
-    console.log(data);
     return (
         <>
             {/* Hero Section */}

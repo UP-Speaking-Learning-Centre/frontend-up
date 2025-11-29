@@ -74,7 +74,7 @@ export const SelectTimeOne = ({
             );
         }
 
-        return getStartTimes(true).map(startTime => (
+        return getStartTimes({ startTimeFor: 'day1' }).map(startTime => (
             <SelectItem key={startTime} value={startTime}>
                 {startTime}
             </SelectItem>
