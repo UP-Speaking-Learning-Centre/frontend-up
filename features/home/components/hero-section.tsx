@@ -20,7 +20,7 @@ export default function HeroSection() {
                 <div className="mx-auto">
                     <div className="text-center">
                         <div className="max-w-4xl mx-auto">
-                            <h1 className="text-[4rem] font-rubik uppercase font-semibold text-white sm:text-6xl space-y-2">
+                            <h1 className="text-[3rem] font-rubik uppercase font-semibold text-white sm:text-6xl space-y-2">
                                 <p>
                                     Up Your <span className="text-primary">Words</span>,
                                 </p>
