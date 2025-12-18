@@ -1,7 +1,7 @@
-import axios, { Axios, AxiosError } from 'axios';
+import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://api.uplearningcentre.com/',
+    baseURL: 'https://dev-api.uplearningcentre.com/',
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
