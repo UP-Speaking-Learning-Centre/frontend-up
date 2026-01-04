@@ -18,7 +18,7 @@ export const HEADER_NAVIGATION = [
         href: ROUTES.faqTestimonials,
     },
     {
-        name: 'Pilih Program',
+        name: 'Registrasi',
         href: ROUTES.chooseProgram,
     },
 ] as const;

@@ -19,11 +19,13 @@ import usePlacementTestGuestStore from '@/features/select-program/stores/placeme
 import { useSubmitPlacementTestMutation } from '@/features/placement-test/queries/use-submit-placement-test';
 import Overlay from '@/components/layout/overlay';
 import { ROUTES } from '@/constants/routes';
+import useProgramSelectionStore from '@/features/select-program/stores/program-selection-store';
 
 function PlacementTestPage() {
     const router = useRouter();
     const questions = usePlacementTestGuestStore(s => s.questions);
     const testSessionId = usePlacementTestGuestStore(s => s.testSessionId);
+    const setCurrentStep = useProgramSelectionStore(s => s.setCurrentStep);
     const { isPending } = useSubmitPlacementTestMutation();
     const {
         currentQuestion,
@@ -47,6 +49,7 @@ function PlacementTestPage() {
     } = usePlacementTest(questions);
 
     const handleContinueToForm = () => {
+        setCurrentStep(0);
         router.push(`${ROUTES.register}?testSessionId=${testSessionId}`);
     };
 

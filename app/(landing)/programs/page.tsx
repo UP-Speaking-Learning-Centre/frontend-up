@@ -17,7 +17,7 @@ const programs = [
         name: 'School Program',
         longDescription:
             'Dirancang khusus untuk anak usia TK hingga SMA dan diselenggarakan secara offline sepenuhnya. Program ini menggunakan kurikulum dari Cambridge University Press, dengan sistem leveling CEFR (Pre-A1 hingga C1). Menggunakan metode 90 Minutes of Happiness, setiap kelas dikemas seru dan aplikatif untuk membangun kepercayaan diri siswa.',
-        imageUrl: '/school.jpg',
+        imageUrl: '/bg-image/school.jpeg',
         duration: '48 Meetings (6 months)',
         format: '90 Minutes/Session , Offline',
     },
@@ -26,7 +26,7 @@ const programs = [
         name: 'Regular Program',
         longDescription:
             'Diarahkan untuk remaja dan dewasa yang ingin belajar bahasa Inggris secara efektif dan terstruktur. Dengan metode 90 Minutes of Happiness, program ini membantu siswa meningkatkan fluency dan rasa percaya diri berbicara dalam konteks akademik maupun profesional.',
-        imageUrl: '/regluar.jpeg',
+        imageUrl: '/bg-image/regular.jpeg',
         duration: '16 weeks',
         format: '90 Minutes/Session , Offline',
     },

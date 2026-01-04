@@ -22,7 +22,7 @@ const RegisterPage = () => {
     }, [testSessionId]);
 
     return (
-        <>
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
             <div
                 id={CHOOSE_PACKAGE_STEP}
                 className="min-h-[calc(100vh-64px)] py-24 flex flex-col justify-center"
@@ -37,7 +37,7 @@ const RegisterPage = () => {
 
             <Price isFromPlacement={true} />
             <FormInformation isFromPlacement={true} />
-        </>
+        </div>
     );
 };
 

@@ -206,12 +206,30 @@ export default function AboutPage() {
                                 </p>
                             </div>
                         </div>
-                        <div className="relative lg:col-span-2">
-                            <div className="relative rounded-xl overflow-hidden shadow-xl ring-1 ring-gray-400/10 mt-12 w-full sm:mx-auto sm:w-8/12 lg:w-full aspect-[3/4]">
-                                <Image src="/pic-3.jpeg" alt="About UP Education" fill />
+                        <div className="relative lg:col-span-2 space-y-4">
+                            <div className="relative rounded-xl overflow-hidden shadow-xl ring-1 ring-gray-400/10 w-full sm:mx-auto sm:w-8/12 lg:w-full aspect-[928/632]">
+                                <Image
+                                    src="/bg-image/about-2.jpeg"
+                                    alt="About UP Education"
+                                    fill
+                                    className="object-cover"
+                                />
                             </div>
-                            <div className="relative rounded-xl overflow-hidden shadow-xl ring-1 ring-gray-400/10 mt-12 w-full sm:mx-auto sm:w-8/12 lg:w-full aspect-[1442/2432]">
-                                <Image src="/pic-2.jpeg" alt="About UP Education" fill />
+                            <div className="relative rounded-xl overflow-hidden shadow-xl ring-1 ring-gray-400/10 w-full sm:mx-auto sm:w-8/12 lg:w-full aspect-[928/632]">
+                                <Image
+                                    src="/bg-image/about-3.jpeg"
+                                    alt="About UP Education"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <div className="relative rounded-xl overflow-hidden shadow-xl ring-1 ring-gray-400/10 w-full sm:mx-auto sm:w-8/12 lg:w-full aspect-[3/4]">
+                                <Image
+                                    src="/bg-image/about.jpeg"
+                                    alt="About UP Education"
+                                    fill
+                                    className="object-cover"
+                                />
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ButtonOutline } from '@/components/ui/button-outline';
+import { ROUTES } from '@/constants/routes';
 
 export default function HeroSection() {
     return (
@@ -9,9 +10,9 @@ export default function HeroSection() {
                 <div
                     className="absolute inset-0 bg-gradient-to-r filter blur-sm from-secondary/80 to-secondary/70"
                     style={{
-                        backgroundImage: `url(/bg-image/hero.svg)`,
+                        backgroundImage: `url(/bg-image/hero-3.jpeg)`,
                         backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                        backgroundPosition: 'top',
                     }}
                 />
                 <div className="absolute inset-0 w-full h-full bg-black/70"></div>
@@ -40,9 +41,9 @@ export default function HeroSection() {
                             keseharian mereka.
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
-                            <Link href="/programs">
+                            <Link href={ROUTES.chooseProgram}>
                                 <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-6">
-                                    Explore Programs
+                                    Registrasi
                                 </Button>
                             </Link>
                         </div>
