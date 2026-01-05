@@ -10,11 +10,8 @@ const useProgramSelection = (isFromPlacement = false) => {
     const resetBasedOnStep = useProgramSelectionStore(s => s.resetBasedOnStep);
     const formValue = useProgramSelectionStore(s => s.formValue);
 
-    console.log(steps);
-    console.log(currentStep);
     const getCurrentStepIndex = useCallback(
         (stepId: (typeof steps)[number]) => {
-            console.log(stepId);
             return steps.findIndex(step => step === stepId);
         },
         [steps]
@@ -22,9 +19,7 @@ const useProgramSelection = (isFromPlacement = false) => {
 
     const isStepDisplayed = useCallback(
         (stepId: (typeof steps)[number]) => {
-            console.log(stepId);
             const stepIndex = getCurrentStepIndex(stepId);
-            console.log(stepIndex);
             return stepIndex <= currentStep;
         },
         [currentStep, getCurrentStepIndex, steps]
