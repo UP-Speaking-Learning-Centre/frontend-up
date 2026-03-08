@@ -1,24 +1,14 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { ALL_GROUP, ALL_MENTOR, ALL_PROGRAM } from '@/features/admin/constants/config';
 import DashboardContentLayout from '@/features/dashboard/components/dashboard-content-layout';
-import DashboardFilter from '@/features/dashboard/components/filter';
-import Table from '@/features/dashboard/components/table';
 import useFilterStudents from '@/features/dashboard/hooks/use-filter-studets';
 import useFetchStudentsQuery from '@/features/dashboard/queries/use-fetch-students';
 import { useStudentsStore } from '@/features/dashboard/stores/students-store';
-import { getDayOfWeek } from '@/lib/date';
-import { cn } from '@/lib/utils';
-import { StudentType } from '@/types/students';
 import { debounce } from '@/utils/function.helper';
-import { ChevronDown, Eye, Filter } from 'lucide-react';
-import moment from 'moment';
-import Link from 'next/link';
 import { useCallback, useState } from 'react';
+
+import StudentFilter from '@/features/admin/components/students/student-filter';
+import StudentTable from '@/features/admin/components/students/student-table';
 
 const Page = () => {
     const students = useStudentsStore(s => s.students);
@@ -38,7 +28,7 @@ const Page = () => {
     const [isFilterOpen, setIsFilterOpen] = useState(true);
 
     const debouncedSearch = useCallback(
-        debounce(value => {
+        debounce((value: string) => {
             onChangeSearch(value);
         }, 500),
         []
@@ -47,147 +37,25 @@ const Page = () => {
     return (
         <DashboardContentLayout pageTitle="Students">
             <div className="space-y-6">
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="text-xl flex items-center justify-between gap-2">
-                            <div className="flex items-center gap-2">
-                                <Filter className="size-5" />
-                                Filters
-                            </div>
-                            <div className="size-8 flex items-center justify-center border border-primary rounded-sm cursor-pointer">
-                                <ChevronDown
-                                    className={cn(
-                                        'size-5 transition-all duration-300 text-primary ease-in-out',
-                                        isFilterOpen ? 'rotate-180' : ''
-                                    )}
-                                    onClick={() => setIsFilterOpen(!isFilterOpen)}
-                                />
-                            </div>
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-0">
-                        <div
-                            className={cn(
-                                'grid grid-cols-1 mx-6 mt-0 overflow-hidden md:grid-cols-4 gap-4 h-fit transition-all duration-300 ease-in-out',
-                                isFilterOpen ? 'max-h-[50vh] mb-6' : 'max-h-0 mb-0'
-                            )}
-                        >
-                            <div className="flex flex-col items-start gap-2">
-                                <Label>Nama</Label>
-                                <Input
-                                    value={filter.localSearchQuery}
-                                    placeholder="Cari Nama"
-                                    onChange={e => {
-                                        onChangeFilter('localSearchQuery', e.target.value);
-                                        debouncedSearch(e.target.value);
-                                    }}
-                                />
-                            </div>
-                            <DashboardFilter
-                                label="Program"
-                                options={
-                                    programs?.map(program => ({
-                                        id: program.id,
-                                        name: program.name,
-                                    })) || []
-                                }
-                                onSelect={onChangeProgram}
-                                value={filter.program?.toString() || ''}
-                                defaultValue={ALL_PROGRAM}
-                            />
-                            <DashboardFilter
-                                label="Group"
-                                options={groups}
-                                onSelect={onChangeGroup}
-                                value={filter.group?.toString() || ''}
-                                defaultValue={ALL_GROUP}
-                            />
-                            <DashboardFilter
-                                label="Mentor"
-                                options={mentors}
-                                onSelect={onChangeMentor}
-                                value={filter.mentors.toString() || ''}
-                                defaultValue={ALL_MENTOR}
-                            />
-                        </div>
-                    </CardContent>
-                </Card>
+                <StudentFilter
+                    isFilterOpen={isFilterOpen}
+                    setIsFilterOpen={setIsFilterOpen}
+                    filter={filter}
+                    onChangeFilter={onChangeFilter}
+                    debouncedSearch={debouncedSearch}
+                    programs={programs!}
+                    onChangeProgram={onChangeProgram}
+                    groups={groups!}
+                    onChangeGroup={onChangeGroup}
+                    mentors={mentors!}
+                    onChangeMentor={onChangeMentor}
+                />
 
-                <Table<StudentType>
+                <StudentTable
                     isLoading={isLoading}
-                    columns={[
-                        { name: 'Name', id: 'studentName', width: 'w-[300px]' },
-                        { name: 'Phone', id: 'parentPhoneNumber' },
-                        { name: 'Program', id: 'program' },
-                        { name: 'Group', id: 'group' },
-                        { name: 'Mentor', id: 'teacherName' },
-                        { name: 'Schedules', id: 'schedules' },
-                        { name: 'Actions', id: 'actions' },
-                    ]}
-                    values={students?.map(user => {
-                        return {
-                            ...user,
-                            studentName: {
-                                renderCell: () => (
-                                    <p className="font-semibold truncate max-w-[300px]">
-                                        {user.studentName}
-                                    </p>
-                                ),
-                            },
-                            program: {
-                                renderCell: () => (
-                                    <p>{user.program === 'N/A' ? '-' : user.program}</p>
-                                ),
-                            },
-                            group: {
-                                renderCell: () => <p>{user.group === 'N/A' ? '-' : user.group}</p>,
-                            },
-                            teacherName: {
-                                renderCell: () => (
-                                    <p>{user.teacherName === 'N/A' ? '-' : user.teacherName}</p>
-                                ),
-                            },
-                            schedules: {
-                                renderCell: () => (
-                                    <>
-                                        {user.schedules?.length ? (
-                                            <div className="flex items-start justify-center flex-col gap-2">
-                                                {user.schedules?.map((item, i) => (
-                                                    <p key={i}>
-                                                        {getDayOfWeek(item.dayOfWeek)},{' '}
-                                                        {moment(item.startTime, 'HH:mm:ss').format(
-                                                            'HH:mm'
-                                                        )}{' '}
-                                                        -{' '}
-                                                        {moment(item.endTime, 'HH:mm:ss').format(
-                                                            'HH:mm'
-                                                        )}
-                                                    </p>
-                                                ))}
-                                            </div>
-                                        ) : (
-                                            <p>-</p>
-                                        )}
-                                    </>
-                                ),
-                            },
-                            actions: {
-                                renderCell: () => (
-                                    <Link href={`/admin/students/${user.studentId}`}>
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            className="hover:text-white absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2"
-                                        >
-                                            <Eye className="h-4 w-4" />
-                                        </Button>
-                                    </Link>
-                                ),
-                            },
-                        };
-                    })}
+                    students={students!}
                     pagination={pagination}
-                    onChangePage={page => onChangePage(page)}
+                    onChangePage={onChangePage}
                 />
             </div>
         </DashboardContentLayout>
