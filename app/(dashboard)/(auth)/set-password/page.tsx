@@ -1,77 +1,22 @@
 'use client';
 
-import type React from 'react';
-
-import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { LockKeyhole } from 'lucide-react';
+import { useSetPassword } from '@/features/auth/hooks/use-set-password';
 
 export default function SetPasswordPage() {
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const phoneNumber = searchParams.get('phone');
-
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-
-    useEffect(() => {
-        // Redirect if no phone number is provided
-        if (!phoneNumber) {
-            router.push('/login');
-        }
-    }, [phoneNumber, router]);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError('');
-
-        // Validate passwords
-        if (password.length < 6) {
-            setError('Password harus minimal 6 karakter');
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            setError('Password tidak cocok');
-            return;
-        }
-
-        setIsLoading(true);
-
-        // Simulate API call to set password
-        await new Promise(resolve => setTimeout(resolve, 1500));
-
-        // Create new user account
-        const newUser = {
-            id: Date.now().toString(),
-            phone: phoneNumber,
-            password: password,
-            accountType: 'parent' as const,
-            status: 'active' as const,
-            students: [
-                {
-                    id: '1',
-                    name: 'Student Baru',
-                    age: 10,
-                    program: 'Belum dipilih',
-                    level: 'Belum dipilih',
-                },
-            ],
-        };
-
-        // Save to localStorage for demo
-        localStorage.setItem('currentUser', JSON.stringify(newUser));
-
-        // Redirect to dashboard
-        router.push('/dashboard');
-
-        setIsLoading(false);
-    };
+    const {
+        phoneNumber,
+        password,
+        setPassword,
+        confirmPassword,
+        setConfirmPassword,
+        error,
+        isLoading,
+        handleSubmit,
+    } = useSetPassword();
 
     return (
         <div className="flex items-center justify-center h-screen bg-gray-100">
