@@ -30,6 +30,19 @@ const sidebarItemsAdmin = [
     { href: ROUTES.adminNewStudents, label: 'New Students', icon: UserPlus2 },
     { href: ROUTES.adminStudents, label: 'List Students', icon: Users },
     {
+        label: 'Non User',
+        icon: Users,
+        children: [
+            { href: ROUTES.adminNonUserMarketing, label: 'By Marketing Team', icon: Users },
+            { href: ROUTES.adminNonUserAdmin, label: 'By Admin Team', icon: Users },
+        ],
+    },
+    {
+        href: ROUTES.adminStaffManagement,
+        label: 'Staff Management',
+        icon: Users,
+    },
+    {
         href: ROUTES.adminPlacementTests,
         label: 'Placement Tests',
         icon: FileText,
@@ -75,7 +88,16 @@ const Sidebar = () => {
     const setExpandSidebar = useDashboardLayoutStore(s => s.setExpandSidebar);
 
     const [sidebarMenu, setSidebarMenu] = React.useState<
-        { href: string; label: string; icon: React.ComponentType<{ className?: string }> }[]
+        {
+            href?: string;
+            label: string;
+            icon: React.ComponentType<{ className?: string }>;
+            children?: {
+                href: string;
+                label: string;
+                icon?: React.ComponentType<{ className?: string }>;
+            }[];
+        }[]
     >([]);
 
     useEffect(() => {
@@ -143,7 +165,7 @@ const Sidebar = () => {
                         <div className="px-6 mb-8">{generateSidebarHeader()}</div>
                         <div className="space-y-1 flex-1 px-3">
                             {sidebarMenu.map(item => {
-                                return <SidebarItem item={item} key={item.href} />;
+                                return <SidebarItem item={item} key={item.href || item.label} />;
                             })}
                         </div>
                         <div className="px-3 pt-4 border-t">
@@ -177,7 +199,7 @@ const Sidebar = () => {
                             <ChevronsLeftRight className="size-6 text-primary" />
                         </div>
                         {sidebarMenu.map(item => (
-                            <SidebarItem item={item} key={item.href} />
+                            <SidebarItem item={item} key={item.href || item.label} />
                         ))}
                     </div>
                     <div className="px-3 pt-4 border-t">
