@@ -8,3 +8,10 @@ export const REGISTRATION_TYPE: Record<
     selfSchedule: 'Self-scheduling Registration',
     normal: 'Normal Registration',
 };
+
+export const NOTES_CREATED_BY = {
+    superadmin: {
+        id: '1',
+        name: 'Super Admin',
+    },
+};

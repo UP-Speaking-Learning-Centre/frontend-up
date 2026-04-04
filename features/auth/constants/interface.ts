@@ -68,6 +68,14 @@ export interface ResponseUserDetailTestResults {
     score: number;
     status: string;
 }
+
+export interface NoteItem {
+    notes: string;
+    staffName: string;
+    createdAt: string;
+    createdBy: string;
+}
+
 export interface BaseResponseUserDetail {
     id: number;
     name: string;
@@ -78,12 +86,7 @@ export interface BaseResponseUserDetail {
     preferredProgramId: string | null;
     preferredProgramName: string | null;
     notes?: string | null;
-    notesList?: {
-        notes: string;
-        role: string;
-        name: string;
-        timestamp: string;
-    }[];
+    notesList?: NoteItem[];
     programId: number;
     program: string;
     groupId: number;
@@ -120,7 +123,7 @@ export interface BaseResponseUserDetail {
 
 export interface ActiveUserDetail extends BaseResponseUserDetail {
     status: 'active';
-    subscription?: {
+    activePeriod?: {
         activeFrom?: string;
         activeUntil?: string;
         selectedPeriod?: 3 | 6 | 12;

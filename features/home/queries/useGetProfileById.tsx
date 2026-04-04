@@ -7,6 +7,7 @@ import {
     NonUserDetail,
     ResponseUserDetail,
 } from '@/features/auth/constants/interface';
+import { getCookiesToken } from '@/features/auth/utils/cookies.helper';
 import api, { BaseService } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
 

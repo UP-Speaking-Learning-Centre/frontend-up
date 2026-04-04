@@ -9,6 +9,7 @@ export const getCookiesAuth = async () => {
     if (!cookieStore.get(ACCESS_TOKEN)) throw new Error('Unauthorized');
     const res = JSON.parse(cookieStore.get(ACCESS_TOKEN)?.value ?? '{}') as ResponseLogin;
 
+    console.log(res);
     return res;
 };
 

@@ -2,21 +2,22 @@
 
 import { useState } from 'react';
 import Table from '@/features/dashboard/components/table';
-import { useStaffStore } from '../stores/staff-store';
-import { StaffMember } from '../types';
+import { Staff } from '@/types/staff';
 import { EditStaffDialog, ViewStaffDialog, DeleteStaffDialog } from './staff-dialogs';
 import { Button } from '@/components/ui/button';
 import { Eye, Edit, Trash2 } from 'lucide-react';
+import { useGetStaffs } from '../queries/use-get-staffs';
 
 export const StaffTable = () => {
-    const staffList = useStaffStore(s => s.staffList);
-
     // Pagination logic
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
-    const totalItems = staffList.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+    const { data: staffData, isLoading } = useGetStaffs({ currentPage, limit: itemsPerPage });
+
+    const staffList = staffData?.data || [];
+    const totalItems = staffData?.meta?.totalItems || 0;
+    const totalPages = staffData?.meta?.totalPages || 1;
 
     // Ensure current page bounds checking when entries deleted
     const safeCurrentPage = Math.min(currentPage, totalPages);
@@ -27,8 +28,8 @@ export const StaffTable = () => {
     );
 
     return (
-        <Table<StaffMember>
-            isLoading={false}
+        <Table<Staff>
+            isLoading={isLoading}
             columns={[
                 { name: 'Name', id: 'name' },
                 { name: 'Phone', id: 'phone' },
@@ -36,9 +37,9 @@ export const StaffTable = () => {
                 { name: 'Actions', id: 'actions', width: 'w-32' },
             ]}
             values={paginatedData.map(staff => ({
-                id: staff.id,
+                id: staff.adminPicId,
                 name: { renderCell: () => <span className="font-semibold">{staff.name}</span> },
-                phone: staff.phone,
+                phone: staff.phoneNumber,
                 role: staff.role,
                 actions: {
                     renderCell: () => (
@@ -61,7 +62,7 @@ export const StaffTable = () => {
                                     <Edit className="h-4 w-4" />
                                 </Button>
                             </EditStaffDialog>
-                            <DeleteStaffDialog staffId={staff.id} staffName={staff.name}>
+                            <DeleteStaffDialog staffId={staff.adminPicId} staffName={staff.name}>
                                 <Button
                                     variant="outline"
                                     size="icon"

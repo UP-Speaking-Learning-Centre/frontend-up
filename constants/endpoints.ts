@@ -1,5 +1,7 @@
 import { parseTemplate } from 'url-template';
 
+const BASE_STAFF = '/admin/staff';
+
 const ENDPOINTS = {
     fetchPrograms: '/programs',
     fetchGroups: parseTemplate('/programs/{programId}/groups'),
@@ -46,6 +48,11 @@ const ENDPOINTS = {
     updateContactedStatus: parseTemplate('/admin/students/{id}/contacted'),
 
     allTeacher: '/teacher-team-members/all',
+
+    // Staff
+    baseStaff: BASE_STAFF,
+    fetchStaffs: parseTemplate(BASE_STAFF + '?currentPage={currentPage}&limit={limit}'),
+    staffById: parseTemplate(BASE_STAFF + '/{id}'),
 } as const;
 
 export default ENDPOINTS;

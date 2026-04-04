@@ -1,6 +1,13 @@
 'use client';
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -84,9 +91,7 @@ export const StaffForm = ({ form, onSubmit, onCancel, isEditing }: StaffFormProp
                             Batal
                         </Button>
                     )}
-                    <Button type="submit">
-                        {isEditing ? 'Simpan Perubahan' : 'Tambah Staff'}
-                    </Button>
+                    <Button type="submit">{isEditing ? 'Simpan Perubahan' : 'Tambah Staff'}</Button>
                 </div>
             </form>
         </Form>

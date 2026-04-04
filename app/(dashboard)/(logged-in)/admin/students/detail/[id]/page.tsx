@@ -37,7 +37,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
+import { useForm, UseFormReturn, FieldValues, Path } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useEditConfirmation } from '@/features/admin/hooks/useEditConfirmation';
@@ -82,7 +82,7 @@ const FieldDisplay = ({
     isDiv = false,
 }: {
     label: string;
-    value: any;
+    value: React.ReactNode;
     highlight?: boolean;
     isDiv?: boolean;
 }) => (
@@ -109,14 +109,14 @@ function EditableFormSection<T extends z.ZodTypeAny>({
 }: {
     title: string;
     schema: T;
-    defaultValues: any;
-    onSave: (oldVal: any, newVal: any, onCancel: () => void) => void;
-    renderFields: (form: any, isEditing: boolean) => React.ReactNode;
+    defaultValues: z.infer<T>;
+    onSave: (oldVal: z.infer<T>, newVal: z.infer<T>, onCancel: () => void) => void;
+    renderFields: (form: UseFormReturn<z.infer<T>>, isEditing: boolean) => React.ReactNode;
 }) {
     const [isEditing, setIsEditing] = useState(false);
     const form = useForm({ resolver: zodResolver(schema), defaultValues });
 
-    const handleSubmit = (data: any) => {
+    const handleSubmit = (data: z.infer<T>) => {
         onSave(defaultValues, data, () => {
             // if canceled in prompt, we keep isEditing true or reset?
             // "revert edited field to original value" means go back to view mode with old values
@@ -174,7 +174,7 @@ function EditableFormSection<T extends z.ZodTypeAny>({
     );
 }
 
-const FormFieldDisplay = ({
+const FormFieldDisplay = <T extends FieldValues>({
     form,
     name,
     label,
@@ -184,8 +184,8 @@ const FormFieldDisplay = ({
     type = 'text',
     options = [],
 }: {
-    form: any;
-    name: string;
+    form: UseFormReturn<T>;
+    name: Path<T>;
     label: string;
     isEditing: boolean;
     suffix?: string;
@@ -344,7 +344,7 @@ const dummyActiveUser: ActiveUserDetail = {
     trialClassAt: null,
     packages: [],
     status: 'active',
-    subscription: {
+    activePeriod: {
         activeFrom: '2023-01-01',
         activeUntil: '2023-12-31',
         selectedPeriod: 12,
@@ -420,7 +420,7 @@ export default function DashboardPage() {
     const [trialClass, setTrialClass] = useState('');
     const dummyTypeParam = searchParams.get('dummy') || 'active';
     const [mockStatus, setMockStatus] = useState<'active' | 'non_user' | 'lapsed'>(
-        dummyTypeParam as any
+        (dummyTypeParam as 'active' | 'non_user' | 'lapsed') || 'active'
     );
 
     const {
@@ -439,7 +439,8 @@ export default function DashboardPage() {
               : dummyLapsedUser;
 
     // Use full API data if real data arrives (but for dummy test we overwrite using realData if it's there)
-    if (realData) data = { ...data, ...realData } as any;
+    if (realData)
+        data = { ...data, ...realData } as ActiveUserDetail | NonUserDetail | LapsedUserDetail;
 
     const { isEdit, setIsEdit, notes, setNotes, handleSave } = useEditNote(data?.notes);
     const {
@@ -458,9 +459,13 @@ export default function DashboardPage() {
     const [showDialodContacted, setShowDialodContacted] = useState(false);
 
     // Edit confirmation dialog state wrapper
-    const editConfirmation = useEditConfirmation<any>();
+    const editConfirmation = useEditConfirmation<Record<string, any>>();
 
-    const handleFormSavePrompt = (oldData: any, newData: any, onCancel: () => void) => {
+    const handleFormSavePrompt = (
+        oldData: Record<string, any>,
+        newData: Record<string, any>,
+        onCancel: () => void
+    ) => {
         // Trigger dialog popup
         editConfirmation.openConfirmation(
             oldData,
@@ -516,7 +521,7 @@ export default function DashboardPage() {
         );
     };
 
-    const StudentDetailFields = ({ userData }: { userData: any }) => (
+    const StudentDetailFields = ({ userData }: { userData: ResponseUserDetail }) => (
         <SectionCard title="Student Detail">
             <div className="col-span-1 md:col-span-2 space-y-4">
                 <FieldDisplay label="Nama" value={userData.name} />
@@ -785,13 +790,13 @@ export default function DashboardPage() {
                                     defaultValues={{
                                         subscription: {
                                             activeFrom:
-                                                (data as ActiveUserDetail).subscription
+                                                (data as ActiveUserDetail).activePeriod
                                                     ?.activeFrom || '',
                                             activeUntil:
-                                                (data as ActiveUserDetail).subscription
+                                                (data as ActiveUserDetail).activePeriod
                                                     ?.activeUntil || '',
                                             selectedPeriod: String(
-                                                (data as ActiveUserDetail).subscription
+                                                (data as ActiveUserDetail).activePeriod
                                                     ?.selectedPeriod || ''
                                             ),
                                         },

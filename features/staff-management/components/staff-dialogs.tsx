@@ -21,9 +21,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { StaffForm } from './staff-form';
 import { useStaffForm, StaffFormValues } from '../hooks/use-staff-form';
-import { StaffMember } from '../types';
-import { useStaffStore } from '../stores/staff-store';
+import { Staff } from '@/types/staff';
+import { Role } from '../types';
 import { ReactNode, useState } from 'react';
+import { useDeleteStaffMutation } from '../queries/use-delete-staff';
 
 export const AddStaffDialog = ({ children }: { children: ReactNode }) => {
     const [open, setOpen] = useState(false);
@@ -46,14 +47,16 @@ export const AddStaffDialog = ({ children }: { children: ReactNode }) => {
     );
 };
 
-export const EditStaffDialog = ({ staff, children }: { staff: StaffMember; children: ReactNode }) => {
+export const EditStaffDialog = ({ staff, children }: { staff: Staff; children: ReactNode }) => {
     const [open, setOpen] = useState(false);
-    
+
     const { form, onSubmit } = useStaffForm({
-        defaultValues: { name: staff.name, phone: staff.phone, role: staff.role },
-        staffId: staff.id,
+        defaultValues: { name: staff.name, phone: staff.phoneNumber, role: staff.role as Role },
+        staffId: staff.adminPicId,
         onSuccess: () => setOpen(false),
     });
+
+    console.log(staff);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -63,14 +66,19 @@ export const EditStaffDialog = ({ staff, children }: { staff: StaffMember; child
                     <DialogTitle>Edit Staff</DialogTitle>
                 </DialogHeader>
                 <div className="py-4">
-                    <StaffForm form={form} onSubmit={onSubmit} isEditing onCancel={() => setOpen(false)} />
+                    <StaffForm
+                        form={form}
+                        onSubmit={onSubmit}
+                        isEditing
+                        onCancel={() => setOpen(false)}
+                    />
                 </div>
             </DialogContent>
         </Dialog>
     );
 };
 
-export const ViewStaffDialog = ({ staff, children }: { staff: StaffMember; children: ReactNode }) => {
+export const ViewStaffDialog = ({ staff, children }: { staff: Staff; children: ReactNode }) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -87,18 +95,11 @@ export const ViewStaffDialog = ({ staff, children }: { staff: StaffMember; child
                     </div>
                     <div className="grid grid-cols-3 gap-2 border-b pb-2">
                         <span className="text-gray-500 text-sm">Phone</span>
-                        <span className="col-span-2 font-medium">{staff.phone}</span>
+                        <span className="col-span-2 font-medium">{staff.phoneNumber}</span>
                     </div>
                     <div className="grid grid-cols-3 gap-2 border-b pb-2">
                         <span className="text-gray-500 text-sm">Jabatan</span>
                         <span className="col-span-2 font-medium">{staff.role}</span>
-                    </div>
-                    
-                    {/* Placeholder for future extended details requested by user */}
-                    <div className="pt-2">
-                        <span className="text-xs text-muted-foreground italic">
-                            Additional staff details will populate here...
-                        </span>
                     </div>
                 </div>
             </DialogContent>
@@ -106,17 +107,22 @@ export const ViewStaffDialog = ({ staff, children }: { staff: StaffMember; child
     );
 };
 
-export const DeleteStaffDialog = ({ staffId, staffName, children }: { staffId: string; staffName: string; children: ReactNode }) => {
+export const DeleteStaffDialog = ({
+    staffId,
+    staffName,
+    children,
+}: {
+    staffId: number | string;
+    staffName: string;
+    children: ReactNode;
+}) => {
     const [open, setOpen] = useState(false);
-    const deleteStaff = useStaffStore(s => s.deleteStaff);
+    const { mutate: deleteStaff } = useDeleteStaffMutation();
 
     const onConfirm = () => {
-        // Future API Integration Point
-        console.log('--- API DELETE STAFF ---');
-        console.log('ENDPOINT PARAMS:', { id: staffId });
-
-        deleteStaff(staffId);
-        setOpen(false);
+        deleteStaff(staffId, {
+            onSuccess: () => setOpen(false),
+        });
     };
 
     return (
@@ -126,12 +132,16 @@ export const DeleteStaffDialog = ({ staffId, staffName, children }: { staffId: s
                 <AlertDialogHeader>
                     <AlertDialogTitle>Hapus Staff?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Apakah Anda yakin ingin menghapus staff <strong>{staffName}</strong>? Tindakan ini tidak dapat dibatalkan.
+                        Apakah Anda yakin ingin menghapus staff <strong>{staffName}</strong>?
+                        Tindakan ini tidak dapat dibatalkan.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Batal</AlertDialogCancel>
-                    <AlertDialogAction onClick={onConfirm} className="bg-destructive hover:bg-destructive/90 text-white">
+                    <AlertDialogAction
+                        onClick={onConfirm}
+                        className="bg-destructive hover:bg-destructive/90 text-white"
+                    >
                         Hapus
                     </AlertDialogAction>
                 </AlertDialogFooter>
