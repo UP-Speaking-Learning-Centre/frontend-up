@@ -104,13 +104,13 @@ const Table = <T,>({ columns, values, pagination, onChangePage, isLoading }: ITa
                                     )}
                                 </tbody>
                             </table>
-                            <div className="absolute bottom-0 right-0 top-0 w-[80px] bg-white shadow-[rgba(0,0,0,0.05)_-1px_0px_2px_1px]">
+                            <div className="absolute bottom-0 right-0 top-0 min-w-[80px] bg-white shadow-[rgba(0,0,0,0.05)_-1px_0px_2px_1px]">
                                 <table className="w-full max-w-full relative">
                                     <thead className="bg-gray-50 border-b">
                                         <tr>
                                             <th
                                                 key="actions"
-                                                className="text-left px-6 py-4 rounded-lg font-medium bg-white text-neutral-500 text-xs"
+                                                className="text-center px-6 py-4 rounded-lg font-medium bg-white text-neutral-500 text-xs"
                                             >
                                                 Action
                                             </th>

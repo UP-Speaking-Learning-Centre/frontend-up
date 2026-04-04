@@ -6,19 +6,18 @@ import { useDashboardLayoutStore } from '@/stores/dashboard-layout-store';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useState } from 'react';
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { ChevronDown } from 'lucide-react';
 
 type SidebarMenuItem = {
     label: string;
     icon: React.ComponentType<{ className?: string }>;
     href?: string;
-    children?: { label: string; href: string; icon?: React.ComponentType<{ className?: string }> }[];
+    children?: {
+        label: string;
+        href: string;
+        icon?: React.ComponentType<{ className?: string }>;
+    }[];
 };
 
 const SidebarItemContent = ({
@@ -76,10 +75,9 @@ const SidebarItemContent = ({
 const SidebarItem = ({ item }: { item: SidebarMenuItem }) => {
     const pathname = usePathname();
     // Support children active state
-    const isActive =
-        item.href
-            ? pathname.startsWith(item.href)
-            : item.children?.some(child => pathname.startsWith(child.href));
+    const isActive = item.href
+        ? pathname.startsWith(item.href)
+        : item.children?.some(child => pathname.startsWith(child.href));
 
     const setOpenSidebar = useDashboardLayoutStore(s => s.setOpenSidebar);
     const expandSidebar = useDashboardLayoutStore(s => s.expandSidebar);
@@ -133,7 +131,11 @@ const SidebarItem = ({ item }: { item: SidebarMenuItem }) => {
                 <TooltipProvider delayDuration={0}>
                     <Tooltip>
                         <TooltipTrigger asChild>{wrappedContent}</TooltipTrigger>
-                        <TooltipContent side="right" sideOffset={10}>
+                        <TooltipContent
+                            side="right"
+                            sideOffset={10}
+                            className="bg-secondary text-white"
+                        >
                             {item.label}
                         </TooltipContent>
                     </Tooltip>

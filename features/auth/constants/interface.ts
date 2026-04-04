@@ -68,7 +68,7 @@ export interface ResponseUserDetailTestResults {
     score: number;
     status: string;
 }
-export interface ResponseUserDetail {
+export interface BaseResponseUserDetail {
     id: number;
     name: string;
     phoneNumber: string;
@@ -78,6 +78,12 @@ export interface ResponseUserDetail {
     preferredProgramId: string | null;
     preferredProgramName: string | null;
     notes?: string | null;
+    notesList?: {
+        notes: string;
+        role: string;
+        name: string;
+        timestamp: string;
+    }[];
     programId: number;
     program: string;
     groupId: number;
@@ -111,6 +117,80 @@ export interface ResponseUserDetail {
         programId: number;
     };
 }
+
+export interface ActiveUserDetail extends BaseResponseUserDetail {
+    status: 'active';
+    subscription?: {
+        activeFrom?: string;
+        activeUntil?: string;
+        selectedPeriod?: 3 | 6 | 12;
+    };
+    studyGroup?: {
+        teacher?: string;
+        location?: string;
+        schedules?: string[];
+    };
+}
+
+export interface NonUserDetail extends BaseResponseUserDetail {
+    status: 'non_user';
+    marketing?: {
+        leadStatus?: string;
+        sourceLead?: string;
+        funnelStage?: string;
+        picRole?: string;
+        picPerson?: string;
+        lastFollowUp?: string;
+    };
+    offer?: {
+        program?: string;
+        package?: string;
+        duration?: string;
+        price?: string;
+    };
+    recommendation?: {
+        program?: string;
+        group?: string;
+        level?: string;
+        grade?: string;
+    };
+    trial?: {
+        branch?: string;
+        studyGroup?: string;
+        schedule?: string;
+        isDone?: boolean;
+    };
+    selection?: {
+        branch?: string;
+        studyGroup?: string;
+        teacher?: string;
+        schedules?: string[];
+        isSelfSchedule?: boolean;
+    };
+}
+
+export interface LapsedUserDetail extends BaseResponseUserDetail {
+    status: 'lapsed';
+    history?: {
+        activeFrom?: string;
+        activeUntil?: string;
+        selectedPeriod?: 3 | 6 | 12;
+    };
+    lastProgram?: {
+        name?: string;
+        group?: string;
+        level?: string;
+        grade?: string;
+    };
+    lastStudyGroup?: {
+        name?: string;
+        teacher?: string;
+        location?: string;
+        schedules?: string[];
+    };
+}
+
+export type ResponseUserDetail = ActiveUserDetail | NonUserDetail | LapsedUserDetail;
 
 export interface ResponseProfile {
     id: number;

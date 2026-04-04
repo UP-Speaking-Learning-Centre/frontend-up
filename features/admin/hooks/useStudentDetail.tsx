@@ -8,11 +8,11 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import useGetStudyGroupDetail from '../queries/useGetStudyGroupDetail';
 
-const useStudentDetail = () => {
+const useStudentDetail = (forcedMockType?: 'active' | 'non_user' | 'lapsed') => {
     const [locationId, setLocationId] = useState('');
 
     const { id } = useParams<{ id: string }>();
-    const { data, isLoading } = useGetProfileById(Number(id));
+    const { data, isLoading } = useGetProfileById(Number(id), forcedMockType);
     const { data: studyGroupDetail, isLoading: isLoadingStudyGroupDetail } = useGetStudyGroupDetail(
         data?.primaryStudyGroupId || 0
     );
