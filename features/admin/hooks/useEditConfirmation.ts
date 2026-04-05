@@ -15,11 +15,14 @@ export function useEditConfirmation<T>() {
         setIsOpen(true);
     };
 
+    const closeConfirmation = () => {
+        setIsOpen(false);
+    };
+
     const handleConfirm = () => {
         if (onConfirmAction) {
             onConfirmAction();
         }
-        setIsOpen(false);
     };
 
     const handleCancel = () => {
@@ -36,6 +39,7 @@ export function useEditConfirmation<T>() {
         oldData,
         newData,
         openConfirmation,
+        closeConfirmation,
         handleConfirm,
         handleCancel,
     };

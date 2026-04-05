@@ -11,10 +11,10 @@ import { useGetStaffsByRole } from '@/features/staff-management/queries/use-get-
 export const filterSchema = z.object({
     studentName: z.string().optional(),
     funnelStage: z.string().optional(),
-    leadStatus: z.string().optional(),
+    statusLead: z.string().optional(),
     picRole: z.array(z.string()).optional(),
     picStaff: z.array(z.string()).optional(),
-    lastFollowUp: z
+    lastUpdate: z
         .object({
             from: z.date().optional(),
             to: z.date().optional(),
@@ -42,8 +42,7 @@ export const useNonUserFilterForm = (menuType: 'marketing' | 'admin') => {
 
     const getInitialPicStaff = () => currentFilters.picStaff || [];
 
-    const queryRoles =
-        menuType === 'marketing' ? [Role.StaffMarketing] : ADMIN_ROLES;
+    const queryRoles = menuType === 'marketing' ? [Role.StaffMarketing] : ADMIN_ROLES;
     const { data: staffsData } = useGetStaffsByRole(queryRoles);
 
     const picStaffOptions = useMemo(() => {
@@ -56,10 +55,10 @@ export const useNonUserFilterForm = (menuType: 'marketing' | 'admin') => {
         defaultValues: {
             studentName: currentFilters.studentName || '',
             funnelStage: currentFilters.funnelStage || '',
-            leadStatus: currentFilters.leadStatus || '',
+            statusLead: currentFilters.statusLead || '',
             picRole: getInitialPicRole(),
             picStaff: getInitialPicStaff(),
-            lastFollowUp: {
+            lastUpdate: {
                 from: currentFilters.lastFollowUpFrom
                     ? moment(currentFilters.lastFollowUpFrom).toDate()
                     : undefined,
@@ -81,14 +80,14 @@ export const useNonUserFilterForm = (menuType: 'marketing' | 'admin') => {
         applyFilters({
             studentName: values.studentName || '',
             funnelStage: values.funnelStage,
-            leadStatus: values.leadStatus,
+            statusLead: values.statusLead,
             picRole: finalPicRole,
             picStaff: values.picStaff || [],
-            lastFollowUpFrom: values.lastFollowUp?.from
-                ? moment(values.lastFollowUp.from).toISOString()
+            lastFollowUpFrom: values.lastUpdate?.from
+                ? moment(values.lastUpdate.from).toISOString()
                 : undefined,
-            lastFollowUpTo: values.lastFollowUp?.to
-                ? moment(values.lastFollowUp.to).toISOString()
+            lastFollowUpTo: values.lastUpdate?.to
+                ? moment(values.lastUpdate.to).toISOString()
                 : undefined,
         });
     };
@@ -97,10 +96,10 @@ export const useNonUserFilterForm = (menuType: 'marketing' | 'admin') => {
         form.reset({
             studentName: '',
             funnelStage: '',
-            leadStatus: '',
+            statusLead: '',
             picRole: menuType === 'marketing' ? [Role.LeadMarketing, Role.StaffMarketing] : [],
             picStaff: [],
-            lastFollowUp: null,
+            lastUpdate: null,
         });
         resetFilters();
     };

@@ -112,7 +112,7 @@ export const NonUserFilterForm = ({ menuType }: NonUserFilterFormProps) => {
 
                 <FormField
                     control={form.control}
-                    name="leadStatus"
+                    name="statusLead"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Lead Status</FormLabel>
@@ -195,7 +195,10 @@ export const NonUserFilterForm = ({ menuType }: NonUserFilterFormProps) => {
                                                             field.onChange(updated);
                                                         }}
                                                     >
-                                                        <Checkbox checked={isSelected} tabIndex={-1} />
+                                                        <Checkbox
+                                                            checked={isSelected}
+                                                            tabIndex={-1}
+                                                        />
                                                         <label className="text-sm font-medium leading-none cursor-pointer">
                                                             {role}
                                                         </label>
@@ -276,7 +279,7 @@ export const NonUserFilterForm = ({ menuType }: NonUserFilterFormProps) => {
 
                 <FormField
                     control={form.control}
-                    name="lastFollowUp"
+                    name="lastUpdate"
                     render={({ field }) => (
                         <FormItem className="flex flex-col">
                             <FormLabel>Last Follow Up</FormLabel>

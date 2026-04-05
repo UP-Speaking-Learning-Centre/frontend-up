@@ -7,11 +7,51 @@ import moment from 'moment';
 import { Button } from '@/components/ui/button';
 import { Eye } from 'lucide-react';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 
 import { useState, useMemo } from 'react';
 import { useFetchListNonUsers } from '../queries/use-fetch-list-non-users';
 import { useNonUserFilterStore } from '../stores/filter-store';
 import { ADMIN_ROLES } from '@/utils/user.helper';
+import { cn } from '@/lib/utils';
+
+const getLeadStatusColor = (status: string) => {
+    switch (status) {
+        case LeadStatus.Lost:
+            return 'bg-red-100 text-red-800 border-red-200 hover:bg-red-200';
+        case LeadStatus.Cold:
+            return 'bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200';
+        case LeadStatus.Warm:
+            return 'bg-orange-100 text-orange-800 border-orange-200 hover:bg-orange-200';
+        case LeadStatus.Hot:
+            return 'bg-rose-100 text-rose-800 border-rose-200 hover:bg-rose-200';
+        case LeadStatus.Converted:
+            return 'bg-green-100 text-green-800 border-green-200 hover:bg-green-200';
+        default:
+            return 'bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200';
+    }
+};
+
+const getFunnelStageColor = (stage: string) => {
+    switch (stage) {
+        case FunnelStage.Asking:
+            return 'bg-slate-100 text-slate-800 border-slate-200 hover:bg-slate-200';
+        case FunnelStage.Qualification:
+            return 'bg-sky-100 text-sky-800 border-sky-200 hover:bg-sky-200';
+        case FunnelStage.TrialClass:
+            return 'bg-indigo-100 text-indigo-800 border-indigo-200 hover:bg-indigo-200';
+        case FunnelStage.PlacementTest:
+            return 'bg-purple-100 text-purple-800 border-purple-200 hover:bg-purple-200';
+        case FunnelStage.Quotation:
+            return 'bg-fuchsia-100 text-fuchsia-800 border-fuchsia-200 hover:bg-fuchsia-200';
+        case FunnelStage.Registered:
+            return 'bg-emerald-100 text-emerald-800 border-emerald-200 hover:bg-emerald-200';
+        case FunnelStage.Cancel:
+            return 'bg-red-100 text-red-800 border-red-200 hover:bg-red-200';
+        default:
+            return 'bg-gray-100 text-gray-800 border-gray-200 hover:bg-gray-200';
+    }
+};
 
 export default function NonUserMarketingTable({ menuType }: { menuType: 'marketing' | 'admin' }) {
     const filters = useNonUserFilterStore(s => s.filters);
@@ -26,10 +66,13 @@ export default function NonUserMarketingTable({ menuType }: { menuType: 'marketi
         search: filters.studentName,
         sourceLead: undefined, // Add to filters if necessary later
         funnelStage: filters.funnelStage,
-        statusLead: filters.leadStatus,
-        picRole: menuType === 'marketing'
-            ? [Role.StaffMarketing]
-            : (filters.picRole && filters.picRole.length > 0 ? filters.picRole : ADMIN_ROLES),
+        statusLead: filters.statusLead,
+        picRole:
+            menuType === 'marketing'
+                ? [Role.StaffMarketing]
+                : filters.picRole && filters.picRole.length > 0
+                  ? filters.picRole
+                  : ADMIN_ROLES,
         picStaff: filters.picStaff,
         lastFollowUpFrom: filters.lastFollowUpFrom,
         lastFollowUpTo: filters.lastFollowUpTo,
@@ -52,9 +95,9 @@ export default function NonUserMarketingTable({ menuType }: { menuType: 'marketi
                 { name: 'Phone', id: 'phone', width: 'whitespace-nowrap' },
                 { name: 'Source Lead', id: 'sourceLead', width: 'whitespace-nowrap' },
                 { name: 'Funnel Stage', id: 'funnelStage', width: 'whitespace-nowrap' },
-                { name: 'Lead Status', id: 'leadStatus', width: 'whitespace-nowrap' },
+                { name: 'Lead Status', id: 'statusLead', width: 'whitespace-nowrap' },
                 { name: 'PIC', id: 'pic', width: 'whitespace-nowrap' },
-                { name: 'Last Follow Up', id: 'lastFollowUp', width: 'whitespace-nowrap' },
+                { name: 'Last Follow Up', id: 'lastUpdate', width: 'whitespace-nowrap' },
                 { name: 'Program Diminati', id: 'programDiminati', width: 'whitespace-nowrap' },
                 {
                     name: 'Tanggal Trial Class',
@@ -85,6 +128,32 @@ export default function NonUserMarketingTable({ menuType }: { menuType: 'marketi
                                 <span className="whitespace-nowrap">{item.phoneNumber}</span>
                             ),
                         },
+                        funnelStage: {
+                            renderCell: () => (
+                                <Badge
+                                    className={cn(
+                                        'whitespace-nowrap font-medium',
+                                        getFunnelStageColor(item.funnelStage)
+                                    )}
+                                    variant="outline"
+                                >
+                                    {item.funnelStage || '-'}
+                                </Badge>
+                            ),
+                        },
+                        statusLead: {
+                            renderCell: () => (
+                                <Badge
+                                    className={cn(
+                                        'whitespace-nowrap font-medium',
+                                        getLeadStatusColor(item.statusLead)
+                                    )}
+                                    variant="outline"
+                                >
+                                    {item.statusLead || '-'}
+                                </Badge>
+                            ),
+                        },
                         pic: {
                             renderCell: () => (
                                 <span className="whitespace-nowrap">
@@ -92,7 +161,7 @@ export default function NonUserMarketingTable({ menuType }: { menuType: 'marketi
                                 </span>
                             ),
                         },
-                        lastFollowUp: {
+                        lastUpdate: {
                             renderCell: () => (
                                 <span className="whitespace-nowrap">
                                     {item.lastUpdate
@@ -141,7 +210,7 @@ export default function NonUserMarketingTable({ menuType }: { menuType: 'marketi
                         },
                         actions: {
                             renderCell: () => (
-                                <Link href={`#`}>
+                                <Link href={`/admin/students/detail/${item.studentId}`}>
                                     <Button
                                         variant="outline"
                                         size="sm"

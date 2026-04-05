@@ -58,11 +58,10 @@ const ENDPOINTS = {
 
     // Non user
     baseNonUser: BASE_NON_USER,
-    fetchNonUsers: parseTemplate(
-        BASE_NON_USER +
-            '?page={page}&limit={limit}&search={search}'
-    ),
+    fetchNonUsers: parseTemplate(BASE_NON_USER + '?page={page}&limit={limit}'),
     nonUserById: parseTemplate(BASE_NON_USER + '/{id}'),
+
+    studentById: parseTemplate('/admin/students/{id}'),
 } as const;
 
 export default ENDPOINTS;

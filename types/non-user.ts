@@ -5,8 +5,10 @@ export interface CreateNonUserPayload {
     sourceLead: string;
     funnelStage: string;
     statusLead: string;
-    grade?: string | null;
     notes?: string | null;
+    adminPicId?: number;
+    picRole?: string | null;
+    picStaff?: string | null;
 }
 
 export interface NonUserItem {

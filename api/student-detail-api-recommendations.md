@@ -27,12 +27,12 @@ To handle all the "Edit Bagian Ini" (Edit This Section) actions efficiently acro
     "selectedPeriod": "string", // e.g., "3", "6", "12"
 
     // --- Non-User: Marketing Funnel Detail ---
-    "leadStatus": "string", // Maps to LeadStatus Enum
+    "statusLead": "string", // Maps to LeadStatus Enum
     "sourceLead": "string", // Maps to SourceLead Enum
     "funnelStage": "string", // Maps to FunnelStage Enum
     "picRole": "string", // Maps to Role Enum
     "picPerson": "string",
-    "lastFollowUp": "2023-10-27T10:00",
+    "lastUpdate": "2023-10-27T10:00",
 
     // --- Non-User: Program & Paket yang ditawarkan ---
     "offeredProgram": "string",

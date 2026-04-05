@@ -8,13 +8,19 @@ import { ROUTES } from '@/constants/routes';
 
 export const createNonUserSchema = z.object({
     name: z.string().min(1, 'Nama wajib diisi'),
-    phone: z.string().min(1, 'Phone wajib diisi'),
+    phone: z
+        .string()
+        .regex(/^\d+$/, 'Phone harus berupa angka')
+        .min(9, 'Minimal 9 digit')
+        .max(15, 'Maksimal 15 digit'),
     instagram: z.string().optional(),
-    grade: z.nativeEnum(Grades, { required_error: 'Grade wajib dipilih' }),
     sourceLead: z.nativeEnum(SourceLead, { required_error: 'Source Lead wajib dipilih' }),
     funnelStage: z.nativeEnum(FunnelStage, { required_error: 'Funnel Stage wajib dipilih' }),
-    leadStatus: z.nativeEnum(LeadStatus, { required_error: 'Lead Status wajib dipilih' }),
+    statusLead: z.nativeEnum(LeadStatus, { required_error: 'Lead Status wajib dipilih' }),
     notes: z.string().optional(),
+    picRole: z.string().optional(),
+    picStaff: z.string().optional(),
+    adminPicId: z.number().optional(),
 });
 
 export type CreateNonUserValues = z.infer<typeof createNonUserSchema>;
@@ -27,26 +33,32 @@ export const useCreateNonUserForm = () => {
         defaultValues: {
             name: '',
             phone: '',
+            instagram: '',
             notes: '',
         },
     });
 
     const onSubmit = (values: CreateNonUserValues) => {
-        mutation.mutate({
-            name: values.name,
-            phoneNumber: values.phone,
-            sourceLead: values.sourceLead,
-            funnelStage: values.funnelStage,
-            statusLead: values.leadStatus,
-            instagram: values.instagram || null,
-            grade: values.grade || null,
-            notes: values.notes || null
-        }, {
-            onSuccess: () => {
-                form.reset();
-                router.back(); // or navigate to listing page, assumption made based on typical UX
+        mutation.mutate(
+            {
+                name: values.name,
+                phoneNumber: values.phone,
+                sourceLead: values.sourceLead,
+                funnelStage: values.funnelStage,
+                statusLead: values.statusLead,
+                instagram: values.instagram || null,
+                notes: values.notes || null,
+                adminPicId: values.adminPicId,
+                picRole: values.picRole || null,
+                picStaff: values.picStaff || null,
+            },
+            {
+                onSuccess: () => {
+                    form.reset();
+                    router.back(); // or navigate to listing page, assumption made based on typical UX
+                },
             }
-        });
+        );
     };
 
     return {

@@ -12,6 +12,9 @@ import DashboardContentLayout from '@/features/dashboard/components/dashboard-co
 import DialogShowContacted from '@/features/dashboard/components/dialog-show-contacted';
 import { getRegistrationType } from '@/utils/student.helper';
 import { AlertCircleIcon, ArrowLeft } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useGetStaffsByRole } from '@/features/staff-management/queries/use-get-staffs-by-role';
+import { toast } from 'sonner';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
@@ -57,363 +60,18 @@ import { Calendar } from '@/components/ui/calendar';
 import { format, parseISO, isValid } from 'date-fns';
 import { CalendarIcon, Clock } from 'lucide-react';
 
-const SectionCard = ({
-    title,
-    children,
-    headerAction,
-}: {
-    title: string;
-    children: React.ReactNode;
-    headerAction?: React.ReactNode;
-}) => (
-    <Card className="overflow-hidden mb-6">
-        <div className="bg-secondary text-white p-4 flex items-center justify-between">
-            <h2 className="text-lg font-semibold">{title}</h2>
-            {headerAction && <div>{headerAction}</div>}
-        </div>
-        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">{children}</div>
-    </Card>
-);
-
-const FieldDisplay = ({
-    label,
-    value,
-    highlight = false,
-    isDiv = false,
-}: {
-    label: string;
-    value: React.ReactNode;
-    highlight?: boolean;
-    isDiv?: boolean;
-}) => (
-    <div>
-        <p className="text-sm text-gray-600 mb-1">{label}</p>
-        <div
-            className={cn(
-                'font-semibold',
-                highlight ? 'text-primary' : 'text-gray-900',
-                isDiv ? 'p-2 bg-gray-100 rounded' : ''
-            )}
-        >
-            {value || <span className="text-neutral-400 font-normal">Belum ditentukan</span>}
-        </div>
-    </div>
-);
-
-function EditableFormSection<T extends z.ZodTypeAny>({
-    title,
-    schema,
-    defaultValues,
-    onSave,
-    renderFields,
-}: {
-    title: string;
-    schema: T;
-    defaultValues: z.infer<T>;
-    onSave: (oldVal: z.infer<T>, newVal: z.infer<T>, onCancel: () => void) => void;
-    renderFields: (form: UseFormReturn<z.infer<T>>, isEditing: boolean) => React.ReactNode;
-}) {
-    const [isEditing, setIsEditing] = useState(false);
-    const form = useForm({ resolver: zodResolver(schema), defaultValues });
-
-    const handleSubmit = (data: z.infer<T>) => {
-        onSave(defaultValues, data, () => {
-            // if canceled in prompt, we keep isEditing true or reset?
-            // "revert edited field to original value" means go back to view mode with old values
-            setIsEditing(false);
-            form.reset(defaultValues);
-        });
-        setIsEditing(false);
-    };
-
-    return (
-        <Card className="overflow-hidden mb-6">
-            <div className="bg-secondary text-white p-4 flex items-center justify-between">
-                <h2 className="text-lg font-semibold">{title}</h2>
-                {isEditing ? (
-                    <Button
-                        variant="destructive"
-                        size="sm"
-                        className="h-7 text-xs"
-                        onClick={() => {
-                            setIsEditing(false);
-                            form.reset();
-                        }}
-                    >
-                        Batalkan Edit
-                    </Button>
-                ) : (
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        className="h-7 text-xs text-black"
-                        onClick={() => {
-                            form.reset(defaultValues);
-                            setIsEditing(true);
-                        }}
-                    >
-                        Edit Bagian Ini
-                    </Button>
-                )}
-            </div>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleSubmit)} className="p-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {renderFields(form, isEditing)}
-                    </div>
-                    {isEditing && (
-                        <div className="mt-6 flex justify-end">
-                            <Button type="submit" size="sm">
-                                Review Perubahan
-                            </Button>
-                        </div>
-                    )}
-                </form>
-            </Form>
-        </Card>
-    );
-}
-
-const FormFieldDisplay = <T extends FieldValues>({
-    form,
-    name,
-    label,
-    isEditing,
-    suffix = '',
-    highlight = false,
-    type = 'text',
-    options = [],
-}: {
-    form: UseFormReturn<T>;
-    name: Path<T>;
-    label: string;
-    isEditing: boolean;
-    suffix?: string;
-    highlight?: boolean;
-    type?: 'text' | 'select' | 'datetime-local' | 'number' | 'datetime-picker';
-    options?: { label: string; value: string }[];
-}) => {
-    if (!isEditing) {
-        const value = form.getValues(name);
-        let displayValue = value ? `${value}${suffix}` : undefined;
-        if (value && type === 'datetime-picker') {
-            displayValue = moment(value).format('DD MMM YYYY, HH:mm');
-        }
-        return <FieldDisplay label={label} value={displayValue} highlight={highlight} />;
-    }
-    return (
-        <FormField
-            control={form.control}
-            name={name}
-            render={({ field }) => (
-                <FormItem>
-                    <FormLabel className="text-sm text-gray-600 mb-1">{label}</FormLabel>
-                    <FormControl>
-                        {type === 'select' ? (
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                <SelectTrigger>
-                                    <SelectValue placeholder={`Pilih ${label}`} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {options.map(opt => (
-                                        <SelectItem key={opt.value} value={opt.value}>
-                                            {opt.label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        ) : type === 'datetime-picker' ? (
-                            <div className="flex flex-col gap-1">
-                                <div className="flex gap-2">
-                                    <Popover>
-                                        <PopoverTrigger asChild>
-                                            <Button
-                                                variant="outline"
-                                                className={cn(
-                                                    'w-full justify-start text-left font-normal',
-                                                    !field.value && 'text-muted-foreground'
-                                                )}
-                                            >
-                                                <CalendarIcon className="mr-2 h-4 w-4" />
-                                                {field.value && isValid(parseISO(field.value)) ? (
-                                                    format(
-                                                        parseISO(field.value.split('T')[0]),
-                                                        'PPP'
-                                                    )
-                                                ) : (
-                                                    <span>Pilih Tanggal</span>
-                                                )}
-                                            </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0" align="start">
-                                            <Calendar
-                                                mode="single"
-                                                selected={
-                                                    field.value && isValid(parseISO(field.value))
-                                                        ? parseISO(field.value.split('T')[0])
-                                                        : undefined
-                                                }
-                                                onSelect={date => {
-                                                    if (!date) return;
-                                                    const timePart =
-                                                        field.value && field.value.includes('T')
-                                                            ? field.value
-                                                                  .split('T')[1]
-                                                                  .substring(0, 5)
-                                                            : '00:00';
-                                                    field.onChange(
-                                                        `${format(date, 'yyyy-MM-dd')}T${timePart}`
-                                                    );
-                                                }}
-                                                initialFocus
-                                            />
-                                        </PopoverContent>
-                                    </Popover>
-                                    <div className="relative">
-                                        <Clock className="absolute left-2 top-2.5 h-4 w-4 text-gray-400 pointer-events-none" />
-                                        <Input
-                                            type="time"
-                                            className="w-[120px] pl-8"
-                                            value={
-                                                field.value && field.value.includes('T')
-                                                    ? field.value.split('T')[1].substring(0, 5)
-                                                    : ''
-                                            }
-                                            onChange={e => {
-                                                const time = e.target.value;
-                                                const datePart =
-                                                    field.value && field.value.includes('T')
-                                                        ? field.value.split('T')[0]
-                                                        : '';
-                                                if (datePart) {
-                                                    field.onChange(`${datePart}T${time}`);
-                                                } else {
-                                                    field.onChange(`T${time}`);
-                                                }
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                                {(!field.value ||
-                                    field.value.startsWith('T') ||
-                                    field.value.endsWith('T') ||
-                                    !field.value.includes('T')) && (
-                                    <p className="text-[10px] text-red-500 font-medium">
-                                        Tanggal dan waktu harus diisi
-                                    </p>
-                                )}
-                            </div>
-                        ) : (
-                            <Input
-                                {...field}
-                                type={type}
-                                value={field.value || ''}
-                                className={type === 'datetime-local' ? 'block' : ''}
-                            />
-                        )}
-                    </FormControl>
-                    <FormMessage />
-                </FormItem>
-            )}
-        />
-    );
-};
-
-// Form dummy responses
-const dummyActiveUser: ActiveUserDetail = {
-    id: 1,
-    name: 'John Doe (Active User)',
-    phoneNumber: '08123456789',
-    isContacted: true,
-    preferredGroupId: null,
-    preferredGroupName: null,
-    preferredProgramId: null,
-    preferredProgramName: null,
-    programId: 1,
-    program: 'Program A',
-    groupId: 1,
-    group: 'Group 1',
-    levelId: 1,
-    level: 'Beginner',
-    gradeId: 1,
-    gradeLabel: 'A',
-    studyGroupIds: [1],
-    primaryStudyGroupId: 1,
-    schedules: [],
-    instagram: '@johndoe',
-    trialClassAt: null,
-    packages: [],
-    status: 'active',
-    activePeriod: {
-        activeFrom: '2023-01-01',
-        activeUntil: '2023-12-31',
-        selectedPeriod: 12,
-    },
-    studyGroup: {
-        teacher: 'Mr. Smith',
-        schedules: ['Senin 10:00', 'Kamis 10:00'],
-        location: 'Cabang Utama',
-    },
-};
-
-const dummyNonUser: NonUserDetail = {
-    ...dummyActiveUser,
-    id: 2,
-    name: 'Jane Doe (Non User)',
-    isContacted: false,
-    status: 'non_user',
-    marketing: {
-        leadStatus: 'Hot',
-        sourceLead: 'Instagram',
-        funnelStage: 'Engaged',
-        picRole: 'Staff',
-        picPerson: 'Jane',
-        lastFollowUp: '2023-10-27T10:00',
-    },
-    offer: {
-        program: 'Program A',
-        package: 'Private',
-        duration: '3 Bulan',
-        price: '5.000.000',
-    },
-    recommendation: {
-        program: 'Program B',
-        group: 'Group 2',
-        level: 'Intermediate',
-        grade: 'B',
-    },
-    trial: {
-        branch: 'Cabang Utama',
-        studyGroup: 'Kelas Coba B',
-        schedule: 'Rabu 15:00',
-        isDone: false,
-    },
-};
-
-const dummyLapsedUser: LapsedUserDetail = {
-    ...dummyActiveUser,
-    id: 3,
-    name: 'Bob Doe (Lapsed User)',
-    isContacted: true,
-    status: 'lapsed',
-    lastProgram: {
-        name: 'Program C',
-        group: 'Group C',
-        level: 'Advanced',
-        grade: 'C',
-    },
-    history: {
-        activeFrom: '2022-01-01',
-        activeUntil: '2022-12-31',
-        selectedPeriod: 12,
-    },
-    lastStudyGroup: {
-        name: 'Study Group C',
-        teacher: 'Mrs. Jane',
-        schedules: ['Senin 10:00', 'Kamis 10:00'],
-        location: 'Cabang Utama',
-    },
-};
+// import {
+//     dummyActiveUser,
+//     dummyNonUser,
+//     dummyLapsedUser,
+// } from '@/features/detail-students/constants/dummy-data';
+import { SectionCard } from '@/features/detail-students/components/section-card';
+import { FieldDisplay } from '@/features/detail-students/components/field-display';
+import { EditableFormSection } from '@/features/detail-students/components/editable-form-section';
+import { FormFieldDisplay } from '@/features/detail-students/components/form-field-display';
+import { MarketingPicFields } from '@/features/detail-students/components/marketing-pic-fields';
+import { useUpdateStudentMutation } from '@/features/detail-students/queries/use-update-student';
+// Components are now imported
 
 export default function DashboardPage() {
     const searchParams = useSearchParams();
@@ -431,16 +89,30 @@ export default function DashboardPage() {
         studyGroupDetail,
     } = useStudentDetail(mockStatus);
 
-    let data =
-        mockStatus === 'active'
-            ? dummyActiveUser
-            : mockStatus === 'non_user'
-              ? dummyNonUser
-              : dummyLapsedUser;
+    let data: ResponseUserDetail = realData as ResponseUserDetail;
+
+    const [localOverrides, setLocalOverrides] = useState<Record<string, any>>({});
+    const mergeOverrides = (target: any, source: any) => {
+        const merged = { ...target };
+        for (const key in source) {
+            if (
+                typeof source[key] === 'object' &&
+                source[key] !== null &&
+                !Array.isArray(source[key])
+            ) {
+                merged[key] = mergeOverrides(merged[key] || {}, source[key]);
+            } else {
+                merged[key] = source[key];
+            }
+        }
+        return merged;
+    };
 
     // Use full API data if real data arrives (but for dummy test we overwrite using realData if it's there)
-    if (realData)
-        data = { ...data, ...realData } as ActiveUserDetail | NonUserDetail | LapsedUserDetail;
+    // if (realData)
+    //     data = { ...data, ...realData } as ActiveUserDetail | NonUserDetail | LapsedUserDetail;
+
+    data = mergeOverrides(data, localOverrides) as any;
 
     const { isEdit, setIsEdit, notes, setNotes, handleSave } = useEditNote(data?.notes);
     const {
@@ -461,9 +133,16 @@ export default function DashboardPage() {
     // Edit confirmation dialog state wrapper
     const editConfirmation = useEditConfirmation<Record<string, any>>();
 
+    const updateStudentMutation = useUpdateStudentMutation(data?.id as number, {
+        onSuccess: (_, variables) => {
+            setLocalOverrides(prev => mergeOverrides(prev, variables));
+        },
+    });
+
     const handleFormSavePrompt = (
         oldData: Record<string, any>,
         newData: Record<string, any>,
+        onSuccess: () => void,
         onCancel: () => void
     ) => {
         // Trigger dialog popup
@@ -471,53 +150,17 @@ export default function DashboardPage() {
             oldData,
             newData,
             () => {
-                // BE API CALL HAPPENS HERE LATER ON
-                console.log('Submitting API changes:', newData);
+                updateStudentMutation.mutate(newData, {
+                    onSuccess: () => {
+                        editConfirmation.closeConfirmation();
+                        onSuccess();
+                    },
+                    onError: () => {
+                        editConfirmation.closeConfirmation();
+                    },
+                });
             },
             onCancel
-        );
-    };
-
-    const StatusBadge = ({ status }: { status: string }) => {
-        const statuses: { id: 'active' | 'non_user' | 'lapsed'; label: string; color: string }[] = [
-            {
-                id: 'active',
-                label: 'Active User',
-                color: 'bg-green-100 text-green-800 border-green-200',
-            },
-            {
-                id: 'non_user',
-                label: 'Non User',
-                color: 'bg-blue-100 text-blue-800 border-blue-200',
-            },
-            {
-                id: 'lapsed',
-                label: 'Lapsed User',
-                color: 'bg-gray-100 text-gray-800 border-gray-200',
-            },
-        ];
-
-        return (
-            <div className="mb-6 space-y-2">
-                <p className="text-xs text-gray-400 font-semibold mb-2">Switch Dummy Status:</p>
-                <div className="flex flex-wrap gap-2">
-                    {statuses.map(s => (
-                        <button
-                            key={s.id}
-                            onClick={() => setMockStatus(s.id)}
-                            className={cn(
-                                'px-3 py-1 rounded-full text-xs font-bold border transition-all',
-                                s.color,
-                                mockStatus === s.id
-                                    ? 'ring-2 ring-offset-2 ring-primary border-transparent opacity-100'
-                                    : 'opacity-60 grayscale-[0.5] hover:opacity-100'
-                            )}
-                        >
-                            {s.label}
-                        </button>
-                    ))}
-                </div>
-            </div>
         );
     };
 
@@ -533,37 +176,6 @@ export default function DashboardPage() {
 
     return (
         <DashboardContentLayout pageTitle="Detail Student">
-            <div className="mb-4 flex gap-4 bg-white p-3 rounded-md shadow-sm">
-                <p className="font-semibold mr-2">Test View (Change Type):</p>
-                <Link
-                    href={ROUTES.adminStudents + '/detail/1?dummy=active'}
-                    className={cn(
-                        'text-sm hover:underline',
-                        mockStatus === 'active' && 'text-primary font-bold'
-                    )}
-                >
-                    Active User
-                </Link>
-                <Link
-                    href={ROUTES.adminStudents + '/detail/2?dummy=non_user'}
-                    className={cn(
-                        'text-sm hover:underline',
-                        mockStatus === 'non_user' && 'text-primary font-bold'
-                    )}
-                >
-                    Non User
-                </Link>
-                <Link
-                    href={ROUTES.adminStudents + '/detail/3?dummy=lapsed'}
-                    className={cn(
-                        'text-sm hover:underline',
-                        mockStatus === 'lapsed' && 'text-primary font-bold'
-                    )}
-                >
-                    Lapsed User
-                </Link>
-            </div>
-
             <div className="mb-6 flex items-center justify-between">
                 <Link
                     href={
@@ -600,7 +212,7 @@ export default function DashboardPage() {
                     {/* Main Detail Section (8-columns grid layout for details) */}
                     <div className="md:col-span-8 space-y-6">
                         {/* TOP LEVEL WARNINGS & ACTIONS */}
-                        {data.status === 'active' && (
+                        {data?.status === 'active' && (
                             <div className="bg-white p-4 rounded shadow-sm flex items-center justify-between mb-4 border border-gray-200">
                                 <span className="text-gray-600">Aksi Cepat:</span>
                                 <Button variant="destructive" size="sm">
@@ -608,8 +220,8 @@ export default function DashboardPage() {
                                 </Button>
                             </div>
                         )}
-                        {data.status === 'non_user' &&
-                            moment((data as NonUserDetail).marketing?.lastFollowUp).diff(
+                        {data?.status === 'non_user' &&
+                            moment((data as NonUserDetail).marketing?.lastUpdate).diff(
                                 moment(),
                                 'days'
                             ) > 5 && (
@@ -646,10 +258,10 @@ export default function DashboardPage() {
                                         gradeLabel: z.string().min(1, 'Harus diisi'),
                                     })}
                                     defaultValues={{
-                                        program: (data as ActiveUserDetail).program || '',
-                                        group: (data as ActiveUserDetail).group || '',
-                                        level: (data as ActiveUserDetail).level || '',
-                                        gradeLabel: (data as ActiveUserDetail).gradeLabel || '',
+                                        program: (data as ResponseUserDetail).program || '',
+                                        group: (data as ResponseUserDetail).group || '',
+                                        level: (data as ResponseUserDetail).level || '',
+                                        gradeLabel: (data as ResponseUserDetail).gradeLabel || '',
                                     }}
                                     onSave={handleFormSavePrompt}
                                     renderFields={(form, isEditing) => (
@@ -847,18 +459,19 @@ export default function DashboardPage() {
                                     title="Marketing Funnel Detail"
                                     schema={z.object({
                                         marketing: z.object({
-                                            leadStatus: z.string().optional(),
+                                            statusLead: z.string().optional(),
                                             sourceLead: z.string().optional(),
                                             funnelStage: z.string().optional(),
                                             picRole: z.string().optional(),
                                             picPerson: z.string().optional(),
-                                            lastFollowUp: z.string().optional(),
+                                            adminPicId: z.number().optional(),
+                                            lastUpdate: z.string().optional(),
                                         }),
                                     })}
                                     defaultValues={{
                                         marketing: {
-                                            leadStatus:
-                                                (data as NonUserDetail).marketing?.leadStatus || '',
+                                            statusLead:
+                                                (data as NonUserDetail).marketing?.statusLead || '',
                                             sourceLead:
                                                 (data as NonUserDetail).marketing?.sourceLead || '',
                                             funnelStage:
@@ -868,9 +481,10 @@ export default function DashboardPage() {
                                                 (data as NonUserDetail).marketing?.picRole || '',
                                             picPerson:
                                                 (data as NonUserDetail).marketing?.picPerson || '',
-                                            lastFollowUp:
-                                                (data as NonUserDetail).marketing?.lastFollowUp ||
-                                                '',
+                                            adminPicId:
+                                                (data as any).marketing?.adminPicId || undefined,
+                                            lastUpdate:
+                                                (data as NonUserDetail).marketing?.lastUpdate || '',
                                         },
                                     }}
                                     onSave={handleFormSavePrompt}
@@ -879,7 +493,7 @@ export default function DashboardPage() {
                                             <div className="space-y-4">
                                                 <FormFieldDisplay
                                                     form={form}
-                                                    name="marketing.leadStatus"
+                                                    name="marketing.statusLead"
                                                     label="Lead Status"
                                                     isEditing={isEditing}
                                                     highlight
@@ -914,32 +528,7 @@ export default function DashboardPage() {
                                                     }))}
                                                 />
                                             </div>
-                                            <div className="space-y-4">
-                                                <FormFieldDisplay
-                                                    form={form}
-                                                    name="marketing.picRole"
-                                                    label="PIC Role"
-                                                    isEditing={isEditing}
-                                                    type="select"
-                                                    options={Object.values(Role).map(v => ({
-                                                        label: v,
-                                                        value: v,
-                                                    }))}
-                                                />
-                                                <FormFieldDisplay
-                                                    form={form}
-                                                    name="marketing.picPerson"
-                                                    label="PIC Person"
-                                                    isEditing={isEditing}
-                                                />
-                                                <FormFieldDisplay
-                                                    form={form}
-                                                    name="marketing.lastFollowUp"
-                                                    label="Last Follow Up"
-                                                    isEditing={isEditing}
-                                                    type="datetime-local"
-                                                />
-                                            </div>
+                                            <MarketingPicFields form={form} isEditing={isEditing} />
                                         </>
                                     )}
                                 />
@@ -1299,7 +888,6 @@ export default function DashboardPage() {
 
                     {/* Side Section (4-columns layout for Notes, etc) */}
                     <div className="md:col-span-4 space-y-6">
-                        <StatusBadge status={data.status} />
                         <StudentDetailFields userData={data} />
 
                         <StudentNotesCard
@@ -1321,6 +909,7 @@ export default function DashboardPage() {
                 newData={editConfirmation.newData}
                 onConfirm={editConfirmation.handleConfirm}
                 onCancel={editConfirmation.handleCancel}
+                isLoading={updateStudentMutation.isPending}
             />
         </DashboardContentLayout>
     );

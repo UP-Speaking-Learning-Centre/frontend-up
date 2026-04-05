@@ -9,12 +9,12 @@ const Overlay = ({ opacity = 100, show = false }: { opacity?: number; show?: boo
 
     return (
         <div
+            style={{ backgroundColor: `rgba(255, 255, 255, ${opacity / 100})` }}
             className={cn(
                 'fixed inset-0 bg-white z-[99] flex items-center justify-center gap-3 transition-all duration-700',
                 isDashboardReady && !show
                     ? 'opacity-0 pointer-events-none'
-                    : 'opacity-100 pointer-events-auto',
-                `bg-opacity-${opacity}`
+                    : 'opacity-100 pointer-events-auto'
             )}
         >
             <div className="relative size-20 max-md:size-16">

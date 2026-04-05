@@ -1,7 +1,14 @@
 'use client';
 
 import { useCreateNonUserForm } from '../hooks/use-create-non-user-form';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -12,10 +19,21 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { FunnelStage, LeadStatus, SourceLead, Grades } from '../types';
+import { FunnelStage, LeadStatus, SourceLead, Role } from '../types';
+import { useGetStaffsByRole } from '@/features/staff-management/queries/use-get-staffs-by-role';
+import { useEffect } from 'react';
 
 export const CreateNonUserForm = () => {
     const { form, onSubmit } = useCreateNonUserForm();
+    const picRole = form.watch('picRole');
+
+    const { data: staffsData } = useGetStaffsByRole(picRole ? [picRole] : []);
+    const picStaffOptions = staffsData?.data || [];
+
+    useEffect(() => {
+        form.setValue('picStaff', undefined);
+        form.setValue('adminPicId', undefined);
+    }, [picRole, form]);
 
     return (
         <Form {...form}>
@@ -58,7 +76,10 @@ export const CreateNonUserForm = () => {
                                 <FormItem>
                                     <FormLabel>Instagram</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Masukkan username instagram" {...field} />
+                                        <Input
+                                            placeholder="Masukkan username instagram"
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -67,20 +88,28 @@ export const CreateNonUserForm = () => {
 
                         <FormField
                             control={form.control}
-                            name="grade"
+                            name="picRole"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Grade</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormLabel>PIC Role</FormLabel>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        value={field.value || undefined}
+                                    >
                                         <FormControl>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Pilih grade" />
+                                                <SelectValue placeholder="Pilih PIC Role" />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            {Object.values(Grades).map(grade => (
-                                                <SelectItem key={grade} value={grade}>
-                                                    {grade}
+                                            {[
+                                                Role.StaffAdminBabyBear,
+                                                Role.StaffAdminPapaBear,
+                                                Role.StaffAdminMamaBear,
+                                                Role.StaffMarketing,
+                                            ].map(role => (
+                                                <SelectItem key={role} value={role}>
+                                                    {role}
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>
@@ -99,7 +128,10 @@ export const CreateNonUserForm = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Source Lead</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Pilih source lead" />
@@ -124,7 +156,10 @@ export const CreateNonUserForm = () => {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Funnel Stage</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Pilih funnel stage" />
@@ -145,11 +180,14 @@ export const CreateNonUserForm = () => {
 
                         <FormField
                             control={form.control}
-                            name="leadStatus"
+                            name="statusLead"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Lead Status</FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Pilih lead status" />
@@ -159,6 +197,53 @@ export const CreateNonUserForm = () => {
                                             {Object.values(LeadStatus).map(status => (
                                                 <SelectItem key={status} value={status}>
                                                     {status}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="picStaff"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>PIC Staff</FormLabel>
+                                    <Select
+                                        disabled={!picRole}
+                                        onValueChange={val => {
+                                            field.onChange(val);
+                                            const selectedStaff = picStaffOptions.find(
+                                                s => s.name === val
+                                            );
+                                            form.setValue(
+                                                'adminPicId',
+                                                selectedStaff?.adminPicId || undefined
+                                            );
+                                        }}
+                                        value={field.value || undefined}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue
+                                                    placeholder={
+                                                        !picRole
+                                                            ? 'Pilih Role terlebih dahulu'
+                                                            : 'Pilih PIC Staff'
+                                                    }
+                                                />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {picStaffOptions.map(staff => (
+                                                <SelectItem
+                                                    key={staff.adminPicId}
+                                                    value={staff.name}
+                                                >
+                                                    {staff.name}
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>
@@ -177,10 +262,10 @@ export const CreateNonUserForm = () => {
                         <FormItem>
                             <FormLabel>Notes</FormLabel>
                             <FormControl>
-                                <Textarea 
-                                    placeholder="Tambahkan catatan (opsional)" 
-                                    className="resize-none h-32" 
-                                    {...field} 
+                                <Textarea
+                                    placeholder="Tambahkan catatan (opsional)"
+                                    className="resize-none h-32"
+                                    {...field}
                                 />
                             </FormControl>
                             <FormMessage />

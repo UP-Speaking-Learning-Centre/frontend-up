@@ -45,9 +45,9 @@ export interface NonUserMarketingType {
     phone: string;
     sourceLead: SourceLead;
     funnelStage: FunnelStage;
-    leadStatus: LeadStatus;
+    statusLead: LeadStatus;
     pic: Role;
-    lastFollowUp: string;
+    lastUpdate: string;
     programDiminati: string;
     tanggalTrialClass: string;
     teacherTrialClass: string;

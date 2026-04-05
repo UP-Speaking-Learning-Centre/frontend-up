@@ -5,7 +5,7 @@ export interface NonUserFilterState {
     filters: {
         studentName: string;
         funnelStage: string | undefined;
-        leadStatus: string | undefined;
+        statusLead: string | undefined;
         picRole: string[];
         picStaff: string[];
         lastFollowUpFrom: string | undefined;
@@ -19,7 +19,7 @@ export interface NonUserFilterState {
 const initialFilters = {
     studentName: '',
     funnelStage: undefined,
-    leadStatus: undefined,
+    statusLead: undefined,
     picRole: [],
     picStaff: [],
     lastFollowUpFrom: undefined,

@@ -47,12 +47,12 @@ Retrieves the full details of a student. The response structure varies slightly 
 
     // 2. For Non Users
     "marketing": {
-        "leadStatus": "Hot",
+        "statusLead": "Hot",
         "sourceLead": "Instagram",
         "funnelStage": "Engaged",
         "picRole": "Sales",
         "picPerson": "John",
-        "lastFollowUp": "2023-10-30T15:00:00Z"
+        "lastUpdate": "2023-10-30T15:00:00Z"
     },
     "offer": {
         "program": "Program A",
@@ -128,9 +128,9 @@ Used to update specific sections of the student detail. The UI is designed to se
 ```json
 {
     "marketing": {
-        "leadStatus": "Closed",
+        "statusLead": "Closed",
         "funnelStage": "Converted",
-        "lastFollowUp": "2023-11-01T10:00:00Z"
+        "lastUpdate": "2023-11-01T10:00:00Z"
     }
 }
 ```
@@ -237,4 +237,4 @@ _(Alternatively, this could just use the `PATCH` endpoint above by sending `{"is
 
 - **Nested Objects**: The frontend expects data to be grouped into objects (`subscription`, `marketing`, `offer`, etc.) to match the TypeScript interfaces.
 - **Dynamic Schedules**: Properties like `lastStudyGroupSchedule1` and `lastStudyGroupSchedule2` have been refactored into a `schedules` array of strings to accommodate any number of sessions.
-- **Date Formats**: Use ISO 8601 strings for timestamps (`lastFollowUp`, `activeFrom`, etc.).
+- **Date Formats**: Use ISO 8601 strings for timestamps (`lastUpdate`, `activeFrom`, etc.).
