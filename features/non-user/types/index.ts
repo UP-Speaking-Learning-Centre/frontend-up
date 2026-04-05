@@ -29,6 +29,7 @@ export enum Role {
 export enum SourceLead {
     Event = 'Event',
     Website = 'Website',
+    WhatsApp = 'WhatsApp',
 }
 
 export enum Grades {

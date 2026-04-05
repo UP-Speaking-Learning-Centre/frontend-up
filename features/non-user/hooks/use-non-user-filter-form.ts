@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,36 +6,50 @@ import { useNonUserFilterStore } from '../stores/filter-store';
 import { Role } from '../types';
 import moment from 'moment';
 import { ADMIN_ROLES } from '@/utils/user.helper';
+import { useGetStaffsByRole } from '@/features/staff-management/queries/use-get-staffs-by-role';
 
 export const filterSchema = z.object({
     studentName: z.string().optional(),
     funnelStage: z.string().optional(),
     leadStatus: z.string().optional(),
-    pic: z.array(z.string()).optional(),
-    lastFollowUp: z.date().optional().nullable(),
+    picRole: z.array(z.string()).optional(),
+    picStaff: z.array(z.string()).optional(),
+    lastFollowUp: z
+        .object({
+            from: z.date().optional(),
+            to: z.date().optional(),
+        })
+        .optional()
+        .nullable(),
 });
 
 export type FilterValues = z.infer<typeof filterSchema>;
 
 export const useNonUserFilterForm = (menuType: 'marketing' | 'admin') => {
     const [isCalendarOpen, setIsCalendarOpen] = useState(false);
-    const [isPicDropdownOpen, setIsPicDropdownOpen] = useState(false);
-    
+    const [isPicRoleDropdownOpen, setIsPicRoleDropdownOpen] = useState(false);
+    const [isPicStaffDropdownOpen, setIsPicStaffDropdownOpen] = useState(false);
+
     const applyFilters = useNonUserFilterStore(s => s.applyFilters);
     const resetFilters = useNonUserFilterStore(s => s.resetFilters);
     const currentFilters = useNonUserFilterStore(s => s.filters);
-    const isPicDefault = useNonUserFilterStore(s => s.isPicDefault);
 
-    const getInitialPic = () => {
+    // Filter values for form
+    const getInitialPicRole = () => {
         if (menuType === 'marketing') return [Role.StaffMarketing];
-        if (menuType === 'admin') {
-            if (isPicDefault) {
-                return ADMIN_ROLES;
-            }
-            return currentFilters.pic || [];
-        }
-        return currentFilters.pic || [];
+        return currentFilters.picRole || [];
     };
+
+    const getInitialPicStaff = () => currentFilters.picStaff || [];
+
+    const queryRoles =
+        menuType === 'marketing' ? [Role.StaffMarketing] : ADMIN_ROLES;
+    const { data: staffsData } = useGetStaffsByRole(queryRoles);
+
+    const picStaffOptions = useMemo(() => {
+        if (!staffsData?.data) return [];
+        return staffsData.data.map(staff => staff.name); // or user id if backend expects id
+    }, [staffsData]);
 
     const form = useForm<FilterValues>({
         resolver: zodResolver(filterSchema),
@@ -43,30 +57,40 @@ export const useNonUserFilterForm = (menuType: 'marketing' | 'admin') => {
             studentName: currentFilters.studentName || '',
             funnelStage: currentFilters.funnelStage || '',
             leadStatus: currentFilters.leadStatus || '',
-            pic: getInitialPic(),
-            lastFollowUp: currentFilters.lastFollowUp
-                ? moment(currentFilters.lastFollowUp).toDate()
-                : null,
+            picRole: getInitialPicRole(),
+            picStaff: getInitialPicStaff(),
+            lastFollowUp: {
+                from: currentFilters.lastFollowUpFrom
+                    ? moment(currentFilters.lastFollowUpFrom).toDate()
+                    : undefined,
+                to: currentFilters.lastFollowUpTo
+                    ? moment(currentFilters.lastFollowUpTo).toDate()
+                    : undefined,
+            },
         },
     });
 
     const onSubmit = (values: FilterValues) => {
-        const isNowPicDefault = menuType === 'admin' ? isPicDefault : false;
-        
-        let finalPic = values.pic || [];
-        if (menuType === 'admin' && finalPic.length === 0) {
-            finalPic = ADMIN_ROLES;
+        let finalPicRole = values.picRole || [];
+        if (menuType === 'marketing') {
+            finalPicRole = [Role.StaffMarketing];
+        } else if (menuType === 'admin' && finalPicRole.length === 0) {
+            finalPicRole = [];
         }
 
         applyFilters({
             studentName: values.studentName || '',
             funnelStage: values.funnelStage,
             leadStatus: values.leadStatus,
-            pic: finalPic,
-            lastFollowUp: values.lastFollowUp
-                ? moment(values.lastFollowUp).toISOString()
+            picRole: finalPicRole,
+            picStaff: values.picStaff || [],
+            lastFollowUpFrom: values.lastFollowUp?.from
+                ? moment(values.lastFollowUp.from).toISOString()
                 : undefined,
-        }, isNowPicDefault);
+            lastFollowUpTo: values.lastFollowUp?.to
+                ? moment(values.lastFollowUp.to).toISOString()
+                : undefined,
+        });
     };
 
     const handleReset = () => {
@@ -74,7 +98,8 @@ export const useNonUserFilterForm = (menuType: 'marketing' | 'admin') => {
             studentName: '',
             funnelStage: '',
             leadStatus: '',
-            pic: menuType === 'marketing' ? [Role.StaffMarketing] : ADMIN_ROLES,
+            picRole: menuType === 'marketing' ? [Role.LeadMarketing, Role.StaffMarketing] : [],
+            picStaff: [],
             lastFollowUp: null,
         });
         resetFilters();
@@ -86,9 +111,12 @@ export const useNonUserFilterForm = (menuType: 'marketing' | 'admin') => {
         handleReset,
         isCalendarOpen,
         setIsCalendarOpen,
-        isPicDropdownOpen,
-        setIsPicDropdownOpen,
-        isPicDefault,
-        adminRoles: ADMIN_ROLES
+        isPicRoleDropdownOpen,
+        setIsPicRoleDropdownOpen,
+        isPicStaffDropdownOpen,
+        setIsPicStaffDropdownOpen,
+        adminRoles: ADMIN_ROLES,
+        marketingRoles: [Role.StaffMarketing],
+        picStaffOptions,
     };
 };

@@ -34,8 +34,8 @@ export default function NonUserMarketingPage() {
                             Tambah Non User
                         </Button>
                     </Link>
-                    <Button 
-                        variant="outline" 
+                    <Button
+                        variant="outline"
                         onClick={() => setDrawerOpen(true)}
                         className="flex items-center gap-2"
                     >
@@ -45,7 +45,7 @@ export default function NonUserMarketingPage() {
                 </div>
 
                 <NonUserFilterDrawer menuType="marketing" />
-                <NonUserTable />
+                <NonUserTable menuType="marketing" />
             </div>
         </DashboardContentLayout>
     );

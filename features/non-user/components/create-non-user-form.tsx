@@ -53,6 +53,20 @@ export const CreateNonUserForm = () => {
 
                         <FormField
                             control={form.control}
+                            name="instagram"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Instagram</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Masukkan username instagram" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
                             name="grade"
                             render={({ field }) => (
                                 <FormItem>

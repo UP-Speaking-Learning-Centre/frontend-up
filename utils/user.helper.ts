@@ -1,6 +1,6 @@
 import { Role } from '@/features/non-user/types';
 
-export const ADMIN_ROLES = [Role.StaffAdminBabyBear, Role.StaffAdminPapaBear, Role.StaffAdminMamaBear];
+export const ADMIN_ROLES = [Role.LeadAdmin, Role.StaffAdminBabyBear, Role.StaffAdminPapaBear, Role.StaffAdminMamaBear];
 
 export const getActiveFilterCount = (
     filters: Record<string, any>,

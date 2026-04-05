@@ -32,49 +32,42 @@ export const NonUserFilterForm = ({ menuType }: NonUserFilterFormProps) => {
         handleReset,
         isCalendarOpen,
         setIsCalendarOpen,
-        isPicDropdownOpen,
-        setIsPicDropdownOpen,
-        isPicDefault,
-        adminRoles
+        isPicRoleDropdownOpen,
+        setIsPicRoleDropdownOpen,
+        isPicStaffDropdownOpen,
+        setIsPicStaffDropdownOpen,
+        adminRoles,
+        marketingRoles,
+        picStaffOptions,
     } = useNonUserFilterForm(menuType);
 
-    const renderPicTriggerContent = (fieldValues: string[]) => {
-        if (menuType === 'marketing') {
-            return Role.StaffMarketing;
+    const renderPicTriggerContent = (fieldValues: string[], defaultLabel: string) => {
+        if (!fieldValues || fieldValues.length === 0) {
+            return <span className="text-muted-foreground">{defaultLabel}</span>;
         }
 
-        if (menuType === 'admin') {
-            if (isPicDefault) {
-                return <span className="text-muted-foreground">Pilih PIC</span>;
-            }
-
-            if (!fieldValues || fieldValues.length === 0) {
-                return <span className="text-muted-foreground">Pilih PIC</span>;
-            }
-
-            if (fieldValues.length <= 2) {
-                return (
-                    <div className="flex flex-wrap gap-1">
-                        {fieldValues.map(val => (
-                            <Badge variant="secondary" key={val} className="mr-1 py-0 px-2 font-normal">
-                                {val}
-                            </Badge>
-                        ))}
-                    </div>
-                );
-            }
-
+        if (fieldValues.length <= 2) {
             return (
-                <div className="flex flex-wrap gap-1 items-center">
-                    <Badge variant="secondary" className="mr-1 py-0 px-2 font-normal">
-                        {fieldValues[0]}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">+{fieldValues.length - 1} lainnya</span>
+                <div className="flex flex-wrap gap-1">
+                    {fieldValues.map(val => (
+                        <Badge variant="secondary" key={val} className="mr-1 py-0 px-2 font-normal">
+                            {val}
+                        </Badge>
+                    ))}
                 </div>
             );
         }
-        
-        return <span className="text-muted-foreground">Pilih PIC</span>;
+
+        return (
+            <div className="flex flex-wrap gap-1 items-center">
+                <Badge variant="secondary" className="mr-1 py-0 px-2 font-normal">
+                    {fieldValues[0]}
+                </Badge>
+                <span className="text-xs text-muted-foreground">
+                    +{fieldValues.length - 1} lainnya
+                </span>
+            </div>
+        );
     };
 
     return (
@@ -99,10 +92,7 @@ export const NonUserFilterForm = ({ menuType }: NonUserFilterFormProps) => {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Funnel Stage</FormLabel>
-                            <Select
-                                onValueChange={field.onChange}
-                                value={field.value || undefined}
-                            >
+                            <Select onValueChange={field.onChange} value={field.value || undefined}>
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Pilih Funnel Stage" />
@@ -126,10 +116,7 @@ export const NonUserFilterForm = ({ menuType }: NonUserFilterFormProps) => {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Lead Status</FormLabel>
-                            <Select
-                                onValueChange={field.onChange}
-                                value={field.value || undefined}
-                            >
+                            <Select onValueChange={field.onChange} value={field.value || undefined}>
                                 <FormControl>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Pilih Lead Status" />
@@ -149,10 +136,10 @@ export const NonUserFilterForm = ({ menuType }: NonUserFilterFormProps) => {
 
                 <FormField
                     control={form.control}
-                    name="pic"
+                    name="picRole"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>PIC</FormLabel>
+                            <FormLabel>PIC Role</FormLabel>
                             {menuType === 'marketing' ? (
                                 <Button
                                     variant="outline"
@@ -164,19 +151,26 @@ export const NonUserFilterForm = ({ menuType }: NonUserFilterFormProps) => {
                                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                 </Button>
                             ) : (
-                                <Popover open={isPicDropdownOpen} onOpenChange={setIsPicDropdownOpen} modal={true}>
+                                <Popover
+                                    open={isPicRoleDropdownOpen}
+                                    onOpenChange={setIsPicRoleDropdownOpen}
+                                    modal={true}
+                                >
                                     <PopoverTrigger asChild>
                                         <FormControl>
                                             <Button
                                                 variant="outline"
                                                 role="combobox"
                                                 className={cn(
-                                                    "w-full justify-between font-normal text-left h-auto min-h-10",
-                                                    !field.value?.length && "text-muted-foreground",
-                                                    isPicDefault && "text-muted-foreground"
+                                                    'w-full justify-between font-normal text-left h-auto min-h-10',
+                                                    !(field.value as string[])?.length &&
+                                                        'text-muted-foreground'
                                                 )}
                                             >
-                                                {renderPicTriggerContent(field.value || [])}
+                                                {renderPicTriggerContent(
+                                                    (field.value as string[]) || [],
+                                                    'Pilih PIC Role'
+                                                )}
                                                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                                             </Button>
                                         </FormControl>
@@ -184,34 +178,29 @@ export const NonUserFilterForm = ({ menuType }: NonUserFilterFormProps) => {
                                     <PopoverContent className="w-[368px] p-0" align="start">
                                         <div className="p-2 space-y-1">
                                             {adminRoles.map(role => {
-                                                const isSelected = isPicDefault ? false : field.value?.includes(role);
+                                                const isSelected =
+                                                    (field.value as string[] | undefined)?.includes(
+                                                        role
+                                                    ) || false;
                                                 return (
-                                                    <div 
-                                                        key={role} 
+                                                    <div
+                                                        key={role}
                                                         className="flex items-center space-x-2 rounded-md p-2 hover:bg-accent cursor-pointer"
                                                         onClick={() => {
-                                                            if (isPicDefault) {
-                                                                useNonUserFilterStore.setState({ isPicDefault: false });
-                                                                field.onChange([role]);
-                                                                return;
-                                                            }
-
-                                                            const current = field.value || [];
+                                                            const current =
+                                                                (field.value as string[]) || [];
                                                             const updated = current.includes(role)
                                                                 ? current.filter(r => r !== role)
                                                                 : [...current, role];
                                                             field.onChange(updated);
                                                         }}
                                                     >
-                                                        <Checkbox 
-                                                            checked={isSelected}
-                                                            tabIndex={-1}
-                                                        />
+                                                        <Checkbox checked={isSelected} tabIndex={-1} />
                                                         <label className="text-sm font-medium leading-none cursor-pointer">
                                                             {role}
                                                         </label>
                                                     </div>
-                                                )
+                                                );
                                             })}
                                         </div>
                                     </PopoverContent>
@@ -223,24 +212,99 @@ export const NonUserFilterForm = ({ menuType }: NonUserFilterFormProps) => {
 
                 <FormField
                     control={form.control}
+                    name="picStaff"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>PIC Staff</FormLabel>
+                            <Popover
+                                open={isPicStaffDropdownOpen}
+                                onOpenChange={setIsPicStaffDropdownOpen}
+                                modal={true}
+                            >
+                                <PopoverTrigger asChild>
+                                    <FormControl>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            className={cn(
+                                                'w-full justify-between font-normal text-left h-auto min-h-10',
+                                                !(field.value as string[])?.length &&
+                                                    'text-muted-foreground'
+                                            )}
+                                        >
+                                            {renderPicTriggerContent(
+                                                (field.value as string[]) || [],
+                                                'Pilih PIC Staff'
+                                            )}
+                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                        </Button>
+                                    </FormControl>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-[368px] p-0" align="start">
+                                    <div className="p-2 space-y-1 max-h-[300px] overflow-y-auto">
+                                        {picStaffOptions.map(staff => {
+                                            const isSelected =
+                                                (field.value as string[] | undefined)?.includes(
+                                                    staff
+                                                ) || false;
+                                            return (
+                                                <div
+                                                    key={staff}
+                                                    className="flex items-center space-x-2 rounded-md p-2 hover:bg-accent cursor-pointer"
+                                                    onClick={() => {
+                                                        const current =
+                                                            (field.value as string[]) || [];
+                                                        const updated = current.includes(staff)
+                                                            ? current.filter(s => s !== staff)
+                                                            : [...current, staff];
+                                                        field.onChange(updated);
+                                                    }}
+                                                >
+                                                    <Checkbox checked={isSelected} tabIndex={-1} />
+                                                    <label className="text-sm font-medium leading-none cursor-pointer">
+                                                        {staff}
+                                                    </label>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </PopoverContent>
+                            </Popover>
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
                     name="lastFollowUp"
                     render={({ field }) => (
                         <FormItem className="flex flex-col">
                             <FormLabel>Last Follow Up</FormLabel>
-                            <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen} modal={true}>
+                            <Popover
+                                open={isCalendarOpen}
+                                onOpenChange={setIsCalendarOpen}
+                                modal={true}
+                            >
                                 <PopoverTrigger asChild>
                                     <FormControl>
                                         <Button
-                                            variant={"outline"}
+                                            variant={'outline'}
                                             className={cn(
-                                                "w-full pl-3 text-left font-normal",
-                                                !field.value && "text-muted-foreground"
+                                                'w-full pl-3 text-left font-normal',
+                                                !field.value?.from && 'text-muted-foreground'
                                             )}
                                         >
-                                            {field.value ? (
-                                                format(field.value, "PP")
+                                            {field.value?.from ? (
+                                                field.value.to ? (
+                                                    <>
+                                                        {format(field.value.from, 'LLL dd, y')} -{' '}
+                                                        {format(field.value.to, 'LLL dd, y')}
+                                                    </>
+                                                ) : (
+                                                    format(field.value.from, 'LLL dd, y')
+                                                )
                                             ) : (
-                                                <span>Pilih Tanggal</span>
+                                                <span>Pilih Range Tanggal</span>
                                             )}
                                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                         </Button>
@@ -248,12 +312,10 @@ export const NonUserFilterForm = ({ menuType }: NonUserFilterFormProps) => {
                                 </PopoverTrigger>
                                 <PopoverContent className="w-auto p-0" align="start">
                                     <Calendar
-                                        mode="single"
-                                        selected={field.value || undefined}
-                                        onSelect={(date: Date | undefined) => {
-                                            field.onChange(date);
-                                            setIsCalendarOpen(false);
-                                        }}
+                                        mode="range"
+                                        selected={(field.value as any) || undefined}
+                                        onSelect={field.onChange}
+                                        numberOfMonths={2}
                                         initialFocus
                                     />
                                 </PopoverContent>

@@ -46,7 +46,7 @@ export default function NonUserAdminPage() {
                 </div>
 
                 <NonUserFilterDrawer menuType="admin" />
-                <NonUserTable />
+                <NonUserTable menuType="admin" />
             </div>
         </DashboardContentLayout>
     );

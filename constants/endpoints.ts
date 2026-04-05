@@ -1,6 +1,7 @@
 import { parseTemplate } from 'url-template';
 
 const BASE_STAFF = '/admin/staff';
+const BASE_NON_USER = '/admin/non-users';
 
 const ENDPOINTS = {
     fetchPrograms: '/programs',
@@ -53,6 +54,15 @@ const ENDPOINTS = {
     baseStaff: BASE_STAFF,
     fetchStaffs: parseTemplate(BASE_STAFF + '?currentPage={currentPage}&limit={limit}'),
     staffById: parseTemplate(BASE_STAFF + '/{id}'),
+    staffByRole: parseTemplate(BASE_STAFF + '?roles={roles}'),
+
+    // Non user
+    baseNonUser: BASE_NON_USER,
+    fetchNonUsers: parseTemplate(
+        BASE_NON_USER +
+            '?page={page}&limit={limit}&search={search}'
+    ),
+    nonUserById: parseTemplate(BASE_NON_USER + '/{id}'),
 } as const;
 
 export default ENDPOINTS;

@@ -6,6 +6,7 @@ import { ROUTES } from '@/constants/routes';
 import useAuthStore from '@/features/auth/stores/authStore';
 import { isAdmin } from '@/features/auth/utils/auth-client.helper';
 import { logout } from '@/features/auth/utils/auth-server.helper';
+import { Role } from '@/features/non-user/types';
 import { useDashboardLayoutStore } from '@/stores/dashboard-layout-store';
 import {
     BookCheckIcon,
@@ -101,12 +102,38 @@ const Sidebar = () => {
     >([]);
 
     useEffect(() => {
-        // TODO: get user role from auth store
-        if (isAdmin(role)) {
-            setSidebarMenu(sidebarItemsAdmin);
+        let menuItems = [];
+
+        const isMarketing = [Role.LeadMarketing, Role.StaffMarketing].includes(role as Role);
+        const isAdminTeam = [Role.LeadAdmin, Role.StaffAdminBabyBear, Role.StaffAdminPapaBear, Role.StaffAdminMamaBear].includes(role as Role);
+
+        if (role === Role.SuperAdmin || isAdmin(role)) {
+            menuItems = sidebarItemsAdmin;
+        } else if (isMarketing) {
+            menuItems = sidebarItemsAdmin.map(item => {
+                if (item.label === 'Non User') {
+                    return {
+                        ...item,
+                        children: item.children?.filter(child => child.href === ROUTES.adminNonUserMarketing),
+                    };
+                }
+                return item;
+            });
+        } else if (isAdminTeam) {
+            menuItems = sidebarItemsAdmin.map(item => {
+                if (item.label === 'Non User') {
+                    return {
+                        ...item,
+                        children: item.children?.filter(child => child.href === ROUTES.adminNonUserAdmin),
+                    };
+                }
+                return item;
+            });
         } else {
-            setSidebarMenu(sidebarItemsUser);
+            menuItems = sidebarItemsUser;
         }
+
+        setSidebarMenu(menuItems);
     }, [role]);
 
     const handleLogout = async () => {
