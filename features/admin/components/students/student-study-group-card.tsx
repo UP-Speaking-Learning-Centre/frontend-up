@@ -17,7 +17,7 @@ import { AlertCircleIcon, Calendar, Clock, Info } from 'lucide-react';
 import moment from 'moment';
 import { useRouter } from 'next/navigation';
 
-interface StudentStudyGroupCardProps {
+export interface StudentStudyGroupCardProps {
     data: any;
     studyGroupDetail: any;
     isLoadingLocation: boolean;
@@ -33,7 +33,8 @@ interface StudentStudyGroupCardProps {
     trialClass: string;
     setTrialClass: (val: string) => void;
     handleChangeStudyGroup: () => void;
-    isLoadingChangeStudy: boolean;
+    isLoadingChangeStudy?: boolean;
+    isLoading?: boolean;
 }
 
 export default function StudentStudyGroupCard({
@@ -53,6 +54,7 @@ export default function StudentStudyGroupCard({
     setTrialClass,
     handleChangeStudyGroup,
     isLoadingChangeStudy,
+    isLoading,
 }: StudentStudyGroupCardProps) {
     const routes = useRouter();
 
@@ -242,15 +244,17 @@ export default function StudentStudyGroupCard({
                             </div>
                         )}
                         <DialogFooter>
-                            <Button
-                                onClick={handleChangeStudyGroup}
+                            <Button 
+                                onClick={handleChangeStudyGroup} 
                                 disabled={
                                     !selectedStudyGroup ||
                                     isFull ||
-                                    (!data?.trialClassAt && !trialClass)
+                                    (!data?.trialClassAt && !trialClass) ||
+                                    isLoadingChangeStudy || 
+                                    isLoading
                                 }
                             >
-                                {!isLoadingChangeStudy ? 'Ganti' : 'Sedang mengganti...'}
+                                {!(isLoadingChangeStudy || isLoading) ? 'Ganti' : 'Sedang mengganti...'}
                             </Button>
                         </DialogFooter>
                     </DialogContent>

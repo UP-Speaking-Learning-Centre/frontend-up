@@ -1,5 +1,6 @@
 import { PackageType } from '@/types/programs-selection';
 import { Schedule } from '@/types/study-group';
+import { Role } from '@/features/non-user/types';
 
 export interface LoginRequest {
     phone: string;
@@ -18,8 +19,8 @@ export interface AuthStoreInterface {
     setIsNewAccount: (isNewAccount: boolean) => void;
     otpForTesting: string;
     setOtpForTesting: (otpForTesting: string) => void;
-    role: string;
-    setRole: (role: string) => void;
+    role: Role | '';
+    setRole: (role: Role | '') => void;
     token: string;
     setToken: (token: string) => void;
 }
@@ -44,7 +45,7 @@ export interface ResponseFirstLogin {
 }
 export interface ResponseLogin {
     accessToken: string;
-    role: 'admin' | 'user';
+    role: Role;
 }
 
 export interface RequestFirstLogin {
@@ -70,46 +71,69 @@ export interface ResponseUserDetailTestResults {
 }
 
 export interface NoteItem {
+    id: number;
     notes: string;
     staffName: string;
     createdAt: string;
     createdBy: string;
 }
 
+export interface StudentDetailSchedule {
+    studyGroupId: number | null;
+    studyGroupName: string | null;
+    packageId: number | null;
+    packageName: string | null;
+    dayOfWeek: string | null;
+    startTime: string | null;
+    endTime: string | null;
+    location: string | null;
+    teacherMemberName: string | null;
+    teacherAlias: string | null;
+}
+
 export interface BaseResponseUserDetail {
     id: number;
     name: string;
-    phoneNumber: string;
-    isContacted: boolean;
-    preferredGroupId: string | null;
+    phoneNumber: string | null;
+    isContacted: boolean | null;
+    preferredGroupId: number | null;
     preferredGroupName: string | null;
-    preferredProgramId: string | null;
+    preferredProgramId: number | null;
     preferredProgramName: string | null;
     notes?: string | null;
     notesList?: NoteItem[];
-    programId: number;
-    program: string;
-    groupId: number;
-    group: string;
-    levelId: number;
-    level: string;
-    gradeId: number;
-    gradeLabel: string;
+    programId: number | null;
+    program: string | null;
+    groupId: number | null;
+    group: string | null;
+    levelId: number | null;
+    level: string | null;
+    gradeId: number | null;
+    gradeLabel: string | null;
     studyGroupIds: number[];
-    primaryStudyGroupId: number;
-    schedules: Schedule[];
+    primaryStudyGroupId: number | null;
+    schedules: StudentDetailSchedule[];
+    assignedStudyGroup?: {
+        studyGroupId: number | null;
+        studyGroupName: string | null;
+        packageId: number | null;
+        packageName: string | null;
+        teacher: string | null;
+        location: string | null;
+        schedules: string[];
+    } | null;
     latestResult?: {
-        determinedLevelId: string | null;
+        determinedLevelId: number | null;
         determinedLevelName: string | null;
         group: string | null;
-        groupId: string | null;
-        placementTestId: number;
+        groupId: number | null;
+        placementTestId: number | null;
         program: string | null;
-        programId: string | null;
-        score: number;
-        status: string;
+        programId: number | null;
+        score: number | null;
+        status: string | null;
     };
-    instagram: string;
+    instagram: string | null;
     trialClassAt: string | null;
     packages: { packageId: number; packageName: string }[];
     self_schedule_payload?: {
@@ -124,9 +148,12 @@ export interface BaseResponseUserDetail {
 
 export interface ActiveUserDetail {
     activePeriod?: {
-        activeFrom?: string;
-        activeUntil?: string;
-        selectedPeriod?: 3 | 6 | 12;
+        id?: number | null;
+        activeFrom?: string | null;
+        activeUntil?: string | null;
+        selectedPeriod?: number | null;
+        createdBy?: string | null;
+        createdAt?: string | null;
     };
     studyGroup?: {
         teacher?: string;
@@ -143,12 +170,25 @@ export interface NonUserDetail {
         picRole?: string;
         picPerson?: string;
         lastUpdate?: string;
+        cancelReason?: string;
+        adminPicId?: number;
     };
     offer?: {
-        program?: string;
-        package?: string;
-        duration?: string;
-        price?: string;
+        id?: number | null;
+        programId?: number | null;
+        program?: string | null;
+        groupId?: number | null;
+        group?: string | null;
+        levelId?: number | null;
+        level?: string | null;
+        gradeId?: number | null;
+        grade?: string | null;
+        packageId?: number | null;
+        package?: string | null;
+        duration?: number | null;
+        price?: string | null;
+        createdBy?: string | null;
+        createdAt?: string | null;
     };
     recommendation?: {
         program?: string;
@@ -210,18 +250,41 @@ export type ResponseUserDetail = BaseResponseUserDetail & {
         schedules?: string[];
     };
     marketing?: {
+        studentId?: number;
         statusLead?: string;
         sourceLead?: string;
         funnelStage?: string;
         picRole?: string;
-        picPerson?: string;
+        picStaff?: string;
+        legacyPicRole?: string | null;
+        legacyPicStaff?: string | null;
         lastUpdate?: string;
+        cancelReason?: string;
+        adminPicId?: number;
+        programId?: number;
+        programName?: string;
+        tanggalTrialClass?: string;
+        teacherTrialClass?: string;
+        grupTrialClass?: string;
+        datangTrialClass?: boolean;
+        notesTerbaru?: string;
     };
     offer?: {
-        program?: string;
-        package?: string;
-        duration?: string;
-        price?: string;
+        id?: number | null;
+        programId?: number | null;
+        program?: string | null;
+        groupId?: number | null;
+        group?: string | null;
+        levelId?: number | null;
+        level?: string | null;
+        gradeId?: number | null;
+        grade?: string | null;
+        packageId?: number | null;
+        package?: string | null;
+        duration?: number | null;
+        price?: string | null;
+        createdBy?: string | null;
+        createdAt?: string | null;
     };
     recommendation?: {
         program?: string;
@@ -229,11 +292,12 @@ export type ResponseUserDetail = BaseResponseUserDetail & {
         level?: string;
         grade?: string;
     };
-    trial?: {
-        branch?: string;
-        studyGroup?: string;
-        schedule?: string;
-        isDone?: boolean;
+    trialClass?: {
+        id?: number | null;
+        studyGroupId?: number | null;
+        studyGroupName?: string | null;
+        schedule?: string | null;
+        isDone?: boolean | null;
     };
     selection?: {
         branch?: string;
@@ -243,9 +307,12 @@ export type ResponseUserDetail = BaseResponseUserDetail & {
         isSelfSchedule?: boolean;
     };
     activePeriod?: {
-        activeFrom?: string;
-        activeUntil?: string;
-        selectedPeriod?: 3 | 6 | 12;
+        id?: number | null;
+        activeFrom?: string | null;
+        activeUntil?: string | null;
+        selectedPeriod?: number | null;
+        createdBy?: string | null;
+        createdAt?: string | null;
     };
     studyGroup?: {
         teacher?: string;

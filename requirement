@@ -1,0 +1,88 @@
+Konteks:
+UP adalah tempat les bahasa inggris
+
+Tipe tipe user:
+Active Student: student yang saat ini sedang menikmati service dari UP
+Non User Student: user yang belum menikmati service dari UP
+Lapsed User Student: user yang pernah menikmati service UP
+
+Alur Non User Student:
+
+1. Tim marketing/admin akan fokus mencari user baru, dimana user baru akan datang ke tempat les (ditangani oleh admin), atau UP mengadakan event untuk mencari user baru dan user akan datang ke event tersebut (ditangani oleh tim marketing)
+
+2. Jika sudah ada user yang tertarik, maka tim admin/marketing harus mengisi google data tersebut di google spreadsheet untuk mendata user user tersebut sehingga bisa terdata dengan baik.
+
+3. Data data yang harus diisi adalah
+   Tanggal Masuk
+   Nama Calon Siswa
+   Kelas (Umum, 1-6 SD, 7-9 SMP, 10-12 SMA)
+   Nama Orang Tua
+   Kontak WA
+   Source Lead (Whatsapp, Event, Direct, Website (Baru))
+   Program Diminati (ada di constant/program.ts)
+   Tujuan Belajar
+   Catatan Kebutuhan
+   Funnel Stage
+   Lead Status
+   PIC Admin
+   UP CAFE (Ya/Tidak)
+   PIC Admin Final
+   Last Follow Up
+   Quotation Sent (Ya/Tidak)
+   Paket Ditawarkan
+   Durasi yang diinginkan
+   Harga yang ditawarkan
+   Sudah Trial Class/Tidak
+   Tanggal Trial
+   Tutor Trial
+   Sudah Placement Test/Tidak
+   Level Rekomendasi
+   Last Updates
+   Notes
+
+4. Data tersebut tidak perlu diisi langsung sekaligus, dimana PIC bisa mengisi secara bertahap sesuai dengan kondisi user
+
+5. Jika akhirnya user memutuskan untuk daftar, maka PIC akan mengubah dia menjadi ACTIVE STUDENT
+
+## KETENTUAN KETENTUAN
+
+1. Ketentuan Funnel Stage
+   Funnel Stage | Arti / Definisi | Ciri Utama | Status Lead | Aturan Penting | Tugas Admin
+   Asking | Calon siswa/orang tua baru pertama kali menghubungi UP | Chat Satu setelah itu hilang | Hot (H+0 s.d. H+7) → Cold (>7 hari) | Asking | Input data, follow up aktif 7 hari pertama
+   Qualification | Admin menggali kebutuhan & kecocokan program | Diskusi usia, tujuan, jadwal | Warm | Tanya harga ≠ Quotation | Edukasi program, arahkan ke trial
+   Trial Class | Calon siswa sudah mencoba belajar di UP | Ikut trial online/offline/cafe | Hot | Trial = Hot (tidak boleh turun) | Ambil feedback, koordinasi tutor
+   Placement Test (opsional) | Penentuan level akademik | Ada hasil level rekomendasi | Hot | Placement boleh dilewati | Input level & rekomendasi
+   Quotation | Penawaran resmi & final dari UP | Paket + harga + jadwal spesifik | Hot | Harga umum ≠ Quotation | Follow up closing dengan value
+   Registered | Calon siswa resmi jadi siswa UP | Sudah bayar & onboarding | Converted | Funnel selesai | Masuk master siswa, handover
+   Cancel / Lost | Calon siswa tidak melanjutkan | Drop di stage mana pun | Lost | Alasan cancel wajib diisi | Catat alasan & stage cancel
+
+2. Ketentuan PIC Funnel Stage
+   | Funnel Stage | PIC |
+   | --- | --- |
+   | Asking | Marketing |
+   | Qualification | Marketing |
+   | Trial Class | Admin |
+   | Placement Test (opsional) | Admin |
+   | Quotation | Admin |
+   | Registered | Admin |
+   | Cancel | Admin |
+
+| Kelas       | PIC Admin       |
+| ----------- | --------------- |
+| 1-6 SD      | Admin Baby Bear |
+| 7-9 SMP     | Admin Papa Bear |
+| 10 - 12 SMA | Admin Mama Bear |
+| Umum        | Admin Mama Bear |
+
+3. Contoh Case:
+   Anak kelas 1 SD
+
+A. Asking → Marketing
+B. Qualification → Marketing
+C. Sisanya → Admin Baby Bear
+
+Anak Kelas 9 SMP
+
+A. Asking → Marketing
+B. Qualification → Marketing
+C. Sisanya → Admin Papa Bear

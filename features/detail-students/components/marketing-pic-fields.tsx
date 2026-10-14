@@ -32,7 +32,7 @@ export const MarketingPicFields = ({
                                     <Select
                                         onValueChange={val => {
                                             field.onChange(val);
-                                            form.setValue('marketing.picPerson', '');
+                                            form.setValue('marketing.picStaff', '');
                                             form.setValue('marketing.adminPicId', undefined);
                                         }}
                                         value={field.value}
@@ -67,7 +67,7 @@ export const MarketingPicFields = ({
 
             <FormField
                 control={form.control}
-                name="marketing.picPerson"
+                name="marketing.picStaff"
                 render={({ field }) => (
                     <FormItem>
                         {isEditing ? (

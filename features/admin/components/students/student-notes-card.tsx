@@ -42,7 +42,7 @@ export default function StudentNotesCard({
         <>
             <Card className="overflow-hidden mb-6">
                 <div className="bg-secondary text-white p-4">
-                    <h2 className="text-lg font-semibold">Catatan Siswa</h2>
+                    <h2 className="text-lg font-semibold">Catatan</h2>
                 </div>
                 <div className="p-6">
                     <div className="grid items-start">
@@ -130,11 +130,7 @@ export default function StudentNotesCard({
                 <Dialog open={isAllNotesOpen} onOpenChange={setIsAllNotesOpen}>
                     <DialogContent className="max-w-2xl">
                         <DialogHeader>
-                            <DialogTitle>Semua Catatan Siswa</DialogTitle>
-                            <DialogDescription>
-                                Daftar seluruh catatan yang ada pada siswa ini, diurutkan dari yang
-                                terbaru
-                            </DialogDescription>
+                            <DialogTitle>Semua Catatan</DialogTitle>
                         </DialogHeader>
                         <div className="max-h-[60vh] overflow-y-auto space-y-4 pr-2">
                             {sortedNotes.map((note, idx) => (

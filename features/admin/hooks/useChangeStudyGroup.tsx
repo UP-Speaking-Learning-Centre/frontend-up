@@ -1,4 +1,5 @@
 import ENDPOINTS from '@/constants/endpoints';
+import { Schedule } from '@/types/study-group';
 import { MAX_STUDENT } from '@/constants/programs';
 import { ResponseUserDetail } from '@/features/auth/constants/interface';
 import { getNextSchedules } from '@/lib/trial-class';
@@ -70,7 +71,7 @@ const useChangeStudyGroup = (
     }, [studyGroupDetailBySelect, studyGroupAssigned]);
 
     const trialClassDates = getNextSchedules(
-        data?.trialClassAt ? data?.schedules : studyGroupDetailBySelect?.schedules || []
+        (data?.trialClassAt ? data?.schedules : studyGroupDetailBySelect?.schedules || []) as Schedule[]
     );
 
     return {

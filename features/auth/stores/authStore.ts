@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { PHONE } from '../constants/config';
 import { AuthStoreInterface, StepType } from '../constants/interface';
+import { Role } from '@/features/non-user/types';
 
 const useAuthStore = create<AuthStoreInterface>()((set, get) => ({
     timeLeft: 0,
@@ -17,8 +18,8 @@ const useAuthStore = create<AuthStoreInterface>()((set, get) => ({
     },
     otpForTesting: '',
     setOtpForTesting: (otpForTesting: string) => set({ otpForTesting }),
-    role: '',
-    setRole: (role: string) => set({ role }),
+    role: '' as Role | '',
+    setRole: (role: Role | '') => set({ role }),
     token: '',
     setToken: (token: string) => set({ token }),
 }));

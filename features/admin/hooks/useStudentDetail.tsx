@@ -64,13 +64,13 @@ const useStudentDetail = (forcedMockType?: 'active' | 'non_user' | 'lapsed') => 
         },
     });
     return {
-        data: {
+        data: data ? {
             ...data,
             marketing: {
-                ...data?.marketing,
-                lastUpdate: moment(data?.marketing?.lastUpdate).utcOffset(+7).toISOString(),
+                ...data.marketing,
+                lastUpdate: data.marketing?.lastUpdate ? moment(data.marketing.lastUpdate).utcOffset(+7).toISOString() : undefined,
             },
-        },
+        } as ResponseUserDetail : undefined,
         locationId,
         isLoading,
         isLoadingStudyGroupDetail,

@@ -10,6 +10,16 @@ import { Button } from '@/components/ui/button';
 import Overlay from '@/components/layout/overlay';
 import moment from 'moment';
 
+interface StudentEditConfirmationDialogProps {
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
+    oldData: Record<string, unknown> | null;
+    newData: Record<string, unknown> | null;
+    onConfirm: () => void;
+    onCancel: () => void;
+    isLoading: boolean;
+}
+
 export function StudentEditConfirmationDialog({
     isOpen,
     setIsOpen,
@@ -18,15 +28,16 @@ export function StudentEditConfirmationDialog({
     onConfirm,
     onCancel,
     isLoading,
-}: any) {
+}: StudentEditConfirmationDialogProps) {
     if (!oldData || !newData) return null;
 
-    const flattenObj = (obj: any, prefix = ''): Record<string, any> => {
-        return Object.keys(obj || {}).reduce((acc: any, k: string) => {
+    const flattenObj = (obj: Record<string, unknown>, prefix = ''): Record<string, unknown> => {
+        return Object.keys(obj || {}).reduce((acc: Record<string, unknown>, k: string) => {
             const pre = prefix.length ? prefix + '.' : '';
-            if (typeof obj[k] === 'object' && obj[k] !== null && !Array.isArray(obj[k]))
-                Object.assign(acc, flattenObj(obj[k], pre + k));
-            else acc[pre + k] = obj[k];
+            const value = obj[k];
+            if (typeof value === 'object' && value !== null && !Array.isArray(value))
+                Object.assign(acc, flattenObj(value as Record<string, unknown>, pre + k));
+            else acc[pre + k] = value;
             return acc;
         }, {});
     };
@@ -37,13 +48,16 @@ export function StudentEditConfirmationDialog({
     // Get keys that changed
     const keys = Object.keys(flatNew).filter(key => flatOld[key] !== flatNew[key]);
 
-    const isDateString = (val: any) => typeof val === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(val);
-    const formatValue = (val: any) => {
-        if (!val) return '-';
+    const isDateString = (val: unknown) => typeof val === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(val);
+    const formatValue = (val: unknown) => {
+        if (val === null || val === undefined || val === '') return '-';
+        if (typeof val === 'boolean') return val ? 'Ya' : 'Tidak';
         if (isDateString(val)) {
-            const parsed = val.endsWith('Z') || val.includes('+') ? moment(val) : moment.utc(val);
+            const strVal = val as string;
+            const parsed = strVal.endsWith('Z') || strVal.includes('+') ? moment(strVal) : moment.utc(strVal);
             return parsed.format('DD MMM YYYY, HH:mm');
         }
+        if (Array.isArray(val)) return val.join(', ');
         return String(val);
     };
 
