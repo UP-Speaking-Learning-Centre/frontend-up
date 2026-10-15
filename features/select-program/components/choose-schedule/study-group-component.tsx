@@ -44,17 +44,21 @@ const StudyGroupComponent = ({
         <div className="mx-auto w-full lg:w-10/12" id={CHOOSE_STUDY_GROUP}>
             <p className="text-center text-[#020817] font-medium">Pilih Kelompok Belajar</p>
             <div className="flex flex-wrap flex-col md:flex-row items-center justify-center gap-2 mt-4">
-                {availableStudyGroup.map(studyGroup => {
-                    const isActive = studyGroupId === studyGroup.studyGroupId && !isUseSelfSchedule;
+                {availableStudyGroup.map((studyGroup: any) => {
+                    const currentId = studyGroup.studyGroupId ?? studyGroup.id;
+                    const isActive = studyGroupId === currentId && !isUseSelfSchedule;
+                    const groupName = studyGroup.studyGroupName ?? studyGroup.name;
+                    const teacherName = studyGroup.teacherTeamMemberName ?? studyGroup.teacherName;
+                    const teacherPhoto = studyGroup.teacherTeamMemberPhoto ?? '';
 
                     return (
                         <div
-                            key={studyGroup.studyGroupId}
+                            key={currentId}
                             onClick={() =>
                                 handleNextStepAction({
                                     stepId: CHOOSE_SELF_SCHEDULE_STEP,
                                     formValue: {
-                                        studyGroupId: studyGroup.studyGroupId,
+                                        studyGroupId: currentId,
                                         studyGroupDetail: studyGroup,
                                         isUseSelfSchedule: false,
                                     },
@@ -72,8 +76,8 @@ const StudyGroupComponent = ({
                             <div className="flex gap-4 items-start">
                                 <div className="border-2 border-primary rounded-md overflow-hidden w-16 h-16 shrink-0 bg-neutral-50">
                                     <ImageWithFallback
-                                        src={studyGroup.teacherTeamMemberPhoto || ''}
-                                        alt={studyGroup.teacherTeamMemberName}
+                                        src={teacherPhoto}
+                                        alt={teacherName || 'Guru'}
                                         width={60}
                                         height={60}
                                     />
@@ -84,13 +88,13 @@ const StudyGroupComponent = ({
                                         <div>
                                             <p className="text-white text-xs">Nama Kelompok:</p>
                                             <p className="text-white text-lg font-medium">
-                                                {studyGroup.studyGroupName}
+                                                {groupName}
                                             </p>
                                         </div>
                                         <div>
                                             <p className="text-white text-xs">Nama Guru:</p>
                                             <p className="text-white text-lg font-medium">
-                                                {studyGroup.teacherTeamMemberName}
+                                                {teacherName}
                                             </p>
                                         </div>
                                     </div>

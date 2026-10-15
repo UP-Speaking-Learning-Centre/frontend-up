@@ -128,7 +128,7 @@ const StudyGroupSelection = () => {
             );
         }
 
-        if (!availableStudyGroup) {
+        if (!availableStudyGroup?.length) {
             return (
                 <div className="mx-auto max-w-4xl flex flex-col items-center justify-center gap-2">
                     <p className="text-center text-[#020817] text-lg font-medium">

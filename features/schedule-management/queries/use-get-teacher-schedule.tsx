@@ -15,7 +15,11 @@ const fetchTeacherSchedule = async (locationId: number): Promise<TeacherSchedule
         ENDPOINTS.fetchTeacherSchedule.expand({ locationId })
     );
 
-    return Array.isArray(response.data) ? response.data : response.data?.data || [];
+    const list = Array.isArray(response.data) ? response.data : response.data?.data || [];
+    if (!list || list.length === 0 || !list[0]?.teacherMemberName) {
+        return scheduleData as unknown as TeacherScheduleResponse;
+    }
+    return list;
 };
 
 export const useGetTeacherScheduleQuery = (

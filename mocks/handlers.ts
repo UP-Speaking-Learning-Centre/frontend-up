@@ -33,6 +33,7 @@ export function setupMockAdapter(api: AxiosInstance) {
             code: 200,
             data: {
                 accessToken: 'mock-access-token-' + Date.now(),
+                role: 'admin',
                 user: { id: 1, name: 'Admin UP', role: 'admin', email: 'admin@upspeaking.com' },
             },
             message: 'Login success',

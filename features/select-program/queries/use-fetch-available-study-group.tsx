@@ -32,8 +32,57 @@ const fetchAvailableStudyGroupQuery = async ({
         })
     );
 
-    // return dummy;
-    return Array.isArray(res.data) ? res.data : res.data?.data || [];
+    const rawData = Array.isArray(res.data) ? res.data : res.data?.data || [];
+    return rawData.map((item: any): StudyGroup => {
+        return {
+            studyGroupId: item.studyGroupId ?? item.id,
+            studyGroupName: item.studyGroupName ?? item.name,
+            teacherTeamMemberId: item.teacherTeamMemberId,
+            teacherTeamMemberName: item.teacherTeamMemberName ?? item.teacherName,
+            teacherTeamMemberPhoto: item.teacherTeamMemberPhoto ?? null,
+            teacherAlias: item.teacherAlias ?? '',
+            locationId: item.locationId,
+            locationName: item.locationName ?? '',
+            programId: item.programId,
+            groupId: item.groupId,
+            levelId: item.levelId,
+            gradeId: item.gradeId,
+            schedule1: item.schedule1 ?? {
+                id: item.schedule1Id ?? item.id,
+                scheduleId: item.schedule1Id ?? item.id,
+                dayOfWeek: item.schedule1DayOfWeek ?? item.dayOfWeek,
+                startTime: item.schedule1StartTime ?? item.startTime,
+                endTime: item.schedule1EndTime ?? item.endTime,
+                durationMinutes: item.schedule1DurationMinutes ?? item.durationMinutes ?? 90,
+                location: item.locationName ?? '',
+                locationId: item.locationId,
+                teacherMemberName: item.teacherName ?? item.teacherTeamMemberName ?? '',
+                teacherAlias: item.teacherAlias ?? '',
+                isPriority: item.isPriority ?? false,
+                program: '',
+                group: '',
+                level: '',
+                grade: '',
+            },
+            schedule2: item.schedule2 ?? (item.schedule2DayOfWeek ? {
+                id: item.schedule2Id ?? item.id,
+                scheduleId: item.schedule2Id ?? item.id,
+                dayOfWeek: item.schedule2DayOfWeek,
+                startTime: item.schedule2StartTime ?? item.startTime,
+                endTime: item.schedule2EndTime ?? item.endTime,
+                durationMinutes: item.schedule2DurationMinutes ?? item.durationMinutes ?? 90,
+                location: item.locationName ?? '',
+                locationId: item.locationId,
+                teacherMemberName: item.teacherName ?? item.teacherTeamMemberName ?? '',
+                teacherAlias: item.teacherAlias ?? '',
+                isPriority: item.isPriority ?? false,
+                program: '',
+                group: '',
+                level: '',
+                grade: '',
+            } : null as any),
+        };
+    });
 };
 
 const useFetchAvailableStudyGroupQuery = () => {

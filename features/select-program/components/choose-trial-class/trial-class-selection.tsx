@@ -31,7 +31,9 @@ const TrialClassSelection = () => {
     const trialClassDates = getNextSchedules(
         formValue.isUseSelfSchedule ? selfSchedules : schedules
     );
-    const displayedDates = seeAllSchedule ? trialClassDates : [trialClassDates[0]];
+    const displayedDates = seeAllSchedule
+        ? trialClassDates
+        : trialClassDates.slice(0, 1);
 
     const handleSelectDate = (date: string) => {
         handleNextStepAction({
@@ -41,6 +43,7 @@ const TrialClassSelection = () => {
     };
 
     const renderScheduleCard = (date: TrialClassSchedule) => {
+        if (!date?.actualDate) return null;
         return (
             <div
                 key={date.actualDate}
@@ -66,9 +69,13 @@ const TrialClassSelection = () => {
             </p>
 
             <div className="mt-4 gap-4 space-y-2 w-fit mx-auto">
-                {displayedDates.map(renderScheduleCard)}
+                {displayedDates.length > 0 ? (
+                    displayedDates.map(renderScheduleCard)
+                ) : (
+                    <p className="text-neutral-500 italic py-4">Belum ada jadwal kelas yang tersedia.</p>
+                )}
 
-                {!seeAllSchedule && (
+                {!seeAllSchedule && trialClassDates.length > 1 && (
                     <p
                         className="text-primary cursor-pointer p-2 border-b border-b-primary"
                         onClick={() => setSeeAllSchedule(true)}

@@ -130,7 +130,7 @@ const Sidebar = () => {
                 return item;
             });
         } else {
-            menuItems = sidebarItemsUser;
+            menuItems = sidebarItemsAdmin;
         }
 
         setSidebarMenu(menuItems);

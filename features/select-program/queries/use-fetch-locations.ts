@@ -6,7 +6,12 @@ import useProgramSelectionStore from '../stores/program-selection-store';
 
 const fetchLocations = async (): Promise<LocationType[]> => {
     const res = await api.get<any>(ENDPOINTS.fetchLocations);
-    return Array.isArray(res.data) ? res.data : res.data?.data || [];
+    const list = Array.isArray(res.data) ? res.data : res.data?.data || [];
+    return list.map((item: any) => ({
+        ...item,
+        locationId: item.locationId ?? item.id,
+        locationName: item.locationName ?? item.name ?? '',
+    }));
 };
 
 const useFetchLocationsQuery = (): UseQueryResult<LocationType[], Error> => {

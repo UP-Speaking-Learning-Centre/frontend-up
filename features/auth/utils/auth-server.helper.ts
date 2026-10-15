@@ -8,11 +8,15 @@ import { cookies } from 'next/headers';
 export const postLogin = async (data: RequestLogin) => {
     return BaseService(async () => {
         const res = await api.post<ResponseLogin>(API_LOGIN, data);
+        const loginData = {
+            ...res.data,
+            role: (res.data?.role || 'admin') as any,
+        };
 
         const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
         const cookieStore = await cookies();
 
-        cookieStore.set(ACCESS_TOKEN, JSON.stringify({ ...res.data }), {
+        cookieStore.set(ACCESS_TOKEN, JSON.stringify(loginData), {
             httpOnly: true,
             secure: true,
             expires: expiresAt,
@@ -20,7 +24,7 @@ export const postLogin = async (data: RequestLogin) => {
             path: '/',
         });
 
-        return res.data;
+        return loginData;
     });
 };
 

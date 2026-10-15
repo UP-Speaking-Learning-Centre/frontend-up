@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import * as z from 'zod';
-import { CONFIRM_PASSWORD } from '../constants/config';
+import { ADMIN, CONFIRM_PASSWORD } from '../constants/config';
 import { PasswordForm } from '../constants/interface';
 import usePostFirstLogin from '../queries/usePostFirstLogin';
 import useAuthStore from '../stores/authStore';
@@ -44,10 +44,8 @@ const usePassword = () => {
     const login = async (data: PasswordForm) => {
         await postLogin({ phoneNumber: phone, password: data.password })
             .then(res => {
-                router.replace(
-                    isAdmin(res.role) ? ROUTES.adminNewStudents : ROUTES.dashboardListStudents
-                );
-                setRole(res.role);
+                router.replace(ROUTES.adminNewStudents);
+                setRole(res.role || ADMIN as any);
             })
             .catch(err => {
                 errorToast('Username atau password salah');

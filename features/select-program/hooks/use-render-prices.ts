@@ -7,13 +7,15 @@ const useRenderPrices = () => {
     const formValue = useProgramSelectionStore(s => s.formValue);
 
     const programPrice = useMemo(() => {
-        if (!!formValue.programPrices.length && !!formValue.packageId) {
+        if (!!formValue?.programPrices?.length && !!formValue?.packageId) {
             const prices = formValue.programPrices
-                .filter(price => price.package.id === formValue.packageId)
+                .filter(price => Number(price?.package?.id) === Number(formValue.packageId))
                 .map(price => {
+                    const parsedTimeframe =
+                        parseInt(String(price.timeframe || '').split('_')[0], 10) || 1;
                     return {
                         price: price.amount,
-                        timeframe: Number(price.timeframe.charAt(0)),
+                        timeframe: parsedTimeframe,
                     };
                 });
             const sortedPrices = prices.sort((a, b) => a.timeframe - b.timeframe);
@@ -29,7 +31,7 @@ const useRenderPrices = () => {
 
             return pricesAfterPromo;
         }
-    }, [formValue.programPrices, formValue.packageId]);
+    }, [formValue?.programPrices, formValue?.packageId]);
 
     const sortedPrice = useMemo(
         () => programPrice?.map(p => p.price / p.timeframe).sort((a, b) => a - b),

@@ -1,6 +1,6 @@
 import React from 'react';
 import useProgramSelectionStore from '../../stores/program-selection-store';
-import { Book, BookOpen, Calendar, Package, User } from 'lucide-react';
+import { BookOpen, Calendar, Clock, MapPin, Sparkles, User } from 'lucide-react';
 import { renderDayToIndonesian } from '@/lib/moment';
 import moment from 'moment';
 import { Schedule } from '@/types/study-group';
@@ -14,126 +14,166 @@ const SummaryItem = () => {
               Boolean
           ) as Schedule[]);
 
+    const formatScheduleTime = (schedule: any) => {
+        if (formValue.isUseSelfSchedule) {
+            const start = schedule.startTime || '';
+            const end = moment(start, 'HH:mm').isValid()
+                ? moment(start, 'HH:mm').add(90, 'minutes').format('HH:mm')
+                : '-';
+            return `${start} - ${end}`;
+        }
+
+        const start = moment(schedule.startTime, 'HH:mm:ss').isValid()
+            ? moment(schedule.startTime, 'HH:mm:ss').format('HH:mm')
+            : schedule.startTime;
+        const end =
+            schedule.endTime && moment(schedule.endTime, 'HH:mm:ss').isValid()
+                ? moment(schedule.endTime, 'HH:mm:ss').format('HH:mm')
+                : moment(schedule.startTime, 'HH:mm:ss').isValid()
+                  ? moment(schedule.startTime, 'HH:mm:ss')
+                        .add(schedule.durationMinutes || 90, 'minutes')
+                        .format('HH:mm')
+                  : '-';
+
+        return `${start} - ${end}`;
+    };
+
     return (
-        <div className="mx-auto max-w-5xl mt-6">
-            <div className="grid grid-cols-12  gap-6 w-full">
-                <div className="col-span-12 md:col-span-5 rounded-lg h-full border-2 bg-white border-[#E2E8F0] flex items-center p-6 gap-4">
-                    <div className="bg-[#DCFCE7] size-10 rounded-lg flex shrink-0 items-center justify-center">
-                        <BookOpen className="text-[#16A34A] size-6" />
-                    </div>
-                    <div>
-                        <p className="text-[#4B5563] text-sm">Program (Group)</p>
-                        <p className="font-semibold text-[#111827] text-lg">
-                            {formValue.programName} ({formValue.groupName})
-                        </p>
-                    </div>
-                </div>
-                <div className="col-span-12 md:col-span-3 h-full rounded-lg border-2 bg-white border-[#E2E8F0] flex items-center p-6 gap-4">
-                    <div className="bg-[#F3E8FF] size-10 rounded-lg flex shrink-0 items-center justify-center">
-                        <Calendar className="text-[#9333EA] size-6" />
-                    </div>
-                    <div>
-                        <p className="text-[#4B5563] text-sm">Level</p>
-                        <p className="font-semibold text-[#111827] text-lg">
-                            {formValue.levelName}
-                        </p>
-                    </div>
-                </div>
-                <div className="col-span-12 md:col-span-4 h-full rounded-lg border-2 bg-white border-[#E2E8F0] flex items-center p-6 gap-4">
-                    <div className="bg-[#EFF6FF] size-10 rounded-lg flex shrink-0 items-center justify-center">
-                        <Package className="text-[#2563EB] size-6" />
-                    </div>
-                    <div>
-                        <p className="text-[#4B5563] text-sm">Paket</p>
-                        <p className="font-semibold text-[#111827] text-lg">
-                            {formValue.packageName}
-                        </p>
-                    </div>
-                </div>
-            </div>
+        <div className="mx-auto max-w-3xl mt-6 px-4">
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                {/* Header overview banner */}
+                <div className="bg-slate-900 text-white p-6 sm:p-7 relative overflow-hidden">
+                    <div className="absolute -right-6 -bottom-6 w-32 h-32 rounded-full bg-primary/10 blur-2xl pointer-events-none" />
 
-            <div className="grid grid-cols-12 max-w-2xl mx-auto space-y-6 mt-6 w-full">
-                <div className="col-span-12 w-full rounded-lg border-2 bg-white border-[#E2E8F0] flex flex-col items-start  mx-auto">
-                    <div className="py-4 px-6 border-b w-full border-[#E2E8F0] gap-3">
-                        <div className="gap-2 mx-auto flex max-md:flex-col justify-between md:items-center w-full">
-                            <div className="flex items-center gap-2">
-                                <Calendar className="text-primary size-6" />
-                                <p className="font-semibold text-[#111827] text-lg">Jadwal Kelas</p>
-                            </div>
-                            <div className="text-[#4B5563] text-lg">
-                                Cabang:{' '}
-                                <span className="font-semibold text-[#111827]">
-                                    {formValue.locationName}
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-primary text-white tracking-wide uppercase">
+                            <Sparkles className="size-3" />
+                            {formValue.packageName || 'Paket Pilihan'}
+                        </span>
+                        {formValue.locationName && (
+                            <span className="inline-flex items-center gap-1.5 text-xs text-slate-300 font-medium">
+                                <MapPin className="size-3.5 text-primary" />
+                                Cabang {formValue.locationName}
+                            </span>
+                        )}
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                        {formValue.programName || '-'}
+                    </h3>
+                    <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-300">
+                        {formValue.groupName && (
+                            <span className="flex items-center gap-1.5">
+                                <span className="text-slate-400">Grup:</span>
+                                <strong className="text-white font-medium">
+                                    {formValue.groupName}
+                                </strong>
+                            </span>
+                        )}
+                        {formValue.levelName && (
+                            <>
+                                <span className="text-slate-500">•</span>
+                                <span className="flex items-center gap-1.5">
+                                    <span className="text-slate-400">Level:</span>
+                                    <strong className="text-white font-medium">
+                                        {formValue.levelName}
+                                    </strong>
                                 </span>
+                            </>
+                        )}
+                    </div>
+                </div>
+
+                <div className="p-6 sm:p-8 space-y-6">
+                    {/* Trial Class Notice / Highlight */}
+                    {formValue.trialClassAt && (
+                        <div className="rounded-xl border border-amber-200/80 bg-amber-50/60 p-4 sm:p-5 flex items-start sm:items-center justify-between gap-4 flex-col sm:flex-row">
+                            <div className="flex items-center gap-3">
+                                <div>
+                                    <p className="text-xs font-medium uppercase tracking-wider text-amber-800/80">
+                                        Jadwal Free Trial Class
+                                    </p>
+                                    <p className="text-base sm:text-lg font-bold text-slate-900 capitalize">
+                                        {moment(formValue.trialClassAt).format('dddd, D MMMM YYYY')}
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-amber-200 text-amber-900 font-semibold text-sm shadow-2xs">
+                                <Clock className="size-4 text-amber-600" />
+                                {moment(formValue.trialClassAt).format('HH:mm')} WIB
                             </div>
                         </div>
-                    </div>
-                    <div className="w-full p-6">
-                        <div className="w-full">
-                            <p className="text-[#4B5563] text-sm">Jadwal Trial Class</p>
-                            <p className="font-semibold text-[#111827] text-lg">
-                                {moment(formValue.trialClassAt).format('dddd, D MMMM, HH:mm')}
-                            </p>
-                        </div>
+                    )}
 
-                        <p className="mt-6 text-[#4B5563] text-sm">
-                            Jadwal Kelas Mingguan{'  '}
+                    {/* Weekly Schedules */}
+                    <div>
+                        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                            <div>
+                                <h4 className="text-base font-semibold text-slate-900">
+                                    Jadwal Kelas Mingguan
+                                </h4>
+                                <p className="text-xs text-slate-500 mt-0.5">
+                                    {formValue.isUseSelfSchedule
+                                        ? 'Jadwal kustom pilihan Anda sendiri'
+                                        : 'Sesuai dengan kelompok belajar yang dipilih'}
+                                </p>
+                            </div>
                             {formValue.isUseSelfSchedule && (
-                                <span className="text-primary font-medium ">
-                                    (Jadwal Pilihan Sendiri)
+                                <span className="text-xs font-medium text-primary bg-primary/10 px-2.5 py-1 rounded-md">
+                                    Custom Schedule
                                 </span>
                             )}
-                        </p>
-                        <div className=" grid grid-cols-1 mt-2 md:grid-cols-2 gap-6 w-full">
-                            {schedules.map((schedule, index) => (
-                                <div className="col-span-1" key={index}>
-                                    <p className="font-semibold text-[#111827]">
-                                        Jadwal {index + 1}
-                                    </p>
-                                    <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-4">
-                                        <Calendar className="text-primary size-4" />
-                                        <p className="text-sm">Hari</p>
-                                        <p className="grow text-right font-semibold">
-                                            {formValue.isUseSelfSchedule
-                                                ? schedule.dayOfWeek
-                                                : renderDayToIndonesian(schedule.dayOfWeek)}
-                                        </p>
-                                    </div>
-                                    <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-2">
-                                        <Calendar className="text-primary size-4" />
-                                        <p className="text-sm">Jam</p>
-                                        <p className="grow text-right font-semibold">
-                                            {formValue.isUseSelfSchedule ? (
-                                                <>
-                                                    {schedule.startTime} -{' '}
-                                                    {moment(schedule.startTime, 'HH:mm')
-                                                        .add(90, 'minutes')
-                                                        .format('HH:mm')}
-                                                </>
-                                            ) : (
-                                                <>
-                                                    {moment(schedule.startTime, 'HH:mm:ss').format(
-                                                        'HH:mm'
-                                                    )}{' '}
-                                                    -{' '}
-                                                    {moment(schedule.startTime, 'HH:mm:ss').format(
-                                                        'HH:mm'
-                                                    )}
-                                                </>
-                                            )}
-                                        </p>
-                                    </div>
-                                    {!formValue.isUseSelfSchedule && (
-                                        <div className="rounded-lg bg-[#F9FAFB] p-3 gap-4 flex items-center justify-between mt-2">
-                                            <User className="text-primary size-4" />
-                                            <p className="text-sm">Mentor</p>
-                                            <p className="grow text-right font-semibold">
-                                                {formValue.studyGroupDetail?.teacherTeamMemberName}
-                                            </p>
+                        </div>
+
+                        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                            {schedules.map((schedule: any, index: number) => {
+                                const dayText = formValue.isUseSelfSchedule
+                                    ? schedule.dayOfWeek
+                                    : renderDayToIndonesian(schedule.dayOfWeek);
+
+                                return (
+                                    <div
+                                        key={index}
+                                        className="relative p-4 rounded-xl border border-slate-200/90 bg-slate-50/50 hover:bg-slate-50 transition-colors"
+                                    >
+                                        <div className="flex items-center justify-between mb-3">
+                                            <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                                                Pertemuan {index + 1}
+                                            </span>
+                                            <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-800 bg-white px-2.5 py-1 rounded-md border border-slate-200 shadow-2xs">
+                                                <Calendar className="size-3 text-primary" />
+                                                {dayText}
+                                            </span>
                                         </div>
-                                    )}
-                                </div>
-                            ))}
+
+                                        <div className="space-y-1.5 pt-1">
+                                            <div className="flex items-center gap-2 text-slate-700">
+                                                <Clock className="size-4 text-slate-400 shrink-0" />
+                                                <span className="text-sm font-semibold text-slate-900">
+                                                    {formatScheduleTime(schedule)}
+                                                </span>
+                                            </div>
+
+                                            {!formValue.isUseSelfSchedule &&
+                                                formValue.studyGroupDetail
+                                                    ?.teacherTeamMemberName && (
+                                                    <div className="flex items-center gap-2 text-slate-600 text-xs pt-1">
+                                                        <User className="size-4 text-slate-400 shrink-0" />
+                                                        <span>
+                                                            Mentor:{' '}
+                                                            <strong className="text-slate-800 font-medium">
+                                                                {
+                                                                    formValue.studyGroupDetail
+                                                                        .teacherTeamMemberName
+                                                                }
+                                                            </strong>
+                                                        </span>
+                                                    </div>
+                                                )}
+                                        </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                 </div>

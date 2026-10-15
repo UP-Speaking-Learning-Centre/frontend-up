@@ -131,7 +131,7 @@ const StudyGroupDetail = ({
                         <p className="text-xs text-[#9CA3AF]">Teacher</p>
                         <Skeleton className="w-20 h-4" loading={isLoading}>
                             <p className="text-base text-[#020817]">
-                                {selectedStudyGroup?.schedules[0].teacherMemberName}
+                                {selectedStudyGroup?.schedules?.[0]?.teacherMemberName || '-'}
                             </p>
                         </Skeleton>
                     </div>
@@ -139,7 +139,7 @@ const StudyGroupDetail = ({
                         <p className="text-xs text-[#9CA3AF]">Package</p>
                         <Skeleton className="w-20 h-4" loading={isLoading}>
                             <p className="text-base text-[#020817]">
-                                {selectedStudyGroup?.package.name}
+                                {selectedStudyGroup?.package?.name || '-'}
                             </p>
                         </Skeleton>
                     </div>
@@ -196,7 +196,7 @@ const StudyGroupDetail = ({
                 </div>
                 <div className="bg-secondary rounded-md p-3">
                     <div className="rounded-md h-full flex flex-col justify-between bg-white p-2 space-y-3">
-                        {selectedStudyGroup?.schedules.map((item, index) => {
+                        {selectedStudyGroup?.schedules?.map((item, index) => {
                             return (
                                 <div className="flex flex-col" key={index}>
                                     <p className="text-base font-semibold">Jadwal {index + 1}</p>
