@@ -6,8 +6,8 @@ import useProgramSelectionStore from '../stores/program-selection-store';
 import { useNewStudyGroupStore } from '@/features/schedule-management/stores/new-study-group-store';
 
 const fetchLevels = async (programId: string, groupId: string): Promise<LevelType[]> => {
-    const res = await api.get<LevelType[]>(ENDPOINTS.fetchLevels.expand({ programId, groupId }));
-    return res.data;
+    const res = await api.get<any>(ENDPOINTS.fetchLevels.expand({ programId, groupId }));
+    return Array.isArray(res.data) ? res.data : res.data?.data || [];
 };
 
 const useFetchLevelsQuery = (fromStudyGroup = false): UseQueryResult<LevelType[]> => {

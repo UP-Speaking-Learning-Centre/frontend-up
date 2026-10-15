@@ -8,6 +8,12 @@ const api = axios.create({
     },
 });
 
+// Setup mock adapter if NEXT_PUBLIC_USE_MOCK is true
+if (process.env.NEXT_PUBLIC_USE_MOCK === 'true') {
+    const { initMocks } = require('@/mocks');
+    initMocks(api);
+}
+
 export const BaseService = async <T>(service: () => Promise<T>) => {
     try {
         return await service();

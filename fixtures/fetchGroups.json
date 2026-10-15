@@ -1,0 +1,63 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": [
+    {
+      "name": "Grammar Program",
+      "materi": "Topik-topik aktual dan meaningful untuk diskusi dan presentasi\nLatihan berpikir kritis, berpendapat, dan menyampaikan ide dalam bahasa Inggris\nTeknik speaking untuk academic presentation, pitch, dan debat\nLatihan grammar in use, bukan sekadar menghafal rumus\nMenulis teks formal (email, artikel singkat, opini)",
+      "capaian": "Siswa dapat berpendapat dengan percaya diri dan logis dalam forum formal dan nonformal\nMampu menyusun dan menyampaikan presentasi akademik atau debat dalam bahasa Inggris\nTerbiasa menggunakan grammar secara alami dalam speaking dan writing\nSiap menghadapi situasi nyata seperti interview beasiswa, kuliah luar negeri, atau pitching ide\nMampu menjadi bintang di kelas dengan keahlian speaking yang keren dan powerful",
+      "id": 5,
+      "program_id": 2,
+      "image_url": null
+    },
+    {
+      "name": "Kindergarten",
+      "materi": "Mengenalkan bahasa Inggris lewat aktivitas seru seperti games, lagu, dan roleplay\nMengembangkan 4 skills (Listening, Reading, Speaking, Writing) secara bertahap\nLatihan simple conversation yang dekat dengan dunia anak\nMendorong keberanian untuk berbicara sejak dini\nMenanamkan pola pikir kritis lewat pertanyaan ringan dan cerita sederhana",
+      "capaian": "Anak mulai berani ngomong bahasa Inggris, walau dengan kalimat sederhana\nMampu menggunakan kosakata yang dipelajari dalam konteks sehari-hari\nMulai bisa mengenal struktur kalimat sederhana dalam bentuk lisan dan tulisan\nMeningkatkan rasa percaya diri dan menjadikan belajar bahasa Inggris sesuatu yang menyenangkan\nSiap melakukan show and tell atau storytelling dengan ekspresi yang natural",
+      "id": 1,
+      "program_id": 1,
+      "image_url": null
+    },
+    {
+      "name": "Elementary School",
+      "materi": "Mengenalkan bahasa Inggris lewat aktivitas seru seperti games, lagu, dan roleplay\nMengembangkan 4 skills (Listening, Reading, Speaking, Writing) secara bertahap\nLatihan simple conversation yang dekat dengan dunia anak\nMendorong keberanian untuk berbicara sejak dini\nMenanamkan pola pikir kritis lewat pertanyaan ringan dan cerita sederhana",
+      "capaian": "Anak mulai berani ngomong bahasa Inggris, walau dengan kalimat sederhana\nMampu menggunakan kosakata yang dipelajari dalam konteks sehari-hari\nMulai bisa mengenal struktur kalimat sederhana dalam bentuk lisan dan tulisan\nMeningkatkan rasa percaya diri dan menjadikan belajar bahasa Inggris sesuatu yang menyenangkan\nSiap melakukan show and tell atau storytelling dengan ekspresi yang natural",
+      "id": 2,
+      "program_id": 1,
+      "image_url": null
+    },
+    {
+      "name": "Junior High School",
+      "materi": "Latihan percakapan sehari-hari dengan berbagai situasi yang dekat dengan dunia remaja\nMenggabungkan diskusi ringan, roleplay, dan mini presentation\nBelajar struktur kalimat lebih kompleks dan ekspresi umum dalam speaking\nMenumbuhkan kebiasaan belajar mandiri dan critical thinking sederhana\nMenulis dan memahami teks pendek, email, dan chat formal/informal",
+      "capaian": "Siswa menjadi lebih percaya diri berbicara dalam berbagai situasi\nMampu menyampaikan pendapat dengan logis dan runtut\nBisa berinteraksi dalam diskusi ringan dan interview dengan ekspresi yang sesuai\nMampu memahami struktur grammar yang umum dan menggunakannya dalam percakapan\nSiap membuat video vlog atau interview dalam bahasa Inggris",
+      "id": 3,
+      "program_id": 1,
+      "image_url": null
+    },
+    {
+      "name": "Senior High School",
+      "materi": "Topik-topik aktual dan meaningful untuk diskusi dan presentasi\nLatihan berpikir kritis, berpendapat, dan menyampaikan ide dalam bahasa Inggris\nTeknik speaking untuk academic presentation, pitch, dan debat\nLatihan grammar in use, bukan sekadar menghafal rumus\nMenulis teks formal (email, artikel singkat, opini)",
+      "capaian": "Siswa dapat berpendapat dengan percaya diri dan logis dalam forum formal dan nonformal\nMampu menyusun dan menyampaikan presentasi akademik atau debat dalam bahasa Inggris\nTerbiasa menggunakan grammar secara alami dalam speaking dan writing\nSiap menghadapi situasi nyata seperti interview beasiswa, kuliah luar negeri, atau pitching ide\nMampu menjadi bintang di kelas dengan keahlian speaking yang keren dan powerful",
+      "id": 4,
+      "program_id": 1,
+      "image_url": null
+    },
+    {
+      "name": "Speaking Program",
+      "materi": "Topik-topik aktual dan meaningful untuk diskusi dan presentasi\nLatihan berpikir kritis, berpendapat, dan menyampaikan ide dalam bahasa Inggris\nTeknik speaking untuk academic presentation, pitch, dan debat\nLatihan grammar in use, bukan sekadar menghafal rumus\nMenulis teks formal (email, artikel singkat, opini)",
+      "capaian": "Siswa dapat berpendapat dengan percaya diri dan logis dalam forum formal dan nonformal\nMampu menyusun dan menyampaikan presentasi akademik atau debat dalam bahasa Inggris\nTerbiasa menggunakan grammar secara alami dalam speaking dan writing\nSiap menghadapi situasi nyata seperti interview beasiswa, kuliah luar negeri, atau pitching ide\nMampu menjadi bintang di kelas dengan keahlian speaking yang keren dan powerful",
+      "id": 6,
+      "program_id": 2,
+      "image_url": null
+    },
+    {
+      "name": "TOEFL Preparation",
+      "materi": "Topik-topik aktual dan meaningful untuk diskusi dan presentasi\nLatihan berpikir kritis, berpendapat, dan menyampaikan ide dalam bahasa Inggris\nTeknik speaking untuk academic presentation, pitch, dan debat\nLatihan grammar in use, bukan sekadar menghafal rumus\nMenulis teks formal (email, artikel singkat, opini)",
+      "capaian": "Siswa dapat berpendapat dengan percaya diri dan logis dalam forum formal dan nonformal\nMampu menyusun dan menyampaikan presentasi akademik atau debat dalam bahasa Inggris\nTerbiasa menggunakan grammar secara alami dalam speaking dan writing\nSiap menghadapi situasi nyata seperti interview beasiswa, kuliah luar negeri, atau pitching ide\nMampu menjadi bintang di kelas dengan keahlian speaking yang keren dan powerful",
+      "id": 7,
+      "program_id": 2,
+      "image_url": null
+    }
+  ],
+  "message": "Success"
+}

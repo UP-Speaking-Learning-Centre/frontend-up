@@ -1,0 +1,10 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "studyGroupId": 1,
+    "isPriority": true,
+    "message": "Priority status updated"
+  },
+  "message": "Success"
+}

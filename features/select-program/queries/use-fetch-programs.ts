@@ -4,8 +4,8 @@ import { ProgramType } from '@/types/programs-selection';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
 const fetchPrograms = async (): Promise<ProgramType[]> => {
-    const res = await api.get<ProgramType[]>(ENDPOINTS.fetchPrograms);
-    return res.data;
+    const res = await api.get<any>(ENDPOINTS.fetchPrograms);
+    return Array.isArray(res.data) ? res.data : res.data?.data || [];
 };
 
 const useFetchProgramsQuery = (): UseQueryResult<ProgramType[]> => {

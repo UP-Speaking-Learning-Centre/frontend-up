@@ -29,7 +29,7 @@ const SelectStudent = () => {
                     <SelectValue placeholder="Select student" />
                 </SelectTrigger>
                 <SelectContent>
-                    {students?.students.map(student => (
+                    {students?.students?.map(student => (
                         <SelectItem className="text-start" value={student.id.toString()}>
                             {student.name}
                         </SelectItem>

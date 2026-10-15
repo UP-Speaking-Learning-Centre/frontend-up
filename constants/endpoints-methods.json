@@ -1,0 +1,320 @@
+[
+  {
+    "key": "fetchPrograms",
+    "endpoint": "/programs",
+    "method": "GET",
+    "description": "Mengambil daftar program kursus"
+  },
+  {
+    "key": "fetchGroups",
+    "endpoint": "/programs/{programId}/groups",
+    "method": "GET",
+    "description": "Mengambil daftar group berdasarkan programId"
+  },
+  {
+    "key": "fetchLevels",
+    "endpoint": "/programs/{programId}/groups/{groupId}/levels",
+    "method": "GET",
+    "description": "Mengambil daftar level berdasarkan programId dan groupId"
+  },
+  {
+    "key": "fetchGrades",
+    "endpoint": "/programs/{programId}/groups/{groupId}/levels/{levelId}/grades",
+    "method": "GET",
+    "description": "Mengambil daftar grade berdasarkan level"
+  },
+  {
+    "key": "fetchPackages",
+    "endpoint": "/packages",
+    "method": "GET",
+    "description": "Mengambil daftar paket kursus"
+  },
+  {
+    "key": "fetchLocations",
+    "endpoint": "/locations",
+    "method": "GET",
+    "description": "Mengambil daftar lokasi/cabang"
+  },
+  {
+    "key": "fetchAvailableSchedule",
+    "endpoint": "/locations/{locationId}/available-schedules",
+    "method": "GET",
+    "description": "Mengambil jadwal yang tersedia di lokasi tertentu"
+  },
+  {
+    "key": "fetchStudyGroups",
+    "endpoint": "/locations/{locationId}/study-groups",
+    "method": "GET",
+    "description": "Mengambil daftar study group di lokasi tertentu"
+  },
+  {
+    "key": "fetchAvailableStudyGroup",
+    "endpoint": "/locations/{locationId}/study-groups?programId={programId}&groupId={groupId}&levelId={levelId}&packageId={packageId}",
+    "method": "GET",
+    "description": "Mengambil study group yang tersedia berdasarkan filter program, group, level, package"
+  },
+  {
+    "key": "fetchDetailPlacementTest",
+    "endpoint": "/placement-tests/{id}",
+    "method": "GET",
+    "description": "Mengambil detail hasil placement test"
+  },
+  {
+    "key": "fetchPlacementTest",
+    "endpoint": "/placement-tests/start-guest",
+    "method": "POST",
+    "description": "Memulai placement test untuk guest"
+  },
+  {
+    "key": "submitPlacementTest",
+    "endpoint": "/placement-tests/submit-guest",
+    "method": "POST",
+    "description": "Submit jawaban placement test guest"
+  },
+  {
+    "key": "fetchAdminDetailPlacementTest",
+    "endpoint": "/admin/placement-tests/{id}",
+    "method": "GET",
+    "description": "Admin mengambil detail placement test student"
+  },
+  {
+    "key": "fetchAdminDetailPlacementTestStatus",
+    "endpoint": "/admin/placement-tests/{id}/status",
+    "method": "PATCH",
+    "description": "Admin mengupdate status placement test student"
+  },
+  {
+    "key": "submitRegistration",
+    "endpoint": "/registrations",
+    "method": "POST",
+    "description": "Submit formulir pendaftaran siswa baru"
+  },
+  {
+    "key": "submitRegistrationFromPlacement",
+    "endpoint": "/auth/register",
+    "method": "POST",
+    "description": "Registrasi akun/siswa setelah placement test"
+  },
+  {
+    "key": "createNewStudyGroup",
+    "endpoint": "/admin/study-groups",
+    "method": "POST",
+    "description": "Admin membuat study group baru"
+  },
+  {
+    "key": "fetchStudyGroupDetail",
+    "endpoint": "/admin/study-groups/{studyGroupId}",
+    "method": "GET",
+    "description": "Admin mengambil detail study group"
+  },
+  {
+    "key": "fetchStudentOfStudyGroup",
+    "endpoint": "/admin/study-groups/{studyGroupId}/assigned-students",
+    "method": "GET",
+    "description": "Admin mengambil daftar murid yang terdaftar di study group"
+  },
+  {
+    "key": "fetchAvailableStudent",
+    "endpoint": "/admin/study-groups/{studyGroupId}/available-students",
+    "method": "GET",
+    "description": "Admin mengambil daftar murid yang siap dimasukkan ke study group"
+  },
+  {
+    "key": "assignStudentToStudyGroup",
+    "endpoint": "/admin/study-groups/assign-students",
+    "method": "POST",
+    "description": "Admin memasukkan murid ke study group"
+  },
+  {
+    "key": "unassignStudentFromStudyGroup",
+    "endpoint": "/admin/study-groups/{studyGroupId}/unassign-students",
+    "method": "POST",
+    "description": "Admin mengeluarkan murid dari study group"
+  },
+  {
+    "key": "fetchUnassignStudent",
+    "endpoint": "/admin/study-groups/{studyGroupId}/unassign-students",
+    "method": "POST",
+    "description": "Alias untuk unassign murid dari study group saat reassign"
+  },
+  {
+    "key": "updatePriority",
+    "endpoint": "/admin/study-groups/{studyGroupId}/priority",
+    "method": "PATCH",
+    "description": "Admin mengupdate status priority study group"
+  },
+  {
+    "key": "fetchTeacherSchedule",
+    "endpoint": "/admin/teacher-schedules/location/{locationId}",
+    "method": "GET",
+    "description": "Admin mengambil jadwal guru berdasarkan lokasi"
+  },
+  {
+    "key": "fetchTeachers",
+    "endpoint": "/admin/teacher-team-members",
+    "method": "GET",
+    "description": "Admin mengambil daftar pengajar/team members (dengan pagination/filter)"
+  },
+  {
+    "key": "fetchTeachers_create",
+    "endpoint": "/admin/teacher-team-members",
+    "method": "POST",
+    "description": "Admin menambahkan pengajar/team member baru"
+  },
+  {
+    "key": "fetchTeachersNoPage",
+    "endpoint": "/admin/teacher-team-members/all",
+    "method": "GET",
+    "description": "Admin mengambil semua pengajar tanpa pagination"
+  },
+  {
+    "key": "allTeacher",
+    "endpoint": "/teacher-team-members/all",
+    "method": "GET",
+    "description": "Mengambil semua teacher untuk halaman public/home"
+  },
+  {
+    "key": "fetchTeachersById_get",
+    "endpoint": "/admin/teacher-team-members/{id}",
+    "method": "GET",
+    "description": "Admin mengambil detail pengajar berdasarkan ID"
+  },
+  {
+    "key": "fetchTeachersById_patch",
+    "endpoint": "/admin/teacher-team-members/{id}",
+    "method": "PATCH",
+    "description": "Admin mengupdate data pengajar berdasarkan ID"
+  },
+  {
+    "key": "fetchTeachersById_delete",
+    "endpoint": "/admin/teacher-team-members/{id}",
+    "method": "DELETE",
+    "description": "Admin menghapus data pengajar berdasarkan ID"
+  },
+  {
+    "key": "fetchTeachersScheduleById",
+    "endpoint": "/admin/teacher-team-members/{id}/schedules",
+    "method": "GET",
+    "description": "Admin mengambil jadwal mengajar per pengajar"
+  },
+  {
+    "key": "fetchPrices",
+    "endpoint": "/prices",
+    "method": "GET",
+    "description": "Mengambil daftar harga paket program"
+  },
+  {
+    "key": "patchpricesByProgram",
+    "endpoint": "/admin/program-packages/by-program-package",
+    "method": "PATCH",
+    "description": "Admin memperbarui harga berdasarkan program & package"
+  },
+  {
+    "key": "patchNoteByUserId",
+    "endpoint": "/admin/students/{id}/notes",
+    "method": "PATCH",
+    "description": "Admin menambahkan/mengupdate catatan siswa"
+  },
+  {
+    "key": "fetchAlias",
+    "endpoint": "/admin/teachers",
+    "method": "GET",
+    "description": "Admin mengambil alias list teachers"
+  },
+  {
+    "key": "fetchAdminLocations",
+    "endpoint": "/admin/locations",
+    "method": "GET",
+    "description": "Admin mengambil daftar lokasi"
+  },
+  {
+    "key": "fetchAdminLocationsById_patch",
+    "endpoint": "/admin/locations/{id}",
+    "method": "PATCH",
+    "description": "Admin mengubah detail lokasi"
+  },
+  {
+    "key": "fetchAdminLocationsById_delete",
+    "endpoint": "/admin/locations/{id}",
+    "method": "DELETE",
+    "description": "Admin menghapus lokasi"
+  },
+  {
+    "key": "fetchAdminStudentById",
+    "endpoint": "/admin/students/{id}",
+    "method": "GET",
+    "description": "Admin mengambil detail data student"
+  },
+  {
+    "key": "studentById",
+    "endpoint": "/admin/students/{id}",
+    "method": "PATCH",
+    "description": "Admin mengupdate data student"
+  },
+  {
+    "key": "updateContactedStatus",
+    "endpoint": "/admin/students/{id}/contacted",
+    "method": "PATCH",
+    "description": "Admin mengupdate status contacted pada student"
+  },
+  {
+    "key": "baseStaff_get",
+    "endpoint": "/admin/staff",
+    "method": "GET",
+    "description": "Admin mengambil list staff"
+  },
+  {
+    "key": "baseStaff_post",
+    "endpoint": "/admin/staff",
+    "method": "POST",
+    "description": "Admin membuat staff baru"
+  },
+  {
+    "key": "fetchStaffs",
+    "endpoint": "/admin/staff?currentPage={currentPage}&limit={limit}",
+    "method": "GET",
+    "description": "Admin mengambil list staff dengan pagination"
+  },
+  {
+    "key": "staffById_get",
+    "endpoint": "/admin/staff/{id}",
+    "method": "GET",
+    "description": "Admin mengambil detail staff"
+  },
+  {
+    "key": "staffById_patch",
+    "endpoint": "/admin/staff/{id}",
+    "method": "PATCH",
+    "description": "Admin mengupdate data staff"
+  },
+  {
+    "key": "staffById_delete",
+    "endpoint": "/admin/staff/{id}",
+    "method": "DELETE",
+    "description": "Admin menghapus staff"
+  },
+  {
+    "key": "staffByRole",
+    "endpoint": "/admin/staff?roles={roles}",
+    "method": "GET",
+    "description": "Admin mengambil list staff difilter berdasarkan role"
+  },
+  {
+    "key": "baseNonUser",
+    "endpoint": "/admin/non-users",
+    "method": "GET",
+    "description": "Admin mengambil list non-users"
+  },
+  {
+    "key": "fetchNonUsers",
+    "endpoint": "/admin/non-users?page={page}&limit={limit}",
+    "method": "GET",
+    "description": "Admin mengambil list non-users dengan pagination"
+  },
+  {
+    "key": "nonUserById",
+    "endpoint": "/admin/non-users/{id}",
+    "method": "GET",
+    "description": "Admin mengambil detail data non-user"
+  }
+]

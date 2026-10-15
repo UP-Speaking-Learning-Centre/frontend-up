@@ -5,8 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 
 const useGetTeacherById = (id: number) => {
     const getTeacher = async (): Promise<TeacherAdmin> => {
-        const mentors = await api.get<TeacherAdmin>(ENDPOINTS.fetchTeachersById.expand({ id }));
-        return mentors.data;
+        const mentors = await api.get<any>(ENDPOINTS.fetchTeachersById.expand({ id }));
+        return mentors.data?.data || mentors.data;
     };
 
     const { data, isLoading } = useQuery({

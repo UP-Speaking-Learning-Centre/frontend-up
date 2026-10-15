@@ -7,11 +7,11 @@ import { useScheduleManagementStore } from '@/features/schedule-management/store
 
 const useGetLocation = () => {
     const get = async () => {
-        const res = await api.get<ResponseLocation[]>(API_LOCATION);
-        return res.data;
+        const res = await api.get<any>(API_LOCATION);
+        return Array.isArray(res.data) ? res.data : res.data?.data || [];
     };
 
-    const query = useQuery({ queryKey: [API_LOCATION], queryFn: get });
+    const query = useQuery<ResponseLocation[]>({ queryKey: [API_LOCATION], queryFn: get });
     const setLocation = useScheduleManagementStore(s => s.setLocationId);
 
     useEffect(() => {

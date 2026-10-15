@@ -11,17 +11,17 @@ const useGetGrade = () => {
 
     const get = async () => {
         if (!programId || !groupId) return;
-        const res = await api.get<ResponseGrade[]>(
+        const res = await api.get<any>(
             API_GRADE.expand({
                 programId,
                 groupId,
                 levelId: assignedLevel,
             })
         );
-        return res.data;
+        return Array.isArray(res.data) ? res.data : res.data?.data || [];
     };
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading } = useQuery<ResponseGrade[]>({
         queryKey: [API_GRADE, assignedLevel],
         queryFn: get,
     });

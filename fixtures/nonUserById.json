@@ -1,0 +1,20 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "id": 1,
+    "studentId": 101,
+    "name": "Calon Murid Dimas",
+    "parentName": "Ibu Ratna",
+    "phone": "+628123445566",
+    "sourceLead": "Instagram",
+    "funnelStage": "Trial Class",
+    "statusLead": "Follow Up",
+    "programId": 1,
+    "preferredGroup": "Kindergarten",
+    "adminPicId": 2,
+    "notesTerbaru": "Tertarik kelas weekend pagi.",
+    "tanggalTrialClass": "2026-10-20T10:00:00.000Z"
+  },
+  "message": "Success"
+}

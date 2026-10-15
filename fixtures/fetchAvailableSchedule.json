@@ -1,0 +1,2147 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": [
+    {
+      "id": 1,
+      "teacher_team_member_id": 2,
+      "day_of_week": "MON",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 2,
+      "teacher_team_member_id": 2,
+      "day_of_week": "MON",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 3,
+      "teacher_team_member_id": 2,
+      "day_of_week": "MON",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 7,
+      "teacher_team_member_id": 2,
+      "day_of_week": "MON",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 8,
+      "teacher_team_member_id": 2,
+      "day_of_week": "TUE",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 10,
+      "teacher_team_member_id": 2,
+      "day_of_week": "TUE",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 12,
+      "teacher_team_member_id": 2,
+      "day_of_week": "TUE",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 13,
+      "teacher_team_member_id": 2,
+      "day_of_week": "TUE",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 14,
+      "teacher_team_member_id": 2,
+      "day_of_week": "TUE",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 15,
+      "teacher_team_member_id": 2,
+      "day_of_week": "WED",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 16,
+      "teacher_team_member_id": 2,
+      "day_of_week": "WED",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 17,
+      "teacher_team_member_id": 2,
+      "day_of_week": "WED",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 20,
+      "teacher_team_member_id": 2,
+      "day_of_week": "WED",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 21,
+      "teacher_team_member_id": 2,
+      "day_of_week": "WED",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 22,
+      "teacher_team_member_id": 2,
+      "day_of_week": "THU",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 24,
+      "teacher_team_member_id": 2,
+      "day_of_week": "THU",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 25,
+      "teacher_team_member_id": 2,
+      "day_of_week": "THU",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 28,
+      "teacher_team_member_id": 2,
+      "day_of_week": "THU",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 29,
+      "teacher_team_member_id": 2,
+      "day_of_week": "FRI",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 31,
+      "teacher_team_member_id": 2,
+      "day_of_week": "FRI",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 33,
+      "teacher_team_member_id": 2,
+      "day_of_week": "FRI",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 35,
+      "teacher_team_member_id": 2,
+      "day_of_week": "FRI",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 38,
+      "teacher_team_member_id": 2,
+      "day_of_week": "SAT",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 41,
+      "teacher_team_member_id": 2,
+      "day_of_week": "SAT",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 42,
+      "teacher_team_member_id": 2,
+      "day_of_week": "SAT",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 43,
+      "teacher_team_member_id": 3,
+      "day_of_week": "MON",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 44,
+      "teacher_team_member_id": 3,
+      "day_of_week": "MON",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 45,
+      "teacher_team_member_id": 3,
+      "day_of_week": "MON",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 50,
+      "teacher_team_member_id": 3,
+      "day_of_week": "TUE",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 51,
+      "teacher_team_member_id": 3,
+      "day_of_week": "TUE",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 52,
+      "teacher_team_member_id": 3,
+      "day_of_week": "TUE",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 56,
+      "teacher_team_member_id": 3,
+      "day_of_week": "TUE",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 57,
+      "teacher_team_member_id": 3,
+      "day_of_week": "WED",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 58,
+      "teacher_team_member_id": 3,
+      "day_of_week": "WED",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 59,
+      "teacher_team_member_id": 3,
+      "day_of_week": "WED",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 62,
+      "teacher_team_member_id": 3,
+      "day_of_week": "WED",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 63,
+      "teacher_team_member_id": 3,
+      "day_of_week": "WED",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 64,
+      "teacher_team_member_id": 3,
+      "day_of_week": "THU",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 65,
+      "teacher_team_member_id": 3,
+      "day_of_week": "THU",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 66,
+      "teacher_team_member_id": 3,
+      "day_of_week": "THU",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 71,
+      "teacher_team_member_id": 3,
+      "day_of_week": "FRI",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 72,
+      "teacher_team_member_id": 3,
+      "day_of_week": "FRI",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 73,
+      "teacher_team_member_id": 3,
+      "day_of_week": "FRI",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 76,
+      "teacher_team_member_id": 3,
+      "day_of_week": "FRI",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 77,
+      "teacher_team_member_id": 3,
+      "day_of_week": "FRI",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 80,
+      "teacher_team_member_id": 3,
+      "day_of_week": "SAT",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 82,
+      "teacher_team_member_id": 3,
+      "day_of_week": "SAT",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 83,
+      "teacher_team_member_id": 3,
+      "day_of_week": "SAT",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 84,
+      "teacher_team_member_id": 3,
+      "day_of_week": "SAT",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 85,
+      "teacher_team_member_id": 5,
+      "day_of_week": "MON",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 86,
+      "teacher_team_member_id": 5,
+      "day_of_week": "MON",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 87,
+      "teacher_team_member_id": 5,
+      "day_of_week": "MON",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 88,
+      "teacher_team_member_id": 5,
+      "day_of_week": "MON",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 91,
+      "teacher_team_member_id": 5,
+      "day_of_week": "MON",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 92,
+      "teacher_team_member_id": 5,
+      "day_of_week": "TUE",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 93,
+      "teacher_team_member_id": 5,
+      "day_of_week": "TUE",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 94,
+      "teacher_team_member_id": 5,
+      "day_of_week": "TUE",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 95,
+      "teacher_team_member_id": 5,
+      "day_of_week": "TUE",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 98,
+      "teacher_team_member_id": 5,
+      "day_of_week": "TUE",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 99,
+      "teacher_team_member_id": 5,
+      "day_of_week": "WED",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 100,
+      "teacher_team_member_id": 5,
+      "day_of_week": "WED",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 101,
+      "teacher_team_member_id": 5,
+      "day_of_week": "WED",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 102,
+      "teacher_team_member_id": 5,
+      "day_of_week": "WED",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 105,
+      "teacher_team_member_id": 5,
+      "day_of_week": "WED",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 106,
+      "teacher_team_member_id": 5,
+      "day_of_week": "THU",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 107,
+      "teacher_team_member_id": 5,
+      "day_of_week": "THU",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 108,
+      "teacher_team_member_id": 5,
+      "day_of_week": "THU",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 112,
+      "teacher_team_member_id": 5,
+      "day_of_week": "THU",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 113,
+      "teacher_team_member_id": 5,
+      "day_of_week": "FRI",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 114,
+      "teacher_team_member_id": 5,
+      "day_of_week": "FRI",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 115,
+      "teacher_team_member_id": 5,
+      "day_of_week": "FRI",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 116,
+      "teacher_team_member_id": 5,
+      "day_of_week": "FRI",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 119,
+      "teacher_team_member_id": 5,
+      "day_of_week": "FRI",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 120,
+      "teacher_team_member_id": 5,
+      "day_of_week": "SAT",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 122,
+      "teacher_team_member_id": 5,
+      "day_of_week": "SAT",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 124,
+      "teacher_team_member_id": 5,
+      "day_of_week": "SAT",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 125,
+      "teacher_team_member_id": 5,
+      "day_of_week": "SAT",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 126,
+      "teacher_team_member_id": 5,
+      "day_of_week": "SAT",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 127,
+      "teacher_team_member_id": 7,
+      "day_of_week": "MON",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 128,
+      "teacher_team_member_id": 7,
+      "day_of_week": "MON",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 129,
+      "teacher_team_member_id": 7,
+      "day_of_week": "MON",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 133,
+      "teacher_team_member_id": 7,
+      "day_of_week": "MON",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 134,
+      "teacher_team_member_id": 7,
+      "day_of_week": "TUE",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 135,
+      "teacher_team_member_id": 7,
+      "day_of_week": "TUE",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 136,
+      "teacher_team_member_id": 7,
+      "day_of_week": "TUE",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 137,
+      "teacher_team_member_id": 7,
+      "day_of_week": "TUE",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 140,
+      "teacher_team_member_id": 7,
+      "day_of_week": "TUE",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 141,
+      "teacher_team_member_id": 7,
+      "day_of_week": "WED",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 142,
+      "teacher_team_member_id": 7,
+      "day_of_week": "WED",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 143,
+      "teacher_team_member_id": 7,
+      "day_of_week": "WED",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 147,
+      "teacher_team_member_id": 7,
+      "day_of_week": "WED",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 148,
+      "teacher_team_member_id": 7,
+      "day_of_week": "THU",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 149,
+      "teacher_team_member_id": 7,
+      "day_of_week": "THU",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 150,
+      "teacher_team_member_id": 7,
+      "day_of_week": "THU",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 154,
+      "teacher_team_member_id": 7,
+      "day_of_week": "THU",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 155,
+      "teacher_team_member_id": 7,
+      "day_of_week": "FRI",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 156,
+      "teacher_team_member_id": 7,
+      "day_of_week": "FRI",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 157,
+      "teacher_team_member_id": 7,
+      "day_of_week": "FRI",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 161,
+      "teacher_team_member_id": 7,
+      "day_of_week": "FRI",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 162,
+      "teacher_team_member_id": 7,
+      "day_of_week": "SAT",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 167,
+      "teacher_team_member_id": 7,
+      "day_of_week": "SAT",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 168,
+      "teacher_team_member_id": 7,
+      "day_of_week": "SAT",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 169,
+      "teacher_team_member_id": 9,
+      "day_of_week": "MON",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 170,
+      "teacher_team_member_id": 9,
+      "day_of_week": "MON",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 171,
+      "teacher_team_member_id": 9,
+      "day_of_week": "MON",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 175,
+      "teacher_team_member_id": 9,
+      "day_of_week": "MON",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 176,
+      "teacher_team_member_id": 9,
+      "day_of_week": "TUE",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 177,
+      "teacher_team_member_id": 9,
+      "day_of_week": "TUE",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 178,
+      "teacher_team_member_id": 9,
+      "day_of_week": "TUE",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 182,
+      "teacher_team_member_id": 9,
+      "day_of_week": "TUE",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 183,
+      "teacher_team_member_id": 9,
+      "day_of_week": "WED",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 184,
+      "teacher_team_member_id": 9,
+      "day_of_week": "WED",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 185,
+      "teacher_team_member_id": 9,
+      "day_of_week": "WED",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 189,
+      "teacher_team_member_id": 9,
+      "day_of_week": "WED",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 190,
+      "teacher_team_member_id": 9,
+      "day_of_week": "THU",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 191,
+      "teacher_team_member_id": 9,
+      "day_of_week": "THU",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 192,
+      "teacher_team_member_id": 9,
+      "day_of_week": "THU",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 196,
+      "teacher_team_member_id": 9,
+      "day_of_week": "THU",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 197,
+      "teacher_team_member_id": 9,
+      "day_of_week": "FRI",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 198,
+      "teacher_team_member_id": 9,
+      "day_of_week": "FRI",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 199,
+      "teacher_team_member_id": 9,
+      "day_of_week": "FRI",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 203,
+      "teacher_team_member_id": 9,
+      "day_of_week": "FRI",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 204,
+      "teacher_team_member_id": 9,
+      "day_of_week": "SAT",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 209,
+      "teacher_team_member_id": 9,
+      "day_of_week": "SAT",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 210,
+      "teacher_team_member_id": 9,
+      "day_of_week": "SAT",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 211,
+      "teacher_team_member_id": 10,
+      "day_of_week": "MON",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 212,
+      "teacher_team_member_id": 10,
+      "day_of_week": "MON",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 213,
+      "teacher_team_member_id": 10,
+      "day_of_week": "MON",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 214,
+      "teacher_team_member_id": 10,
+      "day_of_week": "MON",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 215,
+      "teacher_team_member_id": 10,
+      "day_of_week": "MON",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 217,
+      "teacher_team_member_id": 10,
+      "day_of_week": "MON",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 218,
+      "teacher_team_member_id": 10,
+      "day_of_week": "TUE",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 220,
+      "teacher_team_member_id": 10,
+      "day_of_week": "TUE",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 221,
+      "teacher_team_member_id": 10,
+      "day_of_week": "TUE",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 223,
+      "teacher_team_member_id": 10,
+      "day_of_week": "TUE",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 224,
+      "teacher_team_member_id": 10,
+      "day_of_week": "TUE",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 225,
+      "teacher_team_member_id": 10,
+      "day_of_week": "WED",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 226,
+      "teacher_team_member_id": 10,
+      "day_of_week": "WED",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 227,
+      "teacher_team_member_id": 10,
+      "day_of_week": "WED",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 228,
+      "teacher_team_member_id": 10,
+      "day_of_week": "WED",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 229,
+      "teacher_team_member_id": 10,
+      "day_of_week": "WED",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 231,
+      "teacher_team_member_id": 10,
+      "day_of_week": "WED",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 232,
+      "teacher_team_member_id": 10,
+      "day_of_week": "THU",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 234,
+      "teacher_team_member_id": 10,
+      "day_of_week": "THU",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 235,
+      "teacher_team_member_id": 10,
+      "day_of_week": "THU",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 238,
+      "teacher_team_member_id": 10,
+      "day_of_week": "THU",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 239,
+      "teacher_team_member_id": 10,
+      "day_of_week": "FRI",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 241,
+      "teacher_team_member_id": 10,
+      "day_of_week": "FRI",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 243,
+      "teacher_team_member_id": 10,
+      "day_of_week": "FRI",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 245,
+      "teacher_team_member_id": 10,
+      "day_of_week": "FRI",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 248,
+      "teacher_team_member_id": 10,
+      "day_of_week": "SAT",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 251,
+      "teacher_team_member_id": 10,
+      "day_of_week": "SAT",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 252,
+      "teacher_team_member_id": 10,
+      "day_of_week": "SAT",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 253,
+      "teacher_team_member_id": 11,
+      "day_of_week": "MON",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 254,
+      "teacher_team_member_id": 11,
+      "day_of_week": "MON",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 255,
+      "teacher_team_member_id": 11,
+      "day_of_week": "MON",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 259,
+      "teacher_team_member_id": 11,
+      "day_of_week": "MON",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 260,
+      "teacher_team_member_id": 11,
+      "day_of_week": "TUE",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 261,
+      "teacher_team_member_id": 11,
+      "day_of_week": "TUE",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 262,
+      "teacher_team_member_id": 11,
+      "day_of_week": "TUE",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 266,
+      "teacher_team_member_id": 11,
+      "day_of_week": "TUE",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 267,
+      "teacher_team_member_id": 11,
+      "day_of_week": "WED",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 268,
+      "teacher_team_member_id": 11,
+      "day_of_week": "WED",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 269,
+      "teacher_team_member_id": 11,
+      "day_of_week": "WED",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 273,
+      "teacher_team_member_id": 11,
+      "day_of_week": "WED",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 274,
+      "teacher_team_member_id": 11,
+      "day_of_week": "THU",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 275,
+      "teacher_team_member_id": 11,
+      "day_of_week": "THU",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 276,
+      "teacher_team_member_id": 11,
+      "day_of_week": "THU",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 278,
+      "teacher_team_member_id": 11,
+      "day_of_week": "THU",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 280,
+      "teacher_team_member_id": 11,
+      "day_of_week": "THU",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 281,
+      "teacher_team_member_id": 11,
+      "day_of_week": "FRI",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 282,
+      "teacher_team_member_id": 11,
+      "day_of_week": "FRI",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 283,
+      "teacher_team_member_id": 11,
+      "day_of_week": "FRI",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 287,
+      "teacher_team_member_id": 11,
+      "day_of_week": "FRI",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 291,
+      "teacher_team_member_id": 11,
+      "day_of_week": "SAT",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 292,
+      "teacher_team_member_id": 11,
+      "day_of_week": "SAT",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 293,
+      "teacher_team_member_id": 11,
+      "day_of_week": "SAT",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 294,
+      "teacher_team_member_id": 11,
+      "day_of_week": "SAT",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 295,
+      "teacher_team_member_id": 12,
+      "day_of_week": "MON",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 296,
+      "teacher_team_member_id": 12,
+      "day_of_week": "MON",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 297,
+      "teacher_team_member_id": 12,
+      "day_of_week": "MON",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 300,
+      "teacher_team_member_id": 12,
+      "day_of_week": "MON",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 301,
+      "teacher_team_member_id": 12,
+      "day_of_week": "MON",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 302,
+      "teacher_team_member_id": 12,
+      "day_of_week": "TUE",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 303,
+      "teacher_team_member_id": 12,
+      "day_of_week": "TUE",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 304,
+      "teacher_team_member_id": 12,
+      "day_of_week": "TUE",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 306,
+      "teacher_team_member_id": 12,
+      "day_of_week": "TUE",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 307,
+      "teacher_team_member_id": 12,
+      "day_of_week": "TUE",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 308,
+      "teacher_team_member_id": 12,
+      "day_of_week": "TUE",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 309,
+      "teacher_team_member_id": 12,
+      "day_of_week": "WED",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 310,
+      "teacher_team_member_id": 12,
+      "day_of_week": "WED",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 311,
+      "teacher_team_member_id": 12,
+      "day_of_week": "WED",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 314,
+      "teacher_team_member_id": 12,
+      "day_of_week": "WED",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 315,
+      "teacher_team_member_id": 12,
+      "day_of_week": "WED",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 316,
+      "teacher_team_member_id": 12,
+      "day_of_week": "THU",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 317,
+      "teacher_team_member_id": 12,
+      "day_of_week": "THU",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 318,
+      "teacher_team_member_id": 12,
+      "day_of_week": "THU",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 320,
+      "teacher_team_member_id": 12,
+      "day_of_week": "THU",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 321,
+      "teacher_team_member_id": 12,
+      "day_of_week": "THU",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 322,
+      "teacher_team_member_id": 12,
+      "day_of_week": "THU",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 323,
+      "teacher_team_member_id": 12,
+      "day_of_week": "FRI",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 324,
+      "teacher_team_member_id": 12,
+      "day_of_week": "FRI",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 325,
+      "teacher_team_member_id": 12,
+      "day_of_week": "FRI",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 326,
+      "teacher_team_member_id": 12,
+      "day_of_week": "FRI",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 327,
+      "teacher_team_member_id": 12,
+      "day_of_week": "FRI",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 328,
+      "teacher_team_member_id": 12,
+      "day_of_week": "FRI",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 329,
+      "teacher_team_member_id": 12,
+      "day_of_week": "FRI",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 330,
+      "teacher_team_member_id": 12,
+      "day_of_week": "SAT",
+      "start_time": "08:00:00",
+      "end_time": "09:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 331,
+      "teacher_team_member_id": 12,
+      "day_of_week": "SAT",
+      "start_time": "09:30:00",
+      "end_time": "11:00:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 332,
+      "teacher_team_member_id": 12,
+      "day_of_week": "SAT",
+      "start_time": "11:00:00",
+      "end_time": "12:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 333,
+      "teacher_team_member_id": 12,
+      "day_of_week": "SAT",
+      "start_time": "13:45:00",
+      "end_time": "15:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 334,
+      "teacher_team_member_id": 12,
+      "day_of_week": "SAT",
+      "start_time": "15:15:00",
+      "end_time": "16:45:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 335,
+      "teacher_team_member_id": 12,
+      "day_of_week": "SAT",
+      "start_time": "16:45:00",
+      "end_time": "18:15:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    },
+    {
+      "id": 336,
+      "teacher_team_member_id": 12,
+      "day_of_week": "SAT",
+      "start_time": "19:00:00",
+      "end_time": "20:30:00",
+      "duration_minutes": 90,
+      "is_full": false,
+      "location_id": 1
+    }
+  ],
+  "message": "Success"
+}

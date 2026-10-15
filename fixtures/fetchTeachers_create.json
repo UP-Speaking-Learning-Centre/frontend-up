@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "id": 99,
+    "member_name": "Teacher Baru",
+    "is_coordinator": false,
+    "teacher_id": 1,
+    "image_url": null
+  },
+  "message": "Success"
+}

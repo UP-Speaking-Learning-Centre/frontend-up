@@ -5,19 +5,19 @@ import { useQuery } from '@tanstack/react-query';
 
 const useGetStudyGroup = (locationId: number) => {
     const get = async () => {
-        const res = await api.get<ResponseStudyGroup[]>(
+        const res = await api.get<any>(
             ENDPOINTS.fetchStudyGroups.expand({
                 locationId,
             })
         );
-        return res.data;
+        return Array.isArray(res.data) ? res.data : res.data?.data || [];
     };
 
     const { data, isLoading } = useQuery({
         queryKey: [ENDPOINTS.fetchStudyGroups.expand({ locationId })],
         queryFn: get,
-        select: data =>
-            data.map(item => ({ ...item, id: item.studyGroupId, name: item.studyGroupName })),
+        select: (data: any[]) =>
+            data.map((item: any) => ({ ...item, id: item.studyGroupId, name: item.studyGroupName })),
         enabled: locationId > 0
     });
 

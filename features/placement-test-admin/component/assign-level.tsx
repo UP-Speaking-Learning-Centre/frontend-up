@@ -18,7 +18,6 @@ import useGetLocation from '../queries/use-get-location';
 import useGetTeacher from '../queries/use-get-teacher';
 import { useDisplayedPlacementTestStore } from '../stores/displayed-placement-test-stores';
 import useGetProfileById from '@/features/home/queries/useGetProfileById';
-import { mentors } from '@/app/(landing)/about/page';
 
 interface Props {
     errors: FieldErrors<FormStatusManagement>;
@@ -66,8 +65,8 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
     }, [dataGrade, assignedGrade]);
     const filteredSchedule = useMemo(() => {
         return dataSchedule?.filter(
-            sch =>
-                sch.teacherTeamMemberId.toString() === assignedMentor &&
+            (sch: any) =>
+                sch.teacherTeamMemberId?.toString() === assignedMentor &&
                 sch.packageId === test?.packageId
         );
     }, [dataSchedule, assignedMentor, test]);
@@ -266,7 +265,7 @@ const AssignLevel: FC<Props> = ({ errors, setValue, reset }) => {
                                 <SelectValue placeholder="Select Study Group" />
                             </SelectTrigger>
                             <SelectContent>
-                                {filteredSchedule?.map(sch => (
+                                {filteredSchedule?.map((sch: any) => (
                                     <SelectItem
                                         value={sch.studyGroupId.toString()}
                                         key={sch.studyGroupId}

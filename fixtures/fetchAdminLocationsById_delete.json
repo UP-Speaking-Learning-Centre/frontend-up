@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "id": 1,
+    "name": "Stadion Updated",
+    "status": "active",
+    "message": "Location modified successfully"
+  },
+  "message": "Success"
+}

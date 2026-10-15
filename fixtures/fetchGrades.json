@@ -1,0 +1,105 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": [
+    {
+      "grade_number": 1,
+      "prerequisites": "No prerequisites required. Open for beginners.",
+      "id": 1,
+      "level_id": 1,
+      "image_url": null
+    },
+    {
+      "grade_number": 2,
+      "prerequisites": "Should be able to understand and use basic greetings, simple introductions, and respond to simple questions.",
+      "id": 2,
+      "level_id": 1,
+      "image_url": null
+    },
+    {
+      "grade_number": 1,
+      "prerequisites": "Completed New Star 2 or equivalent",
+      "id": 3,
+      "level_id": 2,
+      "image_url": null
+    },
+    {
+      "grade_number": 2,
+      "prerequisites": "Completed Novice 1 or equivalent",
+      "id": 4,
+      "level_id": 2,
+      "image_url": null
+    },
+    {
+      "grade_number": 3,
+      "prerequisites": "Completed Novice 2 or equivalent",
+      "id": 5,
+      "level_id": 2,
+      "image_url": null
+    },
+    {
+      "grade_number": 4,
+      "prerequisites": "Completed Novice 3 or equivalent",
+      "id": 6,
+      "level_id": 2,
+      "image_url": null
+    },
+    {
+      "grade_number": 1,
+      "prerequisites": "Should be able to understand and use basic vocabulary and simple sentence structures.",
+      "id": 7,
+      "level_id": 8,
+      "image_url": null
+    },
+    {
+      "grade_number": 2,
+      "prerequisites": "Should be able to construct simple sentences about daily activities and express basic needs.",
+      "id": 8,
+      "level_id": 8,
+      "image_url": null
+    },
+    {
+      "grade_number": 1,
+      "prerequisites": "Should be able to understand and use basic vocabulary for everyday objects, numbers, and simple sentences.",
+      "id": 9,
+      "level_id": 7,
+      "image_url": null
+    },
+    {
+      "grade_number": 2,
+      "prerequisites": "Should be able to construct simple sentences about daily activities and express basic needs.",
+      "id": 10,
+      "level_id": 7,
+      "image_url": null
+    },
+    {
+      "grade_number": 3,
+      "prerequisites": "Should be able to describe people, places, and things using simple adjectives and basic verb tenses.",
+      "id": 11,
+      "level_id": 7,
+      "image_url": null
+    },
+    {
+      "grade_number": 4,
+      "prerequisites": "Should be able to hold simple conversations about daily life and express opinions using basic vocabulary.",
+      "id": 12,
+      "level_id": 7,
+      "image_url": null
+    },
+    {
+      "grade_number": 1,
+      "prerequisites": "Should be able to understand and use basic grammar structures and hold simple conversations about daily life.",
+      "id": 13,
+      "level_id": 10,
+      "image_url": null
+    },
+    {
+      "grade_number": 2,
+      "prerequisites": "Should be able to express opinions, describe experiences, and participate in simple discussions using appropriate vocabulary.",
+      "id": 14,
+      "level_id": 10,
+      "image_url": null
+    }
+  ],
+  "message": "Success"
+}

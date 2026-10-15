@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "studentId": 10,
+    "userId": 30,
+    "name": "Siswa Terdaftar",
+    "phone_number": "+6281299990000",
+    "registrationStatus": "registered",
+    "message": "Registration successful"
+  },
+  "message": "Success"
+}

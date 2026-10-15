@@ -8,13 +8,13 @@ import { useQuery } from '@tanstack/react-query';
 const useGetAvailableSchedule = () => {
     const { assignedLocation } = useDisplayedPlacementTestStore();
     const get = async () => {
-        const res = await api.get<AvailableScheduleType[]>(
+        const res = await api.get<any>(
             API_AVAIL_SCHEDULE.expand({ id: assignedLocation })
         );
-        return res.data;
+        return Array.isArray(res.data) ? res.data : res.data?.data || [];
     };
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading } = useQuery<AvailableScheduleType[]>({
         queryKey: [API_AVAIL_SCHEDULE.expand({ id: assignedLocation })],
         queryFn: get,
     });

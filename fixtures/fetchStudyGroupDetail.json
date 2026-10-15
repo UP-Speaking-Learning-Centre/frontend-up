@@ -1,0 +1,23 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "id": 1,
+    "name": "Study Group - Kids Level 1 A",
+    "locationId": 1,
+    "programId": 1,
+    "groupId": 1,
+    "levelId": 1,
+    "packageId": 1,
+    "teacherTeamMemberId": 1,
+    "teacherName": "Miss Sarah",
+    "dayOfWeek": "MON",
+    "startTime": "08:00",
+    "endTime": "09:30",
+    "room": "Room A-101",
+    "maxCapacity": 6,
+    "currentStudentsCount": 2,
+    "isPriority": false
+  },
+  "message": "Success"
+}

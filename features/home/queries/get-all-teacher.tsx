@@ -6,9 +6,9 @@ import { AllTeacherResponse } from '@/types/teacher';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
 const fetchAllTeacher = async (): Promise<AllTeacherResponse> => {
-    const response = await api.get<AllTeacherResponse>(ENDPOINTS.allTeacher);
+    const response = await api.get<any>(ENDPOINTS.allTeacher);
 
-    return response.data;
+    return Array.isArray(response.data) ? response.data : response.data?.data || [];
 };
 
 export const useGetAllTeacher = (): UseQueryResult<AllTeacherResponse> => {

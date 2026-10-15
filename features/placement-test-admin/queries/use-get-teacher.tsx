@@ -8,13 +8,13 @@ const useGetTeacher = () => {
     const assignedLocation = useDisplayedPlacementTestStore(s => s.assignedLocation);
 
     const get = async () => {
-        const res = await api.get<ResponseTeacher[]>(
+        const res = await api.get<any>(
             API_AVAIL_TEACHER.expand({ id: assignedLocation })
         );
-        return res.data;
+        return Array.isArray(res.data) ? res.data : res.data?.data || [];
     };
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading } = useQuery<ResponseTeacher[]>({
         queryKey: [API_AVAIL_TEACHER.expand({ id: assignedLocation })],
         queryFn: get,
         enabled: !!assignedLocation

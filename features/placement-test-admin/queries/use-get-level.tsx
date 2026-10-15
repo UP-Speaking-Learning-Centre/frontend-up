@@ -10,16 +10,16 @@ const useGetLevel = () => {
 
     const get = async () => {
         if (!programId || !groupId) return;
-        const res = await api.get<ResponseLevel[]>(
+        const res = await api.get<any>(
             API_LEVEL.expand({
                 programId,
                 groupId,
             })
         );
-        return res.data;
+        return Array.isArray(res.data) ? res.data : res.data?.data || [];
     };
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading } = useQuery<ResponseLevel[]>({
         queryKey: [API_LEVEL, programId, groupId],
         queryFn: get,
     });

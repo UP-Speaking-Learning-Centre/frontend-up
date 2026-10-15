@@ -12,7 +12,11 @@ type ToastActionElement = React.ReactElement
 
 type ToasterToast = ToastProps & {
   id: string
+  title?: React.ReactNode
+  description?: React.ReactNode
   action?: ToastActionElement
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 const TOAST_LIMIT = 1

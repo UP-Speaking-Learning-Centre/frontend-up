@@ -11,11 +11,11 @@ const useGetGroup = () => {
     const programId = dataProgram?.find(program_ => program_.name === program)?.id ?? '';
 
     const get = async () => {
-        const res = await api.get<ResponseLevel[]>(API_GROUP.expand({ programId }));
-        return res.data;
+        const res = await api.get<any>(API_GROUP.expand({ programId }));
+        return Array.isArray(res.data) ? res.data : res.data?.data || [];
     };
 
-    const { data, isLoading } = useQuery({
+    const { data, isLoading } = useQuery<ResponseLevel[]>({
         queryKey: [API_GROUP.expand({ programId })],
         queryFn: get,
     });

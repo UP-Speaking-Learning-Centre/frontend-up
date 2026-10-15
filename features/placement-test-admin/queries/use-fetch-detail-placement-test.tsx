@@ -13,9 +13,9 @@ const fetchDetailPlacementTest = async ({ id }: { id: string }): Promise<Respons
             Authorization: `Bearer ` + (await getCookiesToken()),
         },
     });
-    const data = await response.data;
+    const resData: any = response.data;
 
-    return data as ResponsePlacementTest;
+    return (resData?.data || resData) as ResponsePlacementTest;
 };
 
 const useFetchDetailPlacementTestQuery = ({

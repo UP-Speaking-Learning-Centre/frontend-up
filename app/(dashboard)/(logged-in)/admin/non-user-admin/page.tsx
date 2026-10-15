@@ -14,7 +14,6 @@ import { ROUTES } from '@/constants/routes';
 export default function NonUserAdminPage() {
     const setDrawerOpen = useNonUserFilterStore(s => s.setDrawerOpen);
     const filters = useNonUserFilterStore(s => s.filters);
-    const isPicDefault = useNonUserFilterStore(s => s.isPicDefault);
     const resetFilters = useNonUserFilterStore(s => s.resetFilters);
 
     useEffect(() => {
@@ -23,7 +22,7 @@ export default function NonUserAdminPage() {
         };
     }, [resetFilters]);
 
-    const activeFilterCount = getActiveFilterCount(filters, isPicDefault);
+    const activeFilterCount = getActiveFilterCount(filters);
 
     return (
         <DashboardContentLayout pageTitle="Non List User - Process By Admin Team">

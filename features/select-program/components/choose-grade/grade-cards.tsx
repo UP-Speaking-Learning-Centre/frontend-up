@@ -57,7 +57,7 @@ const GradeCards = () => {
                     buttonLabel={isGradeSelected ? 'Grade terpilih!' : 'Pilih grade'}
                     buttonAction={() =>
                         handleNextStepAction({
-                            stepId: CHOOSE_GRADE_STEP,
+                            stepId: CHOOSE_GRADE_STEP as any,
                             formValue: {
                                 gradeId: item.id,
                                 gradeName: `${formValue.levelName} ${item.gradeNumber}`,

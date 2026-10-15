@@ -1,0 +1,10 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "studentId": 1,
+    "notes": "Catatan siswa telah diperbarui via admin",
+    "updatedAt": "2026-10-14T17:48:15.718Z"
+  },
+  "message": "Success"
+}

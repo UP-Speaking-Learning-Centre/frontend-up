@@ -1,0 +1,30 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "id": 1,
+    "name": "Siswa Dengan Jadwal 2",
+    "date_of_birth": null,
+    "registration_date": "2025-09-05 18:50:31.716521",
+    "placement_status": "not_taken",
+    "dashboard_access": false,
+    "otp_code": null,
+    "created_at": "2025-09-05 18:50:31.716521",
+    "updated_at": "2025-09-05 18:50:31.716521",
+    "user_id": 21,
+    "phone_number": "+6281288889999",
+    "status": "active",
+    "isContacted": true,
+    "user": {
+      "phone_number": "+6281288889999",
+      "is_verified": true,
+      "created_at": "2025-09-05 18:50:31.121367",
+      "updated_at": "2025-09-05 18:51:27.365526",
+      "id": 21,
+      "username": null,
+      "role": "parent",
+      "password": "[REDACTED]"
+    }
+  },
+  "message": "Success"
+}

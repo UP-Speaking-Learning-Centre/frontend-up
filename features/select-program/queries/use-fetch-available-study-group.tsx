@@ -22,7 +22,7 @@ const fetchAvailableStudyGroupQuery = async ({
     packageId: string | number;
 }): Promise<StudyGroup[]> => {
     await sleep(1000);
-    const res = await api.get<StudyGroup[]>(
+    const res: any = await api.get(
         ENDPOINTS.fetchAvailableStudyGroup.expand({
             locationId,
             groupId,
@@ -33,7 +33,7 @@ const fetchAvailableStudyGroupQuery = async ({
     );
 
     // return dummy;
-    return res.data;
+    return Array.isArray(res.data) ? res.data : res.data?.data || [];
 };
 
 const useFetchAvailableStudyGroupQuery = () => {

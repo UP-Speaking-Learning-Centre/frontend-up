@@ -7,3 +7,5 @@ const Page = () => {
         </DashboardContentLayout>
     );
 };
+
+export default Page;

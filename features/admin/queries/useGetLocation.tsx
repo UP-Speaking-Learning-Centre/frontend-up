@@ -11,11 +11,11 @@ const useGetLocation = (params?: any) => {
     const setLocation = useLocationManagementStore(s => s.setLocation);
 
     const getLocation = async (): Promise<LocationAdmin[]> => {
-        const res = await api.get<LocationAdmin[]>(ENDPOINTS.fetchAdminLocations, {
+        const res = await api.get<any>(ENDPOINTS.fetchAdminLocations, {
             params,
         });
 
-        return res.data;
+        return Array.isArray(res.data) ? res.data : res.data?.data || [];
     };
 
     const { data, isLoading } = useQuery({

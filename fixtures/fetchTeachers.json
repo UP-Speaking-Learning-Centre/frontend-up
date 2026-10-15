@@ -1,0 +1,98 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": [
+    {
+      "id": 1,
+      "member_name": "Mr. Yayat",
+      "is_coordinator": true,
+      "teacher_id": 1,
+      "image_url": null
+    },
+    {
+      "id": 2,
+      "member_name": "Ms. Nuraeni",
+      "is_coordinator": false,
+      "teacher_id": 1,
+      "image_url": null
+    },
+    {
+      "id": 3,
+      "member_name": "Mr. Rafif",
+      "is_coordinator": false,
+      "teacher_id": 1,
+      "image_url": null
+    },
+    {
+      "id": 4,
+      "member_name": "Mr. Wildan",
+      "is_coordinator": false,
+      "teacher_id": 1,
+      "image_url": null
+    },
+    {
+      "id": 5,
+      "member_name": "Ms. Lieken",
+      "is_coordinator": true,
+      "teacher_id": 2,
+      "image_url": null
+    },
+    {
+      "id": 6,
+      "member_name": "Ms. Binti",
+      "is_coordinator": false,
+      "teacher_id": 2,
+      "image_url": null
+    },
+    {
+      "id": 7,
+      "member_name": "Mr. Noval",
+      "is_coordinator": false,
+      "teacher_id": 2,
+      "image_url": null
+    },
+    {
+      "id": 8,
+      "member_name": "Ms. May",
+      "is_coordinator": false,
+      "teacher_id": 3,
+      "image_url": null
+    },
+    {
+      "id": 9,
+      "member_name": "Mr. Firdan",
+      "is_coordinator": true,
+      "teacher_id": 3,
+      "image_url": null
+    },
+    {
+      "id": 10,
+      "member_name": "Ms. Feby",
+      "is_coordinator": false,
+      "teacher_id": 3,
+      "image_url": null
+    },
+    {
+      "id": 11,
+      "member_name": "Ms. Puji",
+      "is_coordinator": false,
+      "teacher_id": 3,
+      "image_url": null
+    },
+    {
+      "id": 12,
+      "member_name": "Ms. Ica",
+      "is_coordinator": false,
+      "teacher_id": 3,
+      "image_url": null
+    }
+  ],
+  "meta": {
+    "totalItems": 12,
+    "itemCount": 12,
+    "itemsPerPage": 20,
+    "totalPages": 1,
+    "currentPage": 1
+  },
+  "message": "Success"
+}

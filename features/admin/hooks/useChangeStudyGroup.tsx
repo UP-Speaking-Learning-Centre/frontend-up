@@ -53,10 +53,11 @@ const useChangeStudyGroup = (
 
     const filteredStudyGroup =
         studyGroups?.filter(
-            sg =>
+            (sg: any) =>
+                data &&
                 sg.programId === data?.programId &&
                 sg.groupId === data.groupId &&
-                data.packages.some(package_ => package_.packageId === sg.packageId) &&
+                data.packages?.some(package_ => package_.packageId === sg.packageId) &&
                 sg.levelId === data.levelId &&
                 sg.locationId === locationId
         ) || [];

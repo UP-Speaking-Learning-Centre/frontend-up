@@ -1,0 +1,147 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "id": 1,
+    "student": {
+      "id": 1,
+      "name": "Siswa Dengan Jadwal 2",
+      "date_of_birth": null,
+      "registration_date": "2025-09-05 18:50:31.716521",
+      "placement_status": "not_taken",
+      "dashboard_access": false,
+      "otp_code": null,
+      "created_at": "2025-09-05 18:50:31.716521",
+      "updated_at": "2025-09-05 18:50:31.716521",
+      "user_id": 21,
+      "phone_number": "+6281288889999",
+      "status": "active",
+      "isContacted": true,
+      "user": {
+        "phone_number": "+6281288889999",
+        "is_verified": true,
+        "created_at": "2025-09-05 18:50:31.121367",
+        "updated_at": "2025-09-05 18:51:27.365526",
+        "id": 21,
+        "username": null,
+        "role": "parent",
+        "password": "[REDACTED]"
+      }
+    },
+    "test": {
+      "id": 1,
+      "name": "Placement Test - Elementary",
+      "description": "A test focusing on basic language concepts for elementary students.",
+      "level_id": 2
+    },
+    "score": 85,
+    "status": "completed",
+    "answers": [
+      {
+        "id": 1,
+        "answer_text": "should",
+        "placement_test_id": 1,
+        "question_id": 1
+      },
+      {
+        "id": 2,
+        "answer_text": "was",
+        "placement_test_id": 1,
+        "question_id": 7
+      },
+      {
+        "id": 3,
+        "answer_text": "swimming",
+        "placement_test_id": 1,
+        "question_id": 27
+      },
+      {
+        "id": 4,
+        "answer_text": "any",
+        "placement_test_id": 1,
+        "question_id": 30
+      },
+      {
+        "id": 5,
+        "answer_text": "should",
+        "placement_test_id": 2,
+        "question_id": 1
+      },
+      {
+        "id": 6,
+        "answer_text": "was",
+        "placement_test_id": 2,
+        "question_id": 7
+      },
+      {
+        "id": 7,
+        "answer_text": "swimming",
+        "placement_test_id": 2,
+        "question_id": 27
+      },
+      {
+        "id": 8,
+        "answer_text": "any",
+        "placement_test_id": 2,
+        "question_id": 30
+      }
+    ],
+    "questions": [
+      {
+        "id": 1,
+        "question_text": "She likes ____ (swim) in the ocean during summer.",
+        "options": null,
+        "correct_answer": "swimming",
+        "question_type": "fill_in_the_blank",
+        "test_id": 1,
+        "instruction": "Complete the sentences with the correct form of the verb."
+      },
+      {
+        "id": 2,
+        "question_text": "They ____ (not like) ____ (eat) spicy food.",
+        "options": null,
+        "correct_answer": "don't like eating",
+        "question_type": "fill_in_the_blank",
+        "test_id": 1,
+        "instruction": null
+      },
+      {
+        "id": 3,
+        "question_text": "There are ____ apples in the fridge. Would you like one?",
+        "options": [
+          "some",
+          "any"
+        ],
+        "correct_answer": "some",
+        "question_type": "multiple_choice",
+        "test_id": 1,
+        "instruction": "Choose the correct word (some/any)."
+      },
+      {
+        "id": 4,
+        "question_text": "She doesn't have ____ money left in her wallet.",
+        "options": [
+          "some",
+          "any"
+        ],
+        "correct_answer": "any",
+        "question_type": "multiple_choice",
+        "test_id": 1,
+        "instruction": null
+      },
+      {
+        "id": 5,
+        "question_text": "The movie begins at 7:20 pm. It's ____ seven.",
+        "options": [
+          "twenty past",
+          "twenty to"
+        ],
+        "correct_answer": "twenty past",
+        "question_type": "multiple_choice",
+        "test_id": 1,
+        "instruction": "Tell the time."
+      }
+    ]
+  },
+  "message": "Success"
+}

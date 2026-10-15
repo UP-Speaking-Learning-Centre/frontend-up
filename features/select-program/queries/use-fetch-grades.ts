@@ -14,10 +14,10 @@ const fetchGrades = async ({
     groupId: string;
     levelId: string;
 }): Promise<GradeType[]> => {
-    const res = await api.get<GradeType[]>(
+    const res = await api.get<any>(
         ENDPOINTS.fetchGrades.expand({ programId, groupId, levelId })
     );
-    return res.data;
+    return Array.isArray(res.data) ? res.data : res.data?.data || [];
 };
 
 const useFetchGradesQuery = (fromStudyGroup = false): UseQueryResult<GradeType[], Error> => {

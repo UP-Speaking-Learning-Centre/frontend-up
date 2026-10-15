@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "placementTestId": 10,
+    "score": 80,
+    "status": "completed",
+    "recommendedLevel": "Novice",
+    "message": "Placement test submitted successfully"
+  },
+  "message": "Success"
+}

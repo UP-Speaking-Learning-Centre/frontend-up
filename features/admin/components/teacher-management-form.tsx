@@ -178,7 +178,7 @@ const TeacherManagementForm: FC<Props> = ({
                                 <div className="col-span-1 flex flex-col items-start gap-2">
                                     <Label>Alias</Label>
                                     <p className="font-semibold">
-                                        {aliasData?.find(data => data.id === alias)?.alias}
+                                        {aliasData?.find((data: any) => data.id === alias)?.alias}
                                     </p>
                                 </div>
                             ) : (
@@ -187,7 +187,7 @@ const TeacherManagementForm: FC<Props> = ({
                                         label="Alias"
                                         loading={isLoadingAlias}
                                         options={
-                                            aliasData?.map(alias => ({
+                                            aliasData?.map((alias: any) => ({
                                                 id: alias.id,
                                                 name: alias.alias,
                                             })) || []

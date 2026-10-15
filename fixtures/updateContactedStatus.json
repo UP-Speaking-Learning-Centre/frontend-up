@@ -1,0 +1,10 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "studentId": 1,
+    "isContacted": true,
+    "message": "Status contacted updated"
+  },
+  "message": "Success"
+}

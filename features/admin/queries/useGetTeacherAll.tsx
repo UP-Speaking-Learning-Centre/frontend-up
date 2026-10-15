@@ -5,10 +5,10 @@ import { useQuery } from '@tanstack/react-query';
 
 const useGetTeacherAll = (params?: any) => {
     const getTeacher = async (): Promise<TeacherAdmin[]> => {
-        const mentors = await api.get<TeacherAdmin[]>(ENDPOINTS.fetchTeachersNoPage, {
+        const mentors = await api.get<any>(ENDPOINTS.fetchTeachersNoPage, {
             params,
         });
-        return mentors.data;
+        return Array.isArray(mentors.data) ? mentors.data : mentors.data?.data || [];
     };
 
     const { data, isLoading } = useQuery({

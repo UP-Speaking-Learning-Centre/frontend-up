@@ -29,6 +29,8 @@ export type FormValue = {
     groupName: string;
     levelId: number | string;
     levelName: string;
+    gradeId?: number | string;
+    gradeName?: string;
     isUseSelfSchedule: boolean;
     taughtBy: string[];
     locationId: number | string;

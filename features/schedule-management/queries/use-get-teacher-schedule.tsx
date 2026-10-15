@@ -11,11 +11,11 @@ import { useScheduleManagementStore } from '../stores/schedule-management-store'
 import { useNewStudyGroupStore } from '../stores/new-study-group-store';
 
 const fetchTeacherSchedule = async (locationId: number): Promise<TeacherScheduleResponse> => {
-    const response = await api.get<TeacherScheduleResponse>(
+    const response = await api.get<any>(
         ENDPOINTS.fetchTeacherSchedule.expand({ locationId })
     );
 
-    return response.data;
+    return Array.isArray(response.data) ? response.data : response.data?.data || [];
 };
 
 export const useGetTeacherScheduleQuery = (

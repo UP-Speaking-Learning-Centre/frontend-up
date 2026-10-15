@@ -9,11 +9,11 @@ const useGetTeacherSchedule = () => {
     const [teacherId, setTeacherId] = useState(0);
 
     const getTeacher = async (): Promise<TeacherAdminSchedule> => {
-        const mentors = await api.get<TeacherAdminSchedule>(
+        const mentors = await api.get<any>(
             ENDPOINTS.fetchTeachersScheduleById.expand({ id: teacherId })
         );
 
-        return mentors.data;
+        return mentors.data?.data || mentors.data;
     };
 
     const handleOpenSchedule = (id: number) => {

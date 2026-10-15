@@ -12,12 +12,12 @@ import { StudyGroupDetailAdmin } from '@/types/study-group';
 import { sleep } from '@/lib/mock';
 
 const fetchStudyGroupDetail = async (studyGroupId: number) => {
-    const response = await api.get<StudyGroupDetailAdmin>(
+    const response = await api.get<any>(
         ENDPOINTS.fetchStudyGroupDetail.expand({
             studyGroupId,
         })
     );
-    return response.data;
+    return response.data?.data || response.data;
 };
 
 export const useGetStudyGroupDetailQuery = (): UseQueryResult => {

@@ -1,0 +1,99 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "placementTestId": 10,
+    "guestName": "Tamu Calon Siswa",
+    "questions": [
+      {
+        "id": 1,
+        "question_text": "She likes ____ (swim) in the ocean during summer.",
+        "options": null,
+        "question_type": "fill_in_the_blank",
+        "instruction": "Complete the sentences with the correct form of the verb."
+      },
+      {
+        "id": 2,
+        "question_text": "They ____ (not like) ____ (eat) spicy food.",
+        "options": null,
+        "question_type": "fill_in_the_blank",
+        "instruction": null
+      },
+      {
+        "id": 3,
+        "question_text": "There are ____ apples in the fridge. Would you like one?",
+        "options": [
+          "some",
+          "any"
+        ],
+        "question_type": "multiple_choice",
+        "instruction": "Choose the correct word (some/any)."
+      },
+      {
+        "id": 4,
+        "question_text": "She doesn't have ____ money left in her wallet.",
+        "options": [
+          "some",
+          "any"
+        ],
+        "question_type": "multiple_choice",
+        "instruction": null
+      },
+      {
+        "id": 5,
+        "question_text": "The movie begins at 7:20 pm. It's ____ seven.",
+        "options": [
+          "twenty past",
+          "twenty to"
+        ],
+        "question_type": "multiple_choice",
+        "instruction": "Tell the time."
+      },
+      {
+        "id": 6,
+        "question_text": "He goes to bed at 11:45. It's ____ twelve.",
+        "options": [
+          "quarter past",
+          "quarter to"
+        ],
+        "question_type": "multiple_choice",
+        "instruction": null
+      },
+      {
+        "id": 7,
+        "question_text": "They are going to the gym ____ (work out) this evening.",
+        "options": null,
+        "question_type": "fill_in_the_blank",
+        "instruction": "Complete the sentences with the infinitive form of the verb."
+      },
+      {
+        "id": 8,
+        "question_text": "She is going to the library ____ (study) for her exams.",
+        "options": null,
+        "question_type": "fill_in_the_blank",
+        "instruction": null
+      },
+      {
+        "id": 9,
+        "question_text": "The children ____ excited about the trip.",
+        "options": [
+          "was",
+          "were"
+        ],
+        "question_type": "multiple_choice",
+        "instruction": "Choose the correct verb (was/were)."
+      },
+      {
+        "id": 10,
+        "question_text": "It ____ cold outside yesterday.",
+        "options": [
+          "was",
+          "were"
+        ],
+        "question_type": "multiple_choice",
+        "instruction": null
+      }
+    ]
+  },
+  "message": "Success"
+}

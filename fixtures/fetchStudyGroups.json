@@ -1,0 +1,43 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": [
+    {
+      "id": 1,
+      "name": "Study Group - Kids Level 1 A",
+      "locationId": 1,
+      "programId": 1,
+      "groupId": 1,
+      "levelId": 1,
+      "packageId": 1,
+      "teacherTeamMemberId": 1,
+      "teacherName": "Miss Sarah",
+      "dayOfWeek": "MON",
+      "startTime": "08:00",
+      "endTime": "09:30",
+      "room": "Room A-101",
+      "maxCapacity": 6,
+      "currentStudentsCount": 2,
+      "isPriority": false
+    },
+    {
+      "id": 2,
+      "name": "Study Group - Speaking Teens B",
+      "locationId": 1,
+      "programId": 2,
+      "groupId": 6,
+      "levelId": 10,
+      "packageId": 2,
+      "teacherTeamMemberId": 2,
+      "teacherName": "Mr. David",
+      "dayOfWeek": "WED",
+      "startTime": "13:45",
+      "endTime": "15:15",
+      "room": "Room B-202",
+      "maxCapacity": 8,
+      "currentStudentsCount": 3,
+      "isPriority": true
+    }
+  ],
+  "message": "Success"
+}

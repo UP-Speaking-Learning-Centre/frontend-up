@@ -1,0 +1,16 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "success": true,
+    "programId": 1,
+    "packageId": 1,
+    "prices": [
+      {
+        "timeframe": "1_month",
+        "amount": 375000
+      }
+    ]
+  },
+  "message": "Success"
+}

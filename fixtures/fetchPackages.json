@@ -1,0 +1,25 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": [
+    {
+      "id": 1,
+      "name": "Basic",
+      "description": "Paket dasar kursus",
+      "total_sessions": 12
+    },
+    {
+      "id": 2,
+      "name": "Intensive",
+      "description": "Paket intensif percepatan",
+      "total_sessions": 24
+    },
+    {
+      "id": 3,
+      "name": "Private",
+      "description": "Paket tatap muka 1-on-1",
+      "total_sessions": 16
+    }
+  ],
+  "message": "Success"
+}

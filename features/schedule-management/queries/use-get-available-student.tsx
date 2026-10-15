@@ -12,10 +12,10 @@ import { useEffect } from 'react';
 const fetchAvailableStudent = async (
     studyGroupId: number
 ): Promise<AvailableStudentForStudyGroup[]> => {
-    const response = await api.get<AvailableStudentForStudyGroup[]>(
+    const response = await api.get<any>(
         ENDPOINTS.fetchAvailableStudent.expand({ studyGroupId })
     );
-    return response.data;
+    return Array.isArray(response.data) ? response.data : response.data?.data || [];
 };
 
 export const useGetAvailableStudentQuery = (): UseQueryResult<AvailableStudentForStudyGroup[]> => {

@@ -24,7 +24,7 @@ const ListStudent = () => {
                 </div>
 
                 <div className="grid gap-6">
-                    {data?.students.map(student => (
+                    {data?.students?.map(student => (
                         <Card key={student.id} className="hover:shadow-md transition-shadow">
                             <CardContent className="p-6">
                                 <div className="sm:flex items-center justify-between">
@@ -37,20 +37,20 @@ const ListStudent = () => {
                                                 {student.name}
                                             </h3>
                                             <div className="mt-2">
-                                                <p>Program: {student.programName}</p>
-                                                <p>Level: {student.levelName}</p>
+                                                <p>Program: {(student as any).programName || (student as any).program || '-'}</p>
+                                                <p>Level: {(student as any).levelName || (student as any).level || '-'}</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="flex flex-wrap mt-4 sm:mt-0 items-center space-x-3 space-y-3 justify-center sm:justify-start">
-                                        {isPlacementTest(student.testResults ?? []) ? (
+                                        {isPlacementTest((student as any).testResults ?? []) ? (
                                             <Badge
                                                 variant="outline"
                                                 className="bg-amber-100 text-amber-700 hover:bg-amber-100"
                                             >
                                                 Menunggu Hasil Test
                                             </Badge>
-                                        ) : (student.testResults?.length ?? 0) > 0 ? (
+                                        ) : ((student as any).testResults?.length ?? 0) > 0 ? (
                                             <Badge variant="default">Aktif</Badge>
                                         ) : (
                                             <Badge variant="secondary">Tidak Aktif</Badge>

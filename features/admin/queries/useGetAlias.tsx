@@ -23,9 +23,9 @@ const useGetAlias = () => {
                 "coordinator": null
             }
         ] satisfies ResponseAlias[];
-        const res = await api.get<ResponseAlias[]>(ENDPOINTS.fetchAlias);
+        const res = await api.get<any>(ENDPOINTS.fetchAlias);
         // return dummy;
-        return res.data;
+        return Array.isArray(res.data) ? res.data : res.data?.data || [];
         
     };
 

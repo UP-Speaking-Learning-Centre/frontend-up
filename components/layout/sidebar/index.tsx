@@ -144,7 +144,7 @@ const Sidebar = () => {
     };
 
     const generateSidebarHeader = () => {
-        if (role === 'admin') {
+        if (isAdmin(role)) {
             return (
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-3">

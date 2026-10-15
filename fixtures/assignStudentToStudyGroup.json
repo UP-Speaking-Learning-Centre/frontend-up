@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": {
+    "success": true,
+    "studyGroupId": 1,
+    "assignedStudentIds": [
+      1
+    ],
+    "message": "Student assigned to study group successfully"
+  },
+  "message": "Success"
+}

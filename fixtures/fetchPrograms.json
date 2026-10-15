@@ -1,0 +1,19 @@
+{
+  "status": "success",
+  "code": 200,
+  "data": [
+    {
+      "name": "School Program",
+      "description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos",
+      "id": 1,
+      "image_url": null
+    },
+    {
+      "name": "Regular / Adults Program",
+      "description": "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos",
+      "id": 2,
+      "image_url": null
+    }
+  ],
+  "message": "Success"
+}

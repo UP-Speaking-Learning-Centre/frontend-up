@@ -5,11 +5,11 @@ import { API_PROGRAM } from '../constants/config';
 
 const useGetProgram = () => {
     const get = async () => {
-        const res = await api.get<ResponseProgram[]>(API_PROGRAM);
-        return res.data;
+        const res = await api.get<any>(API_PROGRAM);
+        return Array.isArray(res.data) ? res.data : res.data?.data || [];
     };
 
-    const { data, isLoading } = useQuery({ queryKey: [API_PROGRAM], queryFn: get });
+    const { data, isLoading } = useQuery<ResponseProgram[]>({ queryKey: [API_PROGRAM], queryFn: get });
 
     return { data, isLoading };
 };

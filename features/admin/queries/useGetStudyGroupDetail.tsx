@@ -5,12 +5,12 @@ import { useQuery } from '@tanstack/react-query';
 
 const useGetStudyGroupDetail = (id: number) => {
     const get = async () => {
-        const res = await api.get<StudyGroupDetail>(
+        const res = await api.get<any>(
             ENDPOINTS.fetchStudyGroupDetail.expand({
                 studyGroupId: id,
             })
         );
-        return res.data;
+        return res.data?.data || res.data;
     };
 
     const { data, isLoading } = useQuery({
